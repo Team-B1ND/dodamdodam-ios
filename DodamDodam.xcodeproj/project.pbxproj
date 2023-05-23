@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9379C8F62A1CD6A2009CB60A /* DodamDodamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C8F52A1CD6A2009CB60A /* DodamDodamApp.swift */; };
+		9379C8F82A1CD6A2009CB60A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C8F72A1CD6A2009CB60A /* ContentView.swift */; };
+		9379C8FA2A1CD6A3009CB60A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9379C8F92A1CD6A3009CB60A /* Assets.xcassets */; };
+		9379C8FD2A1CD6A3009CB60A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9379C8FC2A1CD6A3009CB60A /* Preview Assets.xcassets */; };
+		9379C9072A1CD6A3009CB60A /* DodamDodamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C9062A1CD6A3009CB60A /* DodamDodamTests.swift */; };
+		9379C9112A1CD6A3009CB60A /* DodamDodamUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C9102A1CD6A3009CB60A /* DodamDodamUITests.swift */; };
+		9379C9132A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C9122A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9379C9032A1CD6A3009CB60A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9379C8EA2A1CD6A2009CB60A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9379C8F12A1CD6A2009CB60A;
+			remoteInfo = DodamDodam;
+		};
+		9379C90D2A1CD6A3009CB60A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9379C8EA2A1CD6A2009CB60A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9379C8F12A1CD6A2009CB60A;
+			remoteInfo = DodamDodam;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		9379C8F22A1CD6A2009CB60A /* DodamDodam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DodamDodam.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9379C8F52A1CD6A2009CB60A /* DodamDodamApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamApp.swift; sourceTree = "<group>"; };
+		9379C8F72A1CD6A2009CB60A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9379C8F92A1CD6A3009CB60A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9379C8FC2A1CD6A3009CB60A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9379C9022A1CD6A3009CB60A /* DodamDodamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DodamDodamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9379C9062A1CD6A3009CB60A /* DodamDodamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamTests.swift; sourceTree = "<group>"; };
+		9379C90C2A1CD6A3009CB60A /* DodamDodamUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DodamDodamUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9379C9102A1CD6A3009CB60A /* DodamDodamUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamUITests.swift; sourceTree = "<group>"; };
+		9379C9122A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9379C8EF2A1CD6A2009CB60A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9379C8FF2A1CD6A3009CB60A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9379C9092A1CD6A3009CB60A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		9379C8E92A1CD6A2009CB60A = {
+			isa = PBXGroup;
+			children = (
+				9379C8F42A1CD6A2009CB60A /* DodamDodam */,
+				9379C9052A1CD6A3009CB60A /* DodamDodamTests */,
+				9379C90F2A1CD6A3009CB60A /* DodamDodamUITests */,
+				9379C8F32A1CD6A2009CB60A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9379C8F32A1CD6A2009CB60A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9379C8F22A1CD6A2009CB60A /* DodamDodam.app */,
+				9379C9022A1CD6A3009CB60A /* DodamDodamTests.xctest */,
+				9379C90C2A1CD6A3009CB60A /* DodamDodamUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9379C8F42A1CD6A2009CB60A /* DodamDodam */ = {
+			isa = PBXGroup;
+			children = (
+				9379C8F52A1CD6A2009CB60A /* DodamDodamApp.swift */,
+				9379C8F72A1CD6A2009CB60A /* ContentView.swift */,
+				9379C8F92A1CD6A3009CB60A /* Assets.xcassets */,
+				9379C8FB2A1CD6A3009CB60A /* Preview Content */,
+			);
+			path = DodamDodam;
+			sourceTree = "<group>";
+		};
+		9379C8FB2A1CD6A3009CB60A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				9379C8FC2A1CD6A3009CB60A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		9379C9052A1CD6A3009CB60A /* DodamDodamTests */ = {
+			isa = PBXGroup;
+			children = (
+				9379C9062A1CD6A3009CB60A /* DodamDodamTests.swift */,
+			);
+			path = DodamDodamTests;
+			sourceTree = "<group>";
+		};
+		9379C90F2A1CD6A3009CB60A /* DodamDodamUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9379C9102A1CD6A3009CB60A /* DodamDodamUITests.swift */,
+				9379C9122A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift */,
+			);
+			path = DodamDodamUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9379C8F12A1CD6A2009CB60A /* DodamDodam */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9379C9162A1CD6A3009CB60A /* Build configuration list for PBXNativeTarget "DodamDodam" */;
+			buildPhases = (
+				9379C8EE2A1CD6A2009CB60A /* Sources */,
+				9379C8EF2A1CD6A2009CB60A /* Frameworks */,
+				9379C8F02A1CD6A2009CB60A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DodamDodam;
+			productName = DodamDodam;
+			productReference = 9379C8F22A1CD6A2009CB60A /* DodamDodam.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9379C9012A1CD6A3009CB60A /* DodamDodamTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9379C9192A1CD6A3009CB60A /* Build configuration list for PBXNativeTarget "DodamDodamTests" */;
+			buildPhases = (
+				9379C8FE2A1CD6A3009CB60A /* Sources */,
+				9379C8FF2A1CD6A3009CB60A /* Frameworks */,
+				9379C9002A1CD6A3009CB60A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9379C9042A1CD6A3009CB60A /* PBXTargetDependency */,
+			);
+			name = DodamDodamTests;
+			productName = DodamDodamTests;
+			productReference = 9379C9022A1CD6A3009CB60A /* DodamDodamTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		9379C90B2A1CD6A3009CB60A /* DodamDodamUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9379C91C2A1CD6A3009CB60A /* Build configuration list for PBXNativeTarget "DodamDodamUITests" */;
+			buildPhases = (
+				9379C9082A1CD6A3009CB60A /* Sources */,
+				9379C9092A1CD6A3009CB60A /* Frameworks */,
+				9379C90A2A1CD6A3009CB60A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9379C90E2A1CD6A3009CB60A /* PBXTargetDependency */,
+			);
+			name = DodamDodamUITests;
+			productName = DodamDodamUITests;
+			productReference = 9379C90C2A1CD6A3009CB60A /* DodamDodamUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9379C8EA2A1CD6A2009CB60A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1430;
+				LastUpgradeCheck = 1430;
+				ORGANIZATIONNAME = B1ND;
+				TargetAttributes = {
+					9379C8F12A1CD6A2009CB60A = {
+						CreatedOnToolsVersion = 14.3;
+					};
+					9379C9012A1CD6A3009CB60A = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 9379C8F12A1CD6A2009CB60A;
+					};
+					9379C90B2A1CD6A3009CB60A = {
+						CreatedOnToolsVersion = 14.3;
+						TestTargetID = 9379C8F12A1CD6A2009CB60A;
+					};
+				};
+			};
+			buildConfigurationList = 9379C8ED2A1CD6A2009CB60A /* Build configuration list for PBXProject "DodamDodam" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9379C8E92A1CD6A2009CB60A;
+			productRefGroup = 9379C8F32A1CD6A2009CB60A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9379C8F12A1CD6A2009CB60A /* DodamDodam */,
+				9379C9012A1CD6A3009CB60A /* DodamDodamTests */,
+				9379C90B2A1CD6A3009CB60A /* DodamDodamUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9379C8F02A1CD6A2009CB60A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9379C8FD2A1CD6A3009CB60A /* Preview Assets.xcassets in Resources */,
+				9379C8FA2A1CD6A3009CB60A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9379C9002A1CD6A3009CB60A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9379C90A2A1CD6A3009CB60A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9379C8EE2A1CD6A2009CB60A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9379C8F82A1CD6A2009CB60A /* ContentView.swift in Sources */,
+				9379C8F62A1CD6A2009CB60A /* DodamDodamApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9379C8FE2A1CD6A3009CB60A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9379C9072A1CD6A3009CB60A /* DodamDodamTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9379C9082A1CD6A3009CB60A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9379C9132A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift in Sources */,
+				9379C9112A1CD6A3009CB60A /* DodamDodamUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9379C9042A1CD6A3009CB60A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9379C8F12A1CD6A2009CB60A /* DodamDodam */;
+			targetProxy = 9379C9032A1CD6A3009CB60A /* PBXContainerItemProxy */;
+		};
+		9379C90E2A1CD6A3009CB60A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9379C8F12A1CD6A2009CB60A /* DodamDodam */;
+			targetProxy = 9379C90D2A1CD6A3009CB60A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		9379C9142A1CD6A3009CB60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9379C9152A1CD6A3009CB60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9379C9172A1CD6A3009CB60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DodamDodam/Preview Content\"";
+				DEVELOPMENT_TEAM = 56V747V83R;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "도담도담";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 14;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9379C9182A1CD6A3009CB60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"DodamDodam/Preview Content\"";
+				DEVELOPMENT_TEAM = 56V747V83R;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "도담도담";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 14;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodam;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9379C91A2A1CD6A3009CB60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 56V747V83R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodamTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DodamDodam.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DodamDodam";
+			};
+			name = Debug;
+		};
+		9379C91B2A1CD6A3009CB60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 56V747V83R;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodamTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DodamDodam.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DodamDodam";
+			};
+			name = Release;
+		};
+		9379C91D2A1CD6A3009CB60A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 56V747V83R;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodamUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DodamDodam;
+			};
+			name = Debug;
+		};
+		9379C91E2A1CD6A3009CB60A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 56V747V83R;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodamUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DodamDodam;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9379C8ED2A1CD6A2009CB60A /* Build configuration list for PBXProject "DodamDodam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9379C9142A1CD6A3009CB60A /* Debug */,
+				9379C9152A1CD6A3009CB60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9379C9162A1CD6A3009CB60A /* Build configuration list for PBXNativeTarget "DodamDodam" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9379C9172A1CD6A3009CB60A /* Debug */,
+				9379C9182A1CD6A3009CB60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9379C9192A1CD6A3009CB60A /* Build configuration list for PBXNativeTarget "DodamDodamTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9379C91A2A1CD6A3009CB60A /* Debug */,
+				9379C91B2A1CD6A3009CB60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9379C91C2A1CD6A3009CB60A /* Build configuration list for PBXNativeTarget "DodamDodamUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9379C91D2A1CD6A3009CB60A /* Debug */,
+				9379C91E2A1CD6A3009CB60A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9379C8EA2A1CD6A2009CB60A /* Project object */;
+}
