@@ -10,15 +10,6 @@
       }
     },
     {
-      "identity" : "linknavigator",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/interactord/LinkNavigator",
-      "state" : {
-        "revision" : "0ac3638f4b9a14c8286f378cba8f15fdbdcaa69f",
-        "version" : "0.7.1"
-      }
-    },
-    {
       "identity" : "swift-case-paths",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-case-paths",

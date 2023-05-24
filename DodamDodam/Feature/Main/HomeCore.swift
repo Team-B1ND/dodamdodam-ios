@@ -20,8 +20,6 @@ public struct Home: ReducerProtocol {
         case onTapButton
     }
     
-    @Dependency(\.sideEffect.home) var sideEffect
-    
     public var body: some ReducerProtocol<State, Action> {
         
         Reduce { state, action in
@@ -29,7 +27,7 @@ public struct Home: ReducerProtocol {
             switch action {
                 
             case .onTapButton:
-                sideEffect.onTapButton()
+                print("도담도담")
                 return .none
             }
         }

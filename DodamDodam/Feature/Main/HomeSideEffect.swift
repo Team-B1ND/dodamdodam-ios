@@ -26,7 +26,7 @@ extension HomeSideEffectLive: HomeSideEffect {
     
     public var onTapButton: () -> Void {
         {
-            navigator.sheet(paths: [""], items: [:], isAnimated: true)
+            print("도담도담")
         }
     }
 }
