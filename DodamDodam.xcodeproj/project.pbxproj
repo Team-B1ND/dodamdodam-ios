@@ -45,6 +45,7 @@
 		9379C90C2A1CD6A3009CB60A /* DodamDodamUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DodamDodamUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9379C9102A1CD6A3009CB60A /* DodamDodamUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamUITests.swift; sourceTree = "<group>"; };
 		9379C9122A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9392ADBC2A1DD72600250D6B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +111,7 @@
 		9379C8E92A1CD6A2009CB60A = {
 			isa = PBXGroup;
 			children = (
+				9392ADBC2A1DD72600250D6B /* README.md */,
 				9379C8F42A1CD6A2009CB60A /* DodamDodam */,
 				9379C9052A1CD6A3009CB60A /* DodamDodamTests */,
 				9379C90F2A1CD6A3009CB60A /* DodamDodamUITests */,
