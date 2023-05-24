@@ -7,10 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9379C8F62A1CD6A2009CB60A /* DodamDodamApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C8F52A1CD6A2009CB60A /* DodamDodamApp.swift */; };
-		9379C8F82A1CD6A2009CB60A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C8F72A1CD6A2009CB60A /* ContentView.swift */; };
+		5257248B2A1DC9F10063F7C1 /* LinkNavigator in Frameworks */ = {isa = PBXBuildFile; productRef = 5257248A2A1DC9F10063F7C1 /* LinkNavigator */; };
+		5257248E2A1DCA860063F7C1 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 5257248D2A1DCA860063F7C1 /* ComposableArchitecture */; };
+		525724932A1DCB8A0063F7C1 /* AppMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525724922A1DCB8A0063F7C1 /* AppMain.swift */; };
+		525724962A1DCC030063F7C1 /* AppSideEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525724952A1DCC030063F7C1 /* AppSideEffect.swift */; };
+		525724982A1DCC5A0063F7C1 /* AppRouteBulider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525724972A1DCC5A0063F7C1 /* AppRouteBulider.swift */; };
+		5257249B2A1DCCD60063F7C1 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5257249A2A1DCCD60063F7C1 /* HomeView.swift */; };
+		5257249D2A1DCCE30063F7C1 /* HomeRouteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5257249C2A1DCCE30063F7C1 /* HomeRouteBuilder.swift */; };
+		5257249F2A1DCD9A0063F7C1 /* HomeSideEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5257249E2A1DCD9A0063F7C1 /* HomeSideEffect.swift */; };
+		525724A12A1DCDEE0063F7C1 /* HomeCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525724A02A1DCDEE0063F7C1 /* HomeCore.swift */; };
 		9379C8FA2A1CD6A3009CB60A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9379C8F92A1CD6A3009CB60A /* Assets.xcassets */; };
-		9379C8FD2A1CD6A3009CB60A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9379C8FC2A1CD6A3009CB60A /* Preview Assets.xcassets */; };
 		9379C9072A1CD6A3009CB60A /* DodamDodamTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C9062A1CD6A3009CB60A /* DodamDodamTests.swift */; };
 		9379C9112A1CD6A3009CB60A /* DodamDodamUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C9102A1CD6A3009CB60A /* DodamDodamUITests.swift */; };
 		9379C9132A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9379C9122A1CD6A3009CB60A /* DodamDodamUITestsLaunchTests.swift */; };
@@ -34,11 +40,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		525724922A1DCB8A0063F7C1 /* AppMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMain.swift; sourceTree = "<group>"; };
+		525724952A1DCC030063F7C1 /* AppSideEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSideEffect.swift; sourceTree = "<group>"; };
+		525724972A1DCC5A0063F7C1 /* AppRouteBulider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRouteBulider.swift; sourceTree = "<group>"; };
+		5257249A2A1DCCD60063F7C1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		5257249C2A1DCCE30063F7C1 /* HomeRouteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouteBuilder.swift; sourceTree = "<group>"; };
+		5257249E2A1DCD9A0063F7C1 /* HomeSideEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeSideEffect.swift; sourceTree = "<group>"; };
+		525724A02A1DCDEE0063F7C1 /* HomeCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCore.swift; sourceTree = "<group>"; };
 		9379C8F22A1CD6A2009CB60A /* DodamDodam.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DodamDodam.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9379C8F52A1CD6A2009CB60A /* DodamDodamApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamApp.swift; sourceTree = "<group>"; };
-		9379C8F72A1CD6A2009CB60A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		9379C8F92A1CD6A3009CB60A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9379C8FC2A1CD6A3009CB60A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9379C9022A1CD6A3009CB60A /* DodamDodamTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DodamDodamTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9379C9062A1CD6A3009CB60A /* DodamDodamTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DodamDodamTests.swift; sourceTree = "<group>"; };
 		9379C90C2A1CD6A3009CB60A /* DodamDodamUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DodamDodamUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5257248E2A1DCA860063F7C1 /* ComposableArchitecture in Frameworks */,
+				5257248B2A1DC9F10063F7C1 /* LinkNavigator in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +83,52 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5257248F2A1DCB450063F7C1 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				525724992A1DCCCC0063F7C1 /* Main */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		525724902A1DCB4F0063F7C1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9379C8F92A1CD6A3009CB60A /* Assets.xcassets */,
+				525724912A1DCB760063F7C1 /* Navigator */,
+				525724942A1DCBEB0063F7C1 /* Architecture */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		525724912A1DCB760063F7C1 /* Navigator */ = {
+			isa = PBXGroup;
+			children = (
+				525724922A1DCB8A0063F7C1 /* AppMain.swift */,
+				525724972A1DCC5A0063F7C1 /* AppRouteBulider.swift */,
+			);
+			path = Navigator;
+			sourceTree = "<group>";
+		};
+		525724942A1DCBEB0063F7C1 /* Architecture */ = {
+			isa = PBXGroup;
+			children = (
+				525724952A1DCC030063F7C1 /* AppSideEffect.swift */,
+			);
+			path = Architecture;
+			sourceTree = "<group>";
+		};
+		525724992A1DCCCC0063F7C1 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				5257249A2A1DCCD60063F7C1 /* HomeView.swift */,
+				525724A02A1DCDEE0063F7C1 /* HomeCore.swift */,
+				5257249E2A1DCD9A0063F7C1 /* HomeSideEffect.swift */,
+				5257249C2A1DCCE30063F7C1 /* HomeRouteBuilder.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		9379C8E92A1CD6A2009CB60A = {
 			isa = PBXGroup;
 			children = (
@@ -94,20 +152,10 @@
 		9379C8F42A1CD6A2009CB60A /* DodamDodam */ = {
 			isa = PBXGroup;
 			children = (
-				9379C8F52A1CD6A2009CB60A /* DodamDodamApp.swift */,
-				9379C8F72A1CD6A2009CB60A /* ContentView.swift */,
-				9379C8F92A1CD6A3009CB60A /* Assets.xcassets */,
-				9379C8FB2A1CD6A3009CB60A /* Preview Content */,
+				525724902A1DCB4F0063F7C1 /* Resources */,
+				5257248F2A1DCB450063F7C1 /* Feature */,
 			);
 			path = DodamDodam;
-			sourceTree = "<group>";
-		};
-		9379C8FB2A1CD6A3009CB60A /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				9379C8FC2A1CD6A3009CB60A /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		9379C9052A1CD6A3009CB60A /* DodamDodamTests */ = {
@@ -143,6 +191,10 @@
 			dependencies = (
 			);
 			name = DodamDodam;
+			packageProductDependencies = (
+				5257248A2A1DC9F10063F7C1 /* LinkNavigator */,
+				5257248D2A1DCA860063F7C1 /* ComposableArchitecture */,
+			);
 			productName = DodamDodam;
 			productReference = 9379C8F22A1CD6A2009CB60A /* DodamDodam.app */;
 			productType = "com.apple.product-type.application";
@@ -216,6 +268,10 @@
 				Base,
 			);
 			mainGroup = 9379C8E92A1CD6A2009CB60A;
+			packageReferences = (
+				525724892A1DC9F10063F7C1 /* XCRemoteSwiftPackageReference "LinkNavigator" */,
+				5257248C2A1DCA860063F7C1 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 9379C8F32A1CD6A2009CB60A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -232,7 +288,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9379C8FD2A1CD6A3009CB60A /* Preview Assets.xcassets in Resources */,
 				9379C8FA2A1CD6A3009CB60A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,8 +313,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9379C8F82A1CD6A2009CB60A /* ContentView.swift in Sources */,
-				9379C8F62A1CD6A2009CB60A /* DodamDodamApp.swift in Sources */,
+				525724A12A1DCDEE0063F7C1 /* HomeCore.swift in Sources */,
+				5257249F2A1DCD9A0063F7C1 /* HomeSideEffect.swift in Sources */,
+				525724962A1DCC030063F7C1 /* AppSideEffect.swift in Sources */,
+				525724932A1DCB8A0063F7C1 /* AppMain.swift in Sources */,
+				5257249B2A1DCCD60063F7C1 /* HomeView.swift in Sources */,
+				525724982A1DCC5A0063F7C1 /* AppRouteBulider.swift in Sources */,
+				5257249D2A1DCCE30063F7C1 /* HomeRouteBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +478,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DodamDodam/Preview Content\"";
-				DEVELOPMENT_TEAM = 56V747V83R;
+				DEVELOPMENT_TEAM = H4CNC953L3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "도담도담";
@@ -435,6 +495,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -449,7 +512,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"DodamDodam/Preview Content\"";
-				DEVELOPMENT_TEAM = 56V747V83R;
+				DEVELOPMENT_TEAM = H4CNC953L3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "도담도담";
@@ -466,6 +529,9 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.b1nd.dodam;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -588,6 +654,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		525724892A1DC9F10063F7C1 /* XCRemoteSwiftPackageReference "LinkNavigator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/interactord/LinkNavigator";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.1;
+			};
+		};
+		5257248C2A1DCA860063F7C1 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.53.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5257248A2A1DC9F10063F7C1 /* LinkNavigator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 525724892A1DC9F10063F7C1 /* XCRemoteSwiftPackageReference "LinkNavigator" */;
+			productName = LinkNavigator;
+		};
+		5257248D2A1DCA860063F7C1 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5257248C2A1DCA860063F7C1 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9379C8EA2A1CD6A2009CB60A /* Project object */;
 }
