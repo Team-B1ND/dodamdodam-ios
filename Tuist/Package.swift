@@ -15,7 +15,7 @@ import PackageDescription
             defaultSettings: .recommended
         ),
         projectOptions: [
-            "LocalSwiftPackage": .options(disableSynthesizedResourceAccessors: false),
+            "LocalSwiftPackage": .options(disableSynthesizedResourceAccessors: false)
         ]
     )
 
@@ -24,6 +24,6 @@ import PackageDescription
 let package = Package(
     name: "PackageName",
     dependencies: [
-        .package(url: "https://github.com/Moya/Moya", from: "15.0.0"),
+        .package(url: "https://github.com/Moya/Moya", from: "15.0.0")
     ]
 )
