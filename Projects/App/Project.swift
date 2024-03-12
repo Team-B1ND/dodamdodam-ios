@@ -7,7 +7,7 @@ let project = Project(
         base: .init(),
         configurations: [
             .debug(name: .debug),
-            .release(name: .release),
+            .release(name: .release)
         ],
         defaultSettings: .recommended
     ),
@@ -25,14 +25,14 @@ let project = Project(
                     "CFBundleVersion": "1",
                     "UIMainStoryboardFile": "",
                     "UILaunchStoryboardName": "LaunchScreen",
-                    "NSAllowsArbitraryLoads": true,
+                    "NSAllowsArbitraryLoads": true
                 ]
             ),
             sources: ["Source/**"],
             resources: ["Resource/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .external(name: "Alamofire"),
+                .external(name: "Moya")
             ]
         )
     ]

@@ -24,6 +24,6 @@ import PackageDescription
 let package = Package(
     name: "PackageName",
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire", exact: "5.9.0"),
+        .package(url: "https://github.com/Moya/Moya", from: "15.0.0"),
     ]
 )
