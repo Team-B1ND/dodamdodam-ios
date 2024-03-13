@@ -7,7 +7,8 @@
 
 import Moya
 
-extension MoyaProvider {
+public extension MoyaProvider {
+    
     func request(_ target: Target) async -> Result<Response, MoyaError> {
         await withCheckedContinuation { continuation in
             request(target) {

@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-extension Font {
+public extension Font {
+    
     static let heading1: Self = .system(size: 32, weight: .bold)
     static let heading2: Self = .system(size: 28, weight: .bold)
     static let heading3: Self = .system(size: 24, weight: .bold)

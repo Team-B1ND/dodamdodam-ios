@@ -6,12 +6,16 @@
 //
 
 import SwiftUI
+import FlowKit
 
 @main
 struct AppMain: App {
+    
+    @Inject private var flow: FlowProvider
+    
     var body: some Scene {
         WindowGroup {
-            MainView()
+            flow.present()
         }
     }
 }

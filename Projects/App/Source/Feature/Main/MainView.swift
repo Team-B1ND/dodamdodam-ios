@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @InjectObject var viewModel: MainViewModel
+    
     var body: some View {
-        Text("Hello, world")
+        Text("Hello, world!")
     }
 }
 
