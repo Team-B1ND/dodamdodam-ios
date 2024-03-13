@@ -7,12 +7,15 @@
 
 import SwiftUI
 
-public struct CircularProgressView: View {
+public struct DodamCircularProgressView: View {
     
     private let progress: CGFloat
     private let isDisabled: Bool
     
-    public init(progress: CGFloat, isDisabled: Bool = false) {
+    public init(
+        progress: CGFloat,
+        isDisabled: Bool = false
+    ) {
         self.progress = progress
         self.isDisabled = isDisabled
     }
@@ -52,18 +55,18 @@ public struct CircularProgressView: View {
 }
 
 #Preview {
-    struct CircularProgressPreview: View {
+    struct DodamCircularProgressPreview: View {
         
         @State private var progress: CGFloat = 0.5
         
         var body: some View {
             VStack(spacing: 20) {
-                CircularProgressView(progress: progress)
+                DodamCircularProgressView(progress: progress)
                 Slider(value: $progress)
                     .tint(.gray)
             }
             .padding()
         }
     }
-    return CircularProgressPreview()
+    return DodamCircularProgressPreview()
 }
