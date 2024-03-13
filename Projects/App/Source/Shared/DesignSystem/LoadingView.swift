@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct DodamLoadingView: View {
+public struct DodamLoadingView: View {
     
     @State private var loadingState: Int = -1
     
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 8) {
             ForEach(0..<3) { idx in
                 Circle()
@@ -21,7 +21,7 @@ struct DodamLoadingView: View {
         }
         .onChange(of: loadingState) { newValue in
             Task {
-                try? await Task.sleep(nanoseconds: 300_000_000)
+                try? await Task.sleep(seconds: 0.3)
                 withAnimation(.spring(duration: 0.5)) {
                     loadingState = (newValue + 1) % 3
                 }

@@ -23,6 +23,7 @@ let project = Project(
                     "CFBundleDisplayName": "도담도담",
                     "CFBundleShortVersionString": "1.0",
                     "CFBundleVersion": "1",
+                    "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
                     "UIMainStoryboardFile": "",
                     "UILaunchStoryboardName": "LaunchScreen",
                     "NSAllowsArbitraryLoads": true
