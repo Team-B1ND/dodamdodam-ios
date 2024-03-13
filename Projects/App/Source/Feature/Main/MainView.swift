@@ -12,3 +12,7 @@ struct MainView: View {
         Text("Hello, world")
     }
 }
+
+#Preview {
+    MainView()
+}
