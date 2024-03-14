@@ -16,6 +16,7 @@ struct AppMain: App {
     var body: some Scene {
         WindowGroup {
             flow.present()
+                .ignoresSafeArea()
         }
     }
 }
