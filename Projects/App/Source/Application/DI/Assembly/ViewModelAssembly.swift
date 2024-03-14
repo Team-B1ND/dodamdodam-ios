@@ -13,5 +13,8 @@ class ViewModelAssembly: Assembly {
         container.register(MainViewModel.self) { _ in
             MainViewModel()
         }
+        container.register(OnboardingViewModel.self) { _ in
+            OnboardingViewModel()
+        }
     }
 }
