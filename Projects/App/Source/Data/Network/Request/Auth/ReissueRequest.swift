@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct ReissueRequest: Encodable {
+    
+    let refreshToken: String
+}

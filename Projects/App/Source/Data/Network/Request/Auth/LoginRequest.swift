@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct LoginRequest: Encodable {
+    
+    let id: String
+    let pw: String
+}

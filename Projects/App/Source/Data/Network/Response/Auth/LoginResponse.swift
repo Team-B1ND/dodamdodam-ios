@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct LoginResponse: Decodable {
+    
+    let memeber: Member
+    let refreshToken: String
+    let accessToken: String
+}
