@@ -1,5 +1,5 @@
 //
-//  AuthRepositoryImpl.swift
+//  PointRemote.swift
 //  DodamDodam
 //
 //  Created by Mercen on 3/14/24.

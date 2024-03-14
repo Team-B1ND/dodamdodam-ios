@@ -10,8 +10,8 @@ import Moya
 
 enum AuthService: TargetType {
     
-    case login(id: String, pw: String)
-    case reissue(refreshToken: String)
+    case login(_ request: LoginRequest)
+    case reissue(_ request: ReissueRequest)
 }
 
 extension AuthService {
@@ -36,16 +36,10 @@ extension AuthService {
     
     var task: Moya.Task {
         switch self {
-        case let .login(id, pw):
-                .requestParameters(
-                    parameters: ["id": id, "pw": pw],
-                    encoding: JSONEncoding.default
-                )
-        case let .reissue(refreshToken):
-                .requestParameters(
-                    parameters: ["refreshToken": refreshToken],
-                    encoding: JSONEncoding.default
-                )
+        case let .login(request):
+            request.toJSONParameters()
+        case let .reissue(request):
+            request.toJSONParameters()
         }
     }
 }
