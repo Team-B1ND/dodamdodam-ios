@@ -22,5 +22,8 @@ class ViewModelAssembly: Assembly {
         container.register(RegisterInfoViewModel.self) { _ in
             RegisterInfoViewModel()
         }
+        container.register(RegisterAuthViewModel.self) { _ in
+            RegisterAuthViewModel()
+        }
     }
 }

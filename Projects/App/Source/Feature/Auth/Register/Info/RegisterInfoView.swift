@@ -25,8 +25,7 @@ struct RegisterInfoView: View {
                 case 0: return "이름을"
                 case 1: return "학생정보를"
                 case 2: return "이메일"
-                case 3: return "전화번호를"
-                default: return ""
+                default: return "전화번호를"
                 }
             }() + "\n입력해주세요")
             .font(.heading3)
@@ -34,7 +33,14 @@ struct RegisterInfoView: View {
             if step >= 0 {
                 DodamTextField.default(
                     title: "이름",
-                    text: $testNameText
+                    text: Binding(
+                        get: {
+                            self.testNameText
+                        },
+                        set: {
+                            self.testNameText = $0
+                        }
+                    )
                 )
                 .makeFirstResponder()
             }
@@ -61,12 +67,14 @@ struct RegisterInfoView: View {
             }
             Spacer()
             
-            DodamButton.fullWidth(
-                title: "다음"
-            ) {
-                // action
+            if step >= 4 {
+                DodamButton.fullWidth(
+                    title: "다음"
+                ) {
+                    // action
+                }
+                .padding(.bottom, 24)
             }
-            .padding(.bottom, 24)
         }
         .padding(.horizontal, 16)
         .ignoresSafeArea(.keyboard)
