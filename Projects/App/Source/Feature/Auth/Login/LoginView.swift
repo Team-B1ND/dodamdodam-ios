@@ -10,6 +10,8 @@ import SwiftUI
 struct LoginView: View {
     
     @State var testIdText: String = ""
+    @State var testPwText: String = ""
+    
     @InjectObject var viewModel: LoginViewModel
     
     var body: some View {
@@ -23,7 +25,7 @@ struct LoginView: View {
             .makeFirstResponder()
             DodamTextField.secured(
                 title: "비밀번호",
-                text: $testIdText
+                text: $testPwText
             )
             HStack(spacing: 0) {
                 Text("비밀번호를 잊으셨나요? ")

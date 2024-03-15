@@ -19,5 +19,8 @@ class ViewModelAssembly: Assembly {
         container.register(LoginViewModel.self) { _ in
             LoginViewModel()
         }
+        container.register(RegisterInfoViewModel.self) { _ in
+            RegisterInfoViewModel()
+        }
     }
 }

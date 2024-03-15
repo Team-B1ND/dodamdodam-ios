@@ -19,7 +19,6 @@ class NavigationController: UINavigationController {
     }
     
     private var backButtonImage: UIImage? {
-        _ = UIEdgeInsets(top: 0, left: -9, bottom: 0, right: 0)
         return UIImage(resource: .chevronLeft)
     }
     

@@ -82,7 +82,7 @@ struct OnboardingView: View {
             }
             .frame(maxWidth: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            .overlay{
+            .overlay {
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(Color(.outline), lineWidth: 1.5)
             }
@@ -154,4 +154,3 @@ struct OnboardingView: View {
 #Preview {
     OnboardingView()
 }
-

@@ -12,4 +12,3 @@ class LoginViewModel: ObservableObject {
     
     @Inject var flow: FlowProvider
 }
-
