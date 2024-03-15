@@ -12,7 +12,7 @@ struct OnboardingView: View {
     @InjectObject var viewModel: OnboardingViewModel
     
     var body: some View {
-        modalSheetView
+//        modalSheetView
         overlayView
             .background(
                 Image(.onboard)
@@ -69,7 +69,10 @@ struct OnboardingView: View {
                 Image(.checkmarkCircle)
                     .resizable()
                     .frame(width: 24, height: 24)
-                    .foregroundStyle(Color(true ? .primary : .outline))
+                // true -> change boolean state
+                    .foregroundStyle(Color(
+                        true ? .primary : .outline
+                    ))
                     .padding(.leading, 18)
                     .padding(.vertical, 12)
                 Text("모두 동의합니다")
@@ -90,6 +93,7 @@ struct OnboardingView: View {
                     Image(.checkmark)
                         .resizable()
                         .frame(width: 17)
+                    // true -> change boolean state
                         .foregroundStyle(Color(
                             true ? .primary : .outline
                         ))
@@ -116,6 +120,7 @@ struct OnboardingView: View {
                     Image(.checkmark)
                         .resizable()
                         .frame(width: 17)
+                    // true -> change boolean state
                         .foregroundStyle(Color(
                             true ? .primary : .outline
                         ))
@@ -141,7 +146,7 @@ struct OnboardingView: View {
                 // action
             }
         }
-        .frame(height: 100)
+        .background(Color(.background))
         .padding(24)
     }
 }
