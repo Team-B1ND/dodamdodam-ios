@@ -9,8 +9,8 @@ import SwiftUI
 
 struct RegisterAuthView: View {
     
+    // UI test state
     @State var step: Int = 0
-    
     @State var testIdText: String = ""
     @State var testPwText: String = ""
     @State var testCheckPwText: String = ""
@@ -28,37 +28,61 @@ struct RegisterAuthView: View {
             }())
             .font(.heading3)
             
-            if step >= 0 {
-                DodamTextField.default(
-                    title: "아이디",
-                    text: $testIdText
-                )
-                .makeFirstResponder()
-            }
-            if step >= 1 {
-                DodamTextField.default(
-                    title: "비밀번호",
-                    text: $testPwText
-                )
-                .makeFirstResponder()
-            }
             if step >= 2 {
                 DodamTextField.default(
                     title: "비밀번호 확인",
                     text: $testCheckPwText
                 )
                 .makeFirstResponder()
+                .onSubmit {
+                    step = 3
+                }
+                .transition(.slide)
+                .animation(
+                    Animation.easeIn(duration: 0.2),
+                    value: step
+                )
+            }
+            
+            if step >= 1 {
+                DodamTextField.default(
+                    title: "비밀번호",
+                    text: $testPwText
+                )
+                .makeFirstResponder()
+                .onSubmit {
+                    step = 2
+                }
+                .transition(.slide)
+                .animation(
+                    Animation.easeIn(duration: 0.2),
+                    value: step
+                )
+            }
+            
+            if step >= 0 {
+                DodamTextField.default(
+                    title: "아이디",
+                    text: $testIdText
+                )
+                .makeFirstResponder()
+                .onSubmit {
+                    step = 1
+                }
+                .transition(.slide)
+                .animation(
+                    Animation.easeIn(duration: 0.2),
+                    value: step
+                )
             }
             Spacer()
             
-            if step >= 4 {
-                DodamButton.fullWidth(
-                    title: "가입하기"
-                ) {
-                    // action
-                }
-                .padding(.bottom, 24)
+            DodamButton.fullWidth(
+                title: "가입하기"
+            ) {
+                // action
             }
+            .padding(.bottom, 24)
         }
         .padding(.horizontal, 16)
         .ignoresSafeArea(.keyboard)

@@ -9,10 +9,14 @@ import SwiftUI
 
 struct OnboardingView: View {
     
+    // UI test state
+    @State var isChecked1: Bool = false
+    @State var isChecked2: Bool = false
+    
     @InjectObject var viewModel: OnboardingViewModel
     
     var body: some View {
-//        modalSheetView
+        modalSheetView
         overlayView
             .background(
                 Image(.onboard)
@@ -41,21 +45,22 @@ struct OnboardingView: View {
             Spacer()
             VStack(spacing: 16) {
                 DodamButton.fullWidth(
-                    title: "시작하기"
+                    title: "로그인"
                 ) {
                     viewModel.loginButtonTapped()
                 }
                 .padding(.horizontal, 16)
                 
-                Button {
-                    // action
-                } label: {
+                HStack(spacing: 0) {
                     Text("처음 이용하시나요? ")
                         .font(.body3)
-                    +
-                    Text("회원가입")
-                        .font(.system(size: 14, weight: .bold))
-                        .underline()
+                    Button {
+                        // action
+                    } label: {
+                        Text("회원가입")
+                            .font(.system(size: 14, weight: .bold))
+                            .underline()
+                    }
                 }
                 .foregroundStyle(.white)
             }
@@ -65,37 +70,46 @@ struct OnboardingView: View {
     
     private var modalSheetView: some View {
         VStack(spacing: 16) {
-            HStack(spacing: 14) {
-                Image(.checkmarkCircle)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                // true -> change boolean state
-                    .foregroundStyle(Color(
-                        true ? .primary : .outline
-                    ))
-                    .padding(.leading, 18)
-                    .padding(.vertical, 12)
-                Text("모두 동의합니다")
-                    .font(.body2)
-                    .foregroundStyle(Color(.onBackground))
-                Spacer()
-            }
-            .frame(maxWidth: .infinity)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .overlay {
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(.outline), lineWidth: 1.5)
+            Button {
+                if isChecked1 && isChecked2 == true {
+                    (isChecked1, isChecked2) = (false, false)
+                } else {
+                    (isChecked1, isChecked2) = (true, true)
+                }
+            } label: {
+                HStack(spacing: 14) {
+                    Image(.checkmarkCircle)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                    // true -> change boolean state
+                        .foregroundStyle(Color(
+                            isChecked1 && isChecked2 ? .primary : .outline
+                        ))
+                        .padding(.leading, 18)
+                        .padding(.vertical, 12)
+                    Text("모두 동의합니다")
+                        .font(.body2)
+                        .foregroundStyle(Color(.onBackground))
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color(.outline), lineWidth: 1.5)
+                }
             }
             HStack {
                 Button {
                     // action 1
+                    isChecked1.toggle()
                 } label: {
                     Image(.checkmark)
                         .resizable()
                         .frame(width: 17)
                     // true -> change boolean state
                         .foregroundStyle(Color(
-                            true ? .primary : .outline
+                            isChecked1 ? .primary : .outline
                         ))
                 }
                 Button {
@@ -116,13 +130,14 @@ struct OnboardingView: View {
             HStack {
                 Button {
                     // action 1
+                    isChecked2.toggle()
                 } label: {
                     Image(.checkmark)
                         .resizable()
                         .frame(width: 17)
                     // true -> change boolean state
                         .foregroundStyle(Color(
-                            true ? .primary : .outline
+                            isChecked2 ? .primary : .outline
                         ))
                 }
                 Button {

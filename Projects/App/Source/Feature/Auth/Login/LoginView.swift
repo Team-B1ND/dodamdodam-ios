@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
+    // UI test state
     @State var testIdText: String = ""
     @State var testPwText: String = ""
     
