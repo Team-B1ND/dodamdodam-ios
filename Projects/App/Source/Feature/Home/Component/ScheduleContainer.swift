@@ -10,13 +10,31 @@ import SwiftUI
 struct ScheduleContainer: View {
     
     let dummy1 = Schedule(
-        id: 1, name: "학교 폭력 예방 교육", place: "강당", type: "ACADEMIC", startDate: "2024-03-17", endDate: "2024-03-17", targetGrades: ["GRADE_2"]
+        id: 1, 
+        name: "학교 폭력 예방 교육",
+        place: "강당",
+        type: "ACADEMIC",
+        startDate: "2024-03-17",
+        endDate: "2024-03-17",
+        targetGrades: ["GRADE_2"]
     )
     let dummy2 = Schedule(
-        id: 2, name: "재밌는 일정", place: "집", type: "ACADEMIC", startDate: "2024-03-17", endDate: "2024-03-18", targetGrades: ["GRADE_ALL"]
+        id: 2, 
+        name: "재밌는 일정",
+        place: "집",
+        type: "ACADEMIC",
+        startDate: "2024-03-17",
+        endDate: "2024-03-18",
+        targetGrades: ["GRADE_ALL"]
     )
     let dummy3 = Schedule(
-        id: 2, name: "더 재밌는 일정", place: "어딘가", type: "ACADEMIC", startDate: "2024-03-18", endDate: "2024-03-18", targetGrades: ["GRADE_3"]
+        id: 2, 
+        name: "더 재밌는 일정",
+        place: "어딘가",
+        type: "ACADEMIC",
+        startDate: "2024-03-18",
+        endDate: "2024-03-18",
+        targetGrades: ["GRADE_3"]
     )
     
     var body: some View {

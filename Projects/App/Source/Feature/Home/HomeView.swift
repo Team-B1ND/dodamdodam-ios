@@ -46,19 +46,33 @@ struct HomeView: View {
                     title: "오늘의 저녁",
                     icon: Image(.forkAndKnife)
                 ) {
-                    SupportingContainer(
-                        subTitle: "오늘은 급식이 없어요",
-                        title: "내일 급식 보러가기"
-                    )
+                    Button {
+                        
+                    } label: {
+                        SupportingContainer(
+                            subTitle: "오늘은 급식이 없어요",
+                            title: "내일 급식 보러가기"
+                        )
+                    }
                 }
                 DodamContainer.default(
                     title: "오늘의 기상송",
                     icon: Image(.note)
                 ) {
-                    SupportingContainer(
-                        subTitle: "승인된 기상송이 없어요",
-                        title: "기상송 신청하기"
-                    )
+                    Button {
+                        
+                    } label: {
+                        SupportingContainer(
+                            subTitle: "승인된 기상송이 없어요",
+                            title: "기상송 신청하기"
+                        )
+                    }
+                }
+                DodamContainer.default(
+                    title: "오늘의 기상송",
+                    icon: Image(.note)
+                ) {
+                    WakeupSongContainer()
                 }
                 .arrowButtonAction {
                     print("화살표 액션")
