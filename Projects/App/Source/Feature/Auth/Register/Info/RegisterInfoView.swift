@@ -28,7 +28,7 @@ struct RegisterInfoView: View {
                 default: "전화번호를"
                 }
             }() + "\n입력해주세요")
-            .font(.heading3)
+            .font(.dodamHeading3)
             
             if step >= 3 {
                 DodamTextField.default(

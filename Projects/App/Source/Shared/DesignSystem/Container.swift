@@ -80,6 +80,7 @@ public struct DodamContainer<Content>: View where Content: View {
             }
             .padding([.top, .horizontal], 16)
             content()
+                .padding([.bottom, .horizontal], 16)
         }
         .background(Color(.surfaceVariant))
         .clipShape(RoundedRectangle(cornerRadius: 18))
@@ -96,7 +97,6 @@ public struct DodamContainer<Content>: View where Content: View {
                     icon: Image(.forkAndKnife)
                 ) {
                     Text("contents")
-                        .padding([.bottom, .horizontal], 16)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 DodamContainer.default(
@@ -104,7 +104,6 @@ public struct DodamContainer<Content>: View where Content: View {
                     icon: Image(.note)
                 ) {
                     Text("contents")
-                        .padding([.bottom, .horizontal], 16)
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .arrowButtonAction {

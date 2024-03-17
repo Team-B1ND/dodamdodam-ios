@@ -84,7 +84,7 @@ public struct DodamTextField: View {
                 .foregroundStyle(Color(.label))
             }
             .frame(height: 41, alignment: .bottomLeading)
-            .font(.system(size: 16, weight: .medium))
+            .font(.dodamBody2)
             Rectangle()
                 .frame(height: 1)
         }

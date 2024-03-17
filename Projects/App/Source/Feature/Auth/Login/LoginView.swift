@@ -18,7 +18,7 @@ struct LoginView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             Text("아이디와 비밀번호를\n입력해주세요")
-                .font(.heading3)
+                .font(.dodamHeading3)
             DodamTextField.default(
                 title: "아이디",
                 text: $testIdText
@@ -30,13 +30,13 @@ struct LoginView: View {
             )
             HStack(spacing: 0) {
                 Text("비밀번호를 잊으셨나요? ")
-                    .font(.body3)
+                    .font(.dodamBody3)
                     .foregroundStyle(Color(.tertiary))
                 Button {
                     // action
                 } label: {
                     Text("비밀번호 재설정")
-                        .font(.body3)
+                        .font(.dodamBody3)
                         .underline()
                         .foregroundStyle(Color(.onBackground))
                 }
