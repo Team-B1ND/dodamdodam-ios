@@ -14,10 +14,12 @@ public struct DodamTextField: View {
     private let isFirstResponder: Bool
     @Binding private var text: String
     
-    private init(title: String,
-                 isSecured: Bool,
-                 isFirstResponder: Bool = false,
-                 text: Binding<String>) {
+    private init(
+        title: String,
+        isSecured: Bool,
+        isFirstResponder: Bool = false,
+        text: Binding<String>
+    ) {
         self.title = title
         self.isSecured = isSecured
         self.isFirstResponder = isFirstResponder
