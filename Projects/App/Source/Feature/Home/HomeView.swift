@@ -70,12 +70,6 @@ struct HomeView: View {
                         )
                     }
                 }
-                DodamContainer.default(
-                    title: "오늘의 기상송",
-                    icon: Image(.note)
-                ) {
-                    WakeupSongContainer()
-                }
                 .arrowButtonAction {
                     print("화살표 액션")
                 }

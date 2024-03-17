@@ -101,7 +101,7 @@ struct Student: Codable, Hashable {
         createdAt: "yyyy-MM-ss HH:mm:ss",
         modifiedAt: "yyyy-MM-ss HH:mm:ss"
     )
-    return HStack(spacing: 12) {
+    return VStack(spacing: 12) {
         DodamContainer.default(
             title: "외출 외박",
             icon: Image(.calendar)
@@ -113,6 +113,12 @@ struct Student: Codable, Hashable {
             icon: Image(.calendar)
         ) {
             OutStatusContainer(data: dummyOutData2)
+        }
+        DodamContainer.default(
+            title: "외출 외박",
+            icon: Image(.calendar)
+        ) {
+            OutStatusContainer(data: nil)
         }
     }
     .padding(16)

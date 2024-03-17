@@ -9,6 +9,51 @@ import SwiftUI
 
 struct WakeupSongContainer: View {
     
+    let data: WakeupSong?
+    
+    init(
+        data: WakeupSong?
+    ) {
+        self.data = data
+    }
+    
+    var body: some View {
+        if let data = data {
+            HStack(alignment: .top, spacing: 12) {
+                Link(destination: URL(string: data.videoUrl) ?? URL(string: "about:blank")!) {
+                    AsyncImage(url: URL(string: data.thumbnailUrl)) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 160/1.2, height: 90/1.2)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    } placeholder: {
+                        Rectangle()
+                            .frame(width: 160/1.2, height: 90/1.2)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("\(data.videoTitle)")
+                        .font(.dodamBody2)
+                        .foregroundStyle(Color(.onSurfaceVariant))
+                    Text("\(data.channelTitle)")
+                        .font(.dodamLabel2)
+                        .foregroundStyle(Color(.tertiary))
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            SupportingContainer(
+                subTitle: "승인된 기상송이 없어요",
+                title: "기상송 신청하기"
+            )
+        }
+    }
+}
+
+#Preview {
     let dummy1 = WakeupSong(
         id: 73,
         thumbnailUrl: "https://i.ytimg.com/vi/7jxlsVRylq8/sddefault.jpg",
@@ -19,38 +64,36 @@ struct WakeupSongContainer: View {
         status: "ALLOWED",
         createdAt: "test-te-st"
     )
-    
-    var body: some View {
-        HStack(alignment: .top, spacing: 12) {
-            Link(destination: URL(string: dummy1.videoUrl) ?? URL(string: "about:blank")!) {
-                AsyncImage(url: URL(string: dummy1.thumbnailUrl)) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 160/1.2, height: 90/1.2)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                } placeholder: {
-                    Rectangle()
-                        .frame(width: 160/1.2, height: 90/1.2)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                }
-                
-            }
-            VStack(alignment: .leading, spacing: 4) {
-                Text("\(dummy1.videoTitle)")
-                    .font(.dodamBody2)
-                    .foregroundStyle(Color(.onSurfaceVariant))
-                Text("\(dummy1.channelTitle)")
-                    .font(.dodamLabel2)
-                    .foregroundStyle(Color(.tertiary))
+    return VStack(spacing: 12) {
+        DodamContainer.default(
+            title: "오늘의 기상송",
+            icon: Image(.note)
+        ) {
+            Button {
+                // action
+            } label: {
+                WakeupSongContainer(data: dummy1)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .arrowButtonAction {
+            print("화살표 액션")
+        }
+        DodamContainer.default(
+            title: "오늘의 기상송",
+            icon: Image(.note)
+        ) {
+            Button {
+                // action
+            } label: {
+                WakeupSongContainer(data: nil)
+            }
+        }
+        .arrowButtonAction {
+            print("화살표 액션")
+        }
     }
-}
-
-#Preview {
-    WakeupSongContainer()
+    .padding(16)
+    .background(Color(.surface))
 }
 
 struct WakeupSong: Codable, Hashable {
