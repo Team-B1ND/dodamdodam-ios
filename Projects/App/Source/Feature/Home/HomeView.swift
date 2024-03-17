@@ -39,22 +39,13 @@ struct HomeView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 18))
                 }
                 DodamContainer.default(
-                    title: "오늘의 아침",
-                    icon: Image(.forkAndKnife)
-                ) {
-                    MealContainer()
-                }
-                DodamContainer.default(
                     title: "오늘의 저녁",
                     icon: Image(.forkAndKnife)
                 ) {
                     Button {
                         
                     } label: {
-                        SupportingContainer(
-                            subTitle: "오늘은 급식이 없어요",
-                            title: "내일 급식 보러가기"
-                        )
+                        MealContainer(data: nil)
                     }
                 }
                 DodamContainer.default(
