@@ -14,6 +14,8 @@ struct HomeView: View {
     let outGoingStatus: String = "ALLOWED"
     let nightStudyStatus: String = "PENDING"
     
+    @Flow var flow
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
@@ -86,33 +88,7 @@ struct HomeView: View {
                         Button {
                             // navigate action
                         } label: {
-                            if outGoingStatus == "ALLOWED" ||
-                                outGoingStatus == "PENDING" {
-                                StatusContainer(
-                                    status: outGoingStatus
-                                )
-                            } else if outGoingStatus == "DENY" {
-                                SupportingContainer(
-                                    subTitle: "외출이 거절되었어요",
-                                    title: "다시 신청하기"
-                                )
-                            } else {
-                                SupportingContainer(
-                                    subTitle: "외출, 외박이 필요하다면",
-                                    title: "외출/외박 신청하기"
-                                )
-                            }
-                        }
-                        // UI test
-                        Group {
-                            SupportingContainer(
-                                subTitle: "외출이 거절되었어요",
-                                title: "다시 신청하기"
-                            )
-                            SupportingContainer(
-                                subTitle: "외출, 외박이 필요하다면",
-                                title: "외출/외박 신청하기"
-                            )
+                            OutStatusContainer(data: nil)
                         }
                     }
                     DodamContainer.default(
@@ -122,22 +98,7 @@ struct HomeView: View {
                         Button {
                             // navigate action
                         } label: {
-                            if nightStudyStatus == "ALLOWED" ||
-                                nightStudyStatus == "PENDING" {
-                                StatusContainer(
-                                    status: nightStudyStatus
-                                )
-                            } else if nightStudyStatus == "DENY" {
-                                SupportingContainer(
-                                    subTitle: "심야 자습이 거절되었어요",
-                                    title: "외출/외박 신청하기"
-                                )
-                            } else {
-                                SupportingContainer(
-                                    subTitle: "공부할 시간이 필요하다면",
-                                    title: "다시 신청하기"
-                                )
-                            }
+                            NightStudyStatusContainer(data: nil)
                         }
                     }
                 }
