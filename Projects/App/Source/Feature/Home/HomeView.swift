@@ -9,17 +9,39 @@ import SwiftUI
 
 struct HomeView: View {
     
+    // test data
+    let banner: [String] = ["https://zrr.kr/lzRi"]
+    let outGoingStatus: String = "ALLOWED"
+    let nightStudyStatus: String = "PENDING"
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 12) {
+                TabView {
+                    ForEach(banner, id: \.self) { image in
+                        Link(destination: URL(string: "https://url.kr/49letc") ?? URL(string: "about:blank")!) {
+                            AsyncImage(url: URL(string: image)) { image in
+                                image
+                                    .resizable()
+                            } placeholder: {
+                                Rectangle()
+                                    .opacity(0.5)
+                            }
+                        }
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                .aspectRatio(80/12, contentMode: .fill)
+                .frame(maxWidth: .infinity)
+                .clipShape(RoundedRectangle(cornerRadius: 18))
                 DodamContainer.default(
                     title: "오늘의 급식",
                     icon: Image(.forkAndKnife)
                 ) {
-//                    EmptyDataButton(
-//                        title: "내일 급식 보러가기",
-//                        subTitle: "오늘은 급식이 없어요"
-//                    )
+                    SupportingContainer(
+                        subTitle: "오늘은 급식이 없어요",
+                        title: "내일 급식 보러가기"
+                    )
                     MealContainer()
                 }
                 DodamContainer.default(
@@ -40,27 +62,51 @@ struct HomeView: View {
                         title: "외출 외박",
                         icon: Image(.door)
                     ) {
-                        SupportingContainer(
-                            subTitle: "외출, 외박이 필요하다면",
-                            title: "외출/외박 신청하기"
-                        )
-                        SupportingContainer(
-                            subTitle: "외출이 거절되었어요",
-                            title: "다시 신청하기"
-                        )
+                        Button {
+                            // navigate action
+                        } label: {
+                            if outGoingStatus == "ALLOWED" ||
+                                outGoingStatus == "PENDING" {
+                                StatusContainer(
+                                    status: outGoingStatus
+                                )
+                            } else if outGoingStatus == "DENY" {
+                                SupportingContainer(
+                                    subTitle: "외출이 거절되었어요",
+                                    title: "다시 신청하기"
+                                )
+                            } else {
+                                SupportingContainer(
+                                    subTitle: "외출, 외박이 필요하다면",
+                                    title: "외출/외박 신청하기"
+                                )
+                            }
+                        }
                     }
                     DodamContainer.default(
                         title: "심야 자습",
                         icon: Image(.moonPlus)
                     ) {
-                        SupportingContainer(
-                            subTitle: "공부할 시간이 필요하다면",
-                            title: "다시 신청하기"
-                        )
-                        SupportingContainer(
-                            subTitle: "심야 자습이 거절되었어요",
-                            title: "외출/외박 신청하기"
-                        )
+                        Button {
+                            // navigate action
+                        } label: {
+                            if nightStudyStatus == "ALLOWED" ||
+                                nightStudyStatus == "PENDING" {
+                                StatusContainer(
+                                    status: nightStudyStatus
+                                )
+                            } else if nightStudyStatus == "DENY" {
+                                SupportingContainer(
+                                    subTitle: "심야 자습이 거절되었어요",
+                                    title: "외출/외박 신청하기"
+                                )
+                            } else {
+                                SupportingContainer(
+                                    subTitle: "공부할 시간이 필요하다면",
+                                    title: "다시 신청하기"
+                                )
+                            }
+                        }
                     }
                 }
                 DodamContainer.default(

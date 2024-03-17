@@ -13,6 +13,8 @@ struct MealContainer: View {
         Text("쇠고기우엉볶음밥, 불고기치즈파니니, 계란실파국, 오이생채, 배추김치")
             .font(.dodamBody2)
             .foregroundStyle(Color(.onSurfaceVariant))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 6)
     }
 }
 
