@@ -9,16 +9,16 @@ import SwiftUI
 
 struct NightStudyStatusContainer: View {
     
-    private let data: NightStudy?
+    private let nightStudyData: NightStudy?
     
     public init(
-        data: NightStudy?
+        data nightStudyData: NightStudy?
     ) {
-        self.data = data
+        self.nightStudyData = nightStudyData
     }
     
     var body: some View {
-        if let data = data {
+        if let data = nightStudyData {
             HStack(alignment: .top, spacing: 12) {
                 if data.status == "DENY" {
                     SupportingContainer(

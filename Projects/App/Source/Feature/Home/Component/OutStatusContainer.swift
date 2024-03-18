@@ -9,16 +9,16 @@ import SwiftUI
 
 struct OutStatusContainer: View {
     
-    private let data: Out?
+    private let outData: Out?
     
     public init(
-        data: Out?
+        data outData: Out?
     ) {
-        self.data = data
+        self.outData = outData
     }
     
     var body: some View {
-        if let data = data {
+        if let data = outData {
             HStack(alignment: .top, spacing: 12) {
                 if data.status == "DENY" {
                     SupportingContainer(

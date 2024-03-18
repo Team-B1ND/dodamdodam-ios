@@ -9,16 +9,16 @@ import SwiftUI
 
 struct ScheduleContainer: View {
     
-    private let data: [Schedule]?
+    private let scheduleData: [Schedule]?
     
     public init(
-        data: [Schedule]?
+        data scheduleData: [Schedule]?
     ) {
-        self.data = data
+        self.scheduleData = scheduleData
     }
     
     var body: some View {
-        if let data = data {
+        if let data = scheduleData {
             HStack(alignment: .top, spacing: 12) {
                 ForEach(data, id: \.self) { data in
                     VStack(alignment: .leading, spacing: 0) {

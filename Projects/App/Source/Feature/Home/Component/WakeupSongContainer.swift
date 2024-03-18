@@ -11,16 +11,16 @@ struct WakeupSongContainer: View {
     
     private let thumbnailWidth: CGFloat = 160/1.2
     private let thumbnailHeight: CGFloat = 90/1.2
-    private let data: [WakeupSong]?
+    private let wakeupSongData: [WakeupSong]?
     
     public init(
-        data: [WakeupSong]?
+        data wakeupSongData: [WakeupSong]?
     ) {
-        self.data = data
+        self.wakeupSongData = wakeupSongData
     }
     
     var body: some View {
-        if let data = data {
+        if let data = wakeupSongData {
             DodamPageView {
                 ForEach(data, id: \.self) { data in
                     HStack(alignment: .top, spacing: 12) {

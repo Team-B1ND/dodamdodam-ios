@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
+    @State var mealIdx: Int = 0
     @Flow var flow
     
     var body: some View {
@@ -17,18 +18,9 @@ struct HomeView: View {
                 BannerContainer(
                     data: nil
                 )
-                DodamContainer.default(
-                    title: "오늘의 저녁",
-                    icon: Image(.forkAndKnife)
-                ) {
-                    Button {
-                        
-                    } label: {
-                        MealContainer(data: nil)
-                            .padding(6)
-                    }
-                    .scaledButtonStyle()
-                }
+                MealContainer(
+                    data: nil
+                )
                 DodamContainer.default(
                     title: "오늘의 기상송",
                     icon: Image(.note)
