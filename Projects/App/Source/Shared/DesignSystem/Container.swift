@@ -80,7 +80,7 @@ public struct DodamContainer<Content>: View where Content: View {
             }
             .padding([.top, .horizontal], 16)
             content()
-                .padding([.bottom, .horizontal], 16)
+                .padding([.bottom, .horizontal], 10)
         }
         .background(Color(.surfaceVariant))
         .clipShape(RoundedRectangle(cornerRadius: 18))

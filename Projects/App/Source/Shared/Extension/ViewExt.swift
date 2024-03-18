@@ -9,7 +9,7 @@ import SwiftUI
 
 public extension View {
     
-    func page(_ icon: Image? = nil) -> DodamPage {
+    func page(icon: Image? = nil) -> DodamPage {
         .init(icon: icon) { self }
     }
 }

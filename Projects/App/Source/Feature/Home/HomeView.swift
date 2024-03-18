@@ -46,7 +46,9 @@ struct HomeView: View {
                         
                     } label: {
                         MealContainer(data: nil)
+                            .padding(6)
                     }
+                    .scaledButtonStyle()
                 }
                 DodamContainer.default(
                     title: "오늘의 기상송",
@@ -55,11 +57,10 @@ struct HomeView: View {
                     Button {
                         
                     } label: {
-                        SupportingContainer(
-                            subTitle: "승인된 기상송이 없어요",
-                            title: "기상송 신청하기"
-                        )
+                        WakeupSongContainer(data: nil)
+                            .padding(6)
                     }
+                    .scaledButtonStyle()
                 }
                 .arrowButtonAction {
                     print("화살표 액션")
@@ -74,7 +75,9 @@ struct HomeView: View {
                             // navigate action
                         } label: {
                             OutStatusContainer(data: nil)
+                                .padding(6)
                         }
+                        .scaledButtonStyle()
                     }
                     DodamContainer.default(
                         title: "심야 자습",
@@ -84,14 +87,22 @@ struct HomeView: View {
                             // navigate action
                         } label: {
                             NightStudyStatusContainer(data: nil)
+                                .padding(6)
                         }
+                        .scaledButtonStyle()
                     }
                 }
                 DodamContainer.default(
                     title: "가까운 일정",
                     icon: Image(.calendar)
                 ) {
-                    ScheduleContainer(data: nil)
+                    Button {
+                        // navigate action
+                    } label: {
+                        ScheduleContainer(data: nil)
+                            .padding(6)
+                    }
+                    .scaledButtonStyle()
                 }
                 .arrowButtonAction {
                     print("화살표 액션")
