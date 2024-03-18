@@ -10,73 +10,58 @@ import SwiftUI
 struct MealContainer: View {
     
     private let mealData: Meal?
-    @State private var mealIdx: Int = -1
+    @Binding var mealIdx: Int
     
     public init(
-        data mealData: Meal?
+        data mealData: Meal?,
+        mealIdx: Binding<Int>
     ) {
         self.mealData = mealData
+        self._mealIdx = mealIdx
     }
     
     var body: some View {
-        DodamContainer.default(
-            title: "오늘의 " + { () -> String in
-                switch mealIdx {
-                case 0: return "아침"
-                case 1: return "점심"
-                case 2: return "저녁"
-                default: return "급식"
+        if let data = mealData {
+            DodamPageView(selection: $mealIdx) {
+                ForEach([
+                    data.breakfast.details,
+                    data.lunch.details,
+                    data.dinner.details
+                ], id: \.self
+                ) { meals in
+                    Text(meals.map { $0.name }.joined(separator: ", "))
+                        .font(.dodamBody2)
+                        .foregroundStyle(Color(.onSurfaceVariant))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 6)
+                        .page()
                 }
-            }(),
-            icon: Image(.forkAndKnife)
-        ) {
-            Button {
+            }
+            .frame(maxHeight: 50)
+            .padding(6)
+            .onAppear {
+                let currentTime = Date()
+                let calendar = Calendar.current
+                let components = calendar.dateComponents([.hour, .minute], from: currentTime)
                 
-            } label: {
-                if let data = mealData {
-                    DodamPageView(selection: $mealIdx) {
-                        ForEach([
-                            data.breakfast.details,
-                            data.lunch.details,
-                            data.dinner.details
-                        ], id: \.self
-                        ) { meals in
-                            Text(meals.map { $0.name }.joined(separator: ", "))
-                                .font(.dodamBody2)
-                                .foregroundStyle(Color(.onSurfaceVariant))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.horizontal, 6)
-                                .page()
-                        }
+                if let hour = components.hour, let minute = components.minute {
+                    if hour < 8 || (hour == 8 && minute < 30) {
+                        mealIdx = 0
+                    } else if hour < 13 || (hour == 13 && minute < 30) {
+                        mealIdx = 1
+                    } else if hour < 19 || (hour == 19 && minute < 20) {
+                        mealIdx = 2
+                    } else {
+                        // 다음 날 가져와서 표시
                     }
-                    .frame(maxHeight: 50)
-                    .padding(6)
-                } else {
-                    SupportingContainer(
-                        subTitle: "오늘은 급식이 없어요",
-                        title: "내일 급식 보러가기"
-                    )
-                    .padding(6)
                 }
             }
-            .scaledButtonStyle()
-        }
-        .onAppear {
-            let currentTime = Date()
-            let calendar = Calendar.current
-            let components = calendar.dateComponents([.hour, .minute], from: currentTime)
-            
-            if let hour = components.hour, let minute = components.minute {
-                if hour < 8 || (hour == 8 && minute < 30) {
-                    mealIdx = 0
-                } else if hour < 13 || (hour == 13 && minute < 30) {
-                    mealIdx = 1
-                } else if hour < 19 || (hour == 19 && minute < 20) {
-                    mealIdx = 2
-                } else {
-                    // 다음 날 가져와서 표시
-                }
-            }
+        } else {
+            SupportingContainer(
+                subTitle: "오늘은 급식이 없어요",
+                title: "내일 급식 보러가기"
+            )
+            .padding(6)
         }
     }
 }
@@ -120,9 +105,53 @@ struct MealContainer: View {
                 calorie: 1114.4
             )
         )
+        @State var dummyMealIdx1: Int = -1
+        @State var dummyMealIdx2: Int = -1
+        
         var body: some View {
             VStack(spacing: 12) {
-                MealContainer(data: dummyData)
+                DodamContainer.default(
+                    title: "오늘의 " + { () -> String in
+                        switch dummyMealIdx1 {
+                        case 0: return "아침"
+                        case 1: return "점심"
+                        case 2: return "저녁"
+                        default: return "급식"
+                        }
+                    }(),
+                    icon: Image(.forkAndKnife)
+                ) {
+                    Button {
+                        // navigate action
+                    } label: {
+                        MealContainer(
+                            data: dummyData,
+                            mealIdx: $dummyMealIdx1
+                        )
+                    }
+                    .scaledButtonStyle()
+                }
+                DodamContainer.default(
+                    title: "오늘의 " + { () -> String in
+                        switch dummyMealIdx2 {
+                        case 0: return "아침"
+                        case 1: return "점심"
+                        case 2: return "저녁"
+                        default: return "급식"
+                        }
+                    }(),
+                    icon: Image(.forkAndKnife)
+                ) {
+                    Button {
+                        // navigate action
+                    } label: {
+                        MealContainer(
+                            data: nil,
+                            mealIdx: $dummyMealIdx2
+                        )
+                    }
+                    .scaledButtonStyle()
+                }
             }
             .padding(16)
             .background(Color(.surface))

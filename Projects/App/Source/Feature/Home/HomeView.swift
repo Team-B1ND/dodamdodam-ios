@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State var mealIdx: Int = 0
+    @State var mealIdx: Int = -1
     @Flow var flow
     
     var body: some View {
@@ -18,15 +18,33 @@ struct HomeView: View {
                 BannerContainer(
                     data: nil
                 )
-                MealContainer(
-                    data: nil
-                )
+                DodamContainer.default(
+                    title: "오늘의 " + { () -> String in
+                        switch mealIdx {
+                        case 0: return "아침"
+                        case 1: return "점심"
+                        case 2: return "저녁"
+                        default: return "급식"
+                        }
+                    }(),
+                    icon: Image(.forkAndKnife)
+                ) {
+                    Button {
+                        // navigate action
+                    } label: {
+                        MealContainer(
+                            data: nil,
+                            mealIdx: $mealIdx
+                        )
+                    }
+                    .scaledButtonStyle()
+                }
                 DodamContainer.default(
                     title: "오늘의 기상송",
                     icon: Image(.note)
                 ) {
                     Button {
-                        
+                        // navigate action
                     } label: {
                         WakeupSongContainer(data: nil)
                             .padding(6)
