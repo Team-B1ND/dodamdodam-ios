@@ -10,9 +10,6 @@ import Swinject
 class ViewModelAssembly: Assembly {
     
     func assemble(container: Container) {
-        container.register(MainViewModel.self) { _ in
-            MainViewModel()
-        }
         container.register(OnboardingViewModel.self) { _ in
             OnboardingViewModel()
         }
@@ -24,6 +21,12 @@ class ViewModelAssembly: Assembly {
         }
         container.register(RegisterAuthViewModel.self) { _ in
             RegisterAuthViewModel()
+        }
+        container.register(MainViewModel.self) { _ in
+            MainViewModel()
+        }
+        container.register(HomeViewModel.self) { _ in
+            HomeViewModel()
         }
     }
 }

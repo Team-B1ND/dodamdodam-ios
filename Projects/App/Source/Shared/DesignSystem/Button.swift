@@ -23,7 +23,7 @@ public struct DodamButton: View {
         title: String,
         icon: Image?,
         action: @escaping AsyncAction,
-        font: Font = .body2,
+        font: Font = .dodamBody2,
         iconSize: CGFloat = 19,
         height: CGFloat = 48,
         padding: CGFloat? = nil

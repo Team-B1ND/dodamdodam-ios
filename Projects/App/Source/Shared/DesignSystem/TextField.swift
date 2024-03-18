@@ -14,10 +14,12 @@ public struct DodamTextField: View {
     private let isFirstResponder: Bool
     @Binding private var text: String
     
-    private init(title: String,
-                 isSecured: Bool,
-                 isFirstResponder: Bool = false,
-                 text: Binding<String>) {
+    private init(
+        title: String,
+        isSecured: Bool,
+        isFirstResponder: Bool = false,
+        text: Binding<String>
+    ) {
         self.title = title
         self.isSecured = isSecured
         self.isFirstResponder = isFirstResponder
@@ -82,7 +84,7 @@ public struct DodamTextField: View {
                 .foregroundStyle(Color(.label))
             }
             .frame(height: 41, alignment: .bottomLeading)
-            .font(.system(size: 16, weight: .medium))
+            .font(.dodamBody2)
             Rectangle()
                 .frame(height: 1)
         }

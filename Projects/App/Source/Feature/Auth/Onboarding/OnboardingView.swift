@@ -37,7 +37,7 @@ struct OnboardingView: View {
                     .scaledToFit()
                     .foregroundStyle(.white)
                 Text("어린아이가 탈 없이 잘 놀며 자라는 모양.")
-                    .font(.body2)
+                    .font(.dodamBody2)
                     .foregroundStyle(.white)
             }
             .frame(height: 85)
@@ -53,7 +53,7 @@ struct OnboardingView: View {
                 
                 HStack(spacing: 0) {
                     Text("처음 이용하시나요? ")
-                        .font(.body3)
+                        .font(.dodamBody3)
                     Button {
                         // action
                     } label: {
@@ -88,7 +88,7 @@ struct OnboardingView: View {
                         .padding(.leading, 18)
                         .padding(.vertical, 12)
                     Text("모두 동의합니다")
-                        .font(.body2)
+                        .font(.dodamBody2)
                         .foregroundStyle(Color(.onBackground))
                     Spacer()
                 }
@@ -116,7 +116,7 @@ struct OnboardingView: View {
                     // action 2
                 } label: {
                     Text("(필수) 서비스 이용약관")
-                        .font(.body3)
+                        .font(.dodamBody3)
                         .foregroundStyle(Color(.onSurface))
                     Spacer()
                     Image(.chevronRight)
@@ -144,7 +144,7 @@ struct OnboardingView: View {
                     // action 2
                 } label: {
                     Text("(필수) 개인정보 수집 및 이용에 대한 안내")
-                        .font(.body3)
+                        .font(.dodamBody3)
                         .foregroundStyle(Color(.onSurface))
                     Spacer()
                     Image(.chevronRight)

@@ -26,7 +26,7 @@ struct RegisterAuthView: View {
                 default: return "비밀번호를\n확인해주세요"
                 }
             }())
-            .font(.heading3)
+            .font(.dodamHeading3)
             
             if step >= 2 {
                 DodamTextField.default(

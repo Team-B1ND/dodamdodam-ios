@@ -27,6 +27,8 @@ public struct DodamCircularProgressView: View {
         )
     }
     
+    @State private var animatedProgress: CGFloat = 0
+    
     private var foregroundColor: AnyShapeStyle {
         isDisabled ? .init(Color(.tertiary)) : .init(.tint)
     }
@@ -37,7 +39,7 @@ public struct DodamCircularProgressView: View {
                 .stroke(lineWidth: 10)
                 .foregroundStyle(Color(.secondary))
             Circle()
-                .trim(from: 0, to: min(progress, 1))
+                .trim(from: 0, to: min(animatedProgress, 1))
                 .stroke(
                     style:
                         StrokeStyle(
@@ -51,6 +53,14 @@ public struct DodamCircularProgressView: View {
                 .animation(.linear, value: progress)
         }
         .frame(width: 70, height: 70)
+        .onChange(of: progress) { newValue in
+            animatedProgress = newValue
+        }
+        .onAppear {
+            withAnimation(.spring) {
+                animatedProgress = progress
+            }
+        }
     }
 }
 
