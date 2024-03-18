@@ -27,7 +27,7 @@ struct AppMain: App {
     
     var body: some Scene {
         WindowGroup {
-            FlowPresenter(rootView: MainView())
+            FlowPresenter(rootView: HomeView())
                 .ignoresSafeArea()
         }
     }

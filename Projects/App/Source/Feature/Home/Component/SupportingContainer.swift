@@ -9,10 +9,10 @@ import SwiftUI
 
 struct SupportingContainer: View {
     
-    let subTitle: String
-    let title: String
+    private let subTitle: String
+    private let title: String
     
-    init(
+    public init(
         subTitle: String,
         title: String
     ) {

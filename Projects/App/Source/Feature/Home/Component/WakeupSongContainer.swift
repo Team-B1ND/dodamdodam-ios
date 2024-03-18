@@ -9,9 +9,9 @@ import SwiftUI
 
 struct WakeupSongContainer: View {
     
-    let data: WakeupSong?
+    private let data: WakeupSong?
     
-    init(
+    public init(
         data: WakeupSong?
     ) {
         self.data = data
@@ -96,7 +96,7 @@ struct WakeupSongContainer: View {
     .background(Color(.surface))
 }
 
-struct WakeupSong: Codable, Hashable {
+public struct WakeupSong: Codable, Hashable {
     let id: Int
     let thumbnailUrl: String
     let videoTitle: String

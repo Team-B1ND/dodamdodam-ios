@@ -91,19 +91,7 @@ struct HomeView: View {
                     title: "가까운 일정",
                     icon: Image(.calendar)
                 ) {
-                    ScheduleContainer()
-                }
-                .arrowButtonAction {
-                    print("화살표 액션")
-                }
-                DodamContainer.default(
-                    title: "가까운 일정",
-                    icon: Image(.calendar)
-                ) {
-                    SupportingContainer(
-                        subTitle: "한달 간 일정이 없어요",
-                        title: "전체 일정 확인하기"
-                    )
+                    ScheduleContainer(data: nil)
                 }
                 .arrowButtonAction {
                     print("화살표 액션")
@@ -121,7 +109,7 @@ struct HomeView: View {
                     .padding(.leading, 20)
                 Spacer()
                 Button {
-                    
+                    // bell action
                 } label: {
                     Image(.bell)
                         .resizable()

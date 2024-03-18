@@ -9,9 +9,9 @@ import SwiftUI
 
 struct OutStatusContainer: View {
     
-    let data: Out?
+    private let data: Out?
     
-    init(
+    public init(
         data: Out?
     ) {
         self.data = data
@@ -56,14 +56,14 @@ struct OutStatusContainer: View {
     }
 }
 
-struct Out: Codable, Hashable {
+public struct Out: Codable, Hashable {
     let id: Int
     let reason, status: String
     let student: Student
     let startAt, endAt, createdAt, modifiedAt: String
 }
 
-struct Student: Codable, Hashable {
+public struct Student: Codable, Hashable {
     let id, grade, room, number: Int
     let name: String
 }

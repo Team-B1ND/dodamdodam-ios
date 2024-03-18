@@ -9,9 +9,9 @@ import SwiftUI
 
 struct NightStudyStatusContainer: View {
     
-    let data: NightStudy?
+    private let data: NightStudy?
     
-    init(
+    public init(
         data: NightStudy?
     ) {
         self.data = data
@@ -55,7 +55,7 @@ struct NightStudyStatusContainer: View {
     }
 }
 
-struct NightStudy: Codable, Hashable {
+public struct NightStudy: Codable, Hashable {
     let id: Int
     let content, status: String
     let doNeedPhone: Bool

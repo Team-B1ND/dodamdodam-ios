@@ -9,9 +9,9 @@ import SwiftUI
 
 struct MealContainer: View {
     
-    let data: Meal?
+    private let data: Meal?
     
-    init(
+    public init(
         data: Meal?
     ) {
         self.data = data
@@ -102,7 +102,7 @@ struct MealContainer: View {
     .background(Color(.surface))
 }
 
-struct Meal: Codable {
+public struct Meal: Codable {
     let exists: Bool
     let date: String
     let breakfast: MealDetails
@@ -110,12 +110,12 @@ struct Meal: Codable {
     let dinner: MealDetails
 }
 
-struct MealDetails: Codable {
+public struct MealDetails: Codable {
     let details: [MealItem]
     let calorie: Double
 }
 
-struct MealItem: Codable {
+public struct MealItem: Codable {
     let name: String
     let allergies: [Int]
 }
