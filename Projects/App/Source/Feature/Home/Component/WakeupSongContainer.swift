@@ -9,41 +9,51 @@ import SwiftUI
 
 struct WakeupSongContainer: View {
     
-    private let data: WakeupSong?
+    private let thumbnailWidth: CGFloat = 160/1.2
+    private let thumbnailHeight: CGFloat = 90/1.2
+    private let data: [WakeupSong]?
     
     public init(
-        data: WakeupSong?
+        data: [WakeupSong]?
     ) {
         self.data = data
     }
     
     var body: some View {
         if let data = data {
-            HStack(alignment: .top, spacing: 12) {
-                Link(destination: URL(string: data.videoUrl) ?? URL(string: "about:blank")!) {
-                    AsyncImage(url: URL(string: data.thumbnailUrl)) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 160/1.2, height: 90/1.2)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                    } placeholder: {
-                        Rectangle()
-                            .frame(width: 160/1.2, height: 90/1.2)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+            DodamPageView {
+                ForEach(data, id: \.self) { data in
+                    HStack(alignment: .top, spacing: 12) {
+                        Link(destination: URL(string: data.videoUrl) ?? URL(string: "about:blank")!) {
+                            AsyncImage(url: URL(string: data.thumbnailUrl)) { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: thumbnailWidth, height: thumbnailHeight)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            } placeholder: {
+                                Rectangle()
+                                    .frame(width: thumbnailWidth, height: thumbnailHeight)
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            }
+                            
+                        }
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("\(data.videoTitle)")
+                                .font(.dodamBody2)
+                                .foregroundStyle(Color(.onSurfaceVariant))
+                                .lineLimit(2)
+                            Text("\(data.channelTitle)")
+                                .font(.dodamLabel2)
+                                .foregroundStyle(Color(.tertiary))
+                                .lineLimit(1)
+                        }
                     }
-                    
-                }
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("\(data.videoTitle)")
-                        .font(.dodamBody2)
-                        .foregroundStyle(Color(.onSurfaceVariant))
-                    Text("\(data.channelTitle)")
-                        .font(.dodamLabel2)
-                        .foregroundStyle(Color(.tertiary))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .page()
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(height: thumbnailHeight)
         } else {
             SupportingContainer(
                 subTitle: "승인된 기상송이 없어요",
@@ -64,16 +74,23 @@ struct WakeupSongContainer: View {
         status: "ALLOWED",
         createdAt: "test-te-st"
     )
+    let dummy2 = WakeupSong(
+        id: 74,
+        thumbnailUrl: "https://i.ytimg.com/vi/GAy1NSzjxYY/sddefault.jpg",
+        videoTitle: "LE SSERAFIM 'EASY' Lyrics (르세라핌 EASY 가사)",
+        videoId: "GAy1NSzjxYY",
+        videoUrl: "https://www.youtube.com/watch?v=GAy1NSzjxYY",
+        channelTitle: "LE SSERAFIM",
+        status: "ALLOWED",
+        createdAt: "test-te-st"
+    )
     return VStack(spacing: 12) {
         DodamContainer.default(
             title: "오늘의 기상송",
             icon: Image(.note)
         ) {
-            Button {
-                // action
-            } label: {
-                WakeupSongContainer(data: dummy1)
-            }
+            WakeupSongContainer(data: [dummy1, dummy2])
+                .padding(6)
         }
         .arrowButtonAction {
             print("화살표 액션")
@@ -82,11 +99,8 @@ struct WakeupSongContainer: View {
             title: "오늘의 기상송",
             icon: Image(.note)
         ) {
-            Button {
-                // action
-            } label: {
-                WakeupSongContainer(data: nil)
-            }
+            WakeupSongContainer(data: nil)
+                .padding(6)
         }
         .arrowButtonAction {
             print("화살표 액션")

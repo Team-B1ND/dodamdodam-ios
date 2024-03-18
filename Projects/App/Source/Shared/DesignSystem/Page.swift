@@ -7,20 +7,35 @@
 
 import SwiftUI
 
-public struct DodamPage {
+public protocol DodamPageConvertible {
+    
+    var items: [DodamPage] { get }
+}
+
+public struct DodamPage: DodamPageConvertible {
     
     @resultBuilder
     public struct Builder {
         
         public static func buildBlock(
-            _ components: DodamPage...
-        ) -> [DodamPage] {
+            _ components: DodamPageConvertible...
+        ) -> [DodamPageConvertible] {
             components
+        }
+        
+        public static func buildFinalResult(
+            _ components: [DodamPageConvertible]
+        ) -> [DodamPage] {
+            components.flatMap(\.items)
         }
     }
     
     public let icon: Image?
     public let content: AnyView
+    
+    public var items: [DodamPage] {
+        [self]
+    }
     
     public init<C: View>(
         icon: Image? = nil,
@@ -28,5 +43,12 @@ public struct DodamPage {
     ) {
         self.icon = icon
         self.content = AnyView(content())
+    }
+}
+
+extension DodamPage: View {
+    
+    public var body: Never {
+        fatalError()
     }
 }

@@ -9,35 +9,14 @@ import SwiftUI
 
 struct HomeView: View {
     
-    // test data
-    let banner: [String] = ["https://zrr.kr/lzRi"]
-    let outGoingStatus: String = "ALLOWED"
-    let nightStudyStatus: String = "PENDING"
-    
     @Flow var flow
     
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 12) {
-                if !banner.isEmpty {
-                    TabView {
-                        ForEach(banner, id: \.self) { image in
-                            Link(destination: URL(string: "https://url.kr/49letc") ?? URL(string: "about:blank")!) {
-                                AsyncImage(url: URL(string: image)) { image in
-                                    image
-                                        .resizable()
-                                } placeholder: {
-                                    Rectangle()
-                                        .opacity(0.5)
-                                }
-                            }
-                        }
-                    }
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .aspectRatio(80/12, contentMode: .fill)
-                    .frame(maxWidth: .infinity)
-                    .clipShape(RoundedRectangle(cornerRadius: 18))
-                }
+                BannerContainer(
+                    data: nil
+                )
                 DodamContainer.default(
                     title: "오늘의 저녁",
                     icon: Image(.forkAndKnife)
