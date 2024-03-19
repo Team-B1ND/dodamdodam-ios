@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct LoginView: View {
     
@@ -18,7 +19,7 @@ struct LoginView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             Text("아이디와 비밀번호를\n입력해주세요")
-                .font(.dodamHeading3)
+                .font(.headline(.small))
             DodamTextField.default(
                 title: "아이디",
                 text: $testIdText
@@ -30,15 +31,15 @@ struct LoginView: View {
             )
             HStack(spacing: 0) {
                 Text("비밀번호를 잊으셨나요? ")
-                    .font(.dodamBody3)
-                    .foregroundStyle(Color(.tertiary))
+                    .font(.body(.small))
+                    .dodamColor(.tertiary)
                 Button {
                     // action
                 } label: {
                     Text("비밀번호 재설정")
-                        .font(.dodamBody3)
+                        .font(.body(.small))
                         .underline()
-                        .foregroundStyle(Color(.onBackground))
+                        .dodamColor(.onBackground)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .center)

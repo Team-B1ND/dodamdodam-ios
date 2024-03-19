@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct OutStatusContainer: View {
     
@@ -32,16 +33,16 @@ struct OutStatusContainer: View {
                     )
                     VStack(alignment: .leading, spacing: 4) {
                         Text(data.status == "PENDING" ? "대기 중" : "13시간")
-                            .font(.dodamBody2)
-                            .foregroundStyle(Color(.onSurfaceVariant))
+                            .font(.body(.medium))
+                            .dodamColor(.onSurfaceVariant)
                         if !(data.status == "PENDING") {
                             Text("남음")
-                                .font(.dodamLabel2)
-                                .foregroundStyle(Color(.tertiary))
+                                .font(.label(.medium))
+                                .dodamColor(.tertiary)
                         }
                         Text("13:00 복귀")
-                            .font(.dodamLabel2)
-                            .foregroundStyle(Color(.tertiary))
+                            .font(.label(.medium))
+                            .dodamColor(.tertiary)
                     }
                     
                 }
@@ -104,23 +105,23 @@ public struct Student: Codable, Hashable {
     return VStack(spacing: 12) {
         DodamContainer.default(
             title: "외출 외박",
-            icon: Image(.calendar)
+            icon: Dodam.icon(.calendar)
         ) {
             OutStatusContainer(data: dummyOutData1)
         }
         DodamContainer.default(
             title: "외출 외박",
-            icon: Image(.calendar)
+            icon: Dodam.icon(.calendar)
         ) {
             OutStatusContainer(data: dummyOutData2)
         }
         DodamContainer.default(
             title: "외출 외박",
-            icon: Image(.calendar)
+            icon: Dodam.icon(.calendar)
         ) {
             OutStatusContainer(data: nil)
         }
     }
     .padding(16)
-    .background(Color(.surface))
+    .background(Dodam.color(.surface))
 }

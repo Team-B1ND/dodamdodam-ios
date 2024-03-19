@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct RegisterAuthView: View {
     
@@ -26,7 +27,7 @@ struct RegisterAuthView: View {
                 default: return "비밀번호를\n확인해주세요"
                 }
             }())
-            .font(.dodamHeading3)
+            .font(.headline(.small))
             
             if step >= 2 {
                 DodamTextField.default(

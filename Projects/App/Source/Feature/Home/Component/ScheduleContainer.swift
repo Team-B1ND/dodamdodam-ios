@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct ScheduleContainer: View {
     
@@ -41,8 +42,8 @@ struct ScheduleContainer: View {
                                 return "\(abs(daysDifference))"
                             }
                         }())
-                        .font(.dodamTitle3)
-                        .foregroundStyle(Color(.onSurfaceVariant))
+                        .font(.title(.small))
+                        .dodamColor(.onSurfaceVariant)
                         
                         Text({ () -> String in
                             let dateFormatter = DateFormatter()
@@ -54,8 +55,8 @@ struct ScheduleContainer: View {
                             }
                             return "오류"
                         }())
-                        .font(.dodamLabel2)
-                        .foregroundStyle(Color(.tertiary))
+                        .font(.label(.medium))
+                        .dodamColor(.tertiary)
                     }
                 }
             }
@@ -109,7 +110,7 @@ public struct Schedule: Codable, Hashable {
     return VStack(spacing: 12) {
         DodamContainer.default(
             title: "가까운 일정",
-            icon: Image(.calendar)
+            icon: Dodam.icon(.calendar)
         ) {
             ScheduleContainer(data: [dummy1, dummy2, dummy3])
         }
@@ -118,7 +119,7 @@ public struct Schedule: Codable, Hashable {
         }
         DodamContainer.default(
             title: "가까운 일정",
-            icon: Image(.calendar)
+            icon: Dodam.icon(.calendar)
         ) {
             ScheduleContainer(data: nil)
         }
@@ -128,5 +129,5 @@ public struct Schedule: Codable, Hashable {
         
     }
     .padding(16)
-    .background(Color(.surface))
+    .background(Dodam.color(.surface))
 }

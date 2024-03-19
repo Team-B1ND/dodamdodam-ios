@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct SupportingContainer: View {
     
@@ -23,11 +24,11 @@ struct SupportingContainer: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(subTitle)
-                .font(.dodamLabel2)
-                .foregroundStyle(Color(.tertiary))
+                .font(.label(.medium))
+                .dodamColor(.tertiary)
             Text(title)
-                .font(.dodamTitle3)
-                .foregroundStyle(Color(.primary))
+                .font(.title(.small))
+                .dodamColor(.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

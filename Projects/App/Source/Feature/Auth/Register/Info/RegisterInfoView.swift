@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct RegisterInfoView: View {
     
@@ -28,7 +29,7 @@ struct RegisterInfoView: View {
                 default: "전화번호를"
                 }
             }() + "\n입력해주세요")
-            .font(.dodamHeading3)
+            .font(.headline(.small))
             
             if step >= 3 {
                 DodamTextField.default(

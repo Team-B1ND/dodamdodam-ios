@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "dds-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Team-B1ND/dds-ios",
+      "state" : {
+        "revision" : "9edb34b06579999878cb76fe74158a468b959863",
+        "version" : "0.0.1"
+      }
+    },
+    {
       "identity" : "flowkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mercen-Lee/FlowKit",
