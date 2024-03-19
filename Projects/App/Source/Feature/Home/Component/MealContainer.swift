@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct MealContainer: View {
     
@@ -30,8 +31,8 @@ struct MealContainer: View {
                 ], id: \.self
                 ) { meals in
                     Text(meals.map { $0.name }.joined(separator: ", "))
-                        .font(.dodamBody2)
-                        .foregroundStyle(Color(.onSurfaceVariant))
+                        .font(.body(.medium))
+                        .dodamColor(.onSurfaceVariant)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 6)
                         .page()
@@ -119,7 +120,7 @@ struct MealContainer: View {
                         default: return "급식"
                         }
                     }(),
-                    icon: Image(.forkAndKnife)
+                    icon: Dodam.icon(.forkAndKnife)
                 ) {
                     Button {
                         // navigate action
@@ -140,7 +141,7 @@ struct MealContainer: View {
                         default: return "급식"
                         }
                     }(),
-                    icon: Image(.forkAndKnife)
+                    icon: Dodam.icon(.forkAndKnife)
                 ) {
                     Button {
                         // navigate action
@@ -154,7 +155,7 @@ struct MealContainer: View {
                 }
             }
             .padding(16)
-            .background(Color(.surface))
+            .background(Dodam.color(.surface))
         }
     }
     return MealContainerPreview()

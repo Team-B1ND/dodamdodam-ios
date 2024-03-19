@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct WakeupSongContainer: View {
     
@@ -40,12 +41,12 @@ struct WakeupSongContainer: View {
                         }
                         VStack(alignment: .leading, spacing: 4) {
                             Text("\(data.videoTitle)")
-                                .font(.dodamBody2)
-                                .foregroundStyle(Color(.onSurfaceVariant))
+                                .font(.body(.medium))
+                                .dodamColor(.onSurfaceVariant)
                                 .lineLimit(2)
                             Text("\(data.channelTitle)")
-                                .font(.dodamLabel2)
-                                .foregroundStyle(Color(.tertiary))
+                                .font(.label(.medium))
+                                .dodamColor(.tertiary)
                                 .lineLimit(1)
                         }
                     }
@@ -87,7 +88,7 @@ struct WakeupSongContainer: View {
     return VStack(spacing: 12) {
         DodamContainer.default(
             title: "오늘의 기상송",
-            icon: Image(.note)
+            icon: Dodam.icon(.note)
         ) {
             WakeupSongContainer(data: [dummy1, dummy2])
                 .padding(6)
@@ -97,7 +98,7 @@ struct WakeupSongContainer: View {
         }
         DodamContainer.default(
             title: "오늘의 기상송",
-            icon: Image(.note)
+            icon: Dodam.icon(.note)
         ) {
             WakeupSongContainer(data: nil)
                 .padding(6)
@@ -107,7 +108,7 @@ struct WakeupSongContainer: View {
         }
     }
     .padding(16)
-    .background(Color(.surface))
+    .background(Dodam.color(.surface))
 }
 
 public struct WakeupSong: Codable, Hashable {

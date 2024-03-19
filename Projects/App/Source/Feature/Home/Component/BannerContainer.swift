@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct BannerContainer: View {
     
@@ -55,7 +56,7 @@ struct BannerContainer: View {
         }
         .padding(16)
     }
-    .background(Color(.surface))
+    .background(Dodam.color(.surface))
 }
 
 public struct Banner: Codable, Hashable {

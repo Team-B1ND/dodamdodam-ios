@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct OnboardingView: View {
     
@@ -32,13 +33,13 @@ struct OnboardingView: View {
     private var overlayView: some View {
         VStack {
             VStack(spacing: 16) {
-                Image(.logo)
+                Dodam.icon(.logo)
                     .resizable()
                     .scaledToFit()
-                    .foregroundStyle(.white)
+                    .dodamColor(.onPrimary)
                 Text("어린아이가 탈 없이 잘 놀며 자라는 모양.")
-                    .font(.dodamBody2)
-                    .foregroundStyle(.white)
+                    .font(.body(.medium))
+                    .dodamColor(.onPrimary)
             }
             .frame(height: 85)
             .padding(.top, 80)
@@ -53,7 +54,7 @@ struct OnboardingView: View {
                 
                 HStack(spacing: 0) {
                     Text("처음 이용하시나요? ")
-                        .font(.dodamBody3)
+                        .font(.body(.small))
                     Button {
                         // action
                     } label: {
@@ -62,7 +63,7 @@ struct OnboardingView: View {
                             .underline()
                     }
                 }
-                .foregroundStyle(.white)
+                .dodamColor(.onPrimary)
             }
             .padding(.bottom, 16)
         }
@@ -78,25 +79,25 @@ struct OnboardingView: View {
                 }
             } label: {
                 HStack(spacing: 14) {
-                    Image(.checkmarkCircle)
+                    Dodam.icon(.checkmarkCircle)
                         .resizable()
                         .frame(width: 24, height: 24)
                     // true -> change boolean state
-                        .foregroundStyle(Color(
+                        .dodamColor(
                             isChecked1 && isChecked2 ? .primary : .outline
-                        ))
+                        )
                         .padding(.leading, 18)
                         .padding(.vertical, 12)
                     Text("모두 동의합니다")
-                        .font(.dodamBody2)
-                        .foregroundStyle(Color(.onBackground))
+                        .font(.body(.medium))
+                        .dodamColor(.onBackground)
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .overlay {
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color(.outline), lineWidth: 1.5)
+                        .stroke(Dodam.color(.outline), lineWidth: 1.5)
                 }
             }
             HStack {
@@ -104,25 +105,25 @@ struct OnboardingView: View {
                     // action 1
                     isChecked1.toggle()
                 } label: {
-                    Image(.checkmark)
+                    Dodam.icon(.checkmark)
                         .resizable()
                         .frame(width: 17)
                     // true -> change boolean state
-                        .foregroundStyle(Color(
+                        .dodamColor(
                             isChecked1 ? .primary : .outline
-                        ))
+                        )
                 }
                 Button {
                     // action 2
                 } label: {
                     Text("(필수) 서비스 이용약관")
-                        .font(.dodamBody3)
-                        .foregroundStyle(Color(.onSurface))
+                        .font(.body(.small))
+                        .dodamColor(.onSurface)
                     Spacer()
-                    Image(.chevronRight)
+                    Dodam.icon(.chevronRight)
                         .resizable()
                         .frame(width: 17)
-                        .foregroundStyle(Color(.onSurface))
+                        .dodamColor(.onSurface)
                 }
             }
             .frame(height: 17)
@@ -132,25 +133,25 @@ struct OnboardingView: View {
                     // action 1
                     isChecked2.toggle()
                 } label: {
-                    Image(.checkmark)
+                    Dodam.icon(.checkmark)
                         .resizable()
                         .frame(width: 17)
                     // true -> change boolean state
-                        .foregroundStyle(Color(
+                        .dodamColor(
                             isChecked2 ? .primary : .outline
-                        ))
+                        )
                 }
                 Button {
                     // action 2
                 } label: {
                     Text("(필수) 개인정보 수집 및 이용에 대한 안내")
-                        .font(.dodamBody3)
-                        .foregroundStyle(Color(.onSurface))
+                        .font(.body(.small))
+                        .dodamColor(.onSurface)
                     Spacer()
-                    Image(.chevronRight)
+                    Dodam.icon(.chevronRight)
                         .resizable()
                         .frame(width: 17)
-                        .foregroundStyle(Color(.onSurface))
+                        .dodamColor(.onSurface)
                 }
             }
             .frame(height: 17)
@@ -161,7 +162,7 @@ struct OnboardingView: View {
                 // action
             }
         }
-        .background(Color(.background))
+        .background(Dodam.color(.background))
         .padding(24)
     }
 }

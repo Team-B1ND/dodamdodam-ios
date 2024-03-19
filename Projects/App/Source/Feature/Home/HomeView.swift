@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 struct HomeView: View {
     
@@ -27,7 +28,7 @@ struct HomeView: View {
                         default: return "급식"
                         }
                     }(),
-                    icon: Image(.forkAndKnife)
+                    icon: Dodam.icon(.forkAndKnife)
                 ) {
                     Button {
                         // navigate action
@@ -41,7 +42,7 @@ struct HomeView: View {
                 }
                 DodamContainer.default(
                     title: "오늘의 기상송",
-                    icon: Image(.note)
+                    icon: Dodam.icon(.note)
                 ) {
                     Button {
                         // navigate action
@@ -58,7 +59,7 @@ struct HomeView: View {
                 HStack(alignment: .top, spacing: 12) {
                     DodamContainer.default(
                         title: "외출 외박",
-                        icon: Image(.door)
+                        icon: Dodam.icon(.doorOpen)
                     ) {
                         Button {
                             // navigate action
@@ -70,7 +71,7 @@ struct HomeView: View {
                     }
                     DodamContainer.default(
                         title: "심야 자습",
-                        icon: Image(.moonPlus)
+                        icon: Dodam.icon(.moonPlus)
                     ) {
                         Button {
                             // navigate action
@@ -83,7 +84,7 @@ struct HomeView: View {
                 }
                 DodamContainer.default(
                     title: "가까운 일정",
-                    icon: Image(.calendar)
+                    icon: Dodam.icon(.calendar)
                 ) {
                     Button {
                         // navigate action
@@ -102,19 +103,19 @@ struct HomeView: View {
         }
         .overlay(alignment: .top) {
             HStack {
-                Image(.logo)
+                Dodam.icon(.logo)
                     .resizable()
                     .frame(width: 88, height: 22)
-                    .foregroundStyle(Color(.primary))
+                    .dodamColor(.primary)
                     .padding(.leading, 20)
                 Spacer()
                 Button {
                     // bell action
                 } label: {
-                    Image(.bell)
+                    Dodam.icon(.bell)
                         .resizable()
                         .frame(width: 24, height: 24)
-                        .foregroundStyle(Color(.tertiary))
+                        .dodamColor(.tertiary)
                 }
                 .frame(width: 44, height: 44)
                 .padding(.trailing, 12)
@@ -123,7 +124,7 @@ struct HomeView: View {
             .frame(maxWidth: .infinity)
             .background(.regularMaterial)
         }
-        .background(Color(.surface))
+        .background(Dodam.color(.surface))
     }
 }
 

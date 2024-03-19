@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 public struct DodamContainer<Content>: View where Content: View {
     
@@ -61,20 +62,20 @@ public struct DodamContainer<Content>: View where Content: View {
                         .padding(6)
                 }
                 .frame(width: 32, height: 32)
-                .background(Color(.primary))
+                .background(Dodam.color(.primary))
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Text("\(title)")
-                    .font(.dodamTitle2)
-                    .foregroundStyle(Color(.onSurfaceVariant))
+                    .font(.title(.medium))
+                    .dodamColor(.onSurfaceVariant)
                 Spacer()
                 if isUseRightButton {
                     Button {
                         action()
                     } label: {
-                        Image(.chevronRight)
+                        Dodam.icon(.chevronRight)
                             .resizable()
                             .frame(width: 16, height: 16)
-                            .foregroundStyle(Color(.tertiary))
+                            .dodamColor(.tertiary)
                     }
                 }
             }
@@ -82,7 +83,7 @@ public struct DodamContainer<Content>: View where Content: View {
             content()
                 .padding([.bottom, .horizontal], 10)
         }
-        .background(Color(.surfaceVariant))
+        .background(Dodam.color(.surfaceContainer))
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }
@@ -94,14 +95,14 @@ public struct DodamContainer<Content>: View where Content: View {
             VStack(spacing: 20) {
                 DodamContainer.default(
                     title: "오늘의 급식",
-                    icon: Image(.forkAndKnife)
+                    icon: Dodam.icon(.forkAndKnife)
                 ) {
                     Text("contents")
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 DodamContainer.default(
                     title: "오늘의 기상송",
-                    icon: Image(.note)
+                    icon: Dodam.icon(.note)
                 ) {
                     Text("contents")
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -111,7 +112,7 @@ public struct DodamContainer<Content>: View where Content: View {
                 }
             }
             .padding(16)
-            .background(Color(.surface))
+            .background(Dodam.color(.surface))
         }
     }
     return DodamContainerPreview()
