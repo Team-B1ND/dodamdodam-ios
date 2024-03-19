@@ -6,9 +6,7 @@
 //
 
 import Combine
-import FlowKit
 
 class MainViewModel: ObservableObject {
     
-    @Inject var flow: FlowProvider
 }

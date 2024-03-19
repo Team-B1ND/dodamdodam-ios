@@ -13,25 +13,12 @@ struct OnboardingView: View {
     // UI test state
     @State var isChecked1: Bool = false
     @State var isChecked2: Bool = false
+    @State var isPresented: Bool = false
     
     @InjectObject var viewModel: OnboardingViewModel
     @Flow var flow
     
     var body: some View {
-//        modalSheetView
-        overlayView
-            .background(
-                Image(.onboard)
-                    .resizable()
-                    .offset(x: -30)
-                    .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
-            )
-        // modal sheet view
-    }
-    
-    private var overlayView: some View {
         VStack {
             VStack(spacing: 16) {
                 Dodam.icon(.logo)
@@ -57,7 +44,7 @@ struct OnboardingView: View {
                     Text("처음 이용하시나요? ")
                         .font(.body(.small))
                     Button {
-                        flow.push(RegisterInfoView())
+                        isPresented.toggle()
                     } label: {
                         Text("회원가입")
                             .font(.system(size: 14, weight: .bold))
@@ -67,6 +54,17 @@ struct OnboardingView: View {
                 .dodamColor(.onPrimary)
             }
             .padding(.bottom, 16)
+        }
+        .background(
+            Image(.onboard)
+                .resizable()
+                .offset(x: -30)
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea()
+        )
+        .dodamModal(isPresented: $isPresented) {
+            modalSheetView
         }
     }
     
@@ -103,19 +101,17 @@ struct OnboardingView: View {
             }
             HStack {
                 Button {
-                    // action 1
                     isChecked1.toggle()
                 } label: {
                     Dodam.icon(.checkmark)
                         .resizable()
                         .frame(width: 17)
-                    // true -> change boolean state
                         .dodamColor(
                             isChecked1 ? .primary : .outline
                         )
                 }
                 Button {
-                    // action 2
+                    flow.push(HomeView())
                 } label: {
                     Text("(필수) 서비스 이용약관")
                         .font(.body(.small))
@@ -131,19 +127,17 @@ struct OnboardingView: View {
             
             HStack {
                 Button {
-                    // action 1
                     isChecked2.toggle()
                 } label: {
                     Dodam.icon(.checkmark)
                         .resizable()
                         .frame(width: 17)
-                    // true -> change boolean state
                         .dodamColor(
                             isChecked2 ? .primary : .outline
                         )
                 }
                 Button {
-                    // action 2
+                    flow.push(HomeView())
                 } label: {
                     Text("(필수) 개인정보 수집 및 이용에 대한 안내")
                         .font(.body(.small))
@@ -160,11 +154,11 @@ struct OnboardingView: View {
             DodamButton.fullWidth(
                 title: "다음"
             ) {
-                // action
+                flow.push(RegisterInfoView())
             }
+            .disabled(!(isChecked1 && isChecked2))
         }
         .background(Dodam.color(.background))
-        .padding(24)
     }
 }
 
