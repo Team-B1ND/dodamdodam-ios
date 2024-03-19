@@ -15,6 +15,7 @@ struct LoginView: View {
     @State var testPwText: String = ""
     
     @InjectObject var viewModel: LoginViewModel
+    @Flow var flow
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -48,7 +49,10 @@ struct LoginView: View {
             DodamButton.fullWidth(
                 title: "로그인"
             ) {
-                // action
+                flow.replace([
+                    HomeView()
+                        .navigationBarHidden(true)
+                ])
             }
             .padding(.top, 8)
             Spacer()

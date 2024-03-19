@@ -58,9 +58,3 @@ struct BannerContainer: View {
     }
     .background(Dodam.color(.surface))
 }
-
-public struct Banner: Codable, Hashable {
-    let id: Int
-    let expireA, imageUrl, redirectUrl, title: String
-    let status: String
-}

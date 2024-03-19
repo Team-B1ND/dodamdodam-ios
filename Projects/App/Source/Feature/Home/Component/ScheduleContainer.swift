@@ -69,16 +69,6 @@ struct ScheduleContainer: View {
     }
 }
 
-public struct Schedule: Codable, Hashable {
-    let id: Int
-    let name: String
-    let place: String
-    let type: String
-    let startDate: String
-    let endDate: String
-    let targetGrades: [String]
-}
-
 #Preview {
     let dummy1 = Schedule(
         id: 1,

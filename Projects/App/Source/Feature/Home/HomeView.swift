@@ -10,7 +10,7 @@ import DDS
 
 struct HomeView: View {
     
-    @State var mealIdx: Int = -1
+    @InjectObject var viewModel: HomeViewModel
     @Flow var flow
     
     var body: some View {
@@ -21,7 +21,7 @@ struct HomeView: View {
                 )
                 DodamContainer.default(
                     title: "오늘의 " + { () -> String in
-                        switch mealIdx {
+                        switch viewModel.mealIdx {
                         case 0: return "아침"
                         case 1: return "점심"
                         case 2: return "저녁"
@@ -34,8 +34,8 @@ struct HomeView: View {
                         // navigate action
                     } label: {
                         MealContainer(
-                            data: nil,
-                            mealIdx: $mealIdx
+                            data: viewModel.mealData,
+                            mealIdx: $viewModel.mealIdx
                         )
                     }
                     .scaledButtonStyle()
@@ -47,8 +47,10 @@ struct HomeView: View {
                     Button {
                         // navigate action
                     } label: {
-                        WakeupSongContainer(data: nil)
-                            .padding(6)
+                        WakeupSongContainer(
+                            data: viewModel.wakeupSongData
+                        )
+                        .padding(6)
                     }
                     .scaledButtonStyle()
                 }
@@ -64,8 +66,10 @@ struct HomeView: View {
                         Button {
                             // navigate action
                         } label: {
-                            OutStatusContainer(data: nil)
-                                .padding(6)
+                            OutStatusContainer(
+                                data: viewModel.outData
+                            )
+                            .padding(6)
                         }
                         .scaledButtonStyle()
                     }
@@ -76,8 +80,10 @@ struct HomeView: View {
                         Button {
                             // navigate action
                         } label: {
-                            NightStudyStatusContainer(data: nil)
-                                .padding(6)
+                            NightStudyStatusContainer(
+                                data: viewModel.nightStudyData
+                            )
+                            .padding(6)
                         }
                         .scaledButtonStyle()
                     }
@@ -89,8 +95,10 @@ struct HomeView: View {
                     Button {
                         // navigate action
                     } label: {
-                        ScheduleContainer(data: nil)
-                            .padding(6)
+                        ScheduleContainer(
+                            data: viewModel.scheduleData
+                        )
+                        .padding(6)
                     }
                     .scaledButtonStyle()
                 }

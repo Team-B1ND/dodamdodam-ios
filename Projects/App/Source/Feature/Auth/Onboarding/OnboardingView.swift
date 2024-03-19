@@ -15,9 +15,10 @@ struct OnboardingView: View {
     @State var isChecked2: Bool = false
     
     @InjectObject var viewModel: OnboardingViewModel
+    @Flow var flow
     
     var body: some View {
-        modalSheetView
+//        modalSheetView
         overlayView
             .background(
                 Image(.onboard)
@@ -48,7 +49,7 @@ struct OnboardingView: View {
                 DodamButton.fullWidth(
                     title: "로그인"
                 ) {
-                    viewModel.loginButtonTapped()
+                    flow.push(LoginView())
                 }
                 .padding(.horizontal, 16)
                 
@@ -56,7 +57,7 @@ struct OnboardingView: View {
                     Text("처음 이용하시나요? ")
                         .font(.body(.small))
                     Button {
-                        // action
+                        flow.push(RegisterInfoView())
                     } label: {
                         Text("회원가입")
                             .font(.system(size: 14, weight: .bold))
