@@ -33,6 +33,7 @@ let project = Project(
             resources: ["Resource/**"],
             scripts: [.swiftLint],
             dependencies: [
+                .external(name: "DDS"),
                 .external(name: "Moya"),
                 .external(name: "Swinject"),
                 .external(name: "FlowKit")

@@ -12,7 +12,9 @@ class FlowAssembly: Assembly {
     
     func assemble(container: Container) {
         container.register(FlowProvider.self) { _ in
-            FlowProvider(rootView: MainView())
+            FlowProvider(rootView: HomeView()) {
+                NavigationController(rootViewController: $0)
+            }
         }
     }
 }
