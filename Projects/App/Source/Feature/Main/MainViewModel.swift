@@ -9,4 +9,5 @@ import Combine
 
 class MainViewModel: ObservableObject {
     
+    @Published var selection: Int = 0
 }

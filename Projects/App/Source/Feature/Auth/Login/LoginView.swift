@@ -50,7 +50,7 @@ struct LoginView: View {
                 title: "로그인"
             ) {
                 flow.replace([
-                    HomeView()
+                    MainView()
                         .navigationBarHidden(true)
                 ])
             }

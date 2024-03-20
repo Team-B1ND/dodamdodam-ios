@@ -35,7 +35,7 @@ struct MealView: View {
                                 VStack(spacing: 16) {
                                     HStack(spacing: 12) {
                                         ZStack {
-                                            Text("아침")
+                                            Text("title")
                                                 .font(.title(.small))
                                                 .dodamColor(.onPrimary)
                                                 .padding(.vertical, 4)
@@ -45,7 +45,7 @@ struct MealView: View {
                                         .background(Dodam.color(.primary))
                                         .clipShape(RoundedRectangle(cornerRadius: 32))
                                         Spacer()
-                                        Text("\(String(data.calorie))Kcal")
+                                        Text("\(Int(data.calorie))Kcal")
                                             .font(.label(.large))
                                             .dodamColor(.tertiary)
                                             .padding(.top, 5)
