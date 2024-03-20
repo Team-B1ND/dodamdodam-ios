@@ -28,5 +28,8 @@ class ViewModelAssembly: Assembly {
         container.register(HomeViewModel.self) { _ in
             HomeViewModel()
         }
+        container.register(MealViewModel.self) { _ in
+            MealViewModel()
+        }
     }
 }
