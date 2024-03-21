@@ -14,7 +14,29 @@ struct HomeView: View {
     @Flow var flow
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        DodamScrollView {
+            HStack {
+                Dodam.icon(.logo)
+                    .resizable()
+                    .frame(width: 88, height: 22)
+                    .dodamColor(.primary)
+                    .padding(.leading, 20)
+                Spacer()
+                Button {
+                    // bell action
+                } label: {
+                    Dodam.icon(.bell)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .dodamColor(.tertiary)
+                }
+                .frame(width: 44, height: 44)
+                .padding(.trailing, 12)
+            }
+            .frame(height: 58)
+            .frame(maxWidth: .infinity)
+            .background(.regularMaterial)
+        } content: {
             VStack(spacing: 12) {
                 BannerContainer(
                     data: nil
@@ -110,30 +132,6 @@ struct HomeView: View {
             .padding(.top, 58)
             .padding(.bottom, 150)
         }
-        .overlay(alignment: .top) {
-            HStack {
-                Dodam.icon(.logo)
-                    .resizable()
-                    .frame(width: 88, height: 22)
-                    .dodamColor(.primary)
-                    .padding(.leading, 20)
-                Spacer()
-                Button {
-                    // bell action
-                } label: {
-                    Dodam.icon(.bell)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .dodamColor(.tertiary)
-                }
-                .frame(width: 44, height: 44)
-                .padding(.trailing, 12)
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        }
-        .background(Dodam.color(.surface))
     }
 }
 

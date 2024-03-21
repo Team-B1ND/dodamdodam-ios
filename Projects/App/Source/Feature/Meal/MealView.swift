@@ -14,7 +14,13 @@ struct MealView: View {
     @Flow var flow
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
+        DodamScrollView {
+            Text("급식")
+                .font(.headline(.large))
+                .dodamColor(.onBackground)
+                .padding(.leading, 20)
+            Spacer()
+        } content: {
             VStack(spacing: 20) {
                 if let mealDatas = viewModel.mealDatas {
                     ForEach(mealDatas, id: \.self) { datas in
@@ -68,19 +74,6 @@ struct MealView: View {
             .padding(.top, 58)
             .padding(.bottom, 150)
         }
-        .overlay(alignment: .top) {
-            HStack {
-                Text("급식")
-                    .font(.headline(.large))
-                    .dodamColor(.onBackground)
-                    .padding(.leading, 20)
-                Spacer()
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        }
-        .background(Dodam.color(.surface))
     }
 }
 
