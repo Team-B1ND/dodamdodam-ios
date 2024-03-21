@@ -17,6 +17,7 @@ struct RegisterAuthView: View {
     @State var testCheckPwText: String = ""
     
     @InjectObject var viewModel: RegisterInfoViewModel
+    @Flow var flow
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -78,15 +79,17 @@ struct RegisterAuthView: View {
             }
             Spacer()
             
-            DodamButton.fullWidth(
-                title: "가입하기"
-            ) {
-                // action
+            if step >= 3 {
+                DodamButton.fullWidth(
+                    title: "가입하기"
+                ) {
+                    // action
+                }
+                .padding(.bottom, 24)
             }
-            .padding(.bottom, 24)
         }
         .padding(.horizontal, 16)
-        .ignoresSafeArea(.keyboard)
+//        .ignoresSafeArea(.keyboard)
     }
 }
 

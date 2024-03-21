@@ -6,13 +6,7 @@
 //
 
 import Combine
-import FlowKit
 
 class OnboardingViewModel: ObservableObject {
     
-    @Inject var flow: FlowProvider
-    
-    func loginButtonTapped() {
-        flow.push(LoginView())
-    }
 }

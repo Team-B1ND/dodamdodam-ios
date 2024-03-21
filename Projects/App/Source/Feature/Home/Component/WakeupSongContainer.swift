@@ -110,14 +110,3 @@ struct WakeupSongContainer: View {
     .padding(16)
     .background(Dodam.color(.surface))
 }
-
-public struct WakeupSong: Codable, Hashable {
-    let id: Int
-    let thumbnailUrl: String
-    let videoTitle: String
-    let videoId: String
-    let videoUrl: String
-    let channelTitle: String
-    let status: String
-    let createdAt: String
-}

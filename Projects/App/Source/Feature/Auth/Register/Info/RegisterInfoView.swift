@@ -18,6 +18,7 @@ struct RegisterInfoView: View {
     @State var testNameText: String = ""
     
     @InjectObject var viewModel: RegisterInfoViewModel
+    @Flow var flow
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
@@ -96,15 +97,17 @@ struct RegisterInfoView: View {
             }
             Spacer()
             
-            DodamButton.fullWidth(
-                title: "다음"
-            ) {
-                // action
+            if step >= 4 {
+                DodamButton.fullWidth(
+                    title: "다음"
+                ) {
+                    flow.push(RegisterAuthView())
+                }
+                .padding(.bottom, 24)
             }
-            .padding(.bottom, 24)
         }
         .padding(.horizontal, 16)
-        .ignoresSafeArea(.keyboard)
+//        .ignoresSafeArea(.keyboard)
     }
 }
 

@@ -6,13 +6,25 @@
 //
 
 import SwiftUI
+import DDS
 
 struct MainView: View {
     
     @InjectObject var viewModel: MainViewModel
     
     var body: some View {
-        Text("Hello, world!")
+        DodamTabView(selection: $viewModel.selection) {
+            HomeView()
+                .page(.icon(.home))
+            MealView()
+                .page(.icon(.forkAndKnife))
+            Text("Out")
+                .page(.icon(.doorOpen))
+            Text("NightStudy")
+                .page(.icon(.moonPlus))
+            Text("Menu")
+                .page(.icon(.menu))
+        }
     }
 }
 

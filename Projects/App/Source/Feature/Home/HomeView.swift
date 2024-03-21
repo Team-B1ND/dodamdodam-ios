@@ -10,98 +10,11 @@ import DDS
 
 struct HomeView: View {
     
-    @State var mealIdx: Int = -1
+    @InjectObject var viewModel: HomeViewModel
     @Flow var flow
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 12) {
-                BannerContainer(
-                    data: nil
-                )
-                DodamContainer.default(
-                    title: "오늘의 " + { () -> String in
-                        switch mealIdx {
-                        case 0: return "아침"
-                        case 1: return "점심"
-                        case 2: return "저녁"
-                        default: return "급식"
-                        }
-                    }(),
-                    icon: Dodam.icon(.forkAndKnife)
-                ) {
-                    Button {
-                        // navigate action
-                    } label: {
-                        MealContainer(
-                            data: nil,
-                            mealIdx: $mealIdx
-                        )
-                    }
-                    .scaledButtonStyle()
-                }
-                DodamContainer.default(
-                    title: "오늘의 기상송",
-                    icon: Dodam.icon(.note)
-                ) {
-                    Button {
-                        // navigate action
-                    } label: {
-                        WakeupSongContainer(data: nil)
-                            .padding(6)
-                    }
-                    .scaledButtonStyle()
-                }
-                .arrowButtonAction {
-                    print("화살표 액션")
-                }
-                
-                HStack(alignment: .top, spacing: 12) {
-                    DodamContainer.default(
-                        title: "외출 외박",
-                        icon: Dodam.icon(.doorOpen)
-                    ) {
-                        Button {
-                            // navigate action
-                        } label: {
-                            OutStatusContainer(data: nil)
-                                .padding(6)
-                        }
-                        .scaledButtonStyle()
-                    }
-                    DodamContainer.default(
-                        title: "심야 자습",
-                        icon: Dodam.icon(.moonPlus)
-                    ) {
-                        Button {
-                            // navigate action
-                        } label: {
-                            NightStudyStatusContainer(data: nil)
-                                .padding(6)
-                        }
-                        .scaledButtonStyle()
-                    }
-                }
-                DodamContainer.default(
-                    title: "가까운 일정",
-                    icon: Dodam.icon(.calendar)
-                ) {
-                    Button {
-                        // navigate action
-                    } label: {
-                        ScheduleContainer(data: nil)
-                            .padding(6)
-                    }
-                    .scaledButtonStyle()
-                }
-                .arrowButtonAction {
-                    print("화살표 액션")
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.top, 58)
-        }
-        .overlay(alignment: .top) {
+        DodamScrollView {
             HStack {
                 Dodam.icon(.logo)
                     .resizable()
@@ -123,8 +36,102 @@ struct HomeView: View {
             .frame(height: 58)
             .frame(maxWidth: .infinity)
             .background(.regularMaterial)
+        } content: {
+            VStack(spacing: 12) {
+                BannerContainer(
+                    data: nil
+                )
+                DodamContainer.default(
+                    title: "오늘의 " + { () -> String in
+                        switch viewModel.mealIdx {
+                        case 0: return "아침"
+                        case 1: return "점심"
+                        case 2: return "저녁"
+                        default: return "급식"
+                        }
+                    }(),
+                    icon: Dodam.icon(.forkAndKnife)
+                ) {
+                    Button {
+                        // navigate action
+                    } label: {
+                        MealContainer(
+                            data: viewModel.mealData,
+                            mealIdx: $viewModel.mealIdx
+                        )
+                    }
+                    .scaledButtonStyle()
+                }
+                DodamContainer.default(
+                    title: "오늘의 기상송",
+                    icon: Dodam.icon(.note)
+                ) {
+                    Button {
+                        // navigate action
+                    } label: {
+                        WakeupSongContainer(
+                            data: viewModel.wakeupSongData
+                        )
+                        .padding(6)
+                    }
+                    .scaledButtonStyle()
+                }
+                .arrowButtonAction {
+                    print("화살표 액션")
+                }
+                
+                HStack(alignment: .top, spacing: 12) {
+                    DodamContainer.default(
+                        title: "외출 외박",
+                        icon: Dodam.icon(.doorOpen)
+                    ) {
+                        Button {
+                            // navigate action
+                        } label: {
+                            OutStatusContainer(
+                                data: viewModel.outData
+                            )
+                            .padding(6)
+                        }
+                        .scaledButtonStyle()
+                    }
+                    DodamContainer.default(
+                        title: "심야 자습",
+                        icon: Dodam.icon(.moonPlus)
+                    ) {
+                        Button {
+                            // navigate action
+                        } label: {
+                            NightStudyStatusContainer(
+                                data: viewModel.nightStudyData
+                            )
+                            .padding(6)
+                        }
+                        .scaledButtonStyle()
+                    }
+                }
+                DodamContainer.default(
+                    title: "가까운 일정",
+                    icon: Dodam.icon(.calendar)
+                ) {
+                    Button {
+                        // navigate action
+                    } label: {
+                        ScheduleContainer(
+                            data: viewModel.scheduleData
+                        )
+                        .padding(6)
+                    }
+                    .scaledButtonStyle()
+                }
+                .arrowButtonAction {
+                    print("화살표 액션")
+                }
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 58)
+            .padding(.bottom, 150)
         }
-        .background(Dodam.color(.surface))
     }
 }
 

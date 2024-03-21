@@ -56,16 +56,6 @@ struct NightStudyStatusContainer: View {
     }
 }
 
-public struct NightStudy: Codable, Hashable {
-    let id: Int
-    let content, status: String
-    let doNeedPhone: Bool
-    let reasonForPhone: String
-    let student: Student
-    let place: String
-    let startAt, endAt, createdAt, modifiedAt: String
-}
-
 #Preview {
     let dummyNightStudy1 = NightStudy(
         id: 1,
