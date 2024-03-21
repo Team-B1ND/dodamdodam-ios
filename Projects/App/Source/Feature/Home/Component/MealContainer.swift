@@ -25,17 +25,19 @@ struct MealContainer: View {
         if let data = mealData {
             DodamPageView(selection: $mealIdx) {
                 ForEach([
-                    data.breakfast.details,
-                    data.lunch.details,
-                    data.dinner.details
+                    data.breakfast,
+                    data.lunch,
+                    data.dinner
                 ], id: \.self
                 ) { meals in
-                    Text(meals.map { $0.name }.joined(separator: ", "))
-                        .font(.body(.medium))
-                        .dodamColor(.onSurfaceVariant)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 6)
-                        .page()
+                    Text(meals?.details.map {
+                        $0.name
+                    }.joined(separator: ", ") ?? "")
+                    .font(.body(.medium))
+                    .dodamColor(.onSurfaceVariant)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 6)
+                    .page()
                 }
             }
             .frame(height: 50)

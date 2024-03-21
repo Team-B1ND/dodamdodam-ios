@@ -56,9 +56,9 @@ public struct Banner: Codable, Hashable {
 public struct Meal: Codable, Hashable {
     let exists: Bool
     let date: String
-    let breakfast: MealDetails
-    let lunch: MealDetails
-    let dinner: MealDetails
+    let breakfast: MealDetails?
+    let lunch: MealDetails?
+    let dinner: MealDetails?
 }
 
 public struct MealDetails: Codable, Hashable {

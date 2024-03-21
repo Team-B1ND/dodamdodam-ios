@@ -70,6 +70,27 @@ class MealViewModel: ObservableObject {
                     MealItem(name: "배추김치", allergies: [9]),
                     MealItem(name: "주스", allergies: [13])
                 ], calorie: 1114.4)
+        ),
+        Meal(
+            exists: true,
+            date: "2024-03-22",
+            breakfast: MealDetails(
+                details: [
+                    MealItem(name: "전복죽", allergies: [18]),
+                    MealItem(name: "모닝빵/버터/딸기잼", allergies: [1, 2, 5, 6, 13]),
+                    MealItem(name: "샐러드바/드레싱", allergies: [1, 2, 5, 6, 12]),
+                    MealItem(name: "나박김치", allergies: [9]),
+                    MealItem(name: "시리얼(콘앤스위트)&우유", allergies: [2, 5, 6])
+                ], calorie: 647.7),
+            lunch: nil,
+            dinner: nil
+        ),
+        Meal(
+            exists: false,
+            date: "2024-03-23",
+            breakfast: nil,
+            lunch: nil,
+            dinner: nil
         )
     ]
 }
