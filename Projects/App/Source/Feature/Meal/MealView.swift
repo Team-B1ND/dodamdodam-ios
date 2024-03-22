@@ -16,7 +16,7 @@ struct MealView: View {
     var body: some View {
         DodamScrollView {
             Text("급식")
-                .font(.headline(.large))
+                .font(.headline(.small))
                 .dodamColor(.onBackground)
                 .padding(.leading, 20)
             Spacer()

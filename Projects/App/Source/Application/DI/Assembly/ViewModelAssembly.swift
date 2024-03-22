@@ -31,5 +31,9 @@ class ViewModelAssembly: Assembly {
         container.register(MealViewModel.self) { _ in
             MealViewModel()
         }
+        container.register(OutViewModel.self) { _ in
+            OutViewModel()
+        }
+
     }
 }
