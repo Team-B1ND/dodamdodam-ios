@@ -36,7 +36,7 @@ struct OutSegmentedView: View {
                         }
                     }
                 } label: {
-                    Text("외출 외박")
+                    Text(idx == 0 ? "외출" : "외박")
                         .font(.title(.small))
                         .dodamColor(.onSurfaceVariant)
                         .frame(height: 44)

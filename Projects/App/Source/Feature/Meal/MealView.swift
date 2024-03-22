@@ -15,11 +15,16 @@ struct MealView: View {
     
     var body: some View {
         DodamScrollView {
-            Text("급식")
-                .font(.headline(.small))
-                .dodamColor(.onBackground)
-                .padding(.leading, 20)
-            Spacer()
+            HStack {
+                Text("급식")
+                    .font(.headline(.small))
+                    .dodamColor(.onBackground)
+                    .padding(.leading, 20)
+                Spacer()
+            }
+            .frame(height: 58)
+            .frame(maxWidth: .infinity)
+            .background(.regularMaterial)
         } content: {
             VStack(spacing: 20) {
                 if let mealDatas = viewModel.mealDatas {
@@ -96,8 +101,6 @@ struct MealView: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.top, 58)
-            .padding(.bottom, 150)
         }
     }
 }

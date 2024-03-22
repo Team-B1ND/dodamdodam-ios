@@ -15,29 +15,42 @@ struct OutView: View {
     
     var body: some View {
         DodamScrollView {
-            Text("외출/외박")
-                .font(.headline(.small))
-                .dodamColor(.onBackground)
-                .padding(.leading, 20)
-            Spacer()
-            Button {
-                // bell action
-            } label: {
-                Dodam.icon(.plus)
-                    .resizable()
-                    .frame(width: 24, height: 24)
-                    .dodamColor(.tertiary)
-            }
-            .frame(width: 44, height: 44)
-            .padding(.trailing, 12)
-        } content: {
-            VStack(spacing: 20) {
-                Text("1123")
+            VStack(spacing: 12) {
+                HStack {
+                    Text("외출/외박")
+                        .font(.headline(.small))
+                        .dodamColor(.onBackground)
+                        .padding(.leading, 20)
+                    Spacer()
+                    Button {
+                        // bell action
+                    } label: {
+                        Dodam.icon(.plus)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .dodamColor(.tertiary)
+                    }
+                    .frame(width: 44, height: 44)
+                    .padding(.trailing, 12)
+                }
+                .frame(height: 58)
+                OutSegmentedView(selection: $viewModel.selection)
+                    .padding(.horizontal, 16)
+                Rectangle()
+                    .frame(height: 8)
                     .frame(maxWidth: .infinity)
+                    .foregroundStyle(.clear)
+            }
+            .frame(maxWidth: .infinity)
+            .background(.regularMaterial)
+        } content: {
+            VStack(spacing: 12) {
+                Text("adawd")
+                Text("adawd")
+                Text("adawd")
+                Text("adawd")
             }
             .padding(.horizontal, 16)
-            .padding(.top, 58)
-            .padding(.bottom, 150)
         }
     }
 }
