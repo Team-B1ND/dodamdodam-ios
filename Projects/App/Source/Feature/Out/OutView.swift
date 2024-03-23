@@ -13,6 +13,8 @@ struct OutView: View {
     @InjectObject var viewModel: OutViewModel
     @Flow var flow
     
+    @Namespace private var animation
+    
     var body: some View {
         DodamScrollView {
             VStack(spacing: 12) {
@@ -45,10 +47,28 @@ struct OutView: View {
             .background(.regularMaterial)
         } content: {
             VStack(spacing: 12) {
-                Text("adawd")
-                Text("adawd")
-                Text("adawd")
-                Text("adawd")
+                if viewModel.selection == 0 {
+                    if let data = viewModel.outGoingData {
+                        Text(data[0].reason)
+                    } else {
+                        DodamEmptyView(
+                            .outGoing
+                        ) {
+                            flow.push(OutApplyView())
+                        }
+                    }
+                }
+                if viewModel.selection == 1 {
+                    if let data = viewModel.outSleepingData {
+                        Text(data[0].reason)
+                    } else {
+                        DodamEmptyView(
+                            .outSleeping
+                        ) {
+                            flow.push(OutApplyView())
+                        }
+                    }
+                }
             }
             .padding(.horizontal, 16)
         }

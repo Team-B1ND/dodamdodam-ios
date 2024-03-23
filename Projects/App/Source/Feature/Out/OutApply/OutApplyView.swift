@@ -5,4 +5,18 @@
 //  Created by 이민규 on 3/21/24.
 //
 
-import Foundation
+import SwiftUI
+
+struct OutApplyView: View {
+    
+    @InjectObject var viewModel: OutApplyViewModel
+    @Flow var flow
+    
+    var body: some View {
+        Text("OutApplyView")
+    }
+}
+
+#Preview {
+    OutApplyView()
+}

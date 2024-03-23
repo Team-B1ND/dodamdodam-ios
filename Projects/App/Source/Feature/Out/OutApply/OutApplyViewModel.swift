@@ -5,4 +5,9 @@
 //  Created by 이민규 on 3/21/24.
 //
 
-import Foundation
+import Combine
+
+class OutApplyViewModel: ObservableObject {
+    
+    @Published var selection: Int = 0
+}

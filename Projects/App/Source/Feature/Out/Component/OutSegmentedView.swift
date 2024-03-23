@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import Combine
 
 struct OutSegmentedView: View {
     
@@ -64,6 +65,17 @@ struct OutSegmentedView: View {
         .frame(maxWidth: .infinity)
         .background(Dodam.color(.secondary))
         .clipShape(RoundedRectangle(cornerRadius: 12))
+        .onChange(of: selected) { newValue in
+            selection?.wrappedValue = newValue
+        }
+        .onReceive(Just(selection)) { newValue in
+            if let newValue,
+               selected != newValue.wrappedValue {
+                withAnimation(.spring) {
+                    selected = newValue.wrappedValue
+                }
+            }
+        }
     }
 }
 
