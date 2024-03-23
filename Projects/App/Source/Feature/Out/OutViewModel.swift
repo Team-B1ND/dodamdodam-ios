@@ -13,24 +13,24 @@ class OutViewModel: ObservableObject {
     @Published var outGoingData: [Out]? = [
         Out(
             id: 1,
-            reason: "reason",
+            reason: "이유 없음",
             status: "ALLOWED",
             student: Student(
                 id: 1,
                 grade: 3,
                 room: 4,
                 number: 12,
-                name: "이민규"
+                name: "규민이"
             ),
-            startAt: "yyyy-MM-ss HH:mm:ss",
-            endAt: "yyyy-MM-ss HH:mm:ss",
-            createdAt: "yyyy-MM-ss HH:mm:ss",
-            modifiedAt: "yyyy-MM-ss HH:mm:ss"
+            startAt: "2024-03-24 17:00:00",
+            endAt: "2024-03-26 12:00:00",
+            createdAt: "2024-03-23 17:00:00",
+            modifiedAt: "2024-03-23 17:00:00"
         ),
         Out(
             id: 2,
-            reason: "reason",
-            status: "PENDING",
+            reason: "아무 이유나 적기",
+            status: "DENY",
             student: Student(
                 id: 1,
                 grade: 3,
@@ -38,10 +38,10 @@ class OutViewModel: ObservableObject {
                 number: 12,
                 name: "이민규"
             ),
-            startAt: "yyyy-MM-ss HH:mm:ss",
-            endAt: "yyyy-MM-ss HH:mm:ss",
-            createdAt: "yyyy-MM-ss HH:mm:ss",
-            modifiedAt: "yyyy-MM-ss HH:mm:ss"
+            startAt: "2024-03-24 17:00:00",
+            endAt: "2024-03-26 12:00:00",
+            createdAt: "2024-03-23 17:00:00",
+            modifiedAt: "2024-03-23 17:00:00"
         )
     ]
     

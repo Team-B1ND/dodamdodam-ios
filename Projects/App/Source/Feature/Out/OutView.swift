@@ -48,8 +48,10 @@ struct OutView: View {
         } content: {
             VStack(spacing: 12) {
                 if viewModel.selection == 0 {
-                    if let data = viewModel.outGoingData {
-                        Text(data[0].reason)
+                    if let datas = viewModel.outGoingData {
+                        ForEach(datas, id: \.self) { data in
+                            OutApplyListCell(data: data)
+                        }
                     } else {
                         DodamEmptyView(
                             .outGoing
@@ -59,8 +61,10 @@ struct OutView: View {
                     }
                 }
                 if viewModel.selection == 1 {
-                    if let data = viewModel.outSleepingData {
-                        Text(data[0].reason)
+                    if let datas = viewModel.outSleepingData {
+                        ForEach(datas, id: \.self) { data in
+                            OutApplyListCell(data: data)
+                        }
                     } else {
                         DodamEmptyView(
                             .outSleeping
