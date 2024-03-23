@@ -137,6 +137,16 @@ struct RegisterInfoView: View {
             }
         }
         .padding(.horizontal, 16)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                if step == 1 && testInfoText.count >= 9 {
+                    Button("완료") {
+                        step = 2
+                    }
+                }
+            }
+        }
         //        .ignoresSafeArea(.keyboard)
     }
 }
