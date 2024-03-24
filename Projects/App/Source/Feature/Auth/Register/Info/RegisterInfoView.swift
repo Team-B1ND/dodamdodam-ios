@@ -124,7 +124,7 @@ struct RegisterInfoView: View {
                 testInfoText = "\($0[0])학년 \($0[4])반"
             case 9: // 번호가 두 글자일 때 번호를 삭제한 경우: "1학년 2반 34"
                 if testInfoText[8] != "번" {
-                    testInfoText = "\($0[0])학년 \($0[4])반"
+                    testInfoText = "\($0[0])학년 \($0[4])반 \($0[7])번"
                 }
             case 10: // 번호를 한 글자 더 추가한 경우: "1학년 2반 3번4"
                 if $0[9] != "번" {
