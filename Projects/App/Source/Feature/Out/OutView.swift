@@ -25,7 +25,7 @@ struct OutView: View {
                         .padding(.leading, 20)
                     Spacer()
                     Button {
-                        // bell action
+                        flow.push(OutApplyView())
                     } label: {
                         Dodam.icon(.plus)
                             .resizable()

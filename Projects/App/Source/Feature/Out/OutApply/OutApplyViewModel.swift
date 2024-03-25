@@ -10,4 +10,5 @@ import Combine
 class OutApplyViewModel: ObservableObject {
     
     @Published var selection: Int = 0
+    @Published var testText: String = ""
 }

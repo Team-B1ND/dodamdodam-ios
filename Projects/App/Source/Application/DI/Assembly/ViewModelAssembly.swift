@@ -34,6 +34,8 @@ class ViewModelAssembly: Assembly {
         container.register(OutViewModel.self) { _ in
             OutViewModel()
         }
-
+        container.register(OutApplyViewModel.self) { _ in
+            OutApplyViewModel()
+        }
     }
 }

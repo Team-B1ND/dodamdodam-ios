@@ -84,7 +84,9 @@ struct OutApplyListCell: View {
                     }
                     .padding(.top, 4)
                 } else {
-                    
+                    HStack {
+                        
+                    }
                 }
             }
             .padding([.bottom, .horizontal], 16)
