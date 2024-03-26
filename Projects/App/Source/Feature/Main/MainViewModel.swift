@@ -6,9 +6,8 @@
 //
 
 import Combine
-import FlowKit
 
 class MainViewModel: ObservableObject {
     
-    @Inject var flow: FlowProvider
+    @Published var selection: Int = 0
 }

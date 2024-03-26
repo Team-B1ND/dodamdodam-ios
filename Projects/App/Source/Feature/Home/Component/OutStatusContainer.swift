@@ -57,18 +57,6 @@ struct OutStatusContainer: View {
     }
 }
 
-public struct Out: Codable, Hashable {
-    let id: Int
-    let reason, status: String
-    let student: Student
-    let startAt, endAt, createdAt, modifiedAt: String
-}
-
-public struct Student: Codable, Hashable {
-    let id, grade, room, number: Int
-    let name: String
-}
-
 #Preview {
     let dummyOutData1 = Out(
         id: 1,

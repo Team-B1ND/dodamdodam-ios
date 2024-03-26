@@ -25,20 +25,22 @@ struct MealContainer: View {
         if let data = mealData {
             DodamPageView(selection: $mealIdx) {
                 ForEach([
-                    data.breakfast.details,
-                    data.lunch.details,
-                    data.dinner.details
+                    data.breakfast,
+                    data.lunch,
+                    data.dinner
                 ], id: \.self
                 ) { meals in
-                    Text(meals.map { $0.name }.joined(separator: ", "))
-                        .font(.body(.medium))
-                        .dodamColor(.onSurfaceVariant)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 6)
-                        .page()
+                    Text(meals?.details.map {
+                        $0.name
+                    }.joined(separator: ", ") ?? "")
+                    .font(.body(.medium))
+                    .dodamColor(.onSurfaceVariant)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 6)
+                    .page()
                 }
             }
-            .frame(maxHeight: 50)
+            .frame(height: 50)
             .padding(6)
             .onAppear {
                 let currentTime = Date()
@@ -90,7 +92,10 @@ struct MealContainer: View {
                     MealItem(name: "고등어무조림", allergies: [5, 6, 7, 13]),
                     MealItem(name: "취나물무침", allergies: [5, 6]),
                     MealItem(name: "배추김치", allergies: [9]),
-                    MealItem(name: "롤링핫도그", allergies: [1, 2, 5, 6, 10, 12, 15, 18])
+                    MealItem(name: "롤링핫도그", allergies: [1, 2, 5, 6, 10, 12, 15, 18]),
+                    MealItem(name: "흑미밥", allergies: []),
+                    MealItem(name: "왕만두육개장", allergies: [1, 5, 6, 10, 16, 18])
+                    
                 ],
                 calorie: 945.5
             ),
@@ -159,22 +164,4 @@ struct MealContainer: View {
         }
     }
     return MealContainerPreview()
-}
-
-public struct Meal: Codable, Hashable {
-    let exists: Bool
-    let date: String
-    let breakfast: MealDetails
-    let lunch: MealDetails
-    let dinner: MealDetails
-}
-
-public struct MealDetails: Codable, Hashable {
-    let details: [MealItem]
-    let calorie: Double
-}
-
-public struct MealItem: Codable, Hashable {
-    let name: String
-    let allergies: [Int]
 }

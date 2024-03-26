@@ -23,11 +23,9 @@ public struct Flow: DynamicProperty {
 @main
 struct AppMain: App {
     
-//    @Inject private var flow: FlowProvider
-    
     var body: some Scene {
         WindowGroup {
-            FlowPresenter(rootView: HomeView())
+            FlowPresenter(rootView: OnboardingView())
                 .ignoresSafeArea()
         }
     }

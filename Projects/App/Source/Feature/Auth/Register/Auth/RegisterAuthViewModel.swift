@@ -6,9 +6,7 @@
 //
 
 import Combine
-import FlowKit
 
 class RegisterAuthViewModel: ObservableObject {
     
-    @Inject var flow: FlowProvider
 }
