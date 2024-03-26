@@ -65,14 +65,14 @@ struct OutApplyListCell: View {
                     return "오류"
                 }())
                 .font(.label(.large))
-                .dodamColor(.tertiary)
+                .dodamColor(.onSurfaceVariant)
                 .padding(.top, 5)
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
                 Text("\(data.reason)")
                     .font(.body(.medium))
-                    .dodamColor(.onBackground)
+                    .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Rectangle()
                     .frame(height: 1)
@@ -82,7 +82,7 @@ struct OutApplyListCell: View {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
-                            .dodamColor(.tertiary)
+                            .dodamColor(.onSurface)
                         // 나중에 거절 사유 추가되면 데이터 넣기
                         Text("그냥 맘에 안들어서 거절함")
                             .font(.body(.medium))
@@ -93,52 +93,40 @@ struct OutApplyListCell: View {
                 } else {
                     HStack(alignment: .bottom, spacing: 16) {
                         VStack(spacing: 8) {
-                            HStack(spacing: 4) {
-                                Text("2시간 10분")
-                                    .font(.title(.small))
-                                    .dodamColor(.tertiary)
-                                Text("남음")
-                                    .font(.label(.large))
-                                    .dodamColor(.tertiary)
-                                Spacer()
-                            }
-                            DodamLinearProgressView(progress: 0.6)
-                        }
-                        VStack(spacing: 8) {
-                            HStack(spacing: 8) {
+                            HStack(alignment: .bottom, spacing: 4) {
+                                Text({ () -> String in
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    dateFormatter.locale = Locale(identifier: "ko_KR")
+                                    if let date = dateFormatter.date(from: data.startAt) {
+                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
+                                        return dateFormatter.string(from: date)
+                                    }
+                                    return "오류"
+                                }())
+                                .font(.body(.medium))
+                                .dodamColor(.onSurface)
                                 Text(outType == .outGoing ? "외출" : "외박")
                                     .font(.label(.large))
-                                    .dodamColor(.tertiary)
+                                    .dodamColor(.onSurfaceVariant)
+                                Spacer()
                                 Text({ () -> String in
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: data.startAt) {
+                                    if let date = dateFormatter.date(from: data.endAt) {
                                         dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
                                         return dateFormatter.string(from: date)
                                     }
                                     return "오류"
                                 }())
                                 .font(.body(.medium))
-                                .dodamColor(.onSurfaceVariant)
-                            }
-                            HStack(spacing: 8) {
+                                .dodamColor(.onSurface)
                                 Text("복귀")
                                     .font(.label(.large))
-                                    .dodamColor(.tertiary)
-                                Text({ () -> String in
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: data.startAt) {
-                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
-                                        return dateFormatter.string(from: date)
-                                    }
-                                    return "오류"
-                                }())
-                                .font(.body(.medium))
-                                .dodamColor(.onSurfaceVariant)
+                                    .dodamColor(.onSurfaceVariant)
                             }
+                            DodamLinearProgressView(progress: 0.6)
                         }
                     }
                 }
