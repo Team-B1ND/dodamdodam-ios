@@ -12,31 +12,16 @@ public struct DodamContainer<Content>: View where Content: View {
     
     private let title: String
     private let icon: Image
-    private let isUseRightButton: Bool
     private let content: () -> Content
-    private let action: () -> Void
     
     private init(
         title: String,
         icon: Image,
-        isUseRightButton: Bool = false,
-        action: @escaping () -> Void = {},
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.title = title
         self.icon = icon
-        self.isUseRightButton = isUseRightButton
-        self.action = action
         self.content = content
-    }
-    
-    public func arrowButtonAction(_ action: @escaping () -> Void) -> Self {
-        .init(title: title,
-              icon: icon,
-              isUseRightButton: true,
-              action: action,
-              content: content
-        )
     }
     
     public static func `default`(
@@ -68,16 +53,6 @@ public struct DodamContainer<Content>: View where Content: View {
                     .font(.title(.medium))
                     .dodamColor(.onSurfaceVariant)
                 Spacer()
-                if isUseRightButton {
-                    Button {
-                        action()
-                    } label: {
-                        Dodam.icon(.chevronRight)
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .dodamColor(.tertiary)
-                    }
-                }
             }
             .padding([.top, .horizontal], 16)
             content()
@@ -106,9 +81,6 @@ public struct DodamContainer<Content>: View where Content: View {
                 ) {
                     Text("contents")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .arrowButtonAction {
-                    print("화살표 액션")
                 }
             }
             .padding(16)

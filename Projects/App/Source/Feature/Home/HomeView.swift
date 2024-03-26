@@ -76,10 +76,6 @@ struct HomeView: View {
                     }
                     .scaledButtonStyle()
                 }
-                .arrowButtonAction {
-                    print("화살표 액션")
-                }
-                
                 HStack(alignment: .top, spacing: 12) {
                     DodamContainer.default(
                         title: "외출 외박",
@@ -123,9 +119,6 @@ struct HomeView: View {
                         .padding(6)
                     }
                     .scaledButtonStyle()
-                }
-                .arrowButtonAction {
-                    print("화살표 액션")
                 }
             }
             .padding(.horizontal, 16)
