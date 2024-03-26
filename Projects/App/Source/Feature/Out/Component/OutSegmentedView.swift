@@ -54,12 +54,14 @@ struct OutSegmentedView: View {
                                 )
                                 .shadow(
                                     color: .black.opacity(0.1),
-                                    radius: 4, x: 2, y: 2
+                                    radius: 4,
+                                    x: 2,
+                                    y: 2
                                 )
                         }
                     }
                 )
-                .padding([.horizontal, .vertical], 4)
+                .padding(4)
             }
         }
         .frame(maxWidth: .infinity)

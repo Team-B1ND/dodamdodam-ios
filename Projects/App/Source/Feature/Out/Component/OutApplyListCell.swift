@@ -11,12 +11,19 @@ import Combine
 
 struct OutApplyListCell: View {
     
+    enum OutType {
+        case outGoing, outSleeping
+    }
+    
     private let data: Out
+    private let outType: OutType
     
     init(
-        data: Out
+        data: Out,
+        outType: OutType
     ) {
         self.data = data
+        self.outType = outType
     }
     
     var body: some View {
@@ -84,8 +91,55 @@ struct OutApplyListCell: View {
                     }
                     .padding(.top, 4)
                 } else {
-                    HStack {
-                        
+                    HStack(alignment: .bottom, spacing: 16) {
+                        VStack(spacing: 8) {
+                            HStack(spacing: 4) {
+                                Text("2시간 10분")
+                                    .font(.title(.small))
+                                    .dodamColor(.tertiary)
+                                Text("남음")
+                                    .font(.label(.large))
+                                    .dodamColor(.tertiary)
+                                Spacer()
+                            }
+                            DodamLinearProgressView(progress: 0.6)
+                        }
+                        VStack(spacing: 8) {
+                            HStack(spacing: 8) {
+                                Text(outType == .outGoing ? "외출" : "외박")
+                                    .font(.label(.large))
+                                    .dodamColor(.tertiary)
+                                Text({ () -> String in
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    dateFormatter.locale = Locale(identifier: "ko_KR")
+                                    if let date = dateFormatter.date(from: data.startAt) {
+                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
+                                        return dateFormatter.string(from: date)
+                                    }
+                                    return "오류"
+                                }())
+                                .font(.body(.medium))
+                                .dodamColor(.onSurfaceVariant)
+                            }
+                            HStack(spacing: 8) {
+                                Text("복귀")
+                                    .font(.label(.large))
+                                    .dodamColor(.tertiary)
+                                Text({ () -> String in
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                                    dateFormatter.locale = Locale(identifier: "ko_KR")
+                                    if let date = dateFormatter.date(from: data.startAt) {
+                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
+                                        return dateFormatter.string(from: date)
+                                    }
+                                    return "오류"
+                                }())
+                                .font(.body(.medium))
+                                .dodamColor(.onSurfaceVariant)
+                            }
+                        }
                     }
                 }
             }
@@ -99,7 +153,7 @@ struct OutApplyListCell: View {
 #Preview {
     let outData1: Out = Out(
         id: 1,
-        reason: "맛있는 음식을 위해 외출 다녀오겠습니다.",
+        reason: "맛있는 음식을 위해 나갔다 올게요.",
         status: "ALLOWED",
         student: Student(
             id: 1,
@@ -115,7 +169,7 @@ struct OutApplyListCell: View {
     )
     let outData2: Out = Out(
         id: 1,
-        reason: "맛있는 음식을 위해 외출 다녀오겠습니다.",
+        reason: "맛있는 음식을 위해 나갔다 올게요 ㅎㅎ.",
         status: "DENY",
         student: Student(
             id: 1,
@@ -130,8 +184,9 @@ struct OutApplyListCell: View {
         modifiedAt: "2024-03-23 17:00:00"
     )
     return VStack(spacing: 20) {
-        OutApplyListCell(data: outData1)
-        OutApplyListCell(data: outData2)
+        OutApplyListCell(data: outData1, outType: .outGoing)
+        OutApplyListCell(data: outData1, outType: .outSleeping)
+        OutApplyListCell(data: outData2, outType: .outSleeping)
     }
     .padding(.horizontal, 16)
     .frame(maxHeight: .infinity)

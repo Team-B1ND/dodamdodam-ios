@@ -50,7 +50,10 @@ struct OutView: View {
                 if viewModel.selection == 0 {
                     if let datas = viewModel.outGoingData {
                         ForEach(datas, id: \.self) { data in
-                            OutApplyListCell(data: data)
+                            OutApplyListCell(
+                                data: data,
+                                outType: .outGoing
+                            )
                         }
                     } else {
                         DodamEmptyView(
@@ -63,7 +66,10 @@ struct OutView: View {
                 if viewModel.selection == 1 {
                     if let datas = viewModel.outSleepingData {
                         ForEach(datas, id: \.self) { data in
-                            OutApplyListCell(data: data)
+                            OutApplyListCell(
+                                data: data,
+                                outType: .outSleeping
+                            )
                         }
                     } else {
                         DodamEmptyView(
