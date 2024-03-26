@@ -38,10 +38,10 @@ struct OutSegmentedView: View {
                     }
                 } label: {
                     Text(idx == 0 ? "외출" : "외박")
-                        .font(.title(.small))
-                        .dodamColor(.onSurfaceVariant)
-                        .frame(height: 44)
+                        .font(.body(.large))
+                        .dodamColor(isSelected ? .onSurface : .onSurfaceVariant)
                         .frame(maxWidth: .infinity)
+                        .padding(.vertical, 10)
                 }
                 .background(
                     Group {
