@@ -50,7 +50,7 @@ struct NightStudyStatusContainer: View {
         } else {
             SupportingContainer(
                 subTitle: "공부할 시간이 필요하다면",
-                title: "다시 신청하기"
+                title: "심야 자습 신청하기"
             )
         }
     }

@@ -28,7 +28,7 @@ struct HomeView: View {
                     Dodam.icon(.bell)
                         .resizable()
                         .frame(width: 24, height: 24)
-                        .dodamColor(.tertiary)
+                        .dodamColor(.onSurfaceVariant)
                 }
                 .frame(width: 44, height: 44)
                 .padding(.trailing, 12)
@@ -39,7 +39,7 @@ struct HomeView: View {
         } content: {
             VStack(spacing: 12) {
                 BannerContainer(
-                    data: nil
+                    data: viewModel.bannerData
                 )
                 DodamContainer.default(
                     title: "오늘의 " + { () -> String in

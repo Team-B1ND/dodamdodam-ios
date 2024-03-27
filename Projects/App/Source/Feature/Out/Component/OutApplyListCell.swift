@@ -184,8 +184,8 @@ struct OutApplyListCell: View {
             number: 12,
             name: "이민규"
         ),
-        startAt: "2024-03-26 20:00:00",
-        endAt: "2024-03-26 23:50:00",
+        startAt: "2024-03-27 20:00:00",
+        endAt: "2024-03-27 20:30:00",
         createdAt: "2024-03-23 17:00:00",
         modifiedAt: "2024-03-23 17:00:00"
     )
