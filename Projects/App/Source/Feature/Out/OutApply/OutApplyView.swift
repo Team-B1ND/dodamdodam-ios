@@ -22,9 +22,17 @@ struct OutApplyView: View {
                 title: "\(viewModel.selection == 0 ? "외출" : "외박") 사유",
                 text: $viewModel.testText
             )
+            /// 컴포넌트 넣기
             Spacer()
+            DodamButton.fullWidth(
+                title: "확인"
+            ) {
+                // action
+            }
+            .disabled(true)
+            .padding(.bottom, 8)
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, 24)
         .navigationBarHidden(false)
     }
 }
