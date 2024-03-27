@@ -9,9 +9,7 @@ import SwiftUI
 import DDS
 
 struct WakeupSongContainer: View {
-    
-    private let thumbnailWidth: CGFloat = 160/1.2
-    private let thumbnailHeight: CGFloat = 90/1.2
+
     private let wakeupSongData: [WakeupSong]?
     
     public init(
@@ -30,23 +28,25 @@ struct WakeupSongContainer: View {
                                 image
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
-                                    .frame(width: thumbnailWidth, height: thumbnailHeight)
+                                    .frame(width: 120, height: 67)
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
                             } placeholder: {
                                 Rectangle()
-                                    .frame(width: thumbnailWidth, height: thumbnailHeight)
+                                    .frame(width: 120, height: 67)
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .shimmer()
                             }
                             
                         }
-                        VStack(alignment: .leading, spacing: 4) {
+                        /// marquee 적용 하기
+                        VStack(alignment: .leading, spacing: 0) {
                             Text("\(data.videoTitle)")
                                 .font(.body(.medium))
-                                .dodamColor(.onSurfaceVariant)
-                                .lineLimit(2)
+                                .dodamColor(.onSurface)
+                                .lineLimit(1)
                             Text("\(data.channelTitle)")
-                                .font(.label(.medium))
-                                .dodamColor(.tertiary)
+                                .font(.label(.large))
+                                .dodamColor(.onSurfaceVariant)
                                 .lineLimit(1)
                         }
                     }
@@ -54,7 +54,7 @@ struct WakeupSongContainer: View {
                     .page()
                 }
             }
-            .frame(height: thumbnailHeight)
+            .frame(height: 80)
         } else {
             SupportingContainer(
                 subTitle: "승인된 기상송이 없어요",
@@ -93,18 +93,12 @@ struct WakeupSongContainer: View {
             WakeupSongContainer(data: [dummy1, dummy2])
                 .padding(6)
         }
-        .arrowButtonAction {
-            print("화살표 액션")
-        }
         DodamContainer.default(
             title: "오늘의 기상송",
             icon: Dodam.icon(.note)
         ) {
             WakeupSongContainer(data: nil)
                 .padding(6)
-        }
-        .arrowButtonAction {
-            print("화살표 액션")
         }
     }
     .padding(16)

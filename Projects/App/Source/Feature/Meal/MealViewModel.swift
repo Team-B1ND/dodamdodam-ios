@@ -12,7 +12,7 @@ class MealViewModel: ObservableObject {
     @Published var mealDatas: [Meal]? = [
         Meal(
             exists: true,
-            date: "2024-03-20",
+            date: "2024-03-26",
             breakfast: MealDetails(
                 details: [
                     MealItem(name: "전복죽", allergies: [18]),
@@ -42,7 +42,7 @@ class MealViewModel: ObservableObject {
                 ], calorie: 1114.4)),
         Meal(
             exists: true,
-            date: "2024-03-21",
+            date: "2024-03-27",
             breakfast: MealDetails(
                 details: [
                     MealItem(name: "전복죽", allergies: [18]),
@@ -73,7 +73,7 @@ class MealViewModel: ObservableObject {
         ),
         Meal(
             exists: true,
-            date: "2024-03-22",
+            date: "2024-03-28",
             breakfast: MealDetails(
                 details: [
                     MealItem(name: "전복죽", allergies: [18]),
@@ -87,7 +87,7 @@ class MealViewModel: ObservableObject {
         ),
         Meal(
             exists: false,
-            date: "2024-03-23",
+            date: "2024-03-29",
             breakfast: nil,
             lunch: nil,
             dinner: nil

@@ -104,19 +104,12 @@ struct ScheduleContainer: View {
         ) {
             ScheduleContainer(data: [dummy1, dummy2, dummy3])
         }
-        .arrowButtonAction {
-            print("화살표 액션")
-        }
         DodamContainer.default(
             title: "가까운 일정",
             icon: Dodam.icon(.calendar)
         ) {
             ScheduleContainer(data: nil)
         }
-        .arrowButtonAction {
-            print("화살표 액션")
-        }
-        
     }
     .padding(16)
     .background(Dodam.color(.surface))

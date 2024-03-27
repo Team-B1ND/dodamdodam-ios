@@ -18,7 +18,7 @@ struct MainView: View {
                 .page(.icon(.home))
             MealView()
                 .page(.icon(.forkAndKnife))
-            Text("Out")
+            OutView()
                 .page(.icon(.doorOpen))
             Text("NightStudy")
                 .page(.icon(.moonPlus))
