@@ -8,8 +8,9 @@
 import Foundation
 
 struct AuthRepositoryImpl: AuthRepository {
-
-    public func signIn(_ request: SignInRequest) -> Single<Void> {
+    
+    public func postLogin(_ request: PostLoginRequest) async throws -> Member {
+        // TODO: TOKEN LOGIC
         return authDataSource.signIn(request)
             .flatMap { response -> Single<Void> in
                 KeychainService.username = request.id
@@ -18,8 +19,9 @@ struct AuthRepositoryImpl: AuthRepository {
                 return .just(Void())
             }
     }
-
-    public func signUp(_ request: SignUpRequest) -> Single<Void> {
+    
+    public func postReissue(_ request: PostReissueRequest) async throws {
+        // TODO: REISSUE LOGIC
         return authDataSource.signUp(request)
     }
 }

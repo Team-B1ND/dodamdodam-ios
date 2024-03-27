@@ -11,13 +11,13 @@ struct AuthRemote: RemoteProtocol {
     
     typealias Target = AuthService
     
-    func login(_ request: LoginRequest) async -> Response<LoginResponse> {
-        return self.request(.postSignIn(request))
-            .map(Response<SignInData>.self, using: decoder)
+    func postLogin(_ request: PostLoginRequest) async throws -> Response<LoginResponse> {
+        try await self.request(target: .postLogin(request))
+            .map(Response<LoginResponse>.self, using: decoder)
     }
     
-    func reissue(_ request: ReissueRequest) async {
-        return self.request(.postSignUp(request))
-            .map { _ in Void() }
+    func postReissue(_ request: PostReissueRequest) async throws -> Response<ReissueResponse> {
+        try await self.request(target: .postReissue(request))
+            .map(Response<ReissueResponse>.self, using: decoder)
     }
 }

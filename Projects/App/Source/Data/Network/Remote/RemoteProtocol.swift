@@ -13,7 +13,9 @@ protocol RemoteProtocol {
     associatedtype Target: TargetType
     
     var provider: MoyaProvider<Target> { get }
-
+    
+    var decoder: JSONDecoder { get }
+    
     func request(
         target: MoyaProvider<Target>.Target
     ) async throws -> Moya.Response
@@ -23,6 +25,10 @@ extension RemoteProtocol {
     
     var provider: MoyaProvider<Target> {
         .init(plugins: [NetworkLoggerPlugin()])
+    }
+    
+    var decoder: JSONDecoder {
+        .init()
     }
     
     func request(

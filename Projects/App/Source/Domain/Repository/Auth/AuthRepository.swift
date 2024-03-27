@@ -9,6 +9,7 @@ import Foundation
 
 protocol AuthRepository {
     
-    func login(_ request: LoginRequest) async -> Member
-    func reissue(_ request: ReissueRequest) async
+    func postLogin(_ request: PostLoginRequest) async throws -> Member
+    
+    func postReissue(_ request: PostReissueRequest) async throws
 }

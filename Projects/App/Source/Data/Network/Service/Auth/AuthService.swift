@@ -10,8 +10,8 @@ import Moya
 
 enum AuthService: ServiceProtocol {
     
-    case login(_ request: LoginRequest)
-    case reissue(_ request: ReissueRequest)
+    case postLogin(_ request: PostLoginRequest)
+    case postReissue(_ request: PostReissueRequest)
 }
 
 extension AuthService {
@@ -22,23 +22,23 @@ extension AuthService {
     
     var path: String {
         switch self {
-        case .login: "/login"
-        case .reissue: "/reissue"
+        case .postLogin: "/login"
+        case .postReissue: "/reissue"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .login: .post
-        case .reissue: .post
+        case .postLogin: .post
+        case .postReissue: .post
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case let .login(request):
+        case let .postLogin(request):
             request.toJSONParameters()
-        case let .reissue(request):
+        case let .postReissue(request):
             request.toJSONParameters()
         }
     }

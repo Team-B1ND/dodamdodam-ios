@@ -6,3 +6,40 @@
 //
 
 import Foundation
+import Moya
+
+enum MealService: ServiceProtocol {
+    
+    case fetchMeal(_ request: FetchMealRequest)
+    case fetchMonthlyMeal(_ request: FetchMonthlyMealRequest)
+}
+
+extension MealService {
+    
+    var baseURL: URL {
+        host.appendingPathComponent("meal")
+    }
+    
+    var path: String {
+        switch self {
+        case .fetchMeal: ""
+        case .fetchMonthlyMeal: "/month"
+        }
+    }
+    
+    var method: Moya.Method {
+        switch self {
+        case .fetchMeal: .get
+        case .fetchMonthlyMeal: .get
+        }
+    }
+    
+    var task: Moya.Task {
+        switch self {
+        case let .fetchMeal(request):
+            request.toURLParameters()
+        case let .fetchMonthlyMeal(request):
+            request.toURLParameters()
+        }
+    }
+}

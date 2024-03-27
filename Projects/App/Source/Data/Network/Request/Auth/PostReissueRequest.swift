@@ -1,5 +1,5 @@
 //
-//  ReissueRequest.swift
+//  PostReissueRequest.swift
 //  DodamDodam
 //
 //  Created by Mercen on 3/14/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ReissueRequest: RequestProtocol {
+struct PostReissueRequest: RequestProtocol {
     
     let refreshToken: String
 }

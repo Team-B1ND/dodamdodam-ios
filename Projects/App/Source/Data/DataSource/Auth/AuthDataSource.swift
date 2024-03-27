@@ -11,11 +11,11 @@ struct AuthDataSource {
     
     let remote: AuthRemote
     
-    func login(_ request: LoginRequest) async -> Response<LoginResponse> {
-        await remote.login(request)
+    func postLogin(_ request: PostLoginRequest) async throws -> Response<LoginResponse> {
+        try await remote.postLogin(request)
     }
     
-    func signUp(_ request: SignUpRequest) -> Single<Void> {
-        remote.postSignUp(request)
+    func postReissue(_ request: PostReissueRequest) async throws -> Response<ReissueResponse> {
+        try await remote.postReissue(request)
     }
 }
