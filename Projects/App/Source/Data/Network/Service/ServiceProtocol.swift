@@ -1,5 +1,5 @@
 //
-//  Service.swift
+//  ServiceProtocol.swift
 //  DodamDodam
 //
 //  Created by Mercen on 3/14/24.
@@ -8,7 +8,13 @@
 import Foundation
 import Moya
 
-extension TargetType {
+protocol ServiceProtocol: TargetType {
+    
+    var host: URL { get }
+    var headers: [String: String]? { get }
+}
+
+extension ServiceProtocol {
     
     var host: URL {
         .init(string: Constants.API)!

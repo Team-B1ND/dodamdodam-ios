@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Response<T: Decodable>: Decodable {
+struct Response<T: ResponseProtocol>: ResponseProtocol {
     var status: Int
     var message: String
     var data: T

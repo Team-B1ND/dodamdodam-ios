@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ReissueRequest: Encodable {
+struct ReissueRequest: RequestProtocol {
     
     let refreshToken: String
 }

@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-enum AuthService: TargetType {
+enum AuthService: ServiceProtocol {
     
     case login(_ request: LoginRequest)
     case reissue(_ request: ReissueRequest)

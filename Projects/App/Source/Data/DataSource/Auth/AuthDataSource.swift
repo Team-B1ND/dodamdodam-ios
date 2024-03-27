@@ -12,7 +12,7 @@ struct AuthDataSource {
     let remote: AuthRemote
     
     func login(_ request: LoginRequest) async -> Response<LoginResponse> {
-        remote.login(request)
+        await remote.login(request)
     }
     
     func signUp(_ request: SignUpRequest) -> Single<Void> {

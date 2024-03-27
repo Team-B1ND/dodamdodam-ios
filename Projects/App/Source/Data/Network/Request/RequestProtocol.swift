@@ -1,5 +1,5 @@
 //
-//  Encodable.swift
+//  Request.swift
 //  DodamDodam
 //
 //  Created by Mercen on 3/14/24.
@@ -8,7 +8,26 @@
 import Foundation
 import Moya
 
-extension Encodable {
+protocol RequestProtocol: Encodable {
+    
+    func toRequestParameters(encoding: ParameterEncoding) -> Moya.Task
+    
+    func toJSONParameters() -> Moya.Task
+    
+    func toURLParameters() -> Moya.Task
+}
+
+extension RequestProtocol {
+    
+    var host: URL {
+        .init(string: Constants.API)!
+    }
+    
+    var headers: [String: String]? {
+        var headers = ["Content-Type": "application/json"]
+        headers["Authorization"] = "" // TOKEN
+        return headers
+    }
     
     func toRequestParameters(encoding: ParameterEncoding) -> Moya.Task {
         if let data = try? JSONEncoder().encode(self),
