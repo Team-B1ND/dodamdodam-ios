@@ -7,29 +7,35 @@
 
 import Swinject
 
-class ViewModelAssembly: Assembly {
+struct ViewModelAssembly: Assembly {
     
     func assemble(container: Container) {
         container.register(OnboardingViewModel.self) { _ in
-            OnboardingViewModel()
-        }
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(LoginViewModel.self) { _ in
-            LoginViewModel()
-        }
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(RegisterInfoViewModel.self) { _ in
-            RegisterInfoViewModel()
-        }
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(RegisterAuthViewModel.self) { _ in
-            RegisterAuthViewModel()
-        }
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(MainViewModel.self) { _ in
-            MainViewModel()
-        }
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(HomeViewModel.self) { _ in
-            HomeViewModel()
-        }
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(MealViewModel.self) { _ in
-            MealViewModel()
-        }
+                .init()
+        }.inObjectScope(.container)
     }
 }
