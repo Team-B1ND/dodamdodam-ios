@@ -37,5 +37,13 @@ struct ViewModelAssembly: Assembly {
         container.register(MealViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
+        
+        container.register(OutViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(OutApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
     }
 }

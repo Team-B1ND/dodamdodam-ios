@@ -87,7 +87,7 @@ class MealViewModel: ObservableObject {
         ),
         MealData(
             exists: false,
-            date: "2024-03-23",
+            date: "2024-03-29",
             breakfast: nil,
             lunch: nil,
             dinner: nil

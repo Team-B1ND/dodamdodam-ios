@@ -119,6 +119,7 @@ struct OnboardingView: View {
                     Spacer()
                     Dodam.icon(.chevronRight)
                         .resizable()
+                        .renderingMode(.template)
                         .frame(width: 17)
                         .dodamColor(.onSurface)
                 }
@@ -145,6 +146,7 @@ struct OnboardingView: View {
                     Spacer()
                     Dodam.icon(.chevronRight)
                         .resizable()
+                        .renderingMode(.template)
                         .frame(width: 17)
                         .dodamColor(.onSurface)
                 }
