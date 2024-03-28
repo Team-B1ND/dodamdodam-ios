@@ -1,5 +1,5 @@
 //
-//  OutApplyListCell.swift
+//  OutApplyCell.swift
 //  DodamDodam
 //
 //  Created by 이민규 on 3/23/24.
@@ -9,7 +9,7 @@ import SwiftUI
 import DDS
 import Combine
 
-struct OutApplyListCell: View {
+struct OutApplyCell: View {
     
     public enum OutType {
         case outGoing, outSleeping
@@ -206,9 +206,9 @@ struct OutApplyListCell: View {
         modifiedAt: "2024-03-23 17:00:00"
     )
     return VStack(spacing: 20) {
-        OutApplyListCell(data: outData1, outType: .outGoing)
-        OutApplyListCell(data: outData1, outType: .outSleeping)
-        OutApplyListCell(data: outData2, outType: .outSleeping)
+        OutApplyCell(data: outData1, outType: .outGoing)
+        OutApplyCell(data: outData1, outType: .outSleeping)
+        OutApplyCell(data: outData2, outType: .outSleeping)
     }
     .padding(.horizontal, 16)
     .frame(maxHeight: .infinity)

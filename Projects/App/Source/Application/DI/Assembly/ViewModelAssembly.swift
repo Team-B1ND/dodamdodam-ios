@@ -37,5 +37,11 @@ class ViewModelAssembly: Assembly {
         container.register(OutApplyViewModel.self) { _ in
             OutApplyViewModel()
         }
+        container.register(NightStudyViewModel.self) { _ in
+            NightStudyViewModel()
+        }
+        container.register(NightStudyApplyViewModel.self) { _ in
+            NightStudyApplyViewModel()
+        }
     }
 }
