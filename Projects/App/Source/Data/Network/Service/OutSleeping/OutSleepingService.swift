@@ -10,7 +10,7 @@ import Moya
 
 enum OutSleepingService: ServiceProtocol {
     
-    case postOutSleeping(_ request: PostOutGoingRequest)
+    case postOutSleeping(_ request: PostOutSleepingRequest)
     case deleteOutSleeping(id: Int)
     case fetchOutSleeping
 }

@@ -5,13 +5,11 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
-
 struct OutSleepingRemote: RemoteProtocol {
     
     typealias Target = OutSleepingService
     
-    func postOutSleeping(_ request: PostOutGoingRequest) async throws -> DefaultResponse {
+    func postOutSleeping(_ request: PostOutSleepingRequest) async throws -> DefaultResponse {
         try await self.request(target: .postOutSleeping(request))
             .map(DefaultResponse.self, using: decoder)
     }

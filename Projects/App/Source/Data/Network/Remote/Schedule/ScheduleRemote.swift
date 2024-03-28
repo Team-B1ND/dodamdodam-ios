@@ -5,8 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
-
 struct ScheduleRemote: RemoteProtocol {
     
     typealias Target = ScheduleService

@@ -5,14 +5,13 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Moya
-
-struct AuthDataSource {
+struct AuthDataSource: DataSourceProtocol {
     
     let remote: AuthRemote
     
-    func postLogin(_ request: PostLoginRequest) async throws -> Response<LoginResponse> {
-        try await remote.postLogin(request)
+    func postLogin(_ request: PostLoginRequest) async throws -> Member {
+        let response = try await remote.postLogin(request)
+        return response.data.memeber
     }
     
     func postReissue(_ request: PostReissueRequest) async throws -> Response<ReissueResponse> {

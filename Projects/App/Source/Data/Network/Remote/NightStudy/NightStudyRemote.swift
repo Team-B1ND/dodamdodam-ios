@@ -5,8 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
-
 struct NightStudyRemote: RemoteProtocol {
     
     typealias Target = NightStudyService
