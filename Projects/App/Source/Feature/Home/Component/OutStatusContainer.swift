@@ -64,10 +64,10 @@ struct OutStatusContainer: View {
         status: "PENDING",
         student: Student(
             id: 1,
+            name: "이민규",
             grade: 3,
             room: 4,
-            number: 12,
-            name: "이민규"
+            number: 12
         ),
         startAt: "yyyy-MM-ss HH:mm:ss",
         endAt: "yyyy-MM-ss HH:mm:ss",
@@ -80,10 +80,10 @@ struct OutStatusContainer: View {
         status: "ALLOWED",
         student: Student(
             id: 1,
+            name: "이민규",
             grade: 3,
             room: 4,
-            number: 12,
-            name: "이민규"
+            number: 12
         ),
         startAt: "yyyy-MM-ss HH:mm:ss",
         endAt: "yyyy-MM-ss HH:mm:ss",

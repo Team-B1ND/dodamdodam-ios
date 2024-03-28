@@ -74,7 +74,7 @@ struct MealView: View {
                         
                         VStack(spacing: 12) {
                             ForEach(0..<3, id: \.self) { idx in
-                                let data: MealDetails? = {
+                                let data: Meal? = {
                                     switch idx {
                                     case 0: return datas.breakfast
                                     case 1: return datas.lunch

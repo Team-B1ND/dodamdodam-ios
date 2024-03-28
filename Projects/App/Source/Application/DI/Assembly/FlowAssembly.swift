@@ -8,13 +8,13 @@
 import Swinject
 import FlowKit
 
-class FlowAssembly: Assembly {
+struct FlowAssembly: Assembly {
     
     func assemble(container: Container) {
         container.register(FlowProvider.self) { _ in
-            FlowProvider(rootView: HomeView()) {
-                NavigationController(rootViewController: $0)
-            }
-        }
+                .init(rootView: HomeView()) {
+                    NavigationController(rootViewController: $0)
+                }
+        }.inObjectScope(.container)
     }
 }

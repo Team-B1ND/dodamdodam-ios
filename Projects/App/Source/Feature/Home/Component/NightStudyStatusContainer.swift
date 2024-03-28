@@ -65,10 +65,10 @@ struct NightStudyStatusContainer: View {
         reasonForPhone: "reasonForPhone",
         student: Student(
             id: 1,
+            name: "이민규",
             grade: 3,
             room: 4,
-            number: 12,
-            name: "이민규"
+            number: 12
         ),
         place: "프로그래밍 1실",
         startAt: "yyyy-MM-ss HH:mm:ss",
@@ -84,10 +84,10 @@ struct NightStudyStatusContainer: View {
         reasonForPhone: "reasonForPhone",
         student: Student(
             id: 1,
+            name: "이민규",
             grade: 3,
             room: 4,
-            number: 12,
-            name: "이민규"
+            number: 12
         ),
         place: "프로그래밍 1실",
         startAt: "yyyy-MM-ss HH:mm:ss",
