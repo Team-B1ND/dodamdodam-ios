@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+protocol UploadRepository {
+    
+    func postUpload(data: Data) async throws -> UploadResponse
+}
