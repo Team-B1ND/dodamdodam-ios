@@ -16,7 +16,7 @@ struct AuthRepositoryImpl: AuthRepository {
     }
     
     func postReissue(_ request: PostReissueRequest) async throws {
-        let data = try await dataSource.postReissue(request)
+        _ = try await dataSource.postReissue(request)
         // TODO: Refresh
     }
 }

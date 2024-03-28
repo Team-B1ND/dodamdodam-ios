@@ -45,7 +45,7 @@ extension WakeupSongService {
         case .fetchWakeupSongChart: .get
         case .postWakeupSong: .post
         case .postWakeupSongByKeyword: .post
-        case let .deleteWakeupSong(id): .delete
+        case .deleteWakeupSong: .delete
         }
     }
     

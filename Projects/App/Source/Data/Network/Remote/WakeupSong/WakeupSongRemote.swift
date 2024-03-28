@@ -14,7 +14,9 @@ struct WakeupSongRemote: RemoteProtocol {
             .map(Response<[WakeupSongResponse]>.self, using: decoder)
     }
     
-    func fetchAllowedWakeupSong(_ request: FetchAllowedWakeupSongRequest) async throws -> Response<[WakeupSongResponse]> {
+    func fetchAllowedWakeupSong(
+        _ request: FetchAllowedWakeupSongRequest
+    ) async throws -> Response<[WakeupSongResponse]> {
         try await self.request(target: .fetchAllowedWakeupSong(request))
             .map(Response<[WakeupSongResponse]>.self, using: decoder)
     }
