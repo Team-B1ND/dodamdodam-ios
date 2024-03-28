@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+struct UploadRepositoryImpl: UploadRepository {
+    
+    let dataSource: UploadDataSource
+    
+    func postUpload(data: Data) async throws -> UploadResponse {
+        try await dataSource.postUpload(data: data)
+    }
+}
