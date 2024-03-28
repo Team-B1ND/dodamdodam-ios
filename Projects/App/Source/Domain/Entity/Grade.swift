@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Grade: String, Codable, CaseIterable {
+enum Grade: String, Codable, CaseIterable, Hashable {
     
     case grade1 = "GRADE_1"
     case grade2 = "GRADE_2"

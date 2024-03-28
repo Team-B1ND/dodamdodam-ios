@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+struct BannerRemote: RemoteProtocol {
+    
+    typealias Target = BannerService
+    
+    func fetchActiveBanner() async throws -> Response<BannerResponse> {
+        try await self.request(target: .fetchActiveBanner)
+            .map(Response<BannerResponse>.self, using: decoder)
+    }
+}

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Role: String, Codable {
+enum Role: String, Codable, Hashable {
     
     case student = "STUDENT"
     case teacher = "TEACHER"

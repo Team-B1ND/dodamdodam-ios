@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PointType: String, Codable {
+enum PointType: String, Codable, Hashable {
     
     case dormitory = "DORMITORY"
     case school = "SCHOOL"

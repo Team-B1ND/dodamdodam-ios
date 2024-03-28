@@ -10,7 +10,7 @@ import Moya
 
 enum UploadService: ServiceProtocol {
     
-    case postUpload(_ file: Data)
+    case postUpload(data: Data)
 }
 
 extension UploadService {
@@ -33,12 +33,12 @@ extension UploadService {
     
     var task: Moya.Task {
         switch self {
-        case let .postUpload(file):
-            let data = MultipartFormData(
-                provider: .data(file),
+        case let .postUpload(data):
+            let formData = MultipartFormData(
+                provider: .data(data),
                 name: UUID().uuidString
             )
-            return .uploadMultipart([data])
+            return .uploadMultipart([formData])
         }
     }
 }

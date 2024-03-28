@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ScheduleType: String, Codable {
+enum ScheduleType: String, Codable, Hashable {
     
     case academic = "ACADEMIC"
     case holiday = "HOLIDAY"

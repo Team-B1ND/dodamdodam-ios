@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Member: Codable {
+struct Member: Codable, Hashable {
     
     let createdAt: Date
     let modifiedAt: Date
     let id: String
     let name: String
     let role: Role
-    let status: Status
+    let status: ActiveStatus
     let profileImage: URL?
     let phone: String
 }
