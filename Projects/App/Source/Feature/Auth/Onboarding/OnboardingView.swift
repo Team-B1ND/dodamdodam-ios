@@ -111,7 +111,7 @@ struct OnboardingView: View {
                         )
                 }
                 Button {
-                    flow.push(HomeView())
+
                 } label: {
                     Text("(필수) 서비스 이용약관")
                         .font(.body(.small))
@@ -137,7 +137,7 @@ struct OnboardingView: View {
                         )
                 }
                 Button {
-                    flow.push(HomeView())
+                    
                 } label: {
                     Text("(필수) 개인정보 수집 및 이용에 대한 안내")
                         .font(.body(.small))

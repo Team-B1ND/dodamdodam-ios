@@ -12,6 +12,7 @@ struct HomeView: View {
     
     @InjectObject var viewModel: HomeViewModel
     @Flow var flow
+    @Binding var selection: Int
     
     var body: some View {
         DodamScrollView {
@@ -53,7 +54,7 @@ struct HomeView: View {
                     icon: Dodam.icon(.forkAndKnife)
                 ) {
                     Button {
-                        // navigate action
+                        selection = 1
                     } label: {
                         MealContainer(
                             data: viewModel.mealData,
@@ -67,7 +68,7 @@ struct HomeView: View {
                     icon: Dodam.icon(.note)
                 ) {
                     Button {
-                        // navigate action
+                        
                     } label: {
                         WakeupSongContainer(
                             data: viewModel.wakeupSongData
@@ -82,7 +83,7 @@ struct HomeView: View {
                         icon: Dodam.icon(.doorOpen)
                     ) {
                         Button {
-                            // navigate action
+                            selection = 2
                         } label: {
                             OutStatusContainer(
                                 data: viewModel.outData
@@ -96,7 +97,7 @@ struct HomeView: View {
                         icon: Dodam.icon(.moonPlus)
                     ) {
                         Button {
-                            // navigate action
+                            selection = 3
                         } label: {
                             NightStudyStatusContainer(
                                 data: viewModel.nightStudyData
@@ -127,5 +128,5 @@ struct HomeView: View {
 }
 
 #Preview {
-    HomeView()
+    HomeView(selection: .constant(0))
 }
