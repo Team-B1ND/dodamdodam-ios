@@ -5,4 +5,11 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
+struct BannerRepositoryImpl: BannerRepository {
+    
+    let dataSource: BannerDataSource
+    
+    func fetchActiveBanner() async throws -> BannerResponse {
+        try await dataSource.fetchActiveBanner()
+    }
+}

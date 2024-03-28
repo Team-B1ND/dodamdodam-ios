@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol OutSleepingRepository {
+protocol OutSleepingRepository: RepositoryProtocol {
     
     func postOutSleeping(_ request: PostOutSleepingRequest) async throws
     

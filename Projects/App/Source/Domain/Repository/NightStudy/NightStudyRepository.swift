@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol NightStudyRepository {
+protocol NightStudyRepository: RepositoryProtocol {
     
     func postNightStudy(_ request: PostNightStudyRequest) async throws
     

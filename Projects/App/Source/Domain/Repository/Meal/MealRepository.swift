@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol MealRepository {
+protocol MealRepository: RepositoryProtocol {
     
     func fetchMeal(_ request: FetchMealRequest) async throws -> MealResponse
     

@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol OutGoingRepository {
+protocol OutGoingRepository: RepositoryProtocol {
     
     func postOutGoing(_ request: PostOutGoingRequest) async throws
     

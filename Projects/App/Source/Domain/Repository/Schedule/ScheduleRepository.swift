@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol ScheduleRepository {
+protocol ScheduleRepository: RepositoryProtocol {
     
     func fetchScheduleByPage(_ request: FetchScheduleByPageRequest) async throws -> [ScheduleResponse]
     

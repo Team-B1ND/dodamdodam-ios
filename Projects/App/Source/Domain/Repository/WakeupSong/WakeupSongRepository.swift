@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol WakeupSongRepository {
+protocol WakeupSongRepository: RepositoryProtocol {
     
     func fetchWakeupSong() async throws -> [WakeupSongResponse]
     

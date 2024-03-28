@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol BusRepository {
+protocol BusRepository: RepositoryProtocol {
     
     func fetchAllBus() async throws -> [BusResponse]
     

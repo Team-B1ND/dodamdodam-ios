@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol AuthRepository {
+protocol AuthRepository: RepositoryProtocol {
     
     func postLogin(_ request: PostLoginRequest) async throws -> Member
     

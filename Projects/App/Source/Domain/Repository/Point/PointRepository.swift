@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol PointRepository {
+protocol PointRepository: RepositoryProtocol {
     
     func fetchPoint(_ request: FetchPointRequest) async throws -> [PointResponse]
     

@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol UploadRepository {
+protocol UploadRepository: RepositoryProtocol {
     
     func postUpload(data: Data) async throws -> UploadResponse
 }

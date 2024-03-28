@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/14/24.
 //
 
-protocol MemberRepository {
+protocol MemberRepository: RepositoryProtocol {
     
     func postJoin(_ request: PostJoinRequest) async throws
     
