@@ -39,7 +39,7 @@ struct NightStudyView: View {
             VStack(spacing: 20) {
                 if let datas = viewModel.nightStudyDatas {
                     ForEach(datas, id: \.self) { data in
-                        Text(data.status)
+                       NightStudyApplyCell(data: data)
                     }
                 } else {
                     DodamEmptyView(
