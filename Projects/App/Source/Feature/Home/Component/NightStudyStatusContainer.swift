@@ -21,7 +21,7 @@ struct NightStudyStatusContainer: View {
     var body: some View {
         if let data = nightStudyData {
             HStack(alignment: .top, spacing: 12) {
-                if data.status == "DENY" {
+                if data.status == "DENIED" {
                     SupportingContainer(
                         subTitle: "외출이 거절되었어요",
                         title: "다시 신청하기"
