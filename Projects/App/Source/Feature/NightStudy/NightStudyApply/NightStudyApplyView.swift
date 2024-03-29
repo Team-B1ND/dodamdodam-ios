@@ -35,7 +35,6 @@ struct NightStudyApplyView: View {
             ) {
                 // action
             }
-            .disabled(true)
             .padding(.bottom, 8)
         }
         .padding(.horizontal, 24)

@@ -69,7 +69,7 @@ struct OnboardingView: View {
     }
     
     private var modalSheetView: some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 12) {
             Button {
                 if isChecked1 && isChecked2 == true {
                     (isChecked1, isChecked2) = (false, false)
@@ -99,64 +99,65 @@ struct OnboardingView: View {
                         .stroke(Dodam.color(.outline), lineWidth: 1.5)
                 }
             }
-            HStack {
-                Button {
-                    isChecked1.toggle()
-                } label: {
-                    Dodam.icon(.checkmark)
-                        .resizable()
-                        .frame(width: 17)
-                        .dodamColor(
-                            isChecked1 ? .primary : .outline
-                        )
+            VStack(spacing: 4) {
+                HStack(spacing: 4) {
+                    Button {
+                        isChecked1.toggle()
+                    } label: {
+                        Dodam.icon(.checkmark)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .dodamColor(
+                                isChecked1 ? .primary : .outline
+                            )
+                    }
+                    Link(
+                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")!
+                    ) {
+                        Text("(필수) 서비스 이용약관")
+                            .font(.body(.small))
+                            .dodamColor(.tertiary)
+                        Spacer()
+                        Dodam.icon(.chevronRight)
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .dodamColor(.onSurfaceVariant)
+                    }
                 }
-                Button {
-                    
-                } label: {
-                    Text("(필수) 서비스 이용약관")
-                        .font(.body(.small))
-                        .dodamColor(.onSurface)
-                    Spacer()
-                    Dodam.icon(.chevronRight)
-                        .resizable()
-                        .frame(width: 17)
-                        .dodamColor(.onSurface)
+                .frame(height: 32)
+                
+                HStack(spacing: 4) {
+                    Button {
+                        isChecked2.toggle()
+                    } label: {
+                        Dodam.icon(.checkmark)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .dodamColor(
+                                isChecked2 ? .primary : .outline
+                            )
+                    }
+                    Link(
+                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/service-policy")!
+                    ) {
+                        Text("(필수) 개인정보 수집 및 이용에 대한 안내")
+                            .font(.body(.small))
+                            .dodamColor(.tertiary)
+                        Spacer()
+                        Dodam.icon(.chevronRight)
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .dodamColor(.onSurfaceVariant)
+                    }
                 }
+                .frame(height: 32)
             }
-            .frame(height: 17)
-            
-            HStack {
-                Button {
-                    isChecked2.toggle()
-                } label: {
-                    Dodam.icon(.checkmark)
-                        .resizable()
-                        .frame(width: 17)
-                        .dodamColor(
-                            isChecked2 ? .primary : .outline
-                        )
-                }
-                Button {
-                    
-                } label: {
-                    Text("(필수) 개인정보 수집 및 이용에 대한 안내")
-                        .font(.body(.small))
-                        .dodamColor(.onSurface)
-                    Spacer()
-                    Dodam.icon(.chevronRight)
-                        .resizable()
-                        .frame(width: 17)
-                        .dodamColor(.onSurface)
-                }
-            }
-            .frame(height: 17)
-            
             DodamButton.fullWidth(
                 title: "다음"
             ) {
                 flow.push(RegisterInfoView())
             }
-            .disabled(!(isChecked1 && isChecked2))
+            //            .disabled(!(isChecked1 && isChecked2))
         }
         .background(Dodam.color(.background))
     }
