@@ -12,9 +12,9 @@ struct FlowAssembly: Assembly {
     
     func assemble(container: Container) {
         container.register(FlowProvider.self) { _ in
-                .init(rootView: HomeView()) {
-                    NavigationController(rootViewController: $0)
-                }
+            .init(rootView: MainView()) {
+                NavigationController(rootViewController: $0)
+            }
         }.inObjectScope(.container)
     }
 }

@@ -24,10 +24,10 @@ struct SupportingContainer: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(subTitle)
-                .font(.label(.medium))
-                .dodamColor(.tertiary)
+                .font(.label(.large))
+                .dodamColor(.onSurfaceVariant)
             Text(title)
-                .font(.title(.small))
+                .font(.body(.large))
                 .dodamColor(.primary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)

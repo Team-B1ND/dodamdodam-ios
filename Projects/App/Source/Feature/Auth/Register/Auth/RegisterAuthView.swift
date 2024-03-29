@@ -63,13 +63,18 @@ struct RegisterAuthView: View {
             }
             
             if step >= 0 {
-                DodamTextField.default(
-                    title: "아이디",
-                    text: $testIdText
-                )
-                .makeFirstResponder()
-                .onSubmit {
-                    step = 1
+                VStack(alignment: .leading, spacing: 4) {
+                    DodamTextField.default(
+                        title: "아이디",
+                        text: $testIdText
+                    )
+                    .makeFirstResponder()
+                    .onSubmit {
+                        step = 1
+                    }
+                    Text("아이디는 영문과 숫자로 5 ~ 20글자 이내여야 해요.")
+                        .font(.label(.large))
+                        .dodamColor(.onSurfaceVariant)
                 }
                 .transition(.slide)
                 .animation(

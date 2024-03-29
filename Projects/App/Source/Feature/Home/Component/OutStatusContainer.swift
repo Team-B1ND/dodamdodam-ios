@@ -21,7 +21,7 @@ struct OutStatusContainer: View {
     var body: some View {
         if let data = outData {
             HStack(alignment: .top, spacing: 12) {
-                if data.status == "DENY" {
+                if data.status == "DENIED" {
                     SupportingContainer(
                         subTitle: "심야 자습이 거절되었어요",
                         title: "다시 신청하기"
@@ -34,15 +34,15 @@ struct OutStatusContainer: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(data.status == "PENDING" ? "대기 중" : "13시간")
                             .font(.body(.medium))
-                            .dodamColor(.onSurfaceVariant)
+                            .dodamColor(.onSurface)
                         if !(data.status == "PENDING") {
                             Text("남음")
-                                .font(.label(.medium))
-                                .dodamColor(.tertiary)
+                                .font(.label(.large))
+                                .dodamColor(.onSurfaceVariant)
                         }
                         Text("13:00 복귀")
-                            .font(.label(.medium))
-                            .dodamColor(.tertiary)
+                            .font(.label(.large))
+                            .dodamColor(.onSurfaceVariant)
                     }
                     
                 }

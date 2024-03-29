@@ -34,7 +34,7 @@ struct MealContainer: View {
                         $0.name
                     }.joined(separator: ", ") ?? "")
                     .font(.body(.medium))
-                    .dodamColor(.onSurfaceVariant)
+                    .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 6)
                     .page()

@@ -14,13 +14,13 @@ struct MainView: View {
     
     var body: some View {
         DodamTabView(selection: $viewModel.selection) {
-            HomeView()
+            HomeView(selection: $viewModel.selection)
                 .page(.icon(.home))
             MealView()
                 .page(.icon(.forkAndKnife))
             OutView()
                 .page(.icon(.doorOpen))
-            Text("NightStudy")
+            NightStudyView()
                 .page(.icon(.moonPlus))
             Text("Menu")
                 .page(.icon(.menu))

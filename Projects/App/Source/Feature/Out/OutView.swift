@@ -48,9 +48,9 @@ struct OutView: View {
         } content: {
             VStack(spacing: 12) {
                 if viewModel.selection == 0 {
-                    if let datas = viewModel.outGoingData {
+                    if let datas = viewModel.outGoingDatas {
                         ForEach(datas, id: \.self) { data in
-                            OutApplyListCell(
+                            OutApplyCell(
                                 data: data,
                                 outType: .outGoing
                             )
@@ -64,9 +64,9 @@ struct OutView: View {
                     }
                 }
                 if viewModel.selection == 1 {
-                    if let datas = viewModel.outSleepingData {
+                    if let datas = viewModel.outSleepingDatas {
                         ForEach(datas, id: \.self) { data in
-                            OutApplyListCell(
+                            OutApplyCell(
                                 data: data,
                                 outType: .outSleeping
                             )

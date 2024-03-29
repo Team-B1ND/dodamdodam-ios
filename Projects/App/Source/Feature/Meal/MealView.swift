@@ -60,16 +60,17 @@ struct MealView: View {
                             let formattedDate = dateFormatter.string(from: date)
                             return formattedDate
                         }())
-                        .font(.title(.small))
+                        .font(.body(.medium))
                         .dodamColor(
                             isToday(datas.date) ? .onPrimary : .onSecondaryContainer
                         )
-                        .padding(.vertical, 6)
-                        .padding(.horizontal, 60)
-                        .frame(height: 31)
-                        .background(Dodam.color(
-                            isToday(datas.date) ? .primary : .secondaryContainer
-                        ))
+                        .padding(.vertical, 4)
+                        .frame(width: 218, height: 31)
+                        .background(
+                            isToday(datas.date)
+                            ? Dodam.color(.primary).opacity(0.65)
+                            : Dodam.color(.secondaryContainer)
+                        )
                         .clipShape(RoundedRectangle(cornerRadius: 32))
                         
                         VStack(spacing: 12) {
@@ -94,24 +95,22 @@ struct MealView: View {
                                                     default: return ""
                                                     }
                                                 }())
-                                                .font(.title(.small))
+                                                .font(.body(.medium))
                                                 .dodamColor(.onPrimary)
-                                                .padding(.vertical, 4)
-                                                .padding(.horizontal, 12)
                                             }
-                                            .frame(height: 27)
+                                            .frame(width: 52, height: 27)
                                             .background(Dodam.color(.primary))
                                             .clipShape(RoundedRectangle(cornerRadius: 32))
                                             Spacer()
                                             Text("\(Int(data.calorie))Kcal")
                                                 .font(.label(.large))
-                                                .dodamColor(.tertiary)
+                                                .dodamColor(.onSurfaceVariant)
                                                 .padding(.top, 5)
                                         }
                                         .padding([.top, .horizontal], 16)
                                         Text(data.details.map { $0.name }.joined(separator: "\n"))
                                             .font(.body(.medium))
-                                            .dodamColor(.onBackground)
+                                            .dodamColor(.onSurface)
                                             .frame(maxWidth: .infinity, alignment: .leading)
                                             .padding([.bottom, .horizontal], 16)
                                     }
@@ -121,6 +120,12 @@ struct MealView: View {
                             }
                         }
                     }
+                } else {
+                    Text("이번 달 급식이 없어요")
+                        .font(.system(size: 16, weight: .medium))
+                        .dodamColor(.tertiary)
+                        .padding(.top, 20)
+                        .frame(maxWidth: .infinity)
                 }
             }
             .padding(.horizontal, 16)

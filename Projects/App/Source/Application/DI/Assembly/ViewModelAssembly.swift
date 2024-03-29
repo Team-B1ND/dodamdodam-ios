@@ -45,5 +45,13 @@ struct ViewModelAssembly: Assembly {
         container.register(OutApplyViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
+        
+        container.register(NightStudyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(NightStudyApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
     }
 }

@@ -1,29 +1,22 @@
 //
-//  OutApplyListCell.swift
+//  NightStudyApplyCell.swift
 //  DodamDodam
 //
-//  Created by 이민규 on 3/23/24.
+//  Created by 이민규 on 3/29/24.
 //
 
 import SwiftUI
 import DDS
 import Combine
 
-struct OutApplyListCell: View {
+struct NightStudyApplyCell: View {
     
-    public enum OutType {
-        case outGoing, outSleeping
-    }
-    
-    private let data: Out
-    private let outType: OutType
+    private let data: NightStudy
     
     public init(
-        data: Out,
-        outType: OutType
+        data: NightStudy
     ) {
         self.data = data
-        self.outType = outType
     }
     
     func calculatingProgress(
@@ -62,7 +55,7 @@ struct OutApplyListCell: View {
                         switch data.status {
                         case "ALLOWED": return "승인됨"
                         case "PENDING": return "대기중"
-                        case "DENY": return "거절됨"
+                        case "DENIED": return "거절됨"
                         default: return ""
                         }
                     }())
@@ -76,7 +69,7 @@ struct OutApplyListCell: View {
                     switch data.status {
                     case "ALLOWED": return Dodam.color(.primary)
                     case "PENDING": return Dodam.color(.onSurfaceVariant)
-                    case "DENY": return Dodam.color(.error)
+                    case "DENIED": return Dodam.color(.error)
                     default: return Dodam.color(.primary)
                     }
                 }())
@@ -98,7 +91,7 @@ struct OutApplyListCell: View {
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
-                Text("\(data.reason)")
+                Text("\(data.content)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -106,14 +99,14 @@ struct OutApplyListCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if data.status == "DENY" {
+                if data.status == "DENIED" {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
                             .dodamColor(.onSurfaceVariant)
                         // 나중에 거절 사유 추가되면 데이터 넣기
-                        Text("선생님께서 외출을 거절하였습니다")
-                            .font(.body(.medium))
+                        Text("선생님께서 심자 신청을 거절하였습니다")
+                            .font(.system(size: 16, weight: .medium))
                             .dodamColor(.onSurface)
                         Spacer()
                     }
@@ -127,14 +120,14 @@ struct OutApplyListCell: View {
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
                                     if let date = dateFormatter.date(from: data.startAt) {
-                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
+                                        dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
                                     return "오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
-                                Text(outType == .outGoing ? "외출" : "외박")
+                                Text("시작")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
@@ -143,14 +136,14 @@ struct OutApplyListCell: View {
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
                                     if let date = dateFormatter.date(from: data.endAt) {
-                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
+                                        dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
                                     return "오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
-                                Text("복귀")
+                                Text("종료")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                             }
@@ -163,6 +156,16 @@ struct OutApplyListCell: View {
                             )
                         }
                     }
+                    HStack(spacing: 8) {
+                        Text("휴대폰 사유")
+                            .font(.label(.large))
+                            .dodamColor(.onSurfaceVariant)
+                        Text("\(data.reasonForPhone)")
+                            .font(.system(size: 16, weight: .medium))
+                            .dodamColor(.onSurface)
+                        Spacer()
+                    }
+                    .padding(.top, 4)
                 }
             }
             .padding([.bottom, .horizontal], 16)
@@ -173,10 +176,12 @@ struct OutApplyListCell: View {
 }
 
 #Preview {
-    let outData1: Out = Out(
+    let dummyData: NightStudy = NightStudy(
         id: 1,
-        reason: "맛있는 음식을 위해 나갔다 올게요.",
-        status: "PENDING",
+        content: "도담 개발을 위한 심자 신청",
+        status: "DENIED",
+        doNeedPhone: true,
+        reasonForPhone: "도담도담 iOS 앱을 개발하는데 빌드를 하는 실기기가 필요함",
         student: Student(
             id: 1,
             grade: 3,
@@ -184,31 +189,14 @@ struct OutApplyListCell: View {
             number: 12,
             name: "이민규"
         ),
-        startAt: "2024-03-26 20:00:00",
-        endAt: "2024-03-26 23:50:00",
-        createdAt: "2024-03-23 17:00:00",
-        modifiedAt: "2024-03-23 17:00:00"
-    )
-    let outData2: Out = Out(
-        id: 1,
-        reason: "맛있는 음식을 위해 나갔다 올게요 ㅎㅎ.",
-        status: "DENY",
-        student: Student(
-            id: 1,
-            grade: 3,
-            room: 4,
-            number: 12,
-            name: "이민규"
-        ),
-        startAt: "2024-03-24 17:00:00",
-        endAt: "2024-03-26 12:00:00",
+        place: "1221호",
+        startAt: "2024-04-01 20:00:00",
+        endAt: "2024-04-20 20:30:00",
         createdAt: "2024-03-23 17:00:00",
         modifiedAt: "2024-03-23 17:00:00"
     )
     return VStack(spacing: 20) {
-        OutApplyListCell(data: outData1, outType: .outGoing)
-        OutApplyListCell(data: outData1, outType: .outSleeping)
-        OutApplyListCell(data: outData2, outType: .outSleeping)
+        NightStudyApplyCell(data: dummyData)
     }
     .padding(.horizontal, 16)
     .frame(maxHeight: .infinity)
