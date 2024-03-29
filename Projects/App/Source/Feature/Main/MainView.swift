@@ -10,11 +10,11 @@ import DDS
 
 struct MainView: View {
     
-    @InjectObject var viewModel: MainViewModel
+    @State var selection: Int = 0
     
     var body: some View {
-        DodamTabView(selection: $viewModel.selection) {
-            HomeView(selection: $viewModel.selection)
+        DodamTabView(selection: $selection) {
+            HomeView(selection: $selection)
                 .page(.icon(.home))
             MealView()
                 .page(.icon(.forkAndKnife))

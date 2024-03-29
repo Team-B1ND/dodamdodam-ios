@@ -9,5 +9,5 @@ import Combine
 
 class MealViewModel: ObservableObject {
     
-    @Published var mealDatas: [Meal]?
+    @Published var mealDatas: [MealData]?
 }

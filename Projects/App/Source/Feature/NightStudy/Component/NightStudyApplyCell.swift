@@ -184,10 +184,10 @@ struct NightStudyApplyCell: View {
         reasonForPhone: "도담도담 iOS 앱을 개발하는데 빌드를 하는 실기기가 필요함",
         student: Student(
             id: 1,
+            name: "이민규", 
             grade: 3,
             room: 4,
-            number: 12,
-            name: "이민규"
+            number: 12
         ),
         place: "1221호",
         startAt: "2024-04-01 20:00:00",
