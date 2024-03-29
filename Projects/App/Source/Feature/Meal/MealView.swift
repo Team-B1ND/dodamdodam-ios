@@ -37,8 +37,8 @@ struct MealView: View {
             .background(.regularMaterial)
         } content: {
             VStack(spacing: 20) {
-                if let mealDatas = viewModel.mealDatas {
-                    ForEach({ () -> [Meal] in
+                if let datas = viewModel.mealDatas {
+                    ForEach({ () -> [MealData] in
                         mealDatas.filter {
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -75,7 +75,7 @@ struct MealView: View {
                         
                         VStack(spacing: 12) {
                             ForEach(0..<3, id: \.self) { idx in
-                                let data: MealDetails? = {
+                                let data: Meal? = {
                                     switch idx {
                                     case 0: return datas.breakfast
                                     case 1: return datas.lunch

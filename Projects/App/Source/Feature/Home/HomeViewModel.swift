@@ -24,22 +24,12 @@ public struct Banner: Codable, Hashable {
     let status: String
 }
 
-public struct Meal: Codable, Hashable {
+public struct MealData: Codable, Hashable {
     let exists: Bool
     let date: String
-    let breakfast: MealDetails?
-    let lunch: MealDetails?
-    let dinner: MealDetails?
-}
-
-public struct MealDetails: Codable, Hashable {
-    let details: [MealItem]
-    let calorie: Double
-}
-
-public struct MealItem: Codable, Hashable {
-    let name: String
-    let allergies: [Int]
+    let breakfast: Meal?
+    let lunch: Meal?
+    let dinner: Meal?
 }
 
 public struct NightStudy: Codable, Hashable {
@@ -57,11 +47,6 @@ public struct Out: Codable, Hashable {
     let reason, status: String
     let student: Student
     let startAt, endAt, createdAt, modifiedAt: String
-}
-
-public struct Student: Codable, Hashable {
-    let id, grade, room, number: Int
-    let name: String
 }
 
 public struct Schedule: Codable, Hashable {
