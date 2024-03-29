@@ -20,7 +20,7 @@ struct MainView: View {
                 .page(.icon(.forkAndKnife))
             OutView()
                 .page(.icon(.doorOpen))
-            Text("NightStudy")
+            NightStudyView()
                 .page(.icon(.moonPlus))
             Text("Menu")
                 .page(.icon(.menu))

@@ -58,9 +58,9 @@ struct OnboardingView: View {
         .background(
             Image(.onboard)
                 .resizable()
-                .offset(x: -30)
+                .offset(x: -UIScreen.main.bounds.width / 9)
                 .scaledToFill()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxHeight: .infinity)
                 .ignoresSafeArea()
         )
         .dodamModal(isPresented: $isPresented) {
@@ -111,7 +111,7 @@ struct OnboardingView: View {
                         )
                 }
                 Button {
-
+                    
                 } label: {
                     Text("(필수) 서비스 이용약관")
                         .font(.body(.small))

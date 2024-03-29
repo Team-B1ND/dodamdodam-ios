@@ -16,13 +16,13 @@ struct NightStudyView: View {
     var body: some View {
         DodamScrollView {
             HStack {
-                Text("외출/외박")
+                Text("심야 자습")
                     .font(.headline(.small))
                     .dodamColor(.onBackground)
                     .padding(.leading, 20)
                 Spacer()
                 Button {
-                    flow.push(Text("신청"))
+                    flow.push(NightStudyApplyView())
                 } label: {
                     Dodam.icon(.plus)
                         .resizable()
@@ -45,7 +45,7 @@ struct NightStudyView: View {
                     DodamEmptyView(
                         .nightStudy
                     ) {
-                        flow.push(Text("신청"))
+                        flow.push(NightStudyApplyView())
                     }
                 }
             }

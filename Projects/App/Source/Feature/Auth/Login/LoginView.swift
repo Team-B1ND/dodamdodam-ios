@@ -30,21 +30,21 @@ struct LoginView: View {
                 title: "비밀번호",
                 text: $testPwText
             )
-            HStack(spacing: 0) {
-                Text("비밀번호를 잊으셨나요? ")
-                    .font(.body(.small))
-                    .dodamColor(.tertiary)
-                Button {
-                    // action
-                } label: {
-                    Text("비밀번호 재설정")
-                        .font(.body(.small))
-                        .underline()
-                        .dodamColor(.onBackground)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.top, 16)
+//            HStack(spacing: 0) {
+//                Text("비밀번호를 잊으셨나요? ")
+//                    .font(.body(.small))
+//                    .dodamColor(.tertiary)
+//                Button {
+//                    // action
+//                } label: {
+//                    Text("비밀번호 재설정")
+//                        .font(.body(.small))
+//                        .underline()
+//                        .dodamColor(.onBackground)
+//                }
+//            }
+//            .frame(maxWidth: .infinity, alignment: .center)
+//            .padding(.top, 16)
             
             DodamButton.fullWidth(
                 title: "로그인"
