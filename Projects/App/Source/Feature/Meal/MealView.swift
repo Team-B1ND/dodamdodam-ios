@@ -37,8 +37,8 @@ struct MealView: View {
             .background(.regularMaterial)
         } content: {
             VStack(spacing: 20) {
-                if let mealDatas = viewModel.mealDatas {
-                    ForEach({ () -> [Meal] in
+                if let datas = viewModel.mealDatas {
+                    ForEach({ () -> [MealData] in
                         mealDatas.filter {
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "yyyy-MM-dd"
