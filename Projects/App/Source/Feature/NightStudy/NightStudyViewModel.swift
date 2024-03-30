@@ -9,5 +9,5 @@ import Combine
 
 class NightStudyViewModel: ObservableObject {
     
-    @Published var nightStudyDatas: [NightStudy]?
+    @Published var nightStudyData: [NightStudyResponse]?
 }

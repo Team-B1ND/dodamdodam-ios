@@ -11,5 +11,5 @@ struct MealResponse: ResponseProtocol {
     
     let exists: Bool
     let date: String
-    let breakfast, lunch, dinner: Meal
+    let breakfast, lunch, dinner: Meal?
 }

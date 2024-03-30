@@ -7,4 +7,4 @@
 
 import Foundation
 
-typealias ResponseProtocol = Decodable
+typealias ResponseProtocol = Decodable & Hashable

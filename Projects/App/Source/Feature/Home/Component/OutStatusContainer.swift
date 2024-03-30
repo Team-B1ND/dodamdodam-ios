@@ -10,10 +10,10 @@ import DDS
 
 struct OutStatusContainer: View {
     
-    private let outData: Out?
+    private let outData: OutGoingResponse?
     
     public init(
-        data outData: Out?
+        data outData: OutGoingResponse?
     ) {
         self.outData = outData
     }
@@ -21,7 +21,7 @@ struct OutStatusContainer: View {
     var body: some View {
         if let data = outData {
             HStack(alignment: .top, spacing: 12) {
-                if data.status == "DENIED" {
+                if data.status.rawValue == "DENIED" {
                     SupportingContainer(
                         subTitle: "심야 자습이 거절되었어요",
                         title: "다시 신청하기"
@@ -29,13 +29,13 @@ struct OutStatusContainer: View {
                 } else {
                     DodamCircularProgressView(
                         progress: 0.7,
-                        isDisabled: data.status == "PENDING"
+                        isDisabled: data.status.rawValue == "PENDING"
                     )
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(data.status == "PENDING" ? "대기 중" : "13시간")
+                        Text(data.status.rawValue == "PENDING" ? "대기 중" : "13시간")
                             .font(.body(.medium))
                             .dodamColor(.onSurface)
-                        if !(data.status == "PENDING") {
+                        if !(data.status.rawValue == "PENDING") {
                             Text("남음")
                                 .font(.label(.large))
                                 .dodamColor(.onSurfaceVariant)
@@ -55,61 +55,4 @@ struct OutStatusContainer: View {
             )
         }
     }
-}
-
-#Preview {
-    let dummyOutData1 = Out(
-        id: 1,
-        reason: "reason",
-        status: "PENDING",
-        student: Student(
-            id: 1,
-            name: "이민규",
-            grade: 3,
-            room: 4,
-            number: 12
-        ),
-        startAt: "yyyy-MM-ss HH:mm:ss",
-        endAt: "yyyy-MM-ss HH:mm:ss",
-        createdAt: "yyyy-MM-ss HH:mm:ss",
-        modifiedAt: "yyyy-MM-ss HH:mm:ss"
-    )
-    let dummyOutData2 = Out(
-        id: 1,
-        reason: "reason",
-        status: "ALLOWED",
-        student: Student(
-            id: 1,
-            name: "이민규",
-            grade: 3,
-            room: 4,
-            number: 12
-        ),
-        startAt: "yyyy-MM-ss HH:mm:ss",
-        endAt: "yyyy-MM-ss HH:mm:ss",
-        createdAt: "yyyy-MM-ss HH:mm:ss",
-        modifiedAt: "yyyy-MM-ss HH:mm:ss"
-    )
-    return VStack(spacing: 12) {
-        DodamContainer.default(
-            title: "외출 외박",
-            icon: Dodam.icon(.calendar)
-        ) {
-            OutStatusContainer(data: dummyOutData1)
-        }
-        DodamContainer.default(
-            title: "외출 외박",
-            icon: Dodam.icon(.calendar)
-        ) {
-            OutStatusContainer(data: dummyOutData2)
-        }
-        DodamContainer.default(
-            title: "외출 외박",
-            icon: Dodam.icon(.calendar)
-        ) {
-            OutStatusContainer(data: nil)
-        }
-    }
-    .padding(16)
-    .background(Dodam.color(.surface))
 }

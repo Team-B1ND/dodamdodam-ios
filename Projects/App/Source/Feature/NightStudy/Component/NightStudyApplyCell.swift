@@ -11,12 +11,12 @@ import Combine
 
 struct NightStudyApplyCell: View {
     
-    private let data: NightStudy
+    private let nightStudyData: NightStudyResponse
     
     public init(
-        data: NightStudy
+        data nightStudyData: NightStudyResponse
     ) {
-        self.data = data
+        self.nightStudyData = nightStudyData
     }
     
     func calculatingProgress(
@@ -52,7 +52,7 @@ struct NightStudyApplyCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch data.status {
+                        switch nightStudyData.status.rawValue {
                         case "ALLOWED": return "승인됨"
                         case "PENDING": return "대기중"
                         case "DENIED": return "거절됨"
@@ -66,7 +66,7 @@ struct NightStudyApplyCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch data.status {
+                    switch nightStudyData.status.rawValue {
                     case "ALLOWED": return Dodam.color(.primary)
                     case "PENDING": return Dodam.color(.onSurfaceVariant)
                     case "DENIED": return Dodam.color(.error)
@@ -79,7 +79,7 @@ struct NightStudyApplyCell: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                    if let date = dateFormatter.date(from: data.createdAt) {
+                    if let date = dateFormatter.date(from: nightStudyData.createdAt) {
                         dateFormatter.dateFormat = "M월 d일 (E)"
                         return dateFormatter.string(from: date)
                     }
@@ -91,7 +91,7 @@ struct NightStudyApplyCell: View {
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
-                Text("\(data.content)")
+                Text("\(nightStudyData.content)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -99,7 +99,7 @@ struct NightStudyApplyCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if data.status == "DENIED" {
+                if nightStudyData.status.rawValue == "DENIED" {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
@@ -119,7 +119,7 @@ struct NightStudyApplyCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: data.startAt) {
+                                    if let date = dateFormatter.date(from: nightStudyData.startAt) {
                                         dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
@@ -135,7 +135,7 @@ struct NightStudyApplyCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: data.endAt) {
+                                    if let date = dateFormatter.date(from: nightStudyData.endAt) {
                                         dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
@@ -149,23 +149,25 @@ struct NightStudyApplyCell: View {
                             }
                             DodamLinearProgressView(
                                 progress: calculatingProgress(
-                                    data.startAt,
-                                    data.endAt
+                                    nightStudyData.startAt,
+                                    nightStudyData.endAt
                                 ),
-                                isDisabled: data.status == "PENDING" ? true : false
+                                isDisabled: nightStudyData.status.rawValue == "PENDING" ? true : false
                             )
                         }
                     }
-                    HStack(spacing: 8) {
-                        Text("휴대폰 사유")
-                            .font(.label(.large))
-                            .dodamColor(.onSurfaceVariant)
-                        Text("\(data.reasonForPhone)")
-                            .font(.system(size: 16, weight: .medium))
-                            .dodamColor(.onSurface)
-                        Spacer()
+                    if let reasonForPhone = nightStudyData.reasonForPhone {
+                        HStack(spacing: 8) {
+                            Text("휴대폰 사유")
+                                .font(.label(.large))
+                                .dodamColor(.onSurfaceVariant)
+                            Text("\(reasonForPhone)")
+                                .font(.system(size: 16, weight: .medium))
+                                .dodamColor(.onSurface)
+                            Spacer()
+                        }
+                        .padding(.top, 4)
                     }
-                    .padding(.top, 4)
                 }
             }
             .padding([.bottom, .horizontal], 16)
@@ -173,32 +175,4 @@ struct NightStudyApplyCell: View {
         .background(Dodam.color(.surfaceContainer))
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
-}
-
-#Preview {
-    let dummyData: NightStudy = NightStudy(
-        id: 1,
-        content: "도담 개발을 위한 심자 신청",
-        status: "DENIED",
-        doNeedPhone: true,
-        reasonForPhone: "도담도담 iOS 앱을 개발하는데 빌드를 하는 실기기가 필요함",
-        student: Student(
-            id: 1,
-            name: "이민규", 
-            grade: 3,
-            room: 4,
-            number: 12
-        ),
-        place: "1221호",
-        startAt: "2024-04-01 20:00:00",
-        endAt: "2024-04-20 20:30:00",
-        createdAt: "2024-03-23 17:00:00",
-        modifiedAt: "2024-03-23 17:00:00"
-    )
-    return VStack(spacing: 20) {
-        NightStudyApplyCell(data: dummyData)
-    }
-    .padding(.horizontal, 16)
-    .frame(maxHeight: .infinity)
-    .background(Dodam.color(.surface))
 }

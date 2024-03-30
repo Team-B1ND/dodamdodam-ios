@@ -37,7 +37,7 @@ struct NightStudyView: View {
             .background(.regularMaterial)
         } content: {
             VStack(spacing: 20) {
-                if let datas = viewModel.nightStudyDatas {
+                if let datas = viewModel.nightStudyData {
                     ForEach(datas, id: \.self) { data in
                        NightStudyApplyCell(data: data)
                     }

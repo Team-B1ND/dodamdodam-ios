@@ -26,7 +26,7 @@ let project = Project(
                     "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
                     "UIMainStoryboardFile": "",
                     "UILaunchStoryboardName": "LaunchScreen",
-                    "NSAllowsArbitraryLoads": true
+                    "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true]
                 ]
             ),
             sources: ["Source/**"],

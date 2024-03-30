@@ -86,7 +86,7 @@ struct HomeView: View {
                             selection = 2
                         } label: {
                             OutStatusContainer(
-                                data: viewModel.outData
+                                data: viewModel.outGoingData
                             )
                             .padding(6)
                         }

@@ -10,10 +10,10 @@ import DDS
 
 struct WakeupSongContainer: View {
 
-    private let wakeupSongData: [WakeupSong]?
+    private let wakeupSongData: [WakeupSongResponse]?
     
     public init(
-        data wakeupSongData: [WakeupSong]?
+        data wakeupSongData: [WakeupSongResponse]?
     ) {
         self.wakeupSongData = wakeupSongData
     }
@@ -62,45 +62,4 @@ struct WakeupSongContainer: View {
             )
         }
     }
-}
-
-#Preview {
-    let dummy1 = WakeupSong(
-        id: 73,
-        thumbnailUrl: "https://i.ytimg.com/vi/7jxlsVRylq8/sddefault.jpg",
-        videoTitle: "Flowering (개화 (Flowering))",
-        videoId: "7jxlsVRylq8",
-        videoUrl: "https://music.youtube.com/watch?v=7jxlsVRylq8&si=JUNLf--vr2hvWFH2",
-        channelTitle: "LUCY - Topic",
-        status: "ALLOWED",
-        createdAt: "test-te-st"
-    )
-    let dummy2 = WakeupSong(
-        id: 74,
-        thumbnailUrl: "https://i.ytimg.com/vi/GAy1NSzjxYY/sddefault.jpg",
-        videoTitle: "LE SSERAFIM 'EASY' Lyrics (르세라핌 EASY 가사)",
-        videoId: "GAy1NSzjxYY",
-        videoUrl: "https://www.youtube.com/watch?v=GAy1NSzjxYY",
-        channelTitle: "LE SSERAFIM",
-        status: "ALLOWED",
-        createdAt: "test-te-st"
-    )
-    return VStack(spacing: 12) {
-        DodamContainer.default(
-            title: "오늘의 기상송",
-            icon: Dodam.icon(.note)
-        ) {
-            WakeupSongContainer(data: [dummy1, dummy2])
-                .padding(6)
-        }
-        DodamContainer.default(
-            title: "오늘의 기상송",
-            icon: Dodam.icon(.note)
-        ) {
-            WakeupSongContainer(data: nil)
-                .padding(6)
-        }
-    }
-    .padding(16)
-    .background(Dodam.color(.surface))
 }

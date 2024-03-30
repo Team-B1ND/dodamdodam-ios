@@ -18,3 +18,16 @@ struct OutGoingResponse: ResponseProtocol {
     let createdAt: String
     let modifiedAt: String?
 }
+
+/// 임시
+struct OutResponse: ResponseProtocol {
+    
+    let id: Int
+    let reason: String
+    let status: AllowStatus
+    let student: Student
+    let startAt: String
+    let endAt: String
+    let createdAt: String
+    let modifiedAt: String?
+}

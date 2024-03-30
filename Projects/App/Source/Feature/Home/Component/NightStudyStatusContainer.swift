@@ -10,10 +10,10 @@ import DDS
 
 struct NightStudyStatusContainer: View {
     
-    private let nightStudyData: NightStudy?
+    private let nightStudyData: NightStudyResponse?
     
     public init(
-        data nightStudyData: NightStudy?
+        data nightStudyData: NightStudyResponse?
     ) {
         self.nightStudyData = nightStudyData
     }
@@ -21,7 +21,7 @@ struct NightStudyStatusContainer: View {
     var body: some View {
         if let data = nightStudyData {
             HStack(alignment: .top, spacing: 12) {
-                if data.status == "DENIED" {
+                if data.status.rawValue == "DENIED" {
                     SupportingContainer(
                         subTitle: "외출이 거절되었어요",
                         title: "다시 신청하기"
@@ -29,13 +29,13 @@ struct NightStudyStatusContainer: View {
                 } else {
                     DodamCircularProgressView(
                         progress: 0.7,
-                        isDisabled: data.status == "PENDING"
+                        isDisabled: data.status.rawValue == "PENDING"
                     )
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(data.status == "PENDING" ? "대기 중" : "13시간")
+                        Text(data.status.rawValue == "PENDING" ? "대기 중" : "13시간")
                             .font(.body(.medium))
                             .dodamColor(.onSurfaceVariant)
-                        if !(data.status == "PENDING") {
+                        if !(data.status.rawValue == "PENDING") {
                             Text("남음")
                                 .font(.body(.medium))
                                 .dodamColor(.tertiary)
@@ -54,61 +54,4 @@ struct NightStudyStatusContainer: View {
             )
         }
     }
-}
-
-#Preview {
-    let dummyNightStudy1 = NightStudy(
-        id: 1,
-        content: "content",
-        status: "PENDING",
-        doNeedPhone: true,
-        reasonForPhone: "reasonForPhone",
-        student: Student(
-            id: 1,
-            name: "이민규",
-            grade: 3,
-            room: 4,
-            number: 12
-        ),
-        place: "프로그래밍 1실",
-        startAt: "yyyy-MM-ss HH:mm:ss",
-        endAt: "yyyy-MM-ss HH:mm:ss",
-        createdAt: "yyyy-MM-ss HH:mm:ss",
-        modifiedAt: "yyyy-MM-ss HH:mm:ss"
-    )
-    let dummyNightStudy2 = NightStudy(
-        id: 2,
-        content: "content",
-        status: "ALLOWED",
-        doNeedPhone: true,
-        reasonForPhone: "reasonForPhone",
-        student: Student(
-            id: 1,
-            name: "이민규",
-            grade: 3,
-            room: 4,
-            number: 12
-        ),
-        place: "프로그래밍 1실",
-        startAt: "yyyy-MM-ss HH:mm:ss",
-        endAt: "yyyy-MM-ss HH:mm:ss",
-        createdAt: "yyyy-MM-ss HH:mm:ss",
-        modifiedAt: "yyyy-MM-ss HH:mm:ss"
-    )
-    return HStack(spacing: 12) {
-        DodamContainer.default(
-            title: "외출 외박",
-            icon: Dodam.icon(.calendar)
-        ) {
-            NightStudyStatusContainer(data: dummyNightStudy1)
-        }
-        DodamContainer.default(
-            title: "외출 외박",
-            icon: Dodam.icon(.calendar)
-        ) {
-            NightStudyStatusContainer(data: dummyNightStudy2)
-        }
-    }
-    .padding(16)
-    .background(Dodam.color(.surface))
 }

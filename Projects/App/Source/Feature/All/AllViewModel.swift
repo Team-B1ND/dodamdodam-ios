@@ -15,8 +15,8 @@ class AllViewModel: ObservableObject {
     func getTestData() async {
         do {
             memberData = try await memberRepository.fetchInfo()
-        } catch {
-            print("테스트")
+        } catch let error {
+            print(error)
         }
     }
 }

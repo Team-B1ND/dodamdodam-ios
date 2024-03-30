@@ -15,14 +15,14 @@ struct OutApplyCell: View {
         case outGoing, outSleeping
     }
     
-    private let data: Out
+    private let outData: OutResponse
     private let outType: OutType
     
     public init(
-        data: Out,
+        data outData: OutResponse,
         outType: OutType
     ) {
-        self.data = data
+        self.outData = outData
         self.outType = outType
     }
     
@@ -59,7 +59,7 @@ struct OutApplyCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch data.status {
+                        switch outData.status.rawValue {
                         case "ALLOWED": return "승인됨"
                         case "PENDING": return "대기중"
                         case "DENIED": return "거절됨"
@@ -73,7 +73,7 @@ struct OutApplyCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch data.status {
+                    switch outData.status.rawValue {
                     case "ALLOWED": return Dodam.color(.primary)
                     case "PENDING": return Dodam.color(.onSurfaceVariant)
                     case "DENIED": return Dodam.color(.error)
@@ -86,7 +86,7 @@ struct OutApplyCell: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                    if let date = dateFormatter.date(from: data.createdAt) {
+                    if let date = dateFormatter.date(from: outData.createdAt) {
                         dateFormatter.dateFormat = "M월 d일 (E)"
                         return dateFormatter.string(from: date)
                     }
@@ -98,7 +98,7 @@ struct OutApplyCell: View {
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
-                Text("\(data.reason)")
+                Text("\(outData.reason)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -106,7 +106,7 @@ struct OutApplyCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if data.status == "DENIED" {
+                if outData.status.rawValue == "DENIED" {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
@@ -126,7 +126,7 @@ struct OutApplyCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: data.startAt) {
+                                    if let date = dateFormatter.date(from: outData.startAt) {
                                         dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
                                         return dateFormatter.string(from: date)
                                     }
@@ -142,7 +142,7 @@ struct OutApplyCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: data.endAt) {
+                                    if let date = dateFormatter.date(from: outData.endAt) {
                                         dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
                                         return dateFormatter.string(from: date)
                                     }
@@ -156,10 +156,10 @@ struct OutApplyCell: View {
                             }
                             DodamLinearProgressView(
                                 progress: calculatingProgress(
-                                    data.startAt,
-                                    data.endAt
+                                    outData.startAt,
+                                    outData.endAt
                                 ),
-                                isDisabled: data.status == "PENDING" ? true : false
+                                isDisabled: outData.status.rawValue == "PENDING" ? true : false
                             )
                         }
                     }
@@ -170,47 +170,4 @@ struct OutApplyCell: View {
         .background(Dodam.color(.surfaceContainer))
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
-}
-
-#Preview {
-    let outData1: Out = Out(
-        id: 1,
-        reason: "맛있는 음식을 위해 나갔다 올게요.",
-        status: "PENDING",
-        student: Student(
-            id: 1,
-            name: "이민규", 
-            grade: 3,
-            room: 4,
-            number: 12
-        ),
-        startAt: "2024-03-27 20:00:00",
-        endAt: "2024-03-27 20:30:00",
-        createdAt: "2024-03-23 17:00:00",
-        modifiedAt: "2024-03-23 17:00:00"
-    )
-    let outData2: Out = Out(
-        id: 1,
-        reason: "맛있는 음식을 위해 나갔다 올게요 ㅎㅎ.",
-        status: "DENIED",
-        student: Student(
-            id: 1,
-            name: "이민규", 
-            grade: 3,
-            room: 4,
-            number: 12
-        ),
-        startAt: "2024-03-24 17:00:00",
-        endAt: "2024-03-26 12:00:00",
-        createdAt: "2024-03-23 17:00:00",
-        modifiedAt: "2024-03-23 17:00:00"
-    )
-    return VStack(spacing: 20) {
-        OutApplyCell(data: outData1, outType: .outGoing)
-        OutApplyCell(data: outData1, outType: .outSleeping)
-        OutApplyCell(data: outData2, outType: .outSleeping)
-    }
-    .padding(.horizontal, 16)
-    .frame(maxHeight: .infinity)
-    .background(Dodam.color(.surface))
 }

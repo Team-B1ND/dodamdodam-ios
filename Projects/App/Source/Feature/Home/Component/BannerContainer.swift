@@ -10,10 +10,10 @@ import DDS
 
 struct BannerContainer: View {
     
-    private let bannerData: [Banner]?
+    private let bannerData: [BannerResponse]?
     
     public init(
-        data bannerData: [Banner]?
+        data bannerData: [BannerResponse]?
     ) {
         self.bannerData = bannerData
     }
@@ -39,22 +39,4 @@ struct BannerContainer: View {
             .clipShape(RoundedRectangle(cornerRadius: 18))
         }
     }
-}
-
-#Preview {
-    let dummy = Banner(
-        id: 1,
-        expireA: "2024-03-17 00:00:00",
-        imageUrl: "https://zrr.kr/lzRi",
-        redirectUrl: "https://ahead-yacht-97a.notion.site/9-9ee5631337b049e8b1b57ba9227b52ab?pvs=4",
-        title: "dodam",
-        status: "Active"
-    )
-    return ScrollView {
-        VStack(spacing: 12) {
-            BannerContainer(data: [dummy])
-        }
-        .padding(16)
-    }
-    .background(Dodam.color(.surface))
 }
