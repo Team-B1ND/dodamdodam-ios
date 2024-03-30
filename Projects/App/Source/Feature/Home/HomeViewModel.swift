@@ -11,7 +11,7 @@ class HomeViewModel: ObservableObject {
     
     @Published var mealIdx: Int = -1
     @Published var bannerData: [Banner]?
-    @Published var mealData: Meal?
+    @Published var mealData: MealData?
     @Published var nightStudyData: NightStudy?
     @Published var outData: Out?
     @Published var scheduleData: [Schedule]?

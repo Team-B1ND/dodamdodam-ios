@@ -179,10 +179,10 @@ struct OutApplyCell: View {
         status: "PENDING",
         student: Student(
             id: 1,
+            name: "이민규", 
             grade: 3,
             room: 4,
-            number: 12,
-            name: "이민규"
+            number: 12
         ),
         startAt: "2024-03-27 20:00:00",
         endAt: "2024-03-27 20:30:00",
@@ -195,10 +195,10 @@ struct OutApplyCell: View {
         status: "DENIED",
         student: Student(
             id: 1,
+            name: "이민규", 
             grade: 3,
             room: 4,
-            number: 12,
-            name: "이민규"
+            number: 12
         ),
         startAt: "2024-03-24 17:00:00",
         endAt: "2024-03-26 12:00:00",

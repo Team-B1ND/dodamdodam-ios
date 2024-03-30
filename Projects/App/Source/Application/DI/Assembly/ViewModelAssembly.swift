@@ -26,10 +26,6 @@ struct ViewModelAssembly: Assembly {
                 .init()
         }.inObjectScope(.container)
         
-        container.register(MainViewModel.self) { _ in
-                .init()
-        }.inObjectScope(.container)
-        
         container.register(HomeViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
@@ -51,6 +47,10 @@ struct ViewModelAssembly: Assembly {
         }.inObjectScope(.container)
         
         container.register(NightStudyApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(AllViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
     }

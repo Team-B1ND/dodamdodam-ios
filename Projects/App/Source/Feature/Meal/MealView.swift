@@ -39,7 +39,7 @@ struct MealView: View {
             VStack(spacing: 20) {
                 if let datas = viewModel.mealDatas {
                     ForEach({ () -> [MealData] in
-                        mealDatas.filter {
+                        datas.filter {
                             let dateFormatter = DateFormatter()
                             dateFormatter.dateFormat = "yyyy-MM-dd"
                             guard let date = dateFormatter.date(from: $0.date) else {
