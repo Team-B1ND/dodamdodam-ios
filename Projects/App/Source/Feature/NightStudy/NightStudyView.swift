@@ -18,7 +18,7 @@ struct NightStudyView: View {
             HStack {
                 Text("심야 자습")
                     .font(.headline(.small))
-                    .dodamColor(.onBackground)
+                    .dodamColor(.onSurface)
                     .padding(.leading, 20)
                 Spacer()
                 Button {

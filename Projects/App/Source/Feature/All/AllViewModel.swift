@@ -9,4 +9,14 @@ import Combine
 
 class AllViewModel: ObservableObject {
     
+    @Published var memberData: MemberResponse?
+    @Inject var memberRepository: any MemberRepository
+    
+    func getTestData() async {
+        do {
+            memberData = try await memberRepository.fetchInfo()
+        } catch {
+            print("테스트")
+        }
+    }
 }
