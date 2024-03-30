@@ -52,9 +52,97 @@ struct AllView: View {
                         Rectangle()
                             .frame(width: 70, height: 70)
                             .shimmer()
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                    }
+                    VStack(alignment: .leading) {
+                        Text("환영합니다, \("개발자")님")
+                            .font(.body(.large))
+                            .dodamColor(.onSurface)
+                        Text("환영합니다, \("개발자")님")
+                            .font(.label(.large))
+                            .dodamColor(.onSurfaceVariant)
+                    }
+                    Spacer()
+                }
+                Button {
+                    
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Rectangle()
+                                .dodamFill(.secondary)
+                                .frame(width: 32, height: 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Image(icon: .colorfulBus)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                        .padding(.leading, 8)
+                        Text("귀가 버스 신청하기")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.onBackground)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                            .padding(.trailing, 4)
+                    }
+                }
+                
+                Button {
+                    
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Rectangle()
+                                .dodamFill(.secondary)
+                                .frame(width: 32, height: 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Image(icon: .wakeupMegaphone)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                        .padding(.leading, 8)
+                        Text("기상송 확인하기")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.onBackground)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                            .padding(.trailing, 4)
+                    }
+                }
+                
+                Button {
+                    
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Rectangle()
+                                .dodamFill(.secondary)
+                                .frame(width: 32, height: 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Image(icon: .wakeupNote)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                        .padding(.leading, 8)
+                        Text("기상송 신청하기")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.onBackground)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                            .padding(.trailing, 4)
                     }
                 }
             }
+            .padding([.top, .horizontal], 16)
         }
         .background(Dodam.color(.background))
         .task {
