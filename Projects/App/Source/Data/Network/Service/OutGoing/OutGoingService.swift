@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum OutGoingService: ServiceProtocol {
@@ -17,8 +16,8 @@ enum OutGoingService: ServiceProtocol {
 
 extension OutGoingService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("out-going")
+    var host: String {
+        "out-going"
     }
     
     var path: String {

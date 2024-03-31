@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum ScheduleService: ServiceProtocol {
@@ -19,8 +18,8 @@ enum ScheduleService: ServiceProtocol {
 
 extension ScheduleService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("schedule")
+    var host: String {
+        "schedule"
     }
     
     var path: String {

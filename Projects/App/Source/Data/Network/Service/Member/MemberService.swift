@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum MemberService: ServiceProtocol {
@@ -19,8 +18,8 @@ enum MemberService: ServiceProtocol {
 
 extension MemberService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("member")
+    var host: String {
+        "member"
     }
     
     var path: String {

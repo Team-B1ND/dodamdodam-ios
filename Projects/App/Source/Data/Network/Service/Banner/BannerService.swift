@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum BannerService: ServiceProtocol {
@@ -15,8 +14,8 @@ enum BannerService: ServiceProtocol {
 
 extension BannerService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("banner")
+    var host: String {
+        "banner"
     }
     
     var path: String {

@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum MealService: ServiceProtocol {
@@ -16,8 +15,8 @@ enum MealService: ServiceProtocol {
 
 extension MealService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("meal")
+    var host: String {
+        "meal"
     }
     
     var path: String {

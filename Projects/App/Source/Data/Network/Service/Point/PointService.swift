@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum PointService: ServiceProtocol {
@@ -16,8 +15,8 @@ enum PointService: ServiceProtocol {
 
 extension PointService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("point")
+    var host: String {
+        "point"
     }
     
     var path: String {

@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import SignKit
 
 protocol RemoteProtocol {
     
@@ -24,7 +25,10 @@ protocol RemoteProtocol {
 extension RemoteProtocol {
     
     var provider: MoyaProvider<Target> {
-        .init(plugins: [NetworkLoggerPlugin()])
+        .init(
+            session: Session(interceptor: RemoteInterceptor()),
+            plugins: [NetworkLoggerPlugin()]
+        )
     }
     
     var decoder: JSONDecoder {

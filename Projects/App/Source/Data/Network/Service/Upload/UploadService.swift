@@ -15,8 +15,8 @@ enum UploadService: ServiceProtocol {
 
 extension UploadService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("upload")
+    var host: String {
+        "upload"
     }
     
     var path: String {

@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum WakeupSongService: ServiceProtocol {
@@ -21,8 +20,8 @@ enum WakeupSongService: ServiceProtocol {
 
 extension WakeupSongService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("wakeup-song")
+    var host: String {
+        "wakeup-song"
     }
     
     var path: String {

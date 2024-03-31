@@ -55,6 +55,15 @@
       }
     },
     {
+      "identity" : "signkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Mercen-Lee/SignKit",
+      "state" : {
+        "revision" : "d21862ed22a40fc32097d33deda02928b8fd967e",
+        "version" : "0.0.1"
+      }
+    },
+    {
       "identity" : "swinject",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Swinject/Swinject.git",
