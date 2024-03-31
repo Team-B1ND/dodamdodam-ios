@@ -10,11 +10,6 @@ import DDS
 
 struct OnboardingView: View {
     
-    // UI test state
-    @State var isChecked1: Bool = false
-    @State var isChecked2: Bool = false
-    @State var isPresented: Bool = false
-    
     @InjectObject var viewModel: OnboardingViewModel
     @Flow var flow
     
@@ -44,7 +39,7 @@ struct OnboardingView: View {
                     Text("처음 이용하시나요? ")
                         .font(.body(.small))
                     Button {
-                        isPresented.toggle()
+                        viewModel.onTapRegisterButton()
                     } label: {
                         Text("회원가입")
                             .font(.system(size: 14, weight: .bold))
@@ -63,7 +58,7 @@ struct OnboardingView: View {
                 .frame(maxHeight: .infinity)
                 .ignoresSafeArea()
         )
-        .dodamModal(isPresented: $isPresented) {
+        .dodamModal(isPresented: $viewModel.isModalPresented) {
             modalSheetView
         }
     }
@@ -71,19 +66,20 @@ struct OnboardingView: View {
     private var modalSheetView: some View {
         VStack(spacing: 12) {
             Button {
-                if isChecked1 && isChecked2 == true {
-                    (isChecked1, isChecked2) = (false, false)
+                if viewModel.isChecked() == true {
+                    (viewModel.isChecked1, viewModel.isChecked2) = (false, false)
                 } else {
-                    (isChecked1, isChecked2) = (true, true)
+                    (viewModel.isChecked1, viewModel.isChecked2) = (true, true)
                 }
             } label: {
                 HStack(spacing: 14) {
                     Dodam.icon(.checkmarkCircle)
                         .resizable()
                         .frame(width: 24, height: 24)
-                    // true -> change boolean state
                         .dodamColor(
-                            isChecked1 && isChecked2 ? .primary : .outline
+                            viewModel.isChecked()
+                            ? .primary
+                            : .outline
                         )
                         .padding(.leading, 18)
                         .padding(.vertical, 12)
@@ -102,13 +98,15 @@ struct OnboardingView: View {
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
                     Button {
-                        isChecked1.toggle()
+                        viewModel.isChecked1.toggle()
                     } label: {
                         Dodam.icon(.checkmark)
                             .resizable()
                             .frame(width: 24, height: 24)
                             .dodamColor(
-                                isChecked1 ? .primary : .outline
+                                viewModel.isChecked1
+                                ? .primary
+                                : .outline
                             )
                     }
                     Link(
@@ -128,13 +126,15 @@ struct OnboardingView: View {
                 
                 HStack(spacing: 4) {
                     Button {
-                        isChecked2.toggle()
+                        viewModel.isChecked2.toggle()
                     } label: {
                         Dodam.icon(.checkmark)
                             .resizable()
                             .frame(width: 24, height: 24)
                             .dodamColor(
-                                isChecked2 ? .primary : .outline
+                                viewModel.isChecked2
+                                ? .primary
+                                : .outline
                             )
                     }
                     Link(
@@ -157,12 +157,14 @@ struct OnboardingView: View {
             ) {
                 flow.push(RegisterInfoView())
             }
-            //            .disabled(!(isChecked1 && isChecked2))
+            .disabled(!viewModel.isChecked())
         }
         .background(Dodam.color(.background))
     }
 }
 
 #Preview {
-    OnboardingView()
+    FlowPreview {
+        OnboardingView()
+    }
 }

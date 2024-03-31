@@ -13,6 +13,7 @@ class LoginViewModel: ObservableObject {
     // MARK: - State
     @Published var idText: String = ""
     @Published var pwText: String = ""
+    @Published var isShowingAlert: Bool = false
     
     // MARK: - Repository
     @Inject var authRepository: any AuthRepository
@@ -20,11 +21,15 @@ class LoginViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func postLogin(_ completion: @escaping () -> Void) async {
+        isShowingAlert = false
         do {
-            _ = try await authRepository.postLogin(.init(id: idText, pw: pwText))
+            _ = try await authRepository.postLogin(
+                .init(id: idText, pw: pwText)
+            )
             completion()
         } catch let error {
             print(error)
+            isShowingAlert = true
         }
     }
 }

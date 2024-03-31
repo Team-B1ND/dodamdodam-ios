@@ -55,9 +55,16 @@ struct LoginView: View {
             Spacer()
         }
         .padding(.horizontal, 16)
+        .alert("실패", isPresented: $viewModel.isShowingAlert) {
+            Button("확인", role: .none) { }
+        } message: {
+            Text("로그인이 실패했습니다.")
+        }
     }
 }
 
 #Preview {
-    LoginView()
+    FlowPreview {
+        LoginView()
+    }
 }
