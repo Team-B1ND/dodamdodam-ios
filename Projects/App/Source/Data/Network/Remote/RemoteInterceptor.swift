@@ -23,8 +23,23 @@ struct RemoteInterceptor: RequestInterceptor {
             return
         }
         if let refreshToken = Sign.refreshToken {
-            await refresh(refreshToken: refreshToken, dueTo: error) {
-                completion($0)
+            @Inject var authRepository: any AuthRepository
+            do {
+                try await authRepository.postReissue(
+                    .init(refreshToken: refreshToken)
+                )
+                completion(.retry)
+            } catch {
+                if let id = Sign.id,
+                   let pw = Sign.password {
+                    do {
+                        _ = try await authRepository.postLogin(
+                            .init(id: id, pw: pw)
+                        )
+                    } catch let error {
+                        completion(.doNotRetryWithError(error))
+                    }
+                }
             }
         } else {
             completion(.doNotRetryWithError(error))
