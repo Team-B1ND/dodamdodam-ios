@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum BusService: ServiceProtocol {
@@ -19,8 +18,8 @@ enum BusService: ServiceProtocol {
 
 extension BusService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("bus")
+    var host: String {
+        "bus"
     }
     
     var path: String {

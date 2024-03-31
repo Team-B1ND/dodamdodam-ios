@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum OutSleepingService: ServiceProtocol {
@@ -17,8 +16,8 @@ enum OutSleepingService: ServiceProtocol {
 
 extension OutSleepingService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("out-sleeping")
+    var host: String {
+        "out-sleeping"
     }
     
     var path: String {

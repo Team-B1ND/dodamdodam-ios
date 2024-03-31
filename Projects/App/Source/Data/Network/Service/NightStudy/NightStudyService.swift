@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum NightStudyService: ServiceProtocol {
@@ -17,8 +16,8 @@ enum NightStudyService: ServiceProtocol {
 
 extension NightStudyService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("night-study")
+    var host: String {
+        "night-study"
     }
     
     var path: String {

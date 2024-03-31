@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-import Foundation
 import Moya
 
 enum AuthService: ServiceProtocol {
@@ -16,8 +15,8 @@ enum AuthService: ServiceProtocol {
 
 extension AuthService {
     
-    var baseURL: URL {
-        host.appendingPathComponent("auth")
+    var host: String {
+        "auth"
     }
     
     var path: String {

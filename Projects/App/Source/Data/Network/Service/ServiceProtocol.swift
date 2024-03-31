@@ -7,22 +7,25 @@
 
 import Foundation
 import Moya
+import SignKit
 
 protocol ServiceProtocol: TargetType {
     
-    var host: URL { get }
-    var headers: [String: String]? { get }
+    var host: String { get }
 }
 
 extension ServiceProtocol {
     
-    var host: URL {
+    var baseURL: URL {
         .init(string: Constants.API)!
+        .appendingPathComponent(host)
     }
     
     var headers: [String: String]? {
         var headers = ["Content-Type": "application/json"]
-        headers["Authorization"] = "" // TOKEN
+        if let authorization = Sign.accessToken {
+            headers["Authorization"] = "Bearer \(authorization)"
+        }
         return headers
     }
 }
