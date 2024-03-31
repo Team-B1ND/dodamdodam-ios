@@ -10,16 +10,13 @@ import DDS
 
 struct RegisterInfoView: View {
     
-    // UI test state
-    @State var step: Int = 0
-    
     @InjectObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             Text({ () -> String in
-                switch step {
+                switch viewModel.infoStep {
                 case 0: "이름을"
                 case 1: "학생정보를"
                 case 2: "이메일"
@@ -28,39 +25,41 @@ struct RegisterInfoView: View {
             }() + "\n입력해주세요")
             .font(.headline(.small))
             
-            if step >= 3 {
+            if viewModel.infoStep >= 3 {
                 DodamTextField.default(
                     title: "전화번호",
                     text: $viewModel.phoneText
                 )
                 .makeFirstResponder()
+                .keyboardType(.numberPad)
                 .onSubmit {
-                    step = 4
+                    viewModel.infoStep = 4
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.infoStep
                 )
             }
             
-            if step >= 2 {
+            if viewModel.infoStep >= 2 {
                 DodamTextField.default(
                     title: "이메일",
-                    text: $viewModel.mailText
+                    text: $viewModel.emailText
                 )
                 .makeFirstResponder()
+                .keyboardType(.emailAddress)
                 .onSubmit {
-                    step = 3
+                    viewModel.infoStep = 3
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.infoStep
                 )
             }
             
-            if step >= 1 {
+            if viewModel.infoStep >= 1 {
                 DodamTextField.default(
                     title: "학생정보",
                     text: $viewModel.infoText
@@ -68,33 +67,33 @@ struct RegisterInfoView: View {
                 .makeFirstResponder()
                 .keyboardType(.numberPad)
                 .onSubmit {
-                    step = 2
+                    viewModel.infoStep = 2
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.infoStep
                 )
             }
             
-            if step >= 0 {
+            if viewModel.infoStep >= 0 {
                 DodamTextField.default(
                     title: "이름",
                     text: $viewModel.nameText
                 )
                 .makeFirstResponder()
                 .onSubmit {
-                    step = 1
+                    viewModel.infoStep = 1
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.infoStep
                 )
             }
             Spacer()
             
-            if step >= 4 {
+            if viewModel.infoStep >= 4 {
                 DodamButton.fullWidth(
                     title: "다음"
                 ) {
@@ -131,11 +130,20 @@ struct RegisterInfoView: View {
                 break
             }
         }
+        .onChange(of: viewModel.phoneText) {
+            print($0)
+        }
         .padding(.horizontal, 16)
         .toolbar {
-            if step == 1 && viewModel.infoText.count >= 9 {
+            let info = viewModel.infoStep == 1 && viewModel.infoText.count >= 9
+            let call = viewModel.infoStep == 3 && viewModel.infoText.count == 11
+            if info || call {
                 Button("완료") {
-                    step = 2
+                    if info {
+                        viewModel.infoStep = 2
+                    } else {
+                        viewModel.infoStep = 4
+                    }
                 }
             }
         }

@@ -156,6 +156,7 @@ struct OnboardingView: View {
                 title: "다음"
             ) {
                 flow.push(RegisterInfoView())
+                viewModel.isModalPresented = false
             }
             .disabled(!viewModel.isChecked())
         }
