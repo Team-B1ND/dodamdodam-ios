@@ -7,17 +7,18 @@
 
 import SwiftUI
 import FlowKit
+import SignKit
 
 @propertyWrapper
 public struct Flow: DynamicProperty {
-  
-  @EnvironmentObject private var object: FlowProvider
-  
-  public var wrappedValue: FlowProvider {
-    object
-  }
-  
-  public init() { }
+    
+    @EnvironmentObject private var object: FlowProvider
+    
+    public var wrappedValue: FlowProvider {
+        object
+    }
+    
+    public init() { }
 }
 
 @main
@@ -25,8 +26,13 @@ struct AppMain: App {
     
     var body: some Scene {
         WindowGroup {
-            FlowPresenter(rootView: OnboardingView())
-                .ignoresSafeArea()
+            if Sign.isLoggedIn {
+                FlowPresenter(rootView: MainView())
+                    .ignoresSafeArea()
+            } else {
+                FlowPresenter(rootView: OnboardingView())
+                    .ignoresSafeArea()
+            }
         }
     }
 }

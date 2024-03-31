@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import SignKit
 
 struct HomeView: View {
     
@@ -120,6 +121,12 @@ struct HomeView: View {
                         .padding(6)
                     }
                     .scaledButtonStyle()
+                }
+                
+                Button {
+                    Sign.logout()
+                } label: {
+                    Text("로그아웃")
                 }
             }
             .padding(.horizontal, 16)

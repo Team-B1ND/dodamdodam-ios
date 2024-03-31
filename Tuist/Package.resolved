@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mercen-Lee/SignKit",
       "state" : {
-        "revision" : "d21862ed22a40fc32097d33deda02928b8fd967e",
-        "version" : "0.0.1"
+        "revision" : "11c0dd643e163f7c6c8f64e1b588d2825c0d26c9",
+        "version" : "0.0.2"
       }
     },
     {

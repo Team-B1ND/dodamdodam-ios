@@ -19,7 +19,7 @@ struct AuthRepositoryImpl: AuthRepository {
             accessToken: data.accessToken,
             refreshToken: data.refreshToken
         )
-        return data.memeber
+        return data.member
     }
     
     func postReissue(_ request: PostReissueRequest) async throws {

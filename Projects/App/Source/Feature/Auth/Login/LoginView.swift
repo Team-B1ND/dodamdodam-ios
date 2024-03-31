@@ -10,10 +10,6 @@ import DDS
 
 struct LoginView: View {
     
-    // UI test state
-    @State var testIdText: String = ""
-    @State var testPwText: String = ""
-    
     @InjectObject var viewModel: LoginViewModel
     @Flow var flow
     
@@ -23,12 +19,12 @@ struct LoginView: View {
                 .font(.headline(.small))
             DodamTextField.default(
                 title: "아이디",
-                text: $testIdText
+                text: $viewModel.idText
             )
             .makeFirstResponder()
             DodamTextField.secured(
                 title: "비밀번호",
-                text: $testPwText
+                text: $viewModel.pwText
             )
 //            HStack(spacing: 0) {
 //                Text("비밀번호를 잊으셨나요? ")
@@ -49,10 +45,11 @@ struct LoginView: View {
             DodamButton.fullWidth(
                 title: "로그인"
             ) {
-                flow.replace([
-                    MainView()
-                        .navigationBarHidden(true)
-                ])
+                await viewModel.postLogin {
+                    flow.replace([
+                        MainView()
+                    ])
+                }
             }
             .padding(.top, 8)
             Spacer()

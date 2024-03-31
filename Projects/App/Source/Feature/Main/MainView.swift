@@ -25,6 +25,7 @@ struct MainView: View {
             Text("Menu")
                 .page(.icon(.menu))
         }
+        .navigationBarHidden(true)
     }
 }
 
