@@ -12,11 +12,8 @@ struct RegisterAuthView: View {
     
     // UI test state
     @State var step: Int = 0
-    @State var testIdText: String = ""
-    @State var testPwText: String = ""
-    @State var testCheckPwText: String = ""
     
-    @InjectObject var viewModel: RegisterInfoViewModel
+    @InjectObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {
@@ -33,7 +30,7 @@ struct RegisterAuthView: View {
             if step >= 2 {
                 DodamTextField.default(
                     title: "비밀번호 확인",
-                    text: $testCheckPwText
+                    text: $viewModel.checkPwText
                 )
                 .makeFirstResponder()
                 .onSubmit {
@@ -49,7 +46,7 @@ struct RegisterAuthView: View {
             if step >= 1 {
                 DodamTextField.default(
                     title: "비밀번호",
-                    text: $testPwText
+                    text: $viewModel.pwText
                 )
                 .makeFirstResponder()
                 .onSubmit {
@@ -66,7 +63,7 @@ struct RegisterAuthView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     DodamTextField.default(
                         title: "아이디",
-                        text: $testIdText
+                        text: $viewModel.idText
                     )
                     .makeFirstResponder()
                     .onSubmit {
@@ -94,7 +91,6 @@ struct RegisterAuthView: View {
             }
         }
         .padding(.horizontal, 16)
-//        .ignoresSafeArea(.keyboard)
     }
 }
 

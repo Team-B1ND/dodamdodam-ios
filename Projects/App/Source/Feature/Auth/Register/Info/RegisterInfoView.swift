@@ -12,12 +12,8 @@ struct RegisterInfoView: View {
     
     // UI test state
     @State var step: Int = 0
-    @State var testPhoneText: String = ""
-    @State var testInfoText: String = ""
-    @State var testMailText: String = ""
-    @State var testNameText: String = ""
     
-    @InjectObject var viewModel: RegisterInfoViewModel
+    @InjectObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {
@@ -35,7 +31,7 @@ struct RegisterInfoView: View {
             if step >= 3 {
                 DodamTextField.default(
                     title: "전화번호",
-                    text: $testPhoneText
+                    text: $viewModel.phoneText
                 )
                 .makeFirstResponder()
                 .onSubmit {
@@ -51,7 +47,7 @@ struct RegisterInfoView: View {
             if step >= 2 {
                 DodamTextField.default(
                     title: "이메일",
-                    text: $testMailText
+                    text: $viewModel.mailText
                 )
                 .makeFirstResponder()
                 .onSubmit {
@@ -67,7 +63,7 @@ struct RegisterInfoView: View {
             if step >= 1 {
                 DodamTextField.default(
                     title: "학생정보",
-                    text: $testInfoText
+                    text: $viewModel.infoText
                 )
                 .makeFirstResponder()
                 .keyboardType(.numberPad)
@@ -84,7 +80,7 @@ struct RegisterInfoView: View {
             if step >= 0 {
                 DodamTextField.default(
                     title: "이름",
-                    text: $testNameText
+                    text: $viewModel.nameText
                 )
                 .makeFirstResponder()
                 .onSubmit {
@@ -107,47 +103,47 @@ struct RegisterInfoView: View {
                 .padding(.bottom, 24)
             }
         }
-        .onChange(of: testInfoText) {
-            
+        .onChange(of: viewModel.infoText) {
             switch $0.count {
             case 1: // 학년을 입력한 경우: "" (0글자)
-                testInfoText = "\($0[0])학년"
+                viewModel.infoText = "\($0[0])학년"
             case 2: // 학년을 삭제한 경우: "1학년"
-                testInfoText = ""
+                viewModel.infoText = ""
             case 4: // 반을 입력한 경우: "1학년2"
-                testInfoText = "\($0[0])학년 \($0[3])반"
+                viewModel.infoText = "\($0[0])학년 \($0[3])반"
             case 5: // 반을 삭제한 경우: "1학년 2
-                testInfoText = "\($0[0])학년"
+                viewModel.infoText = "\($0[0])학년"
             case 7: // 번호를 입력한 경우: "1학년 2반3"
-                testInfoText = "\($0[0])학년 \($0[4])반 \($0[6])번"
+                viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[6])번"
             case 8: // 번호를 삭제한 경우: "1학년 2반 3"
-                testInfoText = "\($0[0])학년 \($0[4])반"
+                viewModel.infoText = "\($0[0])학년 \($0[4])반"
             case 9: // 번호가 두 글자일 때 번호를 삭제한 경우: "1학년 2반 34"
-                if testInfoText[8] != "번" {
-                    testInfoText = "\($0[0])학년 \($0[4])반 \($0[7])번"
+                if viewModel.infoText[8] != "번" {
+                    viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[7])번"
                 }
             case 10: // 번호를 한 글자 더 추가한 경우: "1학년 2반 3번4"
                 if $0[9] != "번" {
-                    testInfoText = "\($0[0])학년 \($0[4])반 \($0[7])\($0[9])번"
+                    viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[7])\($0[9])번"
                 }
             case 11...: // "1학년 2반 34번1"
-                testInfoText = testInfoText[0..<10]
+                viewModel.infoText = viewModel.infoText[0..<10]
             default:
                 break
             }
         }
         .padding(.horizontal, 16)
         .toolbar {
-            if step == 1 && testInfoText.count >= 9 {
+            if step == 1 && viewModel.infoText.count >= 9 {
                 Button("완료") {
                     step = 2
                 }
             }
         }
-        //        .ignoresSafeArea(.keyboard)
     }
 }
 
 #Preview {
-    RegisterInfoView()
+    FlowPreview {
+        RegisterInfoView()
+    }
 }

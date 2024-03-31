@@ -18,11 +18,7 @@ struct ViewModelAssembly: Assembly {
                 .init()
         }.inObjectScope(.container)
         
-        container.register(RegisterInfoViewModel.self) { _ in
-                .init()
-        }.inObjectScope(.container)
-        
-        container.register(RegisterAuthViewModel.self) { _ in
+        container.register(RegisterViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
         
