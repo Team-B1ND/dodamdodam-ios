@@ -26,22 +26,6 @@ struct LoginView: View {
                 title: "비밀번호",
                 text: $viewModel.pwText
             )
-//            HStack(spacing: 0) {
-//                Text("비밀번호를 잊으셨나요? ")
-//                    .font(.body(.small))
-//                    .dodamColor(.tertiary)
-//                Button {
-//                    // action
-//                } label: {
-//                    Text("비밀번호 재설정")
-//                        .font(.body(.small))
-//                        .underline()
-//                        .dodamColor(.onBackground)
-//                }
-//            }
-//            .frame(maxWidth: .infinity, alignment: .center)
-//            .padding(.top, 16)
-            
             DodamButton.fullWidth(
                 title: "로그인"
             ) {
@@ -51,6 +35,7 @@ struct LoginView: View {
                     ])
                 }
             }
+            .disabled(!viewModel.isValidIdAndPw())
             .padding(.top, 8)
             Spacer()
         }

@@ -32,4 +32,10 @@ class LoginViewModel: ObservableObject {
             isShowingAlert = true
         }
     }
+    
+    func isValidIdAndPw() -> Bool {
+        let isValidId: Bool = !idText.isEmpty
+        let isValidPw: Bool = !pwText.isEmpty
+        return isValidId && isValidPw
+    }
 }
