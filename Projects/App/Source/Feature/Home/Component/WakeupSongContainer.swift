@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct WakeupSongContainer: View {
 
@@ -19,12 +20,12 @@ struct WakeupSongContainer: View {
     }
     
     var body: some View {
-        if let data = wakeupSongData {
+        if let data = wakeupSongData, !data.isEmpty {
             DodamPageView {
                 ForEach(data, id: \.self) { data in
                     HStack(alignment: .top, spacing: 12) {
                         Link(destination: URL(string: data.videoUrl) ?? URL(string: "about:blank")!) {
-                            AsyncImage(url: URL(string: data.thumbnailUrl)) { image in
+                            CachedAsyncImage(url: URL(string: data.thumbnailUrl)) { image in
                                 image
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
