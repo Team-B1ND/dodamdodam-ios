@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct AllView: View {
     
@@ -14,32 +15,11 @@ struct AllView: View {
     @Flow var flow
     
     var body: some View {
-        DodamScrollView {
-            HStack {
-                Text("전체")
-                    .font(.headline(.small))
-                    .dodamColor(.onSurface)
-                    .padding(.leading, 20)
-                Spacer()
-                Button {
-                    flow.push(NightStudyApplyView())
-                } label: {
-                    Dodam.icon(.gear)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .dodamColor(.onSurfaceVariant)
-                }
-                .frame(width: 44, height: 44)
-                .padding(.trailing, 12)
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        } content: {
+        DodamScrollView.default(title: "전체") {
             VStack(spacing: 24) {
                 HStack(spacing: 16) {
                     if let image = viewModel.memberData?.profileImage {
-                        AsyncImage(url: URL(string: image)) { image in
+                        CachedAsyncImage(url: URL(string: image)) { image in
                             image
                                 .resizable()
                                 .frame(width: 70, height: 70)
@@ -141,16 +121,55 @@ struct AllView: View {
                             .padding(.trailing, 4)
                     }
                 }
+                
+                Button {
+                    viewModel.onTapLogoutButton()
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Rectangle()
+                                .dodamFill(.secondary)
+                                .frame(width: 32, height: 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Image(icon: .doorOpen)
+                                .resizable()
+                                .dodamColor(.onSurface)
+                                .frame(width: 20, height: 20)
+                        }
+                        .padding(.leading, 8)
+                        Text("로그아웃")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.error)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                            .padding(.trailing, 4)
+                    }
+                }
             }
             .padding([.top, .horizontal], 16)
         }
         .background(Dodam.color(.background))
         .task {
-            await viewModel.getTestData()
+            await viewModel.fetchMemberData()
+        }
+        .alert("로그아웃", isPresented: $viewModel.isShowingLogoutAlert) {
+            Button("네", role: .none) {
+                viewModel.logout()
+                flow.replace([OnboardingView()])
+            }
+            Button("취소", role: .cancel) { }
+        } message: {
+            Text("로그아웃 하시겠습니까?")
         }
     }
 }
 
 #Preview {
-    AllView()
+    FlowPreview {
+        AllView()
+            .navigationBarHidden(true)
+    }
 }

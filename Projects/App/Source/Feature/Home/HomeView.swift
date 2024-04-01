@@ -7,7 +7,6 @@
 
 import SwiftUI
 import DDS
-import SignKit
 
 struct HomeView: View {
     
@@ -16,29 +15,9 @@ struct HomeView: View {
     @Binding var selection: Int
     
     var body: some View {
-        DodamScrollView {
-            HStack {
-                Dodam.icon(.logo)
-                    .resizable()
-                    .frame(width: 88, height: 22)
-                    .dodamColor(.primary)
-                    .padding(.leading, 20)
-                Spacer()
-                Button {
-                    // bell action
-                } label: {
-                    Dodam.icon(.bell)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .dodamColor(.onSurfaceVariant)
-                }
-                .frame(width: 44, height: 44)
-                .padding(.trailing, 12)
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        } content: {
+        DodamScrollView.icon(
+            icon: viewModel.ringCount >= 33 ? .domomLogo : .logo
+        ) {
             VStack(spacing: 12) {
                 BannerContainer(
                     data: viewModel.bannerData
@@ -108,28 +87,39 @@ struct HomeView: View {
                         .scaledButtonStyle()
                     }
                 }
-                DodamContainer.default(
-                    title: "가까운 일정",
-                    icon: Dodam.icon(.calendar)
-                ) {
-                    Button {
-                        // navigate action
-                    } label: {
-                        ScheduleContainer(
-                            data: viewModel.scheduleData
-                        )
-                        .padding(6)
-                    }
-                    .scaledButtonStyle()
-                }
-                
-                Button {
-                    Sign.logout()
-                } label: {
-                    Text("로그아웃")
-                }
+                /*
+                 DodamContainer.default(
+                 title: "가까운 일정",
+                 icon: Dodam.icon(.calendar)
+                 ) {
+                 Button {
+                 // navigate action
+                 } label: {
+                 ScheduleContainer(
+                 data: viewModel.scheduleData
+                 )
+                 .padding(6)
+                 }
+                 .scaledButtonStyle()
+                 }
+                 */
             }
             .padding(.horizontal, 16)
+        }
+        .button(icon: .bell) {
+            viewModel.ringCount += 1
+            if viewModel.ringCount == 33 {
+                viewModel.isShowingAlert.toggle()
+            }
+        }
+        .task {
+            await viewModel.onAppear()
+            viewModel.ringCount = 0
+        }
+        .alert("앗", isPresented: $viewModel.isShowingAlert) {
+            Button("확인", role: .none) { }
+        } message: {
+            Text("종을 너무 많이 울려서\n도담도담에 무언가 변화가 생겼습니다.")
         }
     }
 }

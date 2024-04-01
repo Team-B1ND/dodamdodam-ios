@@ -22,7 +22,7 @@ struct MainView: View {
                 .page(.icon(.doorOpen))
             NightStudyView()
                 .page(.icon(.moonPlus))
-            Text("Menu")
+            AllView()
                 .page(.icon(.menu))
         }
         .navigationBarHidden(true)

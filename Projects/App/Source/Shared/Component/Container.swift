@@ -47,7 +47,7 @@ public struct DodamContainer<Content>: View where Content: View {
                         .padding(6)
                 }
                 .frame(width: 32, height: 32)
-                .background(Dodam.color(.primary))
+                .background(Dodam.color(.primary).opacity(0.65))
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Text("\(title)")
                     .font(.title(.medium))

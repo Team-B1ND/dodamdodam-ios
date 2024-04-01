@@ -6,17 +6,36 @@
 //
 
 import Combine
+import SignKit
 
 class AllViewModel: ObservableObject {
     
+    // MARK: - State
     @Published var memberData: MemberResponse?
+    @Published var isShowingLogoutAlert: Bool = false
+    
+    // MARK: - Repository
     @Inject var memberRepository: any MemberRepository
     
-    func getTestData() async {
+    // MARK: - Method
+    func onAppear() async {
+        await fetchMemberData()
+    }
+    
+    func fetchMemberData() async {
         do {
             memberData = try await memberRepository.fetchInfo()
         } catch let error {
             print(error)
         }
+    }
+    
+    func onTapLogoutButton() {
+        isShowingLogoutAlert.toggle()
+    }
+    
+    func logout() {
+        isShowingLogoutAlert.toggle()
+        Sign.logout()
     }
 }

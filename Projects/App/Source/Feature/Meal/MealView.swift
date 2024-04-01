@@ -24,18 +24,7 @@ struct MealView: View {
     }
     
     var body: some View {
-        DodamScrollView {
-            HStack {
-                Text("급식")
-                    .font(.headline(.small))
-                    .dodamColor(.onBackground)
-                    .padding(.leading, 20)
-                Spacer()
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        } content: {
+        DodamScrollView.default(title: "급식") {
             VStack(spacing: 20) {
                 if let datas = viewModel.mealData {
                     ForEach({ () -> [MealResponse] in
