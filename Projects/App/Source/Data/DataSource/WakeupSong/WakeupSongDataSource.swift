@@ -29,6 +29,13 @@ struct WakeupSongDataSource: DataSourceProtocol {
         return response.data
     }
     
+    func fetchWakeupSongByKeyword(
+        _ request: FetchWakeupSongByKeywordRequest
+    ) async throws -> [WakeupSongSearchResponse] {
+        let response = try await remote.fetchWakeupSongByKeyword(request)
+        return response.data
+    }
+    
     func postWakeupSong(_ request: PostWakeupSongRequest) async throws {
         _ = try await remote.postWakeupSong(request)
     }

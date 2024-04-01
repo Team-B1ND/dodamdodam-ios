@@ -5,8 +5,6 @@
 //  Created by Mercen on 3/27/24.
 //
 
-import Foundation
-
 struct PostJoinRequest: RequestProtocol {
     
     let id: String?
