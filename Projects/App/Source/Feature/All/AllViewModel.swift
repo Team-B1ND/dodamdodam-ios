@@ -6,17 +6,27 @@
 //
 
 import Combine
+import SignKit
 
 class AllViewModel: ObservableObject {
     
     @Published var memberData: MemberResponse?
     @Inject var memberRepository: any MemberRepository
     
-    func getTestData() async {
+    func onAppear() async {
+        await fetchMemberData()
+    }
+    
+    func fetchMemberData() async {
         do {
             memberData = try await memberRepository.fetchInfo()
         } catch let error {
             print(error)
         }
+    }
+    
+    func onTapLogoutButton(_ completion: @escaping () -> Void) {
+        Sign.logout()
+        completion()
     }
 }

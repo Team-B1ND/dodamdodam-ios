@@ -141,16 +141,51 @@ struct AllView: View {
                             .padding(.trailing, 4)
                     }
                 }
+                
+                Button {
+                    viewModel.onTapLogoutButton {
+                        flow.replace([OnboardingView()
+                            .toast(timeout: 3) {
+                                Text("로그아웃을 성공했어요")
+                            }]
+                        )
+                    }
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Rectangle()
+                                .dodamFill(.secondary)
+                                .frame(width: 32, height: 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Image(icon: .doorOpen)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                        .padding(.leading, 8)
+                        Text("로그아웃")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.onBackground)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                            .padding(.trailing, 4)
+                    }
+                }
             }
             .padding([.top, .horizontal], 16)
         }
         .background(Dodam.color(.background))
         .task {
-            await viewModel.getTestData()
+            await viewModel.fetchMemberData()
         }
     }
 }
 
 #Preview {
-    AllView()
+    FlowPreview {
+        AllView()
+            .navigationBarHidden(true)
+    }
 }
