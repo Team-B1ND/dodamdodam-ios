@@ -14,28 +14,7 @@ struct NightStudyView: View {
     @Flow var flow
     
     var body: some View {
-        DodamScrollView {
-            HStack {
-                Text("심야 자습")
-                    .font(.headline(.small))
-                    .dodamColor(.onSurface)
-                    .padding(.leading, 20)
-                Spacer()
-                Button {
-                    flow.push(NightStudyApplyView())
-                } label: {
-                    Dodam.icon(.plus)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .dodamColor(.tertiary)
-                }
-                .frame(width: 44, height: 44)
-                .padding(.trailing, 12)
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        } content: {
+        DodamScrollView.default(title: "심야 자습") {
             VStack(spacing: 20) {
                 if let datas = viewModel.nightStudyData {
                     ForEach(datas, id: \.self) { data in
@@ -50,6 +29,9 @@ struct NightStudyView: View {
                 }
             }
             .padding(.horizontal, 16)
+        }
+        .button(icon: .plus) {
+            flow.push(NightStudyApplyView())
         }
     }
 }

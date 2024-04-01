@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Team-B1ND/dds-ios",
       "state" : {
-        "revision" : "97bda6b45faab0ec6d587ecf6d59e6e02b3faf2b",
-        "version" : "0.1.2"
+        "revision" : "982df00cafac6aa72343bd7efa017147e3bc6b4e",
+        "version" : "0.1.5"
       }
     },
     {

@@ -15,29 +15,7 @@ struct HomeView: View {
     @Binding var selection: Int
     
     var body: some View {
-        DodamScrollView {
-            HStack {
-                Dodam.icon(.logo)
-                    .resizable()
-                    .frame(width: 88, height: 22)
-                    .dodamColor(.primary)
-                    .padding(.leading, 20)
-                Spacer()
-                Button {
-                    viewModel.isShowingAlert.toggle()
-                } label: {
-                    Dodam.icon(.bell)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .dodamColor(.onSurfaceVariant)
-                }
-                .frame(width: 44, height: 44)
-                .padding(.trailing, 12)
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        } content: {
+        DodamScrollView.default(title: "도담도담") {
             VStack(spacing: 12) {
                 BannerContainer(
                     data: viewModel.bannerData
@@ -125,6 +103,9 @@ struct HomeView: View {
                  */
             }
             .padding(.horizontal, 16)
+        }
+        .button(icon: .bell) {
+            viewModel.isShowingAlert.toggle()
         }
         .task {
             await viewModel.onAppear()

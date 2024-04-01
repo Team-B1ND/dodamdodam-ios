@@ -15,18 +15,7 @@ struct AllView: View {
     @Flow var flow
     
     var body: some View {
-        DodamScrollView {
-            HStack {
-                Text("전체")
-                    .font(.headline(.small))
-                    .dodamColor(.onSurface)
-                    .padding(.leading, 20)
-                Spacer()
-            }
-            .frame(height: 58)
-            .frame(maxWidth: .infinity)
-            .background(.regularMaterial)
-        } content: {
+        DodamScrollView.default(title: "전체") {
             VStack(spacing: 24) {
                 HStack(spacing: 16) {
                     if let image = viewModel.memberData?.profileImage {
