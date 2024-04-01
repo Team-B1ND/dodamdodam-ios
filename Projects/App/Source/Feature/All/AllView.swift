@@ -45,7 +45,7 @@ struct AllView: View {
                     Spacer()
                 }
                 Button {
-                    
+                    flow.push(BusApplyView())
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {
