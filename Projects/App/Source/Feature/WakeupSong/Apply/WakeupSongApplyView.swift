@@ -12,8 +12,6 @@ struct WakeupSongApplyView: View {
     
     @InjectObject var viewModel: WakeupSongApplyViewModel
     
-    @State private var songList = Array(0..<5)
-    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
@@ -42,16 +40,14 @@ struct WakeupSongApplyView: View {
                     .font(.body(.small))
                     .dodamColor(.onSurface)
                     .padding(.top, 2)
-                LazyVStack(spacing: 4) {
-                    ForEach(songList, id: \.self) { _ in
-                        WakeupSongCell(
-                            title: "123",
-                            artist: "String",
-                            createAt: "String"
-                        )
-                    }
-                }
-                .padding(.top, 12)
+//                LazyVStack(spacing: 4) {
+//                    ForEach(songList, id: \.self) { _ in
+//                        WakeupSongCell(
+//                            data: data
+//                        )
+//                    }
+//                }
+//                .padding(.top, 12)
             }
             .padding(.horizontal, 16)
         }

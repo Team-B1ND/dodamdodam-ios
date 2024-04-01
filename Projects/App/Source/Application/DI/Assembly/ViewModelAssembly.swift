@@ -50,11 +50,11 @@ struct ViewModelAssembly: Assembly {
                 .init()
         }.inObjectScope(.container)
         
-        container.register(WakeupSongView.self) { _ in
+        container.register(WakeupSongViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
         
-        container.register(WakeupSongApplyView.self) { _ in
+        container.register(WakeupSongApplyViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
     }

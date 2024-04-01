@@ -7,39 +7,40 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct TomorrowWakeupSongCell: View {
     
-    let id: Int
-    let title: String
-    let channel: String
+    let data: WakeupSongResponse
     
     init(
-        id: Int,
-        title: String,
-        channel: String
+        data: WakeupSongResponse
     ) {
-        self.id = id
-        self.title = title
-        self.channel = channel
+        self.data = data
     }
     
     var body: some View {
         HStack(spacing: 16) {
-            Text("\(id)")
+            Text("\(data.id)")
                 .font(.label(.large))
                 .dodamColor(.primary)
-            Image(.onboard)
-                .resizable()
-                .frame(width: 120, height: 67)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.vertical, 8)
+            CachedAsyncImage(url: URL(string: data.thumbnail)) {
+                $0
+                    .resizable()
+                    .frame(width: 120, height: 67)
+            } placeholder: {
+                Rectangle()
+                    .frame(width: 120, height: 67)
+                    .shimmer()
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.vertical, 8)
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(title)")
+                Text("\(data.videoTitle)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .lineLimit(1)
-                Text("\(channel)")
+                Text("\(data.channelTitle)")
                     .font(.label(.large))
                     .dodamColor(.onSurfaceVariant)
                     .lineLimit(1)

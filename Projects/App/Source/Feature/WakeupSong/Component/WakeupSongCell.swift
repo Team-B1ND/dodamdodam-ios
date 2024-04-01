@@ -7,42 +7,43 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct WakeupSongCell: View {
     
-    let title: String
-    let artist: String
-    let createAt: String
+    let data: WakeupSongResponse
     
     init(
-        title: String,
-        artist: String,
-        createAt: String
+        data: WakeupSongResponse
     ) {
-        self.title = title
-        self.artist = artist
-        self.createAt = createAt
+        self.data = data
     }
     
     var body: some View {
         HStack(spacing: 16) {
-            Image(.onboard)
-                .resizable()
-                .frame(width: 120, height: 67)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.vertical, 8)
+            CachedAsyncImage(url: URL(string: data.thumbnail)) {
+                $0
+                    .resizable()
+                    .frame(width: 120, height: 67)
+            } placeholder: {
+                Rectangle()
+                    .frame(width: 120, height: 67)
+                    .shimmer()
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.vertical, 8)
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(title)")
+                Text("\(data.videoTitle)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .lineLimit(1)
-                Text("\(artist)")
+                Text("\(data.channelTitle)")
                     .font(.label(.large))
                     .dodamColor(.onSurfaceVariant)
-                Text("\(createAt)")
+                    .lineLimit(1)
+                Text("\(data.createdAt)")
                     .font(.label(.small))
                     .dodamColor(.onSurfaceVariant)
-                    .lineLimit(1)
             }
             .padding(.vertical, 12)
             Spacer()
