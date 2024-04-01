@@ -52,10 +52,8 @@ struct MealContainer: View {
                         mealIdx = 0
                     } else if hour < 13 || (hour == 13 && minute < 30) {
                         mealIdx = 1
-                    } else if hour < 19 || (hour == 19 && minute < 20) {
-                        mealIdx = 2
                     } else {
-                        // 다음 날 가져와서 표시
+                        mealIdx = 2
                     }
                 }
             }
