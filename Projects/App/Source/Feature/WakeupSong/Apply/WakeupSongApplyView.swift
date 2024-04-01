@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct WakeupSongApplyView: View {
     
@@ -32,24 +33,58 @@ struct WakeupSongApplyView: View {
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 }
-                Text("이런 노래는 어떤가요?")
-                    .font(.title(.medium))
-                    .dodamColor(.onSurface)
-                    .padding(.top, 40)
-                Text("요즘 인기있는 노래를 추천해드릴게요")
-                    .font(.body(.small))
-                    .dodamColor(.onSurface)
-                    .padding(.top, 2)
-//                LazyVStack(spacing: 4) {
-//                    ForEach(songList, id: \.self) { _ in
-//                        WakeupSongCell(
-//                            data: data
-//                        )
-//                    }
-//                }
-//                .padding(.top, 12)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("이런 노래는 어떤가요?")
+                        .font(.title(.medium))
+                        .dodamColor(.onSurface)
+                    Text("요즘 인기있는 노래를 추천해드릴게요")
+                        .font(.body(.small))
+                        .dodamColor(.onSurface)
+                }
+                .padding(.top, 40)
+    
+                LazyVStack(spacing: 4) {
+                    if let data = viewModel.wakeupSongChartData {
+                        ForEach(data, id: \.self) { data in
+                            HStack(spacing: 16) {
+                                Text("\(data.rank)위")
+                                    .font(.label(.large))
+                                    .dodamColor(.onBackground)
+                                CachedAsyncImage(url: URL(string: data.thumbnail)) {
+                                    $0
+                                        .resizable()
+                                        .frame(width: 67, height: 67)
+                                } placeholder: {
+                                    Rectangle()
+                                        .frame(width: 67, height: 67)
+                                        .shimmer()
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .padding(.vertical, 8)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("\(data.name)")
+                                        .font(.body(.medium))
+                                        .dodamColor(.onSurface)
+                                        .lineLimit(1)
+                                    Text("\(data.artist)")
+                                        .font(.label(.large))
+                                        .dodamColor(.onSurfaceVariant)
+                                        .lineLimit(1)
+                                }
+                                .padding(.vertical, 12)
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+                .padding(.top, 12)
+                .padding(.bottom, 150)
             }
             .padding(.horizontal, 16)
+        }
+        .navigationBarHidden(false)
+        .task {
+            await viewModel.onAppear()
         }
     }
 }

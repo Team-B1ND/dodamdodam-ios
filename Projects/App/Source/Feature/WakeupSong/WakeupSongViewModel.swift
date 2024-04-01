@@ -34,7 +34,6 @@ class WakeupSongViewModel: ObservableObject {
             allowedWakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
                 .init(year: 2024, month: 4, day: 1)
             )
-            print("allowedWakeupSongData: \n",allowedWakeupSongData)
         } catch let error {
             print(error)
         }
@@ -45,7 +44,6 @@ class WakeupSongViewModel: ObservableObject {
         
         do {
             pendingWakeupSongData = try await wakeupSongRepository.fetchPendingWakeupSong()
-            print("pendingWakeupSongData\n", pendingWakeupSongData)
         } catch let error {
             print(error)
         }
@@ -56,7 +54,6 @@ class WakeupSongViewModel: ObservableObject {
         
         do {
             myWakeupSongData = try await wakeupSongRepository.fetchWakeupSong()
-            print("myWakeupSongData\n", myWakeupSongData)
         } catch let error {
             print(error)
         }
