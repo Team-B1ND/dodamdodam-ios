@@ -143,13 +143,7 @@ struct AllView: View {
                 }
                 
                 Button {
-                    viewModel.onTapLogoutButton {
-                        flow.replace([OnboardingView()
-                            .toast(timeout: 3) {
-                                Text("로그아웃을 성공했어요")
-                            }]
-                        )
-                    }
+                    viewModel.onTapLogoutButton()
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {
@@ -159,12 +153,13 @@ struct AllView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             Image(icon: .doorOpen)
                                 .resizable()
+                                .dodamColor(.onSurface)
                                 .frame(width: 20, height: 20)
                         }
                         .padding(.leading, 8)
                         Text("로그아웃")
                             .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.onBackground)
+                            .dodamColor(.error)
                         Spacer()
                         Image(icon: .chevronRight)
                             .resizable()
@@ -179,6 +174,15 @@ struct AllView: View {
         .background(Dodam.color(.background))
         .task {
             await viewModel.fetchMemberData()
+        }
+        .alert("로그아웃", isPresented: $viewModel.isShowingLogoutAlert) {
+            Button("네", role: .none) {
+                viewModel.logout()
+                flow.replace([OnboardingView()])
+            }
+            Button("취소", role: .cancel) { }
+        } message: {
+            Text("로그아웃 하시겠습니까?")
         }
     }
 }

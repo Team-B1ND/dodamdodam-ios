@@ -10,9 +10,14 @@ import SignKit
 
 class AllViewModel: ObservableObject {
     
+    // MARK: - State
     @Published var memberData: MemberResponse?
+    @Published var isShowingLogoutAlert: Bool = false
+    
+    // MARK: - Repository
     @Inject var memberRepository: any MemberRepository
     
+    // MARK: - Method
     func onAppear() async {
         await fetchMemberData()
     }
@@ -25,8 +30,12 @@ class AllViewModel: ObservableObject {
         }
     }
     
-    func onTapLogoutButton(_ completion: @escaping () -> Void) {
+    func onTapLogoutButton() {
+        isShowingLogoutAlert.toggle()
+    }
+    
+    func logout() {
+        isShowingLogoutAlert.toggle()
         Sign.logout()
-        completion()
     }
 }
