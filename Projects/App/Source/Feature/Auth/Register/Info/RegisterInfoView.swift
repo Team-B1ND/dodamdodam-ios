@@ -131,18 +131,38 @@ struct RegisterInfoView: View {
             }
         }
         .onChange(of: viewModel.phoneText) {
-            print($0)
+            switch $0.count {
+            case 4:
+                if viewModel.phoneText[3] == "-" { // 010-
+                    viewModel.phoneText = viewModel.phoneText[0..<3]
+                } else { // 0108
+                    viewModel.phoneText = "\(viewModel.phoneText[0..<3])-\(viewModel.phoneText[3])"
+                }
+            case 9:
+                if viewModel.phoneText[8] == "-" { // 010-8778-
+                    viewModel.phoneText = viewModel.phoneText[0..<8]
+                } else { // 010-87780
+                    viewModel.phoneText = "\(viewModel.phoneText[0..<8])-\(viewModel.phoneText[8])"
+                }
+            default:
+                break
+            }
         }
+        .ignoresSafeArea(.keyboard)
         .padding(.horizontal, 16)
         .toolbar {
             let info = viewModel.infoStep == 1 && viewModel.infoText.count >= 9
-            let call = viewModel.infoStep == 3 && viewModel.infoText.count == 11
+            let call = viewModel.infoStep == 3 && viewModel.phoneText.count == 13
             if info || call {
                 Button("완료") {
                     if info {
                         viewModel.infoStep = 2
                     } else {
                         viewModel.infoStep = 4
+                        UIApplication.shared.sendAction(
+                            #selector(UIResponder.resignFirstResponder)
+                            , to: nil, from: nil, for: nil
+                        )
                     }
                 }
             }
