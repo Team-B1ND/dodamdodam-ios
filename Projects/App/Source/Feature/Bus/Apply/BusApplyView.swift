@@ -16,7 +16,7 @@ struct BusApplyView: View {
     var body: some View {
         ZStack {
             DodamScrollView(navigationBar: .medium(title: "무슨 버스에\n탑승하실건가요?")) {
-                VStack {
+                VStack(spacing: 12) {
                     ForEach(viewModel.buses, id: \.self) { bus in
                         Button {
                             guard viewModel.selectedBus?.id ?? 0 != bus.id else {
@@ -25,25 +25,12 @@ struct BusApplyView: View {
                             }
                             viewModel.selectedBus = bus
                         } label: {
-                            HStack {
-                                Text(bus.busName)
-                                    .font(.title(.medium))
-                                    .dodamColor(.tertiary)
-                                Spacer()
-                                Text("\(bus.applyCount)/\(bus.peopleLimit)")
-                                    .font(.title(.medium))
-                                    .dodamColor(bus.applyCount >= bus.peopleLimit ? .error : .primary)
-                                
-                                let myBus = bus.id == viewModel.selectedBus?.id ?? 0
-                                Image(icon: .checkmark)
-                                    .resizable()
-                                    .frame(width: 32, height: 32)
-                                    .opacity(myBus ? 1 : 0)
-                            }
+                            BusApplyCell(bus: bus, selectedBus: viewModel.selectedBus)
                         }
                         .padding(.horizontal, 16)
                     }
                 }
+                .padding(.top, 16)
             }
             VStack {
                 Spacer()
