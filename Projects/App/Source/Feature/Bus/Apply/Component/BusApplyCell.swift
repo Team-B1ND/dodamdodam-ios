@@ -31,5 +31,7 @@ struct BusApplyCell: View {
                 .frame(width: 32, height: 32)
                 .opacity(myBus ? 1 : 0)
         }
+        .frame(height: 40)
+        .padding(.horizontal, 8)
     }
 }
