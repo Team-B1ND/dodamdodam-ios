@@ -25,6 +25,12 @@ struct WakeupSongRepositoryImpl: WakeupSongRepository {
         try await dataSource.fetchWakeupSongChart()
     }
     
+    func fetchWakeupSongByKeyword(
+        _ request: FetchWakeupSongByKeywordRequest
+    ) async throws -> [WakeupSongSearchResponse] {
+        try await dataSource.fetchWakeupSongByKeyword(request)
+    }
+    
     func postWakeupSong(_ request: PostWakeupSongRequest) async throws {
         try await dataSource.postWakeupSong(request)
     }
