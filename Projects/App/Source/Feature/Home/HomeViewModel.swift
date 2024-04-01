@@ -9,7 +9,9 @@ import Combine
 
 class HomeViewModel: ObservableObject {
     
+    // MARK: - State
     @Published var mealIdx: Int = -1
+    @Published var isShowingAlert: Bool = false
     @Published var bannerData: [BannerResponse]?
     @Published var mealData: MealResponse?
     @Published var nightStudyData: NightStudyResponse?
@@ -17,4 +19,24 @@ class HomeViewModel: ObservableObject {
     @Published var outSleepingData: OutSleepingResponse?
     @Published var scheduleData: [ScheduleResponse]?
     @Published var wakeupSongData: [WakeupSongResponse]?
+    
+    // MARK: - Repository
+    @Inject var bannerRepository: any BannerRepository
+    
+    // MARK: - Method
+    @MainActor
+    func onAppear() async {
+        await fetchBannerData()
+    }
+    
+    @MainActor
+    func fetchBannerData() async {
+        
+        do {
+            bannerData = try await bannerRepository.fetchActiveBanner()
+            print(bannerData)
+        } catch let error {
+            print(error)
+        }
+    }
 }

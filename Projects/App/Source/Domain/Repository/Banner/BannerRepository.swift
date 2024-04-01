@@ -7,5 +7,5 @@
 
 protocol BannerRepository: RepositoryProtocol {
     
-    func fetchActiveBanner() async throws -> BannerResponse
+    func fetchActiveBanner() async throws -> [BannerResponse]
 }

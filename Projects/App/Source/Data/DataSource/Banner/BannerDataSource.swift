@@ -9,7 +9,7 @@ struct BannerDataSource: DataSourceProtocol {
     
     let remote: BannerRemote
     
-    func fetchActiveBanner() async throws -> BannerResponse {
+    func fetchActiveBanner() async throws -> [BannerResponse] {
         let response = try await remote.fetchActiveBanner()
         return response.data
     }

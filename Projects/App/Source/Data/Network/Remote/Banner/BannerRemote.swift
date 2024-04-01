@@ -9,8 +9,8 @@ struct BannerRemote: RemoteProtocol {
     
     typealias Target = BannerService
     
-    func fetchActiveBanner() async throws -> Response<BannerResponse> {
+    func fetchActiveBanner() async throws -> Response<[BannerResponse]> {
         try await self.request(target: .fetchActiveBanner)
-            .map(Response<BannerResponse>.self, using: decoder)
+            .map(Response<[BannerResponse]>.self, using: decoder)
     }
 }

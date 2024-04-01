@@ -20,7 +20,7 @@ extension BannerService {
     
     var path: String {
         switch self {
-        case .fetchActiveBanner: ""
+        case .fetchActiveBanner: "/active"
         }
     }
     

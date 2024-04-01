@@ -19,7 +19,7 @@ struct BannerContainer: View {
     }
     
     var body: some View {
-        if let data = bannerData {
+        if let data = bannerData, !data.isEmpty {
             TabView {
                 ForEach(data, id: \.self) { data in
                     Link(destination: URL(string: data.redirectUrl) ?? URL(string: "about:blank")!) {
@@ -28,7 +28,7 @@ struct BannerContainer: View {
                                 .resizable()
                         } placeholder: {
                             Rectangle()
-                                .opacity(0.5)
+                                .shimmer()
                         }
                     }
                 }

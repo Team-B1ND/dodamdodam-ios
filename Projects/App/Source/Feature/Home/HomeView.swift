@@ -25,7 +25,7 @@ struct HomeView: View {
                     .padding(.leading, 20)
                 Spacer()
                 Button {
-                    // bell action
+                    viewModel.isShowingAlert.toggle()
                 } label: {
                     Dodam.icon(.bell)
                         .resizable()
@@ -115,14 +115,15 @@ struct HomeView: View {
                     Button {
                         // navigate action
                     } label: {
+                        /*
                         ScheduleContainer(
                             data: viewModel.scheduleData
                         )
                         .padding(6)
+                         */
                     }
                     .scaledButtonStyle()
                 }
-                
                 Button {
                     Sign.logout()
                 } label: {
@@ -130,6 +131,16 @@ struct HomeView: View {
                 }
             }
             .padding(.horizontal, 16)
+        }
+        .task {
+            await viewModel.onAppear()
+        }
+        .alert("앗", isPresented: $viewModel.isShowingAlert) {
+            Button("확인", role: .none) {
+                viewModel.isShowingAlert.toggle()
+            }
+        } message: {
+            Text("해당 기능은 곧 추가될 예정이에요")
         }
     }
 }

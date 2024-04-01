@@ -9,7 +9,7 @@ struct BannerRepositoryImpl: BannerRepository {
     
     let dataSource: BannerDataSource
     
-    func fetchActiveBanner() async throws -> BannerResponse {
+    func fetchActiveBanner() async throws -> [BannerResponse] {
         try await dataSource.fetchActiveBanner()
     }
 }
