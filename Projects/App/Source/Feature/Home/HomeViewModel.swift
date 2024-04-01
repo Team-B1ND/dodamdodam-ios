@@ -34,7 +34,6 @@ class HomeViewModel: ObservableObject {
         
         do {
             bannerData = try await bannerRepository.fetchActiveBanner()
-            print(bannerData)
         } catch let error {
             print(error)
         }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct AllView: View {
     
@@ -21,16 +22,6 @@ struct AllView: View {
                     .dodamColor(.onSurface)
                     .padding(.leading, 20)
                 Spacer()
-                Button {
-                    flow.push(NightStudyApplyView())
-                } label: {
-                    Dodam.icon(.gear)
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .dodamColor(.onSurfaceVariant)
-                }
-                .frame(width: 44, height: 44)
-                .padding(.trailing, 12)
             }
             .frame(height: 58)
             .frame(maxWidth: .infinity)
@@ -39,7 +30,7 @@ struct AllView: View {
             VStack(spacing: 24) {
                 HStack(spacing: 16) {
                     if let image = viewModel.memberData?.profileImage {
-                        AsyncImage(url: URL(string: image)) { image in
+                        CachedAsyncImage(url: URL(string: image)) { image in
                             image
                                 .resizable()
                                 .frame(width: 70, height: 70)
