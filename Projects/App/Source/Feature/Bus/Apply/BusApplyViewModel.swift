@@ -11,6 +11,7 @@ class BusApplyViewModel: ObservableObject {
     
     // MARK: - State
     @Published var buses: [BusResponse] = []
+    @Published var appliedBus: BusResponse?
     
     // MARK: - Repository
     @Inject var busRepository: any BusRepository
@@ -19,7 +20,16 @@ class BusApplyViewModel: ObservableObject {
     @MainActor
     func fetchBuses() async {
         do {
-            bus = try await busRepository.fetchAllBus()
+            buses = try await busRepository.fetchAllBus()
+        } catch {
+            debugPrint(error)
+        }
+    }
+    
+    @MainActor
+    func fetchAppledBus() async {
+        do {
+            appliedBus = try await busRepository.fetchAppliedBus()
         } catch {
             debugPrint(error)
         }
