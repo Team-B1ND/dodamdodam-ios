@@ -10,19 +10,13 @@ import DDS
 
 struct RegisterAuthView: View {
     
-    // UI test state
-    @State var step: Int = 0
-    @State var testIdText: String = ""
-    @State var testPwText: String = ""
-    @State var testCheckPwText: String = ""
-    
-    @InjectObject var viewModel: RegisterInfoViewModel
+    @InjectObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             Text({ () -> String in
-                switch step {
+                switch viewModel.authStep {
                 case 0: return "아이디를\n입력해주세요"
                 case 1: return "비밀번호를\n입력해주세요"
                 default: return "비밀번호를\n확인해주세요"
@@ -30,47 +24,47 @@ struct RegisterAuthView: View {
             }())
             .font(.headline(.small))
             
-            if step >= 2 {
+            if viewModel.authStep >= 2 {
                 DodamTextField.default(
                     title: "비밀번호 확인",
-                    text: $testCheckPwText
+                    text: $viewModel.checkPwText
                 )
                 .makeFirstResponder()
                 .onSubmit {
-                    step = 3
+                    viewModel.authStep = 3
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.authStep
                 )
             }
             
-            if step >= 1 {
+            if viewModel.authStep >= 1 {
                 DodamTextField.default(
                     title: "비밀번호",
-                    text: $testPwText
+                    text: $viewModel.pwText
                 )
                 .makeFirstResponder()
                 .onSubmit {
-                    step = 2
+                    viewModel.authStep = 2
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.authStep
                 )
             }
             
-            if step >= 0 {
+            if viewModel.authStep >= 0 {
                 VStack(alignment: .leading, spacing: 4) {
                     DodamTextField.default(
                         title: "아이디",
-                        text: $testIdText
+                        text: $viewModel.idText
                     )
                     .makeFirstResponder()
                     .onSubmit {
-                        step = 1
+                        viewModel.authStep = 1
                     }
                     Text("아이디는 영문과 숫자로 5 ~ 20글자 이내여야 해요.")
                         .font(.label(.large))
@@ -79,22 +73,27 @@ struct RegisterAuthView: View {
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.authStep
                 )
             }
             Spacer()
             
-            if step >= 3 {
+            if viewModel.authStep >= 3 {
                 DodamButton.fullWidth(
                     title: "가입하기"
                 ) {
-                    // action
+                    await viewModel.postJoin {
+                        flow.replace([OnboardingView()
+                            .toast(timeout: 3) {
+                                Text("회원가입에 성공했어요!")
+                            }]
+                        )
+                    }
                 }
                 .padding(.bottom, 24)
             }
         }
         .padding(.horizontal, 16)
-//        .ignoresSafeArea(.keyboard)
     }
 }
 

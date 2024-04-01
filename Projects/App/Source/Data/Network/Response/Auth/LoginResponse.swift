@@ -9,7 +9,7 @@ import Foundation
 
 struct LoginResponse: ResponseProtocol {
     
-    let memeber: Member
+    let member: Member
     let refreshToken: String
     let accessToken: String
 }

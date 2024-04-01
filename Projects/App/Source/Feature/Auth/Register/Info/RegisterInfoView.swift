@@ -10,20 +10,13 @@ import DDS
 
 struct RegisterInfoView: View {
     
-    // UI test state
-    @State var step: Int = 0
-    @State var testPhoneText: String = ""
-    @State var testInfoText: String = ""
-    @State var testMailText: String = ""
-    @State var testNameText: String = ""
-    
-    @InjectObject var viewModel: RegisterInfoViewModel
+    @InjectObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             Text({ () -> String in
-                switch step {
+                switch viewModel.infoStep {
                 case 0: "이름을"
                 case 1: "학생정보를"
                 case 2: "이메일"
@@ -32,73 +25,75 @@ struct RegisterInfoView: View {
             }() + "\n입력해주세요")
             .font(.headline(.small))
             
-            if step >= 3 {
+            if viewModel.infoStep >= 3 {
                 DodamTextField.default(
                     title: "전화번호",
-                    text: $testPhoneText
-                )
-                .makeFirstResponder()
-                .onSubmit {
-                    step = 4
-                }
-                .transition(.slide)
-                .animation(
-                    Animation.easeIn(duration: 0.2),
-                    value: step
-                )
-            }
-            
-            if step >= 2 {
-                DodamTextField.default(
-                    title: "이메일",
-                    text: $testMailText
-                )
-                .makeFirstResponder()
-                .onSubmit {
-                    step = 3
-                }
-                .transition(.slide)
-                .animation(
-                    Animation.easeIn(duration: 0.2),
-                    value: step
-                )
-            }
-            
-            if step >= 1 {
-                DodamTextField.default(
-                    title: "학생정보",
-                    text: $testInfoText
+                    text: $viewModel.phoneText
                 )
                 .makeFirstResponder()
                 .keyboardType(.numberPad)
                 .onSubmit {
-                    step = 2
+                    viewModel.infoStep = 4
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.infoStep
                 )
             }
             
-            if step >= 0 {
+            if viewModel.infoStep >= 2 {
                 DodamTextField.default(
-                    title: "이름",
-                    text: $testNameText
+                    title: "이메일",
+                    text: $viewModel.emailText
                 )
                 .makeFirstResponder()
+                .keyboardType(.emailAddress)
                 .onSubmit {
-                    step = 1
+                    viewModel.infoStep = 3
                 }
                 .transition(.slide)
                 .animation(
                     Animation.easeIn(duration: 0.2),
-                    value: step
+                    value: viewModel.infoStep
+                )
+            }
+            
+            if viewModel.infoStep >= 1 {
+                DodamTextField.default(
+                    title: "학생정보",
+                    text: $viewModel.infoText
+                )
+                .makeFirstResponder()
+                .keyboardType(.numberPad)
+                .onSubmit {
+                    viewModel.infoStep = 2
+                }
+                .transition(.slide)
+                .animation(
+                    Animation.easeIn(duration: 0.2),
+                    value: viewModel.infoStep
+                )
+            }
+            
+            if viewModel.infoStep >= 0 {
+                DodamTextField.default(
+                    title: "이름",
+                    text: $viewModel.nameText
+                )
+                .makeFirstResponder()
+                .onSubmit {
+                    viewModel.infoStep = 1
+                }
+                .transition(.slide)
+                .animation(
+                    Animation.easeIn(duration: 0.2),
+                    value: viewModel.infoStep
                 )
             }
             Spacer()
             
-            if step >= 4 {
+            if viewModel.infoStep >= 4 {
                 DodamButton.fullWidth(
                     title: "다음"
                 ) {
@@ -107,47 +102,76 @@ struct RegisterInfoView: View {
                 .padding(.bottom, 24)
             }
         }
-        .onChange(of: testInfoText) {
-            
+        .onChange(of: viewModel.infoText) {
             switch $0.count {
             case 1: // 학년을 입력한 경우: "" (0글자)
-                testInfoText = "\($0[0])학년"
+                viewModel.infoText = "\($0[0])학년"
             case 2: // 학년을 삭제한 경우: "1학년"
-                testInfoText = ""
+                viewModel.infoText = ""
             case 4: // 반을 입력한 경우: "1학년2"
-                testInfoText = "\($0[0])학년 \($0[3])반"
+                viewModel.infoText = "\($0[0])학년 \($0[3])반"
             case 5: // 반을 삭제한 경우: "1학년 2
-                testInfoText = "\($0[0])학년"
+                viewModel.infoText = "\($0[0])학년"
             case 7: // 번호를 입력한 경우: "1학년 2반3"
-                testInfoText = "\($0[0])학년 \($0[4])반 \($0[6])번"
+                viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[6])번"
             case 8: // 번호를 삭제한 경우: "1학년 2반 3"
-                testInfoText = "\($0[0])학년 \($0[4])반"
+                viewModel.infoText = "\($0[0])학년 \($0[4])반"
             case 9: // 번호가 두 글자일 때 번호를 삭제한 경우: "1학년 2반 34"
-                if testInfoText[8] != "번" {
-                    testInfoText = "\($0[0])학년 \($0[4])반 \($0[7])번"
+                if viewModel.infoText[8] != "번" {
+                    viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[7])번"
                 }
             case 10: // 번호를 한 글자 더 추가한 경우: "1학년 2반 3번4"
                 if $0[9] != "번" {
-                    testInfoText = "\($0[0])학년 \($0[4])반 \($0[7])\($0[9])번"
+                    viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[7])\($0[9])번"
                 }
             case 11...: // "1학년 2반 34번1"
-                testInfoText = testInfoText[0..<10]
+                viewModel.infoText = viewModel.infoText[0..<10]
             default:
                 break
             }
         }
+        .onChange(of: viewModel.phoneText) {
+            switch $0.count {
+            case 4:
+                if viewModel.phoneText[3] == "-" { // 010-
+                    viewModel.phoneText = viewModel.phoneText[0..<3]
+                } else { // 0108
+                    viewModel.phoneText = "\(viewModel.phoneText[0..<3])-\(viewModel.phoneText[3])"
+                }
+            case 9:
+                if viewModel.phoneText[8] == "-" { // 010-8778-
+                    viewModel.phoneText = viewModel.phoneText[0..<8]
+                } else { // 010-87780
+                    viewModel.phoneText = "\(viewModel.phoneText[0..<8])-\(viewModel.phoneText[8])"
+                }
+            default:
+                break
+            }
+        }
+        .ignoresSafeArea(.keyboard)
         .padding(.horizontal, 16)
         .toolbar {
-            if step == 1 && testInfoText.count >= 9 {
+            let info = viewModel.infoStep == 1 && viewModel.infoText.count >= 9
+            let call = viewModel.infoStep == 3 && viewModel.phoneText.count == 13
+            if info || call {
                 Button("완료") {
-                    step = 2
+                    if info {
+                        viewModel.infoStep = 2
+                    } else {
+                        viewModel.infoStep = 4
+                        UIApplication.shared.sendAction(
+                            #selector(UIResponder.resignFirstResponder)
+                            , to: nil, from: nil, for: nil
+                        )
+                    }
                 }
             }
         }
-        //        .ignoresSafeArea(.keyboard)
     }
 }
 
 #Preview {
-    RegisterInfoView()
+    FlowPreview {
+        RegisterInfoView()
+    }
 }

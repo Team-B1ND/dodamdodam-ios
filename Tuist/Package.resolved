@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Team-B1ND/dds-ios",
       "state" : {
-        "revision" : "167bc676db6b0cc51c2b6dbaf5aca7b3b06a4d81",
-        "version" : "0.0.9"
+        "revision" : "97bda6b45faab0ec6d587ecf6d59e6e02b3faf2b",
+        "version" : "0.1.2"
       }
     },
     {
@@ -59,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mercen-Lee/SignKit",
       "state" : {
-        "revision" : "d21862ed22a40fc32097d33deda02928b8fd967e",
-        "version" : "0.0.1"
+        "revision" : "11c0dd643e163f7c6c8f64e1b588d2825c0d26c9",
+        "version" : "0.0.2"
       }
     },
     {
