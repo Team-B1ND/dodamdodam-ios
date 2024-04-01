@@ -10,20 +10,27 @@ import DDS
 
 struct BusApplyView: View {
     
-    @InjectObject private var viewModel: BusApplyViewModel
+    @InjectObject var viewModel: BusApplyViewModel
+    @Flow var flow
     
     var body: some View {
-        VStack {
-            ForEach(viewModel.bus, id: \.self) { bus in
-                Button {
-                    
-                } label: {
-                    HStack {
-                        Text(bus.busName)
-                            .font(.title(.medium))
-                        Text("\(bus.applyCount)/\(bus.peopleLimit)")
-                            .font(.title(.medium))
+        DodamScrollView(navigationBar: .medium(title: "무슨 버스에\n탑승하실건가요?")) {
+            VStack {
+                ForEach(viewModel.bus, id: \.self) { bus in
+                    Button {
+                        
+                    } label: {
+                        HStack {
+                            Text(bus.busName)
+                                .font(.title(.medium))
+                                .dodamColor(.tertiary)
+                            Spacer()
+                            Text("\(bus.applyCount)/\(bus.peopleLimit)")
+                                .font(.title(.medium))
+                                .dodamColor(bus.applyCount >= bus.peopleLimit ? .error : .primary)
+                        }
                     }
+                    .padding(.horizontal, 16)
                 }
             }
         }

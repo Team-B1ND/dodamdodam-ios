@@ -9,10 +9,14 @@ import Foundation
 
 class BusApplyViewModel: ObservableObject {
     
+    // MARK: - State
+    @Published var buses: [BusResponse] = []
+    
+    // MARK: - Repository
     @Inject var busRepository: any BusRepository
     
-    @Published var bus: [BusResponse] = []
-    
+    // MARK: - Method
+    @MainActor
     func fetchBuses() async {
         do {
             bus = try await busRepository.fetchAllBus()
