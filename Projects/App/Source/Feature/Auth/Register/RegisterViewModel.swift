@@ -19,6 +19,7 @@ class RegisterViewModel: ObservableObject {
     @Published var idText: String = ""
     @Published var pwText: String = ""
     @Published var checkPwText: String = ""
+    @Published var isSuccessJoin: Bool = false
     
     // MARK: - Repository
     @Inject var memberRepository: any MemberRepository
@@ -40,6 +41,7 @@ class RegisterViewModel: ObservableObject {
                     number: getNumbersFromString(infoText)[2]
                 )
             )
+            isSuccessJoin = true
             completion()
         } catch let error {
             print(error)

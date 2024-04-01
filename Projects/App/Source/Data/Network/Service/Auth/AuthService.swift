@@ -41,4 +41,8 @@ extension AuthService {
             request.toJSONParameters()
         }
     }
+    
+    var headers: [String: String]? {
+        ["Content-Type": "application/json"]
+    }
 }

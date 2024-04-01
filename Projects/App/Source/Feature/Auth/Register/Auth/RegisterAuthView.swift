@@ -83,7 +83,11 @@ struct RegisterAuthView: View {
                     title: "가입하기"
                 ) {
                     await viewModel.postJoin {
-                        flow.popToRoot()
+                        flow.replace([OnboardingView()
+                            .toast(timeout: 3) {
+                                Text("회원가입에 성공했어요!")
+                            }]
+                        )
                     }
                 }
                 .padding(.bottom, 24)
