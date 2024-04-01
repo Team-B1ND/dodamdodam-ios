@@ -31,6 +31,13 @@ struct WakeupSongRemote: RemoteProtocol {
             .map(Response<[WakeupSongChartResponse]>.self, using: decoder)
     }
     
+    func fetchWakeupSongByKeyword(
+        _ request: FetchWakeupSongByKeywordRequest
+    ) async throws -> Response<[WakeupSongSearchResponse]> {
+        try await self.request(target: .fetchWakeupSongByKeyword(request))
+            .map(Response<[WakeupSongSearchResponse]>.self, using: decoder)
+    }
+    
     func postWakeupSong(_ request: PostWakeupSongRequest) async throws -> DefaultResponse {
         try await self.request(target: .postWakeupSong(request))
             .map(DefaultResponse.self, using: decoder)
