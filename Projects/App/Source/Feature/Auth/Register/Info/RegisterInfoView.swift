@@ -136,6 +136,24 @@ struct RegisterInfoView: View {
                 break
             }
         }
+        .onChange(of: testPhoneText) {
+            switch $0.count {
+            case 4:
+                if testPhoneText[3] == "-" { // 010-
+                    testPhoneText = testPhoneText[0..<3]
+                } else { // 0108
+                    testPhoneText = "\(testPhoneText[0..<3])-\(testPhoneText[3])"
+                }
+            case 9:
+                if testPhoneText[8] == "-" { // 010-8778-
+                    testPhoneText = testPhoneText[0..<8]
+                } else { // 010-87780
+                    testPhoneText = "\(testPhoneText[0..<8])-\(testPhoneText[8])"
+                }
+            default:
+                break
+            }
+        }
         .padding(.horizontal, 16)
         .toolbar {
             if step == 1 && testInfoText.count >= 9 {
