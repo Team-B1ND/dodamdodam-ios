@@ -19,7 +19,11 @@ struct BusApplyView: View {
                 VStack {
                     ForEach(viewModel.buses, id: \.self) { bus in
                         Button {
-                            
+                            guard viewModel.selectedBus?.id ?? 0 != bus.id else {
+                                viewModel.selectedBus = nil
+                                return
+                            }
+                            viewModel.selectedBus = bus
                         } label: {
                             HStack {
                                 Text(bus.busName)
@@ -30,7 +34,7 @@ struct BusApplyView: View {
                                     .font(.title(.medium))
                                     .dodamColor(bus.applyCount >= bus.peopleLimit ? .error : .primary)
                                 
-                                let myBus = bus.id == viewModel.appliedBus?.id ?? 0
+                                let myBus = bus.id == viewModel.selectedBus?.id ?? 0
                                 Image(icon: .checkmark)
                                     .resizable()
                                     .frame(width: 32, height: 32)
@@ -47,7 +51,11 @@ struct BusApplyView: View {
                     title: "확인"
                 ) {
                     // action
+                    Task {
+                        await viewModel.completeBus()
+                    }
                 }
+                .disabled(viewModel.selectedBus == nil)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 8)
             }
