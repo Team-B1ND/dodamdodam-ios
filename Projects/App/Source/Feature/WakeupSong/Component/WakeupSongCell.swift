@@ -10,7 +10,6 @@ import DDS
 
 struct WakeupSongCell: View {
     
-    
     var body: some View {
         HStack(spacing: 16) {
             Image(.onboard)
