@@ -7,8 +7,12 @@
 
 import Foundation
 
-final class WakeupSongApplyViewModel: ObservableObject {
+class WakeupSongApplyViewModel: ObservableObject {
     
-    @Published var searchText = ""
+    // MARK: - State
+    @Published var keywordText: String = ""
     
+    // MARK: - Repository
+    
+    // MARK: - Method
 }

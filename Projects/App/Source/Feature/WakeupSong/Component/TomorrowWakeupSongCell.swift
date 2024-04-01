@@ -10,11 +10,23 @@ import DDS
 
 struct TomorrowWakeupSongCell: View {
     
-    var rank: Int
+    let id: Int
+    let title: String
+    let channel: String
+    
+    init(
+        id: Int,
+        title: String,
+        channel: String
+    ) {
+        self.id = id
+        self.title = title
+        self.channel = channel
+    }
     
     var body: some View {
         HStack(spacing: 16) {
-            Text("\(rank)")
+            Text("\(id)")
                 .font(.label(.large))
                 .dodamColor(.primary)
             Image(.onboard)
@@ -23,11 +35,11 @@ struct TomorrowWakeupSongCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.vertical, 8)
             VStack(alignment: .leading, spacing: 2) {
-                Text("TWS (투어스) '첫 만남은 계획대로 되")
+                Text("\(title)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .lineLimit(1)
-                Text("HYBE LABELS")
+                Text("\(channel)")
                     .font(.label(.large))
                     .dodamColor(.onSurfaceVariant)
                     .lineLimit(1)

@@ -71,7 +71,7 @@ struct AllView: View {
                 }
                 
                 Button {
-                    
+                    flow.push(WakeupSongView())
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {
@@ -97,7 +97,7 @@ struct AllView: View {
                 }
                 
                 Button {
-                    
+                    flow.push(WakeupSongApplyView())
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {

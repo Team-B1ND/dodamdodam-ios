@@ -10,6 +10,20 @@ import DDS
 
 struct WakeupSongCell: View {
     
+    let title: String
+    let artist: String
+    let createAt: String
+    
+    init(
+        title: String,
+        artist: String,
+        createAt: String
+    ) {
+        self.title = title
+        self.artist = artist
+        self.createAt = createAt
+    }
+    
     var body: some View {
         HStack(spacing: 16) {
             Image(.onboard)
@@ -18,14 +32,14 @@ struct WakeupSongCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .padding(.vertical, 8)
             VStack(alignment: .leading, spacing: 2) {
-                Text("TWS (투어스) '첫 만남은 계획대로 되")
+                Text("\(title)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .lineLimit(1)
-                Text("HYBE LABELS")
+                Text("\(artist)")
                     .font(.label(.large))
                     .dodamColor(.onSurfaceVariant)
-                Text("2024.03.18")
+                Text("\(createAt)")
                     .font(.label(.small))
                     .dodamColor(.onSurfaceVariant)
                     .lineLimit(1)

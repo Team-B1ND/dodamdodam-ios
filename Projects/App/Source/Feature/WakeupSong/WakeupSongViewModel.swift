@@ -8,4 +8,10 @@
 import Foundation
 
 class WakeupSongViewModel: ObservableObject {
+    
+    // MARK: - State
+    
+    // MARK: - Repository
+    
+    // MARK: - Method
 }

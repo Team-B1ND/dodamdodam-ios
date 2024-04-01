@@ -10,7 +10,7 @@ import DDS
 
 struct WakeupSongApplyView: View {
     
-//    @InjectObject var viewModel: WakeupSongApplyViewModel
+    @InjectObject var viewModel: WakeupSongApplyViewModel
     
     @State private var songList = Array(0..<5)
     
@@ -18,7 +18,10 @@ struct WakeupSongApplyView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 16) {
-                    DodamTextField.default(title: "제목, 아티스트 혹은 링크", text: .constant(""))
+                    DodamTextField.default(
+                        title: "제목, 아티스트 혹은 링크",
+                        text: $viewModel.keywordText
+                    )
                     Button {
                         print("search")
                     } label: {
@@ -41,7 +44,11 @@ struct WakeupSongApplyView: View {
                     .padding(.top, 2)
                 LazyVStack(spacing: 4) {
                     ForEach(songList, id: \.self) { _ in
-                        WakeupSongCell()
+                        WakeupSongCell(
+                            title: "123",
+                            artist: "String",
+                            createAt: "String"
+                        )
                     }
                 }
                 .padding(.top, 12)

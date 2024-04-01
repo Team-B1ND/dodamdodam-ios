@@ -96,8 +96,12 @@ struct WakeupSongView: View {
     private var tomorrowWakeupSongList: some View {
         LazyVStack(spacing: 4) {
             ForEach(Array(testTomorrowWakeupSongs.enumerated()), id: \.element) { idx, _ in
-                TomorrowWakeupSongCell(rank: idx + 1)
-                    .padding(.horizontal, 16)
+                TomorrowWakeupSongCell(
+                    id: idx,
+                    title: "123",
+                    channel: "123"
+                )
+                .padding(.horizontal, 16)
             }
         }
     }
@@ -122,11 +126,15 @@ struct WakeupSongView: View {
     private var waitingWakeUpSongList: some View {
         LazyVStack(spacing: 4) {
             ForEach(testWaitingWakeupSongs, id: \.self) { _ in
-                WakeupSongCell()
-                    .padding(.horizontal, 16)
-                    .onLongPressGesture {
-                        showDeleteWakeupDialog = true
-                    }
+                WakeupSongCell(
+                    title: "123",
+                    artist: "123",
+                    createAt: "123"
+                )
+                .padding(.horizontal, 16)
+                .onLongPressGesture {
+                    showDeleteWakeupDialog = true
+                }
             }
             Spacer()
         }
@@ -137,11 +145,15 @@ struct WakeupSongView: View {
     private var myWakeUpSongList: some View {
         LazyVStack(spacing: 4) {
             ForEach(testMyWakeupSongs, id: \.self) { _ in
-                WakeupSongCell()
-                    .padding(.horizontal, 16)
-                    .onLongPressGesture {
-                        showDeleteWakeupDialog = true
-                    }
+                WakeupSongCell(
+                    title: "123",
+                    artist: "123",
+                    createAt: "123"
+                )
+                .padding(.horizontal, 16)
+                .onLongPressGesture {
+                    showDeleteWakeupDialog = true
+                }
             }
             Spacer()
         }
