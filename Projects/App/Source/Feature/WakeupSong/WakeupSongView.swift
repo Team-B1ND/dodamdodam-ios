@@ -17,6 +17,7 @@ struct WakeupSongView: View {
     
     //    @InjectObject var viewModel: WakeupSongViewModel
     @Flow var flow
+    @State private var showDeleteWakeupDialog = false
     
     @State private var rect: CGRect = .zero
     
@@ -123,6 +124,9 @@ struct WakeupSongView: View {
             ForEach(testWaitingWakeupSongs, id: \.self) { _ in
                 WakeupSongCell()
                     .padding(.horizontal, 16)
+                    .onLongPressGesture {
+                        showDeleteWakeupDialog = true
+                    }
             }
             Spacer()
         }
@@ -135,6 +139,9 @@ struct WakeupSongView: View {
             ForEach(testMyWakeupSongs, id: \.self) { _ in
                 WakeupSongCell()
                     .padding(.horizontal, 16)
+                    .onLongPressGesture {
+                        showDeleteWakeupDialog = true
+                    }
             }
             Spacer()
         }

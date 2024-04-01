@@ -12,7 +12,7 @@ struct WakeupSongApplyView: View {
     
 //    @InjectObject var viewModel: WakeupSongApplyViewModel
     
-    @State private var songList = Array(0..<10)
+    @State private var songList = Array(0..<5)
     
     var body: some View {
         ScrollView {
