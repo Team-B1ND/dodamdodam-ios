@@ -55,7 +55,7 @@ struct BusApplyView: View {
                         await viewModel.completeBus()
                     }
                 }
-                .disabled(viewModel.selectedBus == nil)
+                .disabled(viewModel.selectedBus == viewModel.appliedBus)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 8)
             }
@@ -68,6 +68,9 @@ struct BusApplyView: View {
             Button("확인", role: .none) {
                 flow.pop()
             }
+        }
+        .alert(viewModel.dialogMessage, isPresented: $viewModel.showDialog) {
+            Button("확인", role: .none) {}
         }
 //        .dodamModal(isPresented: $showNotFoundBus) {
 //            Text("현재 탑승할 수 있는 버스가 없습니다")
