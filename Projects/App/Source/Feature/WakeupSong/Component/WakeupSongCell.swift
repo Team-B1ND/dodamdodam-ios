@@ -27,6 +27,7 @@ struct WakeupSongCell: View {
                     .dodamColor(.onSurfaceVariant)
                 Text("2024.03.18")
                     .font(.label(.small))
+                    .dodamColor(.onSurfaceVariant)
             }
             .padding(.vertical, 12)
             Spacer()

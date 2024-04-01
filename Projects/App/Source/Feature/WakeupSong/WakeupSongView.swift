@@ -31,13 +31,6 @@ struct WakeupSongView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     HStack {
-                        Text("기상송")
-                            .font(.headline(.small))
-                            .padding(.leading, 24)
-                        Spacer()
-                    }
-                    .padding(.top, 10)
-                    HStack {
                         Text("내일의 기상송")
                             .font(.title(.medium))
                             .padding(.leading, 16)
@@ -54,7 +47,7 @@ struct WakeupSongView: View {
                             .padding(.bottom, 6)
                     }
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
-                        /// TODO: temp indicator
+                        // temp indicator
                         Section(header: tabIndicator) {
                             TabView(selection: $selectedTab) {
                                 waitingWakeUpSongList
@@ -71,18 +64,18 @@ struct WakeupSongView: View {
                                     })
                             }
                             .tabViewStyle(.page(indexDisplayMode: .never))
-                            .frame(height: rect.size.height + 30)
+                            .frame(height: rect.size.height + 12)
                             .onPreferenceChange(ViewRectKey.self) { rects in
                                 if rects.first?.height != .zero {
                                     rect = rects.first ?? .zero
                                 }
                             }
-                            .padding(.top, 12)
                         }
                         Spacer()
                     }
                 }
             }
+            .clipped()
             VStack {
                 Spacer()
                 DodamButton.fullWidth(
@@ -130,7 +123,9 @@ struct WakeupSongView: View {
                 WakeupSongCell()
                     .padding(.horizontal, 16)
             }
+            Spacer()
         }
+        .padding(.bottom, 48)
     }
     
     @ViewBuilder
@@ -140,7 +135,9 @@ struct WakeupSongView: View {
                 WakeupSongCell()
                     .padding(.horizontal, 16)
             }
+            Spacer()
         }
+        .padding(.bottom, 48)
     }
 }
 

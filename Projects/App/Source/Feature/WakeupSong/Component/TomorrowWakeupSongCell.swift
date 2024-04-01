@@ -14,7 +14,7 @@ struct TomorrowWakeupSongCell: View {
     
     var body: some View {
         HStack(spacing: 16) {
-            Text("\(rank + 1)")
+            Text("\(rank)")
                 .font(.label(.large))
                 .dodamColor(.primary)
             Image(.onboard)
