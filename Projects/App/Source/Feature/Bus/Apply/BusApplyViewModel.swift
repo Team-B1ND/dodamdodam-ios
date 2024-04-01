@@ -12,6 +12,7 @@ class BusApplyViewModel: ObservableObject {
     // MARK: - State
     @Published var buses: [BusResponse] = []
     @Published var appliedBus: BusResponse?
+    @Published var showNotFoundBus = false
     
     // MARK: - Repository
     @Inject var busRepository: any BusRepository
@@ -21,6 +22,9 @@ class BusApplyViewModel: ObservableObject {
     func fetchBuses() async {
         do {
             buses = try await busRepository.fetchAllBus()
+            if buses.isEmpty {
+                showNotFoundBus = true
+            }
         } catch {
             debugPrint(error)
         }
@@ -31,11 +35,9 @@ class BusApplyViewModel: ObservableObject {
         do {
             appliedBus = try await busRepository.fetchAppliedBus()
         } catch {
-            debugPrint(error)
+            print("\(#function)")
+            print(error)
         }
     }
-    
-    
-    
-//    func 
+//    func
 }

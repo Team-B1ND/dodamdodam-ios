@@ -54,6 +54,17 @@ struct BusApplyView: View {
         }
         .task {
             await viewModel.fetchBuses()
+            await viewModel.fetchAppledBus()
         }
+        .alert("현재 탑승할 수 있는 버스가 없습니다", isPresented: $viewModel.showNotFoundBus) {
+            Button("확인", role: .none) {
+                flow.pop()
+            }
+        }
+//        .dodamModal(isPresented: $showNotFoundBus) {
+//            Text("현재 탑승할 수 있는 버스가 없습니다")
+//                .font(.title(.large))
+//                .dodamColor(.onSurface)
+//        }
     }
 }
