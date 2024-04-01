@@ -13,6 +13,7 @@ class HomeViewModel: ObservableObject {
     // MARK: - State
     @Published var mealIdx: Int = -1
     @Published var isShowingAlert: Bool = false
+    @Published var ringCount: Int = 0
     
     @Published var bannerData: [BannerResponse]?
     @Published var mealData: MealResponse?
@@ -78,6 +79,7 @@ class HomeViewModel: ObservableObject {
     }
     
     func getDate(_ type: DateType) -> Int {
+        
         let currentDate = Date()
         let calendar = Calendar.current
         

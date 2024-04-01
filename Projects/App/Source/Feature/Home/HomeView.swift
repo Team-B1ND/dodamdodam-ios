@@ -15,7 +15,9 @@ struct HomeView: View {
     @Binding var selection: Int
     
     var body: some View {
-        DodamScrollView.default(title: "도담도담") {
+        DodamScrollView.icon(
+            icon: viewModel.ringCount >= 33 ? .domomLogo : .logo
+        ) {
             VStack(spacing: 12) {
                 BannerContainer(
                     data: viewModel.bannerData
@@ -105,17 +107,19 @@ struct HomeView: View {
             .padding(.horizontal, 16)
         }
         .button(icon: .bell) {
-            viewModel.isShowingAlert.toggle()
+            viewModel.ringCount += 1
+            if viewModel.ringCount == 33 {
+                viewModel.isShowingAlert.toggle()
+            }
         }
         .task {
             await viewModel.onAppear()
+            viewModel.ringCount = 0
         }
         .alert("앗", isPresented: $viewModel.isShowingAlert) {
-            Button("확인", role: .none) {
-                viewModel.isShowingAlert.toggle()
-            }
+            Button("확인", role: .none) { }
         } message: {
-            Text("해당 기능은 현재 개발 중 입니다")
+            Text("종을 너무 많이 울려서\n도담도담에 무언가 변화가 생겼습니다.")
         }
     }
 }
