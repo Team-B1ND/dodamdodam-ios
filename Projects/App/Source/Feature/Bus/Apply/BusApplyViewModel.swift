@@ -59,54 +59,57 @@ class BusApplyViewModel: ObservableObject {
             }
         }
         guard let selectedBus else {
-            do {
-                print("delete bus")
-                try await busRepository.deleteAppliedBus(id: appliedBus?.id ?? 0)
-                appliedBus = nil
-                dialogMessage = "버스 삭제에 성공했어요"
-            } catch {
-                dialogMessage = "버스 삭제에 실패했어요"
-                print(error)
-            }
+            await deleteBus(id: appliedBus?.id ?? 0)
             return
         }
         guard let appliedBus else {
-            print("post bus")
-            do {
-                try await busRepository.postApplyBus(id: selectedBus.id)
-                self.appliedBus = selectedBus
-                dialogMessage = "버스 신청에 성공했어요"
-            } catch {
-                dialogMessage = "버스 신청에 실패했어요"
-                print(error)
-            }
+            await postBus(id: selectedBus.id)
             return
         }
         guard selectedBus != appliedBus else {
-            print("delete bus")
-            do {
-                try await busRepository.deleteAppliedBus(id: selectedBus.id)
-                self.appliedBus = nil
-                dialogMessage = "버스 삭제에 성공했어요"
-            } catch {
-                dialogMessage = "버스 삭제에 실패했어요"
-                print(error)
-            }
+            await deleteBus(id: selectedBus.id)
             return
         }
         guard selectedBus.applyCount < selectedBus.peopleLimit else {
             dialogMessage = "버스가 만석이에요"
             return
         }
+        await patchBus(id: selectedBus.id)
+    }
+    
+    @MainActor
+    private func postBus(id: Int) async {
         do {
-            try await busRepository.patchAppliedBus(id: selectedBus.id)
+            try await busRepository.postApplyBus(id: id)
+            self.appliedBus = selectedBus
+            dialogMessage = "버스 신청에 성공했어요"
+        } catch {
+            dialogMessage = "버스 신청에 실패했어요"
+            print(error)
+        }
+    }
+    
+    @MainActor
+    private func deleteBus(id: Int) async {
+        do {
+            try await busRepository.deleteAppliedBus(id: id)
+            self.appliedBus = nil
+            dialogMessage = "버스 삭제에 성공했어요"
+        } catch {
+            dialogMessage = "버스 삭제에 실패했어요"
+            print(error)
+        }
+    }
+    
+    @MainActor
+    private func patchBus(id: Int) async {
+        do {
+            try await busRepository.patchAppliedBus(id: id)
             dialogMessage = "버스 변경에 성공했어요"
             self.appliedBus = selectedBus
         } catch {
             dialogMessage = "버스 변경에 실패했어요"
             print(error)
         }
-        
     }
-//    func
 }
