@@ -13,7 +13,7 @@ struct BusRepositoryImpl: BusRepository {
         try await dataSource.fetchAllBus()
     }
     
-    func fetchAppliedBus() async throws -> BusResponse {
+    func fetchAppliedBus() async throws -> BusResponse? {
         try await dataSource.fetchAppliedBus()
     }
     

@@ -14,7 +14,7 @@ struct BusDataSource: DataSourceProtocol {
         return response.data
     }
     
-    func fetchAppliedBus() async throws -> BusResponse {
+    func fetchAppliedBus() async throws -> BusResponse? {
         let response = try await remote.fetchAppliedBus()
         return response.data
     }

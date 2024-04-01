@@ -9,7 +9,7 @@ protocol BusRepository: RepositoryProtocol {
     
     func fetchAllBus() async throws -> [BusResponse]
     
-    func fetchAppliedBus() async throws -> BusResponse
+    func fetchAppliedBus() async throws -> BusResponse?
     
     func postApplyBus(id: Int) async throws
     

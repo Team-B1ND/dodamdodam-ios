@@ -28,7 +28,7 @@ extension BusService {
         case .fetchAppliedBus: "/apply"
         case let .postApplyBus(id): "/apply/\(id)"
         case let .patchAppliedBus(id): "/apply/\(id)"
-        case let .deleteAppliedBus(id): "/apply\(id)"
+        case let .deleteAppliedBus(id): "/apply/\(id)"
         }
     }
     
