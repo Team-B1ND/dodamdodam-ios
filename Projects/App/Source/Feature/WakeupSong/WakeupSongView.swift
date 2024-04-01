@@ -76,6 +76,7 @@ struct WakeupSongView: View {
                 }
             }
             .clipped()
+            
             VStack {
                 Spacer()
                 DodamButton.fullWidth(
