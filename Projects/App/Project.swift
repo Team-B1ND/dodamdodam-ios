@@ -37,7 +37,8 @@ let project = Project(
                 .external(name: "Moya"),
                 .external(name: "Swinject"),
                 .external(name: "FlowKit"),
-                .external(name: "SignKit")
+                .external(name: "SignKit"),
+                .external(name: "CachedAsyncImage")
             ]
         )
     ]

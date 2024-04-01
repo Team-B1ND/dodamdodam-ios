@@ -134,7 +134,7 @@ struct HomeView: View {
                 viewModel.isShowingAlert.toggle()
             }
         } message: {
-            Text("해당 기능은 곧 추가될 예정이에요")
+            Text("해당 기능은 현재 개발 중 입니다")
         }
     }
 }

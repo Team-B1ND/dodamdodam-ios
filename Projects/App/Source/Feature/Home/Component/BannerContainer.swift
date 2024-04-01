@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct BannerContainer: View {
     
@@ -23,9 +24,8 @@ struct BannerContainer: View {
             TabView {
                 ForEach(data, id: \.self) { data in
                     Link(destination: URL(string: data.redirectUrl) ?? URL(string: "about:blank")!) {
-                        AsyncImage(url: URL(string: data.imageUrl)) { image in
-                            image
-                                .resizable()
+                        CachedAsyncImage(url: URL(string: data.imageUrl)) {
+                            $0.resizable()
                         } placeholder: {
                             Rectangle()
                                 .shimmer()
