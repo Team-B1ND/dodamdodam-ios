@@ -87,5 +87,4 @@ struct OutSegmentedView: View {
 
 #Preview {
     OutSegmentedView()
-        .padding(.horizontal, 16)
 }

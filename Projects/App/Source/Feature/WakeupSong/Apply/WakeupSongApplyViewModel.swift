@@ -46,7 +46,7 @@ class WakeupSongApplyViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchWakeupSongChart(keyword: String) async {
+    func fetchWakeupSongByKeyword(keyword: String) async {
         
         isSearchLoading = true
         do {
@@ -65,7 +65,7 @@ class WakeupSongApplyViewModel: ObservableObject {
     func postWakeupSongByKeyword(artist: String, title: String) async {
         
         do {
-            _ = try await wakeupSongRepository.postWakeupSongByKeyword(
+            try await wakeupSongRepository.postWakeupSongByKeyword(
                 .init(artist: artist, title: title)
             )
             dialogMessage = "기상송 신청에 성공했어요"
@@ -75,17 +75,17 @@ class WakeupSongApplyViewModel: ObservableObject {
         }
     }
     
-//    @MainActor
-//    func postWakeupSongByKeyword(artist: String, title: String) async {
-//        
-//        do {
-//            try await wakeupSongRepository.postWakeupSongByKeyword(
-//                .init(artist: artist, title: title)
-//            )
-//            dialogMessage = "기상송 신청에 성공했어요"
-//        } catch let error {
-//            print(error)
-//            dialogMessage = "기상송을 이미 신청했어요"
-//        }
-//    }
+    @MainActor
+    func postWakeupSong(videoUrl: String) async {
+        
+        do {
+            try await wakeupSongRepository.postWakeupSong(
+                .init(videoUrl: videoUrl)
+            )
+            dialogMessage = "기상송 신청에 성공했어요"
+        } catch let error {
+            print(error)
+            dialogMessage = "기상송을 이미 신청했어요"
+        }
+    }
 }

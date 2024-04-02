@@ -20,32 +20,41 @@ struct WakeupSongApplyView: View {
                    !viewModel.isSearchLoading {
                     LazyVStack(spacing: 4) {
                         ForEach(data, id: \.self) { data in
-                            HStack(spacing: 16) {
-                                CachedAsyncImage(url: URL(string: data.thumbnail)) {
-                                    $0
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(width: 120, height: 67)
-                                } placeholder: {
-                                    Rectangle()
-                                        .frame(width: 120, height: 67)
-                                        .shimmer()
+                            Button {
+                                Task {
+                                    await viewModel.postWakeupSong(
+                                        videoUrl: data.videoUrl
+                                    )
                                 }
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .padding(.vertical, 8)
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text("\(data.videoTitle)")
-                                        .font(.body(.medium))
-                                        .dodamColor(.onSurface)
-                                        .lineLimit(1)
-                                    Text("\(data.channelTitle)")
-                                        .font(.label(.large))
-                                        .dodamColor(.onSurfaceVariant)
-                                        .lineLimit(1)
+                            } label: {
+                                HStack(spacing: 16) {
+                                    CachedAsyncImage(url: URL(string: data.thumbnail)) {
+                                        $0
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 120, height: 67)
+                                    } placeholder: {
+                                        Rectangle()
+                                            .frame(width: 120, height: 67)
+                                            .shimmer()
+                                    }
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .padding(.vertical, 8)
+                                    VStack(alignment: .leading, spacing: 2) {
+                                        Text("\(data.videoTitle)")
+                                            .font(.body(.medium))
+                                            .dodamColor(.onSurface)
+                                            .lineLimit(1)
+                                        Text("\(data.channelTitle)")
+                                            .font(.label(.large))
+                                            .dodamColor(.onSurfaceVariant)
+                                            .lineLimit(1)
+                                    }
+                                    .padding(.vertical, 12)
+                                    Spacer()
                                 }
-                                .padding(.vertical, 12)
-                                Spacer()
                             }
+                            .scaledButtonStyle()
                         }
                     }
                     .padding(.bottom, 40)
@@ -78,10 +87,10 @@ struct WakeupSongApplyView: View {
                                 }
                             } label: {
                                 HStack(spacing: 16) {
-                                    Text("\(data.rank)")
-                                        .font(.label(.large))
-                                        .dodamColor(.onBackground)
-                                        .frame(width: 25, height: 20)
+//                                    Text("\(data.rank)")
+//                                        .font(.label(.large))
+//                                        .dodamColor(.onBackground)
+//                                        .frame(width: 25, height: 20)
                                     CachedAsyncImage(url: URL(
                                         string: data.thumbnail
                                     )) {
@@ -93,7 +102,9 @@ struct WakeupSongApplyView: View {
                                             .frame(width: 67, height: 67)
                                             .shimmer()
                                     }
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                    .clipShape(
+                                        RoundedRectangle(cornerRadius: 4)
+                                    )
                                     .padding(.vertical, 8)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("\(data.name)")
@@ -125,7 +136,7 @@ struct WakeupSongApplyView: View {
             )
             .onSubmit {
                 Task {
-                    await viewModel.fetchWakeupSongChart(
+                    await viewModel.fetchWakeupSongByKeyword(
                         keyword: viewModel.keywordText
                     )
                 }

@@ -20,7 +20,7 @@ extension Button {
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
                 .scaleEffect(configuration.isPressed ? 0.96 : 1)
-                .background(configuration.isPressed ? Dodam.color(.secondary).opacity(0.5) : .white)
+                .background(configuration.isPressed ? Dodam.color(.secondary) : .clear)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .animation(.easeIn(duration: 0.15), value: configuration.isPressed)
         }

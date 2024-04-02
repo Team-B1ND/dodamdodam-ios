@@ -55,7 +55,6 @@ struct OutView: View {
         }
         .subView {
             OutSegmentedView(selection: $viewModel.selection)
-                .padding(.horizontal, 16)
         }
         .button(icon: .plus) {
             flow.push(OutApplyView())
