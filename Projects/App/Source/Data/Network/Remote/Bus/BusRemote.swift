@@ -16,9 +16,9 @@ struct BusRemote: RemoteProtocol {
             .map(Response<[BusResponse]>.self, using: decoder)
     }
     
-    func fetchAppliedBus() async throws -> Response<BusResponse> {
+    func fetchAppliedBus() async throws -> Response<BusResponse?> {
         try await self.request(target: .fetchAppliedBus)
-            .map(Response<BusResponse>.self, using: decoder)
+            .map(Response<BusResponse?>.self, using: decoder)
     }
     
     func postApplyBus(id: Int) async throws -> DefaultResponse {

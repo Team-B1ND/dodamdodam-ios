@@ -13,6 +13,7 @@ enum WakeupSongService: ServiceProtocol {
     case fetchAllowedWakeupSong(_ request: FetchAllowedWakeupSongRequest)
     case fetchPendingWakeupSong
     case fetchWakeupSongChart
+    case fetchWakeupSongByKeyword(_ request: FetchWakeupSongByKeywordRequest)
     case postWakeupSong(_ request: PostWakeupSongRequest)
     case postWakeupSongByKeyword(_ request: PostWakeupSongByKeywordRequest)
     case deleteWakeupSong(id: Int)
@@ -30,6 +31,7 @@ extension WakeupSongService {
         case .fetchAllowedWakeupSong: "/allowed"
         case .fetchPendingWakeupSong: "/pending"
         case .fetchWakeupSongChart: "/chart"
+        case .fetchWakeupSongByKeyword: "/search"
         case .postWakeupSong: ""
         case .postWakeupSongByKeyword: "/keyword"
         case let .deleteWakeupSong(id): "/my/\(id)"
@@ -42,6 +44,7 @@ extension WakeupSongService {
         case .fetchAllowedWakeupSong: .get
         case .fetchPendingWakeupSong: .get
         case .fetchWakeupSongChart: .get
+        case .fetchWakeupSongByKeyword: .get
         case .postWakeupSong: .post
         case .postWakeupSongByKeyword: .post
         case .deleteWakeupSong: .delete
@@ -58,6 +61,8 @@ extension WakeupSongService {
                 .requestPlain
         case .fetchWakeupSongChart:
                 .requestPlain
+        case let .fetchWakeupSongByKeyword(request):
+            request.toURLParameters()
         case let .postWakeupSong(request):
             request.toJSONParameters()
         case let .postWakeupSongByKeyword(request):

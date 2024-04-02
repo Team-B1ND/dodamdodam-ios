@@ -15,6 +15,10 @@ protocol WakeupSongRepository: RepositoryProtocol {
     
     func fetchWakeupSongChart() async throws -> [WakeupSongChartResponse]
     
+    func fetchWakeupSongByKeyword(
+        _ request: FetchWakeupSongByKeywordRequest
+    ) async throws -> [WakeupSongSearchResponse]
+    
     func postWakeupSong(_ request: PostWakeupSongRequest) async throws
     
     func postWakeupSongByKeyword(_ request: PostWakeupSongByKeywordRequest) async throws
