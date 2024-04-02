@@ -61,4 +61,14 @@ class WakeupSongViewModel: ObservableObject {
             print(error)
         }
     }
+    
+    @MainActor
+    func deleteWakeupSong(id: Int) async {
+        
+        do {
+            try await wakeupSongRepository.deleteWakeupSong(id: id)
+        } catch let error {
+            print(error)
+        }
+    }
 }

@@ -60,9 +60,16 @@ struct WakeupSongView: View {
                         LazyVStack(spacing: 4) {
                             if let data = viewModel.myWakeupSongData {
                                 ForEach(data, id: \.self) { data in
-                                    WakeupSongCell(
-                                        data: data
-                                    )
+                                    Button {
+                                        Task {
+                                            await viewModel.deleteWakeupSong(id: data.id)
+                                        }
+                                    } label: {
+                                        WakeupSongCell(
+                                            data: data
+                                        )
+                                    }
+                                    .scaledButtonStyle()
                                 }
                             }
                             Spacer()
