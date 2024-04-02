@@ -8,24 +8,10 @@
 import SwiftUI
 import DDS
 
-enum WakeupSongTabType {
-    case waiting
-    case my
-}
-
 struct WakeupSongView: View {
     
     @InjectObject var viewModel: WakeupSongViewModel
     @Flow var flow
-    @State private var showDeleteWakeupDialog = false
-    
-    @State private var rect: CGRect = .zero
-    
-    @State private var testTomorrowWakeupSongs = Array(0..<3)
-    @State private var testWaitingWakeupSongs = Array(0..<10)
-    @State private var testMyWakeupSongs = Array(0..<2)
-    
-    @State private var selectedTab: WakeupSongTabType = .waiting
     
     var body: some View {
         DodamScrollView.medium(title: "기상송") {
@@ -92,8 +78,14 @@ struct WakeupSongView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 150)
         }
-        .button(icon: .plus) {
-            flow.push(WakeupSongApplyView())
+        .bottomMask()
+        .overlay(alignment: .bottom) {
+            DodamButton.fullWidth(
+                title: "기상송 신청하기"
+            ) {
+                flow.push(WakeupSongApplyView())
+            }
+            .padding([.bottom, .horizontal], 16)
         }
         .task {
             await viewModel.onAppear()

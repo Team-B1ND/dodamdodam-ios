@@ -14,38 +14,36 @@ struct BusApplyView: View {
     @Flow var flow
     
     var body: some View {
-        ZStack {
-            DodamScrollView(navigationBar: .medium(title: "무슨 버스에\n탑승하실건가요?")) {
-                VStack(spacing: 12) {
-                    ForEach(viewModel.buses, id: \.self) { bus in
-                        Button {
-                            guard viewModel.selectedBus?.id ?? 0 != bus.id else {
-                                viewModel.selectedBus = nil
-                                return
-                            }
-                            viewModel.selectedBus = bus
-                        } label: {
-                            BusApplyCell(bus: bus, selectedBus: viewModel.selectedBus)
+        DodamScrollView(navigationBar: .medium(title: "무슨 버스에\n탑승하실건가요?")) {
+            VStack(spacing: 12) {
+                ForEach(
+                    viewModel.buses,
+                    id: \.self
+                ) { bus in
+                    Button {
+                        guard viewModel.selectedBus?.id ?? 0 != bus.id else {
+                            viewModel.selectedBus = nil
+                            return
                         }
-                        .padding(.horizontal, 16)
+                        viewModel.selectedBus = bus
+                    } label: {
+                        BusApplyCell(bus: bus, selectedBus: viewModel.selectedBus)
                     }
                 }
-                .padding(.top, 16)
             }
-            VStack {
-                Spacer()
-                DodamButton.fullWidth(
-                    title: "확인"
-                ) {
-                    // action
-                    Task {
-                        await viewModel.completeBus()
-                    }
+            .padding([.top, .horizontal], 16)
+        }
+        .bottomMask()
+        .overlay(alignment: .bottom) {
+            DodamButton.fullWidth(
+                title: "확인"
+            ) {
+                Task {
+                    await viewModel.completeBus()
                 }
-                .disabled(viewModel.selectedBus == viewModel.appliedBus)
-                .padding(.horizontal, 24)
-                .padding(.bottom, 8)
             }
+            .disabled(viewModel.selectedBus == viewModel.appliedBus)
+            .padding([.bottom, .horizontal], 16)
         }
         .task {
             await viewModel.fetchBuses()

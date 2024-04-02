@@ -87,10 +87,10 @@ struct WakeupSongApplyView: View {
                                 }
                             } label: {
                                 HStack(spacing: 16) {
-//                                    Text("\(data.rank)")
-//                                        .font(.label(.large))
-//                                        .dodamColor(.onBackground)
-//                                        .frame(width: 25, height: 20)
+                                    Text("\(data.rank)")
+                                        .font(.label(.large))
+                                        .dodamColor(.onBackground)
+                                        .frame(width: 25, height: 20)
                                     CachedAsyncImage(url: URL(
                                         string: data.thumbnail
                                     )) {
@@ -142,6 +142,7 @@ struct WakeupSongApplyView: View {
                 }
             }
         }
+        .bottomMask()
         .background(Dodam.color(.background))
         .task {
             await viewModel.onAppear()

@@ -151,6 +151,7 @@ struct AllView: View {
             }
             .padding([.top, .horizontal], 16)
         }
+        .bottomMask()
         .background(Dodam.color(.background))
         .task {
             await viewModel.fetchMemberData()
