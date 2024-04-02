@@ -112,6 +112,7 @@ struct HomeView: View {
                 viewModel.isShowingAlert.toggle()
             }
         }
+        .background(Dodam.color(.surface))
         .task {
             await viewModel.onAppear()
             viewModel.ringCount = 0
