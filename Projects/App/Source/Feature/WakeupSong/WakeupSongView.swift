@@ -120,7 +120,6 @@ struct WakeupSongView: View {
         .task {
             await viewModel.onAppear()
         }
-        .navigationBarHidden(false)
     }
     
     @ViewBuilder
