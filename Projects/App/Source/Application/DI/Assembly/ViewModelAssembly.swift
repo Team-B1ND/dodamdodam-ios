@@ -53,5 +53,13 @@ struct ViewModelAssembly: Assembly {
         container.register(BusApplyViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
+        
+        container.register(WakeupSongViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(WakeupSongApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
     }
 }

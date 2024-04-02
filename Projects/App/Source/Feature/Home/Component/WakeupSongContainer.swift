@@ -25,7 +25,7 @@ struct WakeupSongContainer: View {
                 ForEach(data, id: \.self) { data in
                     HStack(alignment: .top, spacing: 12) {
                         Link(destination: URL(string: data.videoUrl) ?? URL(string: "about:blank")!) {
-                            CachedAsyncImage(url: URL(string: data.thumbnailUrl)) { image in
+                            CachedAsyncImage(url: URL(string: data.thumbnail)) { image in
                                 image
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)

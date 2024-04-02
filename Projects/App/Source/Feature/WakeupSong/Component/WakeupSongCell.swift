@@ -7,28 +7,43 @@
 
 import SwiftUI
 import DDS
+import CachedAsyncImage
 
 struct WakeupSongCell: View {
     
+    let data: WakeupSongResponse
+    
+    init(
+        data: WakeupSongResponse
+    ) {
+        self.data = data
+    }
+    
     var body: some View {
         HStack(spacing: 16) {
-            Image(.onboard)
-                .resizable()
-                .frame(width: 120, height: 67)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
-                .padding(.vertical, 8)
+            CachedAsyncImage(url: URL(string: data.thumbnail)) {
+                $0
+                    .resizable()
+                    .frame(width: 120, height: 67)
+            } placeholder: {
+                Rectangle()
+                    .frame(width: 120, height: 67)
+                    .shimmer()
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.vertical, 8)
             VStack(alignment: .leading, spacing: 2) {
-                Text("TWS (투어스) '첫 만남은 계획대로 되")
+                Text("\(data.videoTitle)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .lineLimit(1)
-                Text("HYBE LABELS")
+                Text("\(data.channelTitle)")
                     .font(.label(.large))
                     .dodamColor(.onSurfaceVariant)
-                Text("2024.03.18")
+                    .lineLimit(1)
+                Text("\(data.createdAt)")
                     .font(.label(.small))
                     .dodamColor(.onSurfaceVariant)
-                    .lineLimit(1)
             }
             .padding(.vertical, 12)
             Spacer()

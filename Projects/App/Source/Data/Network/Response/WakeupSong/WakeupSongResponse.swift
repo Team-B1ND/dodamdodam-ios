@@ -8,7 +8,7 @@
 struct WakeupSongResponse: ResponseProtocol {
     
     let id: Int
-    let thumbnailUrl: String
+    let thumbnail: String
     let videoTitle: String
     let videoId: String
     let videoUrl: String

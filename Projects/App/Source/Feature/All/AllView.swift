@@ -19,8 +19,8 @@ struct AllView: View {
             VStack(spacing: 24) {
                 HStack(spacing: 16) {
                     if let image = viewModel.memberData?.profileImage {
-                        CachedAsyncImage(url: URL(string: image)) { image in
-                            image
+                        CachedAsyncImage(url: URL(string: image)) {
+                            $0
                                 .resizable()
                                 .frame(width: 70, height: 70)
                         } placeholder: {
@@ -71,7 +71,7 @@ struct AllView: View {
                 }
                 
                 Button {
-                    
+                    flow.push(WakeupSongView())
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {
@@ -97,7 +97,7 @@ struct AllView: View {
                 }
                 
                 Button {
-                    
+                    flow.push(WakeupSongApplyView())
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {
