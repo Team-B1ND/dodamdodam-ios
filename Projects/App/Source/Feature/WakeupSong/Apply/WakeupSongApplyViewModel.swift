@@ -14,6 +14,9 @@ class WakeupSongApplyViewModel: ObservableObject {
     @Published var wakeupSongChartData: [WakeupSongChartResponse]?
     @Published var wakeupSongSearchData: [WakeupSongSearchResponse]?
     
+    @Published var videoUrl: String = ""
+    @Published var title: String = ""
+    @Published var artist: String = ""
     @Published var isSearchLoading: Bool = false
     @Published var dialogMessage = "" {
         didSet {
@@ -62,30 +65,29 @@ class WakeupSongApplyViewModel: ObservableObject {
     }
     
     @MainActor
-    func postWakeupSongByKeyword(artist: String, title: String) async {
+    func postWakeupSong() async {
         
         do {
-            try await wakeupSongRepository.postWakeupSongByKeyword(
-                .init(artist: artist, title: title)
-            )
-            dialogMessage = "기상송 신청에 성공했어요"
+            print("videoUrl: \(videoUrl)\ntitle: \(title)\nartist: \(artist)")
+            if !videoUrl.isEmpty {
+                try await wakeupSongRepository.postWakeupSong(
+                    .init(videoUrl: videoUrl)
+                )
+            }
+            if !(title + artist).isEmpty {
+                try await wakeupSongRepository.postWakeupSongByKeyword(
+                    .init(artist: artist, title: title)
+                )
+            }
         } catch let error {
             print(error)
-            dialogMessage = "기상송을 이미 신청했어요"
         }
     }
     
-    @MainActor
-    func postWakeupSong(videoUrl: String) async {
+    func clearData() {
         
-        do {
-            try await wakeupSongRepository.postWakeupSong(
-                .init(videoUrl: videoUrl)
-            )
-            dialogMessage = "기상송 신청에 성공했어요"
-        } catch let error {
-            print(error)
-            dialogMessage = "기상송을 이미 신청했어요"
-        }
+        videoUrl = ""
+        title = ""
+        artist = ""
     }
 }

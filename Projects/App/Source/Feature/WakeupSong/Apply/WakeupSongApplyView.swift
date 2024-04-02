@@ -21,11 +21,8 @@ struct WakeupSongApplyView: View {
                     LazyVStack(spacing: 4) {
                         ForEach(data, id: \.self) { data in
                             Button {
-                                Task {
-                                    await viewModel.postWakeupSong(
-                                        videoUrl: data.videoUrl
-                                    )
-                                }
+                                viewModel.dialogMessage = "\(data.videoTitle)"
+                                viewModel.videoUrl = data.videoUrl
                             } label: {
                                 HStack(spacing: 16) {
                                     CachedAsyncImage(url: URL(string: data.thumbnail)) {
@@ -79,12 +76,9 @@ struct WakeupSongApplyView: View {
                     if let data = viewModel.wakeupSongChartData {
                         ForEach(data, id: \.self) { data in
                             Button {
-                                Task {
-                                    await viewModel.postWakeupSongByKeyword(
-                                        artist: data.artist,
-                                        title: data.name
-                                    )
-                                }
+                                viewModel.dialogMessage = "\(data.artist)-\(data.name)"
+                                viewModel.artist = data.artist
+                                viewModel.title = data.name
                             } label: {
                                 HStack(spacing: 16) {
                                     Text("\(data.rank)")
@@ -148,10 +142,19 @@ struct WakeupSongApplyView: View {
             await viewModel.onAppear()
         }
         .alert(
-            viewModel.dialogMessage,
+            "기상송을 신청하시겠습니까?",
             isPresented: $viewModel.showDialog
         ) {
-            Button("확인", role: .none) {}
+            Button("네", role: .none) {
+                Task {
+                    await viewModel.postWakeupSong()
+                }
+            }
+            Button("취소", role: .cancel) { 
+                viewModel.clearData()
+            }
+        } message: {
+            Text("\(viewModel.dialogMessage)")
         }
     }
 }

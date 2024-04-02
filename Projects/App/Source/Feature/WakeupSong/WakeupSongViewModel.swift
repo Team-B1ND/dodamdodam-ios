@@ -13,7 +13,6 @@ class WakeupSongViewModel: ObservableObject {
     @Published var allowedWakeupSongData: [WakeupSongResponse]?
     @Published var pendingWakeupSongData: [WakeupSongResponse]?
     @Published var myWakeupSongData: [WakeupSongResponse]?
-    @Published var isShowingLogoutAlert: Bool = false
     
     // MARK: - Repository
     @Inject var wakeupSongRepository: any WakeupSongRepository
