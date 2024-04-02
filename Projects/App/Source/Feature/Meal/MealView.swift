@@ -140,38 +140,36 @@ struct MealView: View {
     }
     
     func isMealTime(_ date: Date, mealType: Int) -> Bool {
-        let calendar = Calendar.current
-        let currentDate = Date()
-        
+        let c = Calendar.current
         // 현재 시간의 년, 월, 일
-        let currentYear = calendar.component(.year, from: currentDate)
-        let currentMonth = calendar.component(.month, from: currentDate)
-        let currentDay = calendar.component(.day, from: currentDate)
+        let currentDate = Date()
+        let currentYear = c.component(.year, from: currentDate)
+        let currentMonth = c.component(.month, from: currentDate)
+        let currentDay = c.component(.day, from: currentDate)
+        let currentHour = c.component(.hour, from: currentDate)
+        let currentMinute = c.component(.minute, from: currentDate)
         
         // 입력된 시간의 년, 월, 일
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        let day = calendar.component(.day, from: date)
+        let year = date.getYear()
+        let month = date.getMonth()
+        let day = date.getDay()
         
-        // 입력된 시간의 시, 분
-        let hour = calendar.component(.hour, from: date)
-        let minute = calendar.component(.minute, from: date)
-        
-        // 날짜가 오늘 이상인지 확인
+        // 날짜가 오늘인지 확인
         guard currentYear == year && currentMonth == month && currentDay == day else {
             return false
         }
+        print(currentDate, currentYear, currentMonth, currentDay, currentHour, currentMinute)
         
         switch mealType {
         case 0:
             // 아침: ~ 8:20
-            return hour < 8 || (hour == 8 && minute <= 20)
+            return (currentHour >= 0 && currentHour < 8) || (currentHour == 8 && currentMinute <= 20)
         case 1:
             // 점심: 8:21 ~ 13:30
-            return (hour == 8 && minute > 20) || (hour > 8 && hour < 13) || (hour == 13 && minute <= 30)
+            return (currentHour == 8 && currentMinute > 20) || (currentHour > 8 && currentHour < 13) || (currentHour == 13 && currentMinute <= 30)
         case 2:
             // 저녁: 13:31 ~ 19:10
-            return (hour == 13 && minute > 30) || (hour > 13 && hour < 19) || (hour == 19 && minute <= 10)
+            return (currentHour == 13 && currentMinute > 30) || (currentHour > 13 && currentHour < 19) || (currentHour == 19 && currentMinute <= 10)
         default:
             return false
         }
