@@ -12,6 +12,7 @@ import CachedAsyncImage
 struct WakeupSongApplyView: View {
     
     @InjectObject var viewModel: WakeupSongApplyViewModel
+    @Flow var flow
     
     var body: some View {
         DodamScrollView.medium(title: "기상송을\n검색해주세요") {
@@ -148,6 +149,7 @@ struct WakeupSongApplyView: View {
             Button("네", role: .none) {
                 Task {
                     await viewModel.postWakeupSong()
+                    flow.pop()
                 }
             }
             Button("취소", role: .cancel) { 

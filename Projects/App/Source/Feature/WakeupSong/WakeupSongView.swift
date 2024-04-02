@@ -58,19 +58,42 @@ struct WakeupSongView: View {
                         .page(.text("대기중"))
                         
                         LazyVStack(spacing: 4) {
-                            if let data = viewModel.myWakeupSongData {
+                            if let data = viewModel.myWakeupSongData,
+                               !data.isEmpty {
                                 ForEach(data, id: \.self) { data in
                                     Button {
-                                        Task {
-                                            await viewModel.deleteWakeupSong(id: data.id)
-                                        }
+                                        viewModel.showDialog = true
                                     } label: {
                                         WakeupSongCell(
                                             data: data
                                         )
                                     }
                                     .scaledButtonStyle()
+                                    .alert(
+                                        "기상송을 삭제하시겠습니까?",
+                                        isPresented: $viewModel.showDialog
+                                    ) {
+                                        Button("네", role: .none) {
+                                            Task {
+                                                await viewModel.deleteWakeupSong(
+                                                    id: data.id
+                                                )
+                                                await viewModel.fetchMyWakeupSong()
+                                                await viewModel.fetchPendingWakeupSong()
+                                            }
+                                        }
+                                        Button("취소", role: .cancel) { }
+                                    }
                                 }
+                            } else {
+                                Text("기상송을 신청해 보세요!")
+                                    .font(.label(.large))
+                                    .dodamColor(.tertiary)
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .center
+                                    )
+                                    .padding(.top, 40)
                             }
                             Spacer()
                         }
