@@ -24,6 +24,7 @@ struct TomorrowWakeupSongCell: View {
             Text("\(data.id)")
                 .font(.label(.large))
                 .dodamColor(.primary)
+                .frame(width: 8, height: 20)
             CachedAsyncImage(url: URL(string: data.thumbnail)) {
                 $0
                     .resizable()
@@ -33,8 +34,7 @@ struct TomorrowWakeupSongCell: View {
                     .frame(width: 120, height: 67)
                     .shimmer()
             }
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding(.vertical, 8)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(data.videoTitle)")
                     .font(.body(.medium))

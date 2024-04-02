@@ -170,6 +170,5 @@ struct AllView: View {
 #Preview {
     FlowPreview {
         AllView()
-            .navigationBarHidden(true)
     }
 }

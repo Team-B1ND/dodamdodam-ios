@@ -32,7 +32,11 @@ class WakeupSongViewModel: ObservableObject {
         
         do {
             allowedWakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
-                .init(year: 2024, month: 4, day: 1)
+                .init(
+                    year: getDate(.year),
+                    month: getDate(.month),
+                    day: getDate(.day)
+                )
             )
         } catch let error {
             print(error)

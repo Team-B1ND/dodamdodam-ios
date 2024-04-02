@@ -28,14 +28,11 @@ struct WakeupSongView: View {
     @State private var selectedTab: WakeupSongTabType = .waiting
     
     var body: some View {
-        DodamScrollView.default(title: "기상송") {
-            VStack(spacing: 0) {
-                HStack {
-                    Text("내일의 기상송")
-                        .font(.title(.medium))
-                        .padding(.leading, 16)
-                    Spacer()
-                }
+        DodamScrollView.medium(title: "기상송") {
+            VStack(alignment: .leading, spacing: 0) {
+                Text("내일의 기상송")
+                    .font(.title(.medium))
+                    .dodamColor(.onBackground)
                 if let data = viewModel.allowedWakeupSongData,
                    !data.isEmpty {
                     LazyVStack(spacing: 4) {
@@ -43,7 +40,6 @@ struct WakeupSongView: View {
                             TomorrowWakeupSongCell(
                                 data: data
                             )
-                            .padding(.horizontal, 16)
                         }
                     }
                     .padding(.top, 12)
@@ -52,102 +48,61 @@ struct WakeupSongView: View {
                     Text("승인된 기상송이 아직 없어요.")
                         .font(.label(.large))
                         .dodamColor(.tertiary)
+                        .frame(
+                            maxWidth: .infinity,
+                            alignment: .center
+                        )
                         .padding(.vertical, 40)
                 }
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
-                    // temp indicator
-                    Section(header: tabIndicator) {
-                        TabView(selection: $selectedTab) {
-                            LazyVStack(spacing: 4) {
-                                if let data = viewModel.pendingWakeupSongData,
-                                   !data.isEmpty {
-                                    ForEach(data, id: \.self) { data in
-                                        WakeupSongCell(
-                                            data: data
-                                        )
-                                        .padding(.horizontal, 16)
-                                        .onLongPressGesture {
-                                            showDeleteWakeupDialog = true
-                                        }
-                                    }
+                    DodamTopTabView {
+                        LazyVStack(spacing: 4) {
+                            if let data = viewModel.pendingWakeupSongData,
+                               !data.isEmpty {
+                                ForEach(data, id: \.self) { data in
+                                    WakeupSongCell(
+                                        data: data
+                                    )
                                 }
-                                Spacer()
                             }
-                            .padding(.bottom, 150)
-                            .tag(WakeupSongTabType.waiting)
-                            .background(GeometryReader {
-                                Color.clear.preference(
-                                    key: ViewRectKey.self,
-                                    value: [$0.frame(in: .local)]
-                                )
-                            })
-                            
-                            LazyVStack(spacing: 4) {
-                                if let data = viewModel.myWakeupSongData {
-                                    ForEach(data, id: \.self) { data in
-                                        WakeupSongCell(
-                                            data: data
-                                        )
-                                        .padding(.horizontal, 16)
-                                        .onLongPressGesture {
-                                            showDeleteWakeupDialog = true
-                                        }
-                                    }
+                            Spacer()
+                        }
+                        .padding(.top, 12)
+                        .padding(.bottom, 150)
+                        .page(.text("대기중"))
+                        
+                        LazyVStack(spacing: 4) {
+                            if let data = viewModel.myWakeupSongData {
+                                ForEach(data, id: \.self) { data in
+                                    WakeupSongCell(
+                                        data: data
+                                    )
                                 }
-                                Spacer()
                             }
-                            .padding(.bottom, 150)
-                            .tag(WakeupSongTabType.my)
-                            .background(GeometryReader {
-                                Color.clear.preference(
-                                    key: ViewRectKey.self,
-                                    value: [$0.frame(in: .local)]
-                                )
-                            })
+                            Spacer()
                         }
-                        .tabViewStyle(.page(indexDisplayMode: .never))
-                        .frame(height: rect.size.height + 12)
-                        .onPreferenceChange(ViewRectKey.self) { rects in
-                            if rects.first?.height != .zero {
-                                rect = rects.first ?? .zero
-                            }
-                        }
+                        .padding(.top, 12)
+                        .padding(.bottom, 150)
+                        .page(.text("MY"))
                     }
+                    .padding(.top, 15)
                     Spacer()
                 }
             }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 150)
+        }
+        .button(icon: .plus) {
+            flow.push(WakeupSongApplyView())
         }
         .task {
             await viewModel.onAppear()
         }
-        .navigationBarHidden(false)
-    }
-    
-    @ViewBuilder
-    private var tabIndicator: some View {
-        HStack {
-            Spacer()
-            Button("대기중") {
-                selectedTab = .waiting
-            }
-            Spacer()
-            Button("MY") {
-                selectedTab = .my
-            }
-            Spacer()
-        }
-        .background(Color.white)
     }
 }
 
 #Preview {
-    WakeupSongView()
-}
-
-public struct ViewRectKey: PreferenceKey {
-    public typealias Value = [CGRect]
-    public static var defaultValue = [CGRect]()
-    public static func reduce(value: inout Value, nextValue: () -> Value) {
-        value += nextValue()
+    FlowPreview {
+        WakeupSongView()
     }
 }

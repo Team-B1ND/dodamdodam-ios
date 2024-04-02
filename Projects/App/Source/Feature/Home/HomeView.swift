@@ -48,7 +48,7 @@ struct HomeView: View {
                     icon: Dodam.icon(.note)
                 ) {
                     Button {
-                        
+                        flow.push(WakeupSongView())
                     } label: {
                         WakeupSongContainer(
                             data: viewModel.wakeupSongData

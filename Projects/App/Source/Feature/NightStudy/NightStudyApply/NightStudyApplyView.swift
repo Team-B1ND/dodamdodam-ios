@@ -38,7 +38,6 @@ struct NightStudyApplyView: View {
             .padding(.bottom, 8)
         }
         .padding(.horizontal, 24)
-        .navigationBarHidden(false)
     }
 }
 
