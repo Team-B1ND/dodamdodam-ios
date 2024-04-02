@@ -15,7 +15,12 @@ class WakeupSongApplyViewModel: ObservableObject {
     @Published var wakeupSongSearchData: [WakeupSongSearchResponse]?
     
     @Published var isSearchLoading: Bool = false
-    @Published var isFailedPostWakeupSongByKeyword: Bool = false
+    @Published var dialogMessage = "" {
+        didSet {
+            showDialog = true
+        }
+    }
+    @Published var showDialog = false
     
     // MARK: - Repository
     @Inject var wakeupSongRepository: any WakeupSongRepository
@@ -52,17 +57,35 @@ class WakeupSongApplyViewModel: ObservableObject {
         } catch let error {
             print(error)
             isSearchLoading = false
+            dialogMessage = "기상송 검색을 실패했어요"
         }
     }
     
+    @MainActor
     func postWakeupSongByKeyword(artist: String, title: String) async {
         
         do {
             _ = try await wakeupSongRepository.postWakeupSongByKeyword(
                 .init(artist: artist, title: title)
             )
+            dialogMessage = "기상송 신청에 성공했어요"
         } catch let error {
             print(error)
+            dialogMessage = "기상송을 이미 신청했어요"
         }
     }
+    
+//    @MainActor
+//    func postWakeupSongByKeyword(artist: String, title: String) async {
+//        
+//        do {
+//            try await wakeupSongRepository.postWakeupSongByKeyword(
+//                .init(artist: artist, title: title)
+//            )
+//            dialogMessage = "기상송 신청에 성공했어요"
+//        } catch let error {
+//            print(error)
+//            dialogMessage = "기상송을 이미 신청했어요"
+//        }
+//    }
 }

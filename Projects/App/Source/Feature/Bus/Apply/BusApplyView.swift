@@ -59,10 +59,5 @@ struct BusApplyView: View {
         .alert(viewModel.dialogMessage, isPresented: $viewModel.showDialog) {
             Button("확인", role: .none) {}
         }
-//        .dodamModal(isPresented: $showNotFoundBus) {
-//            Text("현재 탑승할 수 있는 버스가 없습니다")
-//                .font(.title(.large))
-//                .dodamColor(.onSurface)
-//        }
     }
 }

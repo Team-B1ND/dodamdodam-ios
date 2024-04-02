@@ -43,6 +43,7 @@ extension RemoteProtocol {
                 switch result {
                 case let .success(data):
                     continuation.resume(returning: data)
+                    print(String(data: data.data, encoding: .utf8))
                 case let .failure(error):
                     continuation.resume(throwing: error)
                 }

@@ -24,6 +24,7 @@ struct WakeupSongApplyView: View {
                                 CachedAsyncImage(url: URL(string: data.thumbnail)) {
                                     $0
                                         .resizable()
+                                        .scaledToFill()
                                         .frame(width: 120, height: 67)
                                 } placeholder: {
                                     Rectangle()
@@ -54,10 +55,8 @@ struct WakeupSongApplyView: View {
                         DodamLoadingView()
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 40)
-                            .padding(.bottom, 40)
                     }
                 }
-                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("이런 노래는 어떤가요?")
                         .font(.title(.medium))
@@ -66,6 +65,7 @@ struct WakeupSongApplyView: View {
                         .font(.body(.small))
                         .dodamColor(.onSurface)
                 }
+                .padding(.top, 20)
                 LazyVStack(spacing: 4) {
                     if let data = viewModel.wakeupSongChartData {
                         ForEach(data, id: \.self) { data in
@@ -131,8 +131,15 @@ struct WakeupSongApplyView: View {
                 }
             }
         }
+        .background(Dodam.color(.background))
         .task {
             await viewModel.onAppear()
+        }
+        .alert(
+            viewModel.dialogMessage,
+            isPresented: $viewModel.showDialog
+        ) {
+            Button("확인", role: .none) {}
         }
     }
 }

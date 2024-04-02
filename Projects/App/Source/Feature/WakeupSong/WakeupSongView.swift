@@ -28,7 +28,7 @@ struct WakeupSongView: View {
     @State private var selectedTab: WakeupSongTabType = .waiting
     
     var body: some View {
-        DodamScrollView.default(title: "기상송") {
+        DodamScrollView.medium(title: "기상송") {
             VStack(spacing: 0) {
                 HStack {
                     Text("내일의 기상송")
@@ -117,6 +117,9 @@ struct WakeupSongView: View {
                 }
             }
         }
+        .button(icon: .plus) {
+            flow.push(WakeupSongApplyView())
+        }
         .task {
             await viewModel.onAppear()
         }
@@ -140,7 +143,9 @@ struct WakeupSongView: View {
 }
 
 #Preview {
-    WakeupSongView()
+    FlowPreview {
+        WakeupSongView()
+    }
 }
 
 public struct ViewRectKey: PreferenceKey {
