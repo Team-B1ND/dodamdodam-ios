@@ -18,32 +18,72 @@ struct AllView: View {
         DodamScrollView.default(title: "전체") {
             VStack(spacing: 24) {
                 HStack(spacing: 16) {
-                    if let image = viewModel.memberData?.profileImage {
-                        CachedAsyncImage(url: URL(string: image)) {
-                            $0
+                    if let data = viewModel.memberData {
+                        if let profileImage = data.profileImage {
+                            CachedAsyncImage(url: URL(string: profileImage)) {
+                                $0
+                                    .resizable()
+                                    .frame(width: 70, height: 70)
+                            } placeholder: {
+                                Rectangle()
+                                    .frame(width: 70, height: 70)
+                                    .shimmer()
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        } else {
+                            Image("Profile")
                                 .resizable()
                                 .frame(width: 70, height: 70)
-                        } placeholder: {
-                            Rectangle()
-                                .frame(width: 70, height: 70)
-                                .shimmer()
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
-                    } else {
-                        Rectangle()
-                            .frame(width: 70, height: 70)
-                            .shimmer()
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                    }
-                    VStack(alignment: .leading) {
-                        Text("환영합니다, \("개발자")님")
-                            .font(.body(.large))
-                            .dodamColor(.onSurface)
-                        Text("환영합니다, \("개발자")님")
-                            .font(.label(.large))
-                            .dodamColor(.onSurfaceVariant)
+                        if let student = data.student {
+                            VStack(alignment: .leading) {
+                                Text("환영합니다, \(student.name)님")
+                                    .font(.body(.large))
+                                    .dodamColor(.onSurface)
+                                Text("\(student.grade)학년 \(student.room)반 \(student.number)번")
+                                    .font(.label(.large))
+                                    .dodamColor(.onSurfaceVariant)
+                            }
+                        } else {
+                            VStack(alignment: .leading) {
+                                Rectangle()
+                                    .frame(width: 150, height: 24)
+                                    .shimmer()
+                                Rectangle()
+                                    .frame(width: 90, height: 16)
+                                    .shimmer()
+                            }
+                        }
                     }
                     Spacer()
                 }
+                Button {
+//                    flow.push(PointView())
+                } label: {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Rectangle()
+                                .dodamFill(.secondary)
+                                .frame(width: 32, height: 32)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Image(icon: .barChart)
+                                .resizable()
+                                .frame(width: 20, height: 20)
+                        }
+                        .padding(.leading, 8)
+                        Text("내 상벌점 보기")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.onBackground)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                            .padding(.trailing, 4)
+                    }
+                }
+                
                 Button {
                     flow.push(BusApplyView())
                 } label: {
@@ -123,7 +163,7 @@ struct AllView: View {
                 }
                 
                 Button {
-                    viewModel.onTapLogoutButton()
+                    viewModel.isShowingLogoutAlert.toggle()
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {
@@ -152,11 +192,13 @@ struct AllView: View {
             .padding([.top, .horizontal], 16)
         }
         .bottomMask()
-        .background(Dodam.color(.background))
         .task {
-            await viewModel.fetchMemberData()
+            await viewModel.onAppear()
         }
-        .alert("로그아웃", isPresented: $viewModel.isShowingLogoutAlert) {
+        .alert(
+            "로그아웃",
+            isPresented: $viewModel.isShowingLogoutAlert
+        ) {
             Button("네", role: .none) {
                 viewModel.logout()
                 flow.replace([OnboardingView()])

@@ -18,11 +18,15 @@ class AllViewModel: ObservableObject {
     @Inject var memberRepository: any MemberRepository
     
     // MARK: - Method
+    @MainActor
     func onAppear() async {
+        
         await fetchMemberData()
     }
     
+    @MainActor
     func fetchMemberData() async {
+        
         do {
             memberData = try await memberRepository.fetchInfo()
         } catch let error {
@@ -30,11 +34,8 @@ class AllViewModel: ObservableObject {
         }
     }
     
-    func onTapLogoutButton() {
-        isShowingLogoutAlert.toggle()
-    }
-    
     func logout() {
+        
         isShowingLogoutAlert.toggle()
         Sign.logout()
     }
