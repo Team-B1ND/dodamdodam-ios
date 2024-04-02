@@ -14,9 +14,15 @@ struct PointView: View {
     @Flow var flow
     
     var body: some View {
-        DodamScrollView.default(title: "내 상벌점") {
-            VStack(spacing: 24) {
-                
+        DodamScrollView.medium(title: "내 상벌점") {
+            VStack(spacing: 0) {
+                SegmentedView(
+                    labels: ["기숙사", "학교"],
+                    selection: $viewModel.selection
+                )
+                VStack(spacing: 24) {
+                    
+                }
             }
             .padding([.top, .horizontal], 16)
         }

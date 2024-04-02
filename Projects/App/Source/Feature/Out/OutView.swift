@@ -54,7 +54,10 @@ struct OutView: View {
             .padding(.horizontal, 16)
         }
         .subView {
-            OutSegmentedView(selection: $viewModel.selection)
+            SegmentedView(
+                labels: ["외출", "외박"],
+                selection: $viewModel.selection
+            )
         }
         .button(icon: .plus) {
             flow.push(OutApplyView())

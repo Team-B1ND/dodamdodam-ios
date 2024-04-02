@@ -15,6 +15,8 @@ class PointViewModel: ObservableObject {
     @Published var domitoryPointScoreData: [PointScoreResponse]?
     @Published var schoolPointScoreData: [PointScoreResponse]?
     
+    @Published var selection: Int = 0
+    
     // MARK: - Repository
     @Inject var pointRepository: any PointRepository
     

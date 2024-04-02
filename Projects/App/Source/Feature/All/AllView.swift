@@ -30,11 +30,6 @@ struct AllView: View {
                                     .shimmer()
                             }
                             .clipShape(RoundedRectangle(cornerRadius: 12))
-                        } else {
-                            Image("Profile")
-                                .resizable()
-                                .frame(width: 70, height: 70)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         if let student = data.student {
                             VStack(alignment: .leading) {
@@ -45,21 +40,25 @@ struct AllView: View {
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                             }
-                        } else {
-                            VStack(alignment: .leading) {
-                                Rectangle()
-                                    .frame(width: 150, height: 24)
-                                    .shimmer()
-                                Rectangle()
-                                    .frame(width: 90, height: 16)
-                                    .shimmer()
-                            }
                         }
-                    }
+                    } else {
+                       Image("Profile")
+                           .resizable()
+                           .frame(width: 70, height: 70)
+                           .clipShape(RoundedRectangle(cornerRadius: 12))
+                        VStack(alignment: .leading) {
+                            Rectangle()
+                                .frame(width: 150, height: 24)
+                                .shimmer()
+                            Rectangle()
+                                .frame(width: 90, height: 16)
+                                .shimmer()
+                        }
+                   }
                     Spacer()
                 }
                 Button {
-//                    flow.push(PointView())
+                    flow.push(PointView())
                 } label: {
                     HStack(spacing: 16) {
                         ZStack {

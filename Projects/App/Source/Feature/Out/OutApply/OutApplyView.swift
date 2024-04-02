@@ -16,8 +16,11 @@ struct OutApplyView: View {
         VStack(alignment: .leading, spacing: 24) {
             Text("외출/외박 신청하기")
                 .font(.headline(.small))
-            OutSegmentedView(selection: $viewModel.selection)
-                .padding(.top, 6)
+            SegmentedView(
+                labels: ["외출", "외박"],
+                selection: $viewModel.selection
+            )
+            .padding(.top, 6)
             DodamTextField.default(
                 title: "\(viewModel.selection == 0 ? "외출" : "외박") 사유",
                 text: $viewModel.testText
