@@ -8,24 +8,10 @@
 import SwiftUI
 import DDS
 
-enum WakeupSongTabType {
-    case waiting
-    case my
-}
-
 struct WakeupSongView: View {
     
     @InjectObject var viewModel: WakeupSongViewModel
     @Flow var flow
-    @State private var showDeleteWakeupDialog = false
-    
-    @State private var rect: CGRect = .zero
-    
-    @State private var testTomorrowWakeupSongs = Array(0..<3)
-    @State private var testWaitingWakeupSongs = Array(0..<10)
-    @State private var testMyWakeupSongs = Array(0..<2)
-    
-    @State private var selectedTab: WakeupSongTabType = .waiting
     
     var body: some View {
         DodamScrollView.medium(title: "기상송") {
@@ -72,12 +58,42 @@ struct WakeupSongView: View {
                         .page(.text("대기중"))
                         
                         LazyVStack(spacing: 4) {
-                            if let data = viewModel.myWakeupSongData {
+                            if let data = viewModel.myWakeupSongData,
+                               !data.isEmpty {
                                 ForEach(data, id: \.self) { data in
-                                    WakeupSongCell(
-                                        data: data
-                                    )
+                                    Button {
+                                        viewModel.showDialog = true
+                                    } label: {
+                                        WakeupSongCell(
+                                            data: data
+                                        )
+                                    }
+                                    .scaledButtonStyle()
+                                    .alert(
+                                        "기상송을 삭제하시겠습니까?",
+                                        isPresented: $viewModel.showDialog
+                                    ) {
+                                        Button("네", role: .none) {
+                                            Task {
+                                                await viewModel.deleteWakeupSong(
+                                                    id: data.id
+                                                )
+                                                await viewModel.fetchMyWakeupSong()
+                                                await viewModel.fetchPendingWakeupSong()
+                                            }
+                                        }
+                                        Button("취소", role: .cancel) { }
+                                    }
                                 }
+                            } else {
+                                Text("기상송을 신청해 보세요!")
+                                    .font(.label(.large))
+                                    .dodamColor(.tertiary)
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .center
+                                    )
+                                    .padding(.top, 40)
                             }
                             Spacer()
                         }
@@ -92,8 +108,14 @@ struct WakeupSongView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 150)
         }
-        .button(icon: .plus) {
-            flow.push(WakeupSongApplyView())
+        .bottomMask()
+        .overlay(alignment: .bottom) {
+            DodamButton.fullWidth(
+                title: "기상송 신청하기"
+            ) {
+                flow.push(WakeupSongApplyView())
+            }
+            .padding([.bottom, .horizontal], 16)
         }
         .task {
             await viewModel.onAppear()

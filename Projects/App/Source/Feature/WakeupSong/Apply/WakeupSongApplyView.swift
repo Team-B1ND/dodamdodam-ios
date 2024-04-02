@@ -12,6 +12,7 @@ import CachedAsyncImage
 struct WakeupSongApplyView: View {
     
     @InjectObject var viewModel: WakeupSongApplyViewModel
+    @Flow var flow
     
     var body: some View {
         DodamScrollView.medium(title: "기상송을\n검색해주세요") {
@@ -21,11 +22,8 @@ struct WakeupSongApplyView: View {
                     LazyVStack(spacing: 4) {
                         ForEach(data, id: \.self) { data in
                             Button {
-                                Task {
-                                    await viewModel.postWakeupSong(
-                                        videoUrl: data.videoUrl
-                                    )
-                                }
+                                viewModel.dialogMessage = "\(data.videoTitle)"
+                                viewModel.videoUrl = data.videoUrl
                             } label: {
                                 HStack(spacing: 16) {
                                     CachedAsyncImage(url: URL(string: data.thumbnail)) {
@@ -79,18 +77,15 @@ struct WakeupSongApplyView: View {
                     if let data = viewModel.wakeupSongChartData {
                         ForEach(data, id: \.self) { data in
                             Button {
-                                Task {
-                                    await viewModel.postWakeupSongByKeyword(
-                                        artist: data.artist,
-                                        title: data.name
-                                    )
-                                }
+                                viewModel.dialogMessage = "\(data.artist)-\(data.name)"
+                                viewModel.artist = data.artist
+                                viewModel.title = data.name
                             } label: {
                                 HStack(spacing: 16) {
-//                                    Text("\(data.rank)")
-//                                        .font(.label(.large))
-//                                        .dodamColor(.onBackground)
-//                                        .frame(width: 25, height: 20)
+                                    Text("\(data.rank)")
+                                        .font(.label(.large))
+                                        .dodamColor(.onBackground)
+                                        .frame(width: 25, height: 20)
                                     CachedAsyncImage(url: URL(
                                         string: data.thumbnail
                                     )) {
@@ -142,15 +137,26 @@ struct WakeupSongApplyView: View {
                 }
             }
         }
+        .bottomMask()
         .background(Dodam.color(.background))
         .task {
             await viewModel.onAppear()
         }
         .alert(
-            viewModel.dialogMessage,
+            "기상송을 신청하시겠습니까?",
             isPresented: $viewModel.showDialog
         ) {
-            Button("확인", role: .none) {}
+            Button("네", role: .none) {
+                Task {
+                    await viewModel.postWakeupSong()
+                    flow.pop()
+                }
+            }
+            Button("취소", role: .cancel) { 
+                viewModel.clearData()
+            }
+        } message: {
+            Text("\(viewModel.dialogMessage)")
         }
     }
 }

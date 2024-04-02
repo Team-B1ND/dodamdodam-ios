@@ -13,7 +13,8 @@ class WakeupSongViewModel: ObservableObject {
     @Published var allowedWakeupSongData: [WakeupSongResponse]?
     @Published var pendingWakeupSongData: [WakeupSongResponse]?
     @Published var myWakeupSongData: [WakeupSongResponse]?
-    @Published var isShowingLogoutAlert: Bool = false
+    
+    @Published var showDialog = false
     
     // MARK: - Repository
     @Inject var wakeupSongRepository: any WakeupSongRepository
@@ -58,6 +59,16 @@ class WakeupSongViewModel: ObservableObject {
         
         do {
             myWakeupSongData = try await wakeupSongRepository.fetchWakeupSong()
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func deleteWakeupSong(id: Int) async {
+        
+        do {
+            try await wakeupSongRepository.deleteWakeupSong(id: id)
         } catch let error {
             print(error)
         }
