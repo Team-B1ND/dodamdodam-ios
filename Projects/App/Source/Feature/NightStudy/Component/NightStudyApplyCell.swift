@@ -115,8 +115,9 @@ struct NightStudyApplyCell: View {
                             }
                             DodamLinearProgressView(
                                 progress: calculatingDateProgress(
-                                    nightStudyData.startAt,
-                                    nightStudyData.endAt
+                                    startAt: nightStudyData.startAt,
+                                    endAt: nightStudyData.endAt,
+                                    dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
                                 ),
                                 isDisabled: nightStudyData.status.rawValue == "PENDING" ? true : false
                             )

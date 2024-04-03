@@ -47,12 +47,12 @@ struct OutGoingCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({ () -> String in
-                    if let date = outGoingData.createdAt.parseDate(
-                        format: "yyyy-MM-dd HH:mm:ss"
-                    ) {
-                        return date.parseString(format: "M월 d일 (E)")
+                    guard let date = outGoingData.createdAt.parseDate(
+                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+                    ) else {
+                        return "시간 오류"
                     }
-                    return "오류"
+                    return date.parseString(format: "M월 d일 (E)")
                 }())
                 .font(.label(.large))
                 .dodamColor(.onSurfaceVariant)
@@ -86,11 +86,11 @@ struct OutGoingCell: View {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text({ () -> String in
                                     if let date = outGoingData.startAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                        format: "yyyy-MM-dd'T'HH:mm:ss"
                                     ) {
-                                        return date.parseString(format: "M월 d일")
+                                        return date.parseString(format: "H시 m분")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -100,11 +100,11 @@ struct OutGoingCell: View {
                                 Spacer()
                                 Text({ () -> String in
                                     if let date = outGoingData.endAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                        format: "yyyy-MM-dd'T'HH:mm:ss"
                                     ) {
-                                        return date.parseString(format: "M월 d일")
+                                        return date.parseString(format: "H시 m분")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -114,8 +114,9 @@ struct OutGoingCell: View {
                             }
                             DodamLinearProgressView(
                                 progress: calculatingDateProgress(
-                                    outGoingData.startAt,
-                                    outGoingData.endAt
+                                    startAt: outGoingData.startAt,
+                                    endAt: outGoingData.endAt,
+                                    dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
                                 ),
                                 isDisabled: outGoingData.status.rawValue == "PENDING" ? true : false
                             )

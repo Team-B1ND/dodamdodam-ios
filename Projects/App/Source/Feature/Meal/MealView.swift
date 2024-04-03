@@ -37,13 +37,9 @@ struct MealView: View {
                         let date = datas.date.parseDate(format: "yyyy-MM-dd")
                         Text({ () -> String in
                             guard let date else {
-                                return "datas.date 가 없습니다"
+                                return "오류"
                             }
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy-MM-dd"
-                            dateFormatter.locale = Locale(identifier: "ko_KR")
-                            dateFormatter.dateFormat = "M월 d일 EEEE"
-                            let formattedDate = dateFormatter.string(from: date)
+                            let formattedDate = date.parseString(format: "M월 d일 EEEE")
                             return formattedDate
                         }())
                         .font(.body(.medium))

@@ -48,11 +48,11 @@ struct OutSleepingCell: View {
                 Spacer()
                 Text({ () -> String in
                     if let date = outSleepingData.createdAt.parseDate(
-                        format: "yyyy-MM-dd HH:mm:ss"
+                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
                     ) {
                         return date.parseString(format: "M월 d일 (E)")
                     }
-                    return "오류"
+                    return "시간 오류"
                 }())
                 .font(.label(.large))
                 .dodamColor(.onSurfaceVariant)
@@ -86,11 +86,11 @@ struct OutSleepingCell: View {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text({ () -> String in
                                     if let date = outSleepingData.startAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                        format: "yyyy-MM-dd"
                                     ) {
                                         return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -100,11 +100,11 @@ struct OutSleepingCell: View {
                                 Spacer()
                                 Text({ () -> String in
                                     if let date = outSleepingData.startAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                        format: "yyyy-MM-dd"
                                     ) {
                                         return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -114,8 +114,9 @@ struct OutSleepingCell: View {
                             }
                             DodamLinearProgressView(
                                 progress: calculatingDateProgress(
-                                    outSleepingData.startAt,
-                                    outSleepingData.endAt
+                                    startAt: outSleepingData.startAt,
+                                    endAt: outSleepingData.endAt,
+                                    dateFormat: "yyyy-MM-dd"
                                 ),
                                 isDisabled: outSleepingData.status.rawValue == "PENDING" ? true : false
                             )

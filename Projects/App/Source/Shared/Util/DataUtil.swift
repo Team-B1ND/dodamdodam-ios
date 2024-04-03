@@ -33,24 +33,32 @@ public func getDate(_ type: DateType) -> Int {
 }
 
 public func calculatingDateProgress(
-    _ startAt: String,
-    _ endAt: String
+    startAt: String,
+    endAt: String,
+    dateFormat: String
 ) -> Double {
     
-    let currentDate = Date()
+    let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
+    let currentDate = Date().addingTimeInterval(TimeInterval(koreanTimeZone.secondsFromGMT()))
     
-    guard let startDate = startAt.parseDate(format: "yyyy-MM-dd HH:mm:ss"),
-          let endDate = endAt.parseDate(format: "yyyy-MM-dd HH:mm:ss") else {
+    guard let startDate = startAt.parseDate(format: dateFormat),
+          let endDate = endAt.parseDate(format: dateFormat) else {
         return 0.0
     }
+    
     let totalDuration = endDate.timeIntervalSince(startDate)
     
-    if currentDate < startDate {
+    print("\ntest 현재", currentDate)
+    print("test 시작", startDate)
+    print("test 끝", endDate)
+    print("")
+    if currentDate <= startDate {
         return 0.0
     } else if currentDate >= endDate {
         return 1.0
     } else {
         let elapsedTime = currentDate.timeIntervalSince(startDate)
+        let totalDuration = endDate.timeIntervalSince(startDate)
         let progress = elapsedTime / totalDuration
         return progress
     }
