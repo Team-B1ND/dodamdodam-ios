@@ -19,11 +19,11 @@ struct OutView: View {
         DodamScrollView.default(title: "외출/외박") {
             VStack(spacing: 12) {
                 if viewModel.selection == 0 {
-                    if let datas = viewModel.outGoingDatas {
-                        ForEach(datas, id: \.self) { data in
-                            OutApplyCell(
-                                data: data,
-                                outType: .outGoing
+                    if let data = viewModel.outGoingData,
+                       !data.isEmpty {
+                        ForEach(data, id: \.self) { data in
+                            OutGoingCell(
+                                data: data
                             )
                         }
                     } else {
@@ -35,12 +35,13 @@ struct OutView: View {
                     }
                 }
                 if viewModel.selection == 1 {
-                    if let datas = viewModel.outSleepingDatas {
-                        ForEach(datas, id: \.self) { data in
-                            OutApplyCell(
-                                data: data,
-                                outType: .outSleeping
-                            )
+                    if let data = viewModel.outSleepingData,
+                       !data.isEmpty {
+                        ForEach(data, id: \.self) { data in
+//                            OutGoingCell(
+//                                data: data
+//                            )
+                            Text("\(data.reason)")
                         }
                     } else {
                         DodamEmptyView(
@@ -62,8 +63,13 @@ struct OutView: View {
         .button(icon: .plus) {
             flow.push(OutApplyView())
         }
-        .bottomMask()
         .background(Dodam.color(.surface))
+        .task {
+            await viewModel.onAppear()
+        }
+        .refreshable {
+            await viewModel.onRefresh()
+        }
     }
 }
 

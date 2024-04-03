@@ -1,5 +1,5 @@
 //
-//  OutApplyCell.swift
+//  OutGoingCell.swift
 //  DodamDodam
 //
 //  Created by 이민규 on 3/23/24.
@@ -9,27 +9,21 @@ import SwiftUI
 import DDS
 import Combine
 
-struct OutApplyCell: View {
+struct OutGoingCell: View {
     
-    public enum OutType {
-        case outGoing, outSleeping
-    }
+    private let outGoingData: OutGoingResponse
     
-    private let outData: OutResponse
-    private let outType: OutType
-    
-    public init(
-        data outData: OutResponse,
-        outType: OutType
+    init(
+        data outGoingData: OutGoingResponse
     ) {
-        self.outData = outData
-        self.outType = outType
+        self.outGoingData = outGoingData
     }
     
     func calculatingProgress(
         _ startAt: String,
         _ endAt: String
     ) -> Double {
+        
         let currentDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -40,9 +34,6 @@ struct OutApplyCell: View {
         }
         let totalDuration = endDate.timeIntervalSince(startDate)
         
-        print("currentDate : \(currentDate)")
-        print("startDate : \(startDate)")
-        print("endDate : \(endDate)")
         if currentDate < startDate {
             return 0.0
         } else if currentDate >= endDate {
@@ -59,7 +50,7 @@ struct OutApplyCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch outData.status.rawValue {
+                        switch outGoingData.status.rawValue {
                         case "ALLOWED": return "승인됨"
                         case "PENDING": return "대기중"
                         case "DENIED": return "거절됨"
@@ -73,7 +64,7 @@ struct OutApplyCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch outData.status.rawValue {
+                    switch outGoingData.status.rawValue {
                     case "ALLOWED": return Dodam.color(.primary)
                     case "PENDING": return Dodam.color(.onSurfaceVariant)
                     case "DENIED": return Dodam.color(.error)
@@ -86,7 +77,7 @@ struct OutApplyCell: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                    if let date = dateFormatter.date(from: outData.createdAt) {
+                    if let date = dateFormatter.date(from: outGoingData.createdAt) {
                         dateFormatter.dateFormat = "M월 d일 (E)"
                         return dateFormatter.string(from: date)
                     }
@@ -98,7 +89,7 @@ struct OutApplyCell: View {
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
-                Text("\(outData.reason)")
+                Text("\(outGoingData.reason)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -106,7 +97,7 @@ struct OutApplyCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if outData.status.rawValue == "DENIED" {
+                if outGoingData.status.rawValue == "DENIED" {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
@@ -126,15 +117,15 @@ struct OutApplyCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outData.startAt) {
-                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
+                                    if let date = dateFormatter.date(from: outGoingData.startAt) {
+                                        dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
                                     return "오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
-                                Text(outType == .outGoing ? "외출" : "외박")
+                                Text("외출")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
@@ -142,8 +133,8 @@ struct OutApplyCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outData.endAt) {
-                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
+                                    if let date = dateFormatter.date(from: outGoingData.endAt) {
+                                        dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
                                     return "오류"
@@ -156,10 +147,10 @@ struct OutApplyCell: View {
                             }
                             DodamLinearProgressView(
                                 progress: calculatingProgress(
-                                    outData.startAt,
-                                    outData.endAt
+                                    outGoingData.startAt,
+                                    outGoingData.endAt
                                 ),
-                                isDisabled: outData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: outGoingData.status.rawValue == "PENDING" ? true : false
                             )
                         }
                     }
