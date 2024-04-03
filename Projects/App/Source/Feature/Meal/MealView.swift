@@ -26,7 +26,8 @@ struct MealView: View {
     var body: some View {
         DodamScrollView.default(title: "급식") {
             VStack(spacing: 20) {
-                if let datas = viewModel.mealData {
+                if let datas = viewModel.mealData,
+                   !datas.isEmpty {
                     ForEach({ () -> [MealResponse] in
                         datas.filter {
                             let date = $0.date.parseDate()
@@ -51,7 +52,9 @@ struct MealView: View {
                         }())
                         .font(.body(.medium))
                         .dodamColor(
-                            isToday(datas.date) ? .onPrimary : .onSecondaryContainer
+                            isToday(datas.date) 
+                            ? .onPrimary
+                            : .onSecondaryContainer
                         )
                         .padding(.vertical, 4)
                         .frame(width: 218, height: 31)
@@ -81,13 +84,7 @@ struct MealView: View {
                                     }
                                     return date
                                 }()
-                                
-                                let isMealTime = isMealTime(date, mealType: idx)
-                                
-                                let backgroundColor = isMealTime ? Dodam.color(.primary) : Dodam.color(.onSurfaceVariant)
-                                
-                                if let data = data
-                                {
+                                if let data = data {
                                     VStack(spacing: 16) {
                                         HStack(spacing: 12) {
                                             ZStack {
@@ -103,7 +100,11 @@ struct MealView: View {
                                                 .dodamColor(.onPrimary)
                                             }
                                             .frame(width: 52, height: 27)
-                                            .background(backgroundColor)
+                                            .background(
+                                                isMealTime(date, mealType: idx)
+                                                ? Dodam.color(.primary)
+                                                : Dodam.color(.onSurfaceVariant)
+                                            )
                                             .clipShape(RoundedRectangle(cornerRadius: 32))
                                             Spacer()
                                             Text("\(Int(data.calorie))Kcal")
@@ -142,36 +143,41 @@ struct MealView: View {
     }
     
     func isMealTime(_ date: Date, mealType: Int) -> Bool {
-        let c = Calendar.current
+        
+        let cc = Calendar.current
         // 현재 시간의 년, 월, 일
         let currentDate = Date()
-        let currentYear = c.component(.year, from: currentDate)
-        let currentMonth = c.component(.month, from: currentDate)
-        let currentDay = c.component(.day, from: currentDate)
-        let currentHour = c.component(.hour, from: currentDate)
-        let currentMinute = c.component(.minute, from: currentDate)
+        let currentYear = cc.component(.year, from: currentDate)
+        let currentMonth = cc.component(.month, from: currentDate)
+        let currentDay = cc.component(.day, from: currentDate)
+        let currentHour = cc.component(.hour, from: currentDate)
+        let currentMinute = cc.component(.minute, from: currentDate)
         
         // 입력된 시간의 년, 월, 일
-        let year = c.component(.year, from: date)
-        let month = c.component(.month, from: date)
-        let day = c.component(.day, from: date)
+        let year = cc.component(.year, from: date)
+        let month = cc.component(.month, from: date)
+        let day = cc.component(.day, from: date)
         
         // 날짜가 오늘인지 확인
         guard currentYear == year && currentMonth == month && currentDay == day else {
             return false
         }
-//        print(currentDate, currentYear, currentMonth, currentDay, currentHour, currentMinute)
         
         switch mealType {
         case 0:
             // 아침: ~ 8:20
-            return (currentHour >= 0 && currentHour < 8) || (currentHour == 8 && currentMinute <= 20)
+            return (currentHour >= 0 && currentHour < 8) ||
+                   (currentHour == 8 && currentMinute <= 20)
         case 1:
             // 점심: 8:21 ~ 13:30
-            return (currentHour == 8 && currentMinute > 20) || (currentHour > 8 && currentHour < 13) || (currentHour == 13 && currentMinute <= 30)
+            return (currentHour == 8 && currentMinute > 20) ||
+                   (currentHour > 8 && currentHour < 13) ||
+                   (currentHour == 13 && currentMinute <= 30)
         case 2:
             // 저녁: 13:31 ~ 19:10
-            return (currentHour == 13 && currentMinute > 30) || (currentHour > 13 && currentHour < 19) || (currentHour == 19 && currentMinute <= 10)
+            return (currentHour == 13 && currentMinute > 30) ||
+                   (currentHour > 13 && currentHour < 19) ||
+                   (currentHour == 19 && currentMinute <= 10)
         default:
             return false
         }
