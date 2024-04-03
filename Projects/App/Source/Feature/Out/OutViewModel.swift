@@ -13,6 +13,7 @@ class OutViewModel: ObservableObject {
     @Published var selection: Int = 0
     @Published var outGoingData: [OutGoingResponse]?
     @Published var outSleepingData: [OutSleepingResponse]?
+    @Published var isShowingDeleteAlert: Bool = false
     
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository
@@ -38,6 +39,26 @@ class OutViewModel: ObservableObject {
         do {
             outGoingData = try await outGoingRepository.fetchOutGoing()
             outSleepingData = try await outSleepingRepository.fetchOutSleeping()
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func deleteOutGoing(id: Int) async {
+        
+        do {
+            try await outGoingRepository.deleteOutGoing(id: id)
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func deleteOutSleeping(id: Int) async {
+        
+        do {
+            try await outSleepingRepository.deleteOutSleeping(id: id)
         } catch let error {
             print(error)
         }

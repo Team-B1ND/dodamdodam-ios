@@ -13,8 +13,6 @@ struct OutView: View {
     @InjectObject var viewModel: OutViewModel
     @Flow var flow
     
-    @Namespace private var animation
-    
     var body: some View {
         DodamScrollView.default(title: "외출/외박") {
             VStack(spacing: 12) {
@@ -22,9 +20,27 @@ struct OutView: View {
                     if let data = viewModel.outGoingData,
                        !data.isEmpty {
                         ForEach(data, id: \.self) { data in
-                            OutGoingCell(
-                                data: data
-                            )
+                            Button {
+                                viewModel.isShowingDeleteAlert.toggle()
+                            } label: {
+                                OutGoingCell(
+                                    data: data
+                                )
+                            }
+                            .scaledButtonStyle()
+                            .alert(
+                                "해당 외출 신청을 삭제하시겠습니까?",
+                                isPresented: $viewModel.isShowingDeleteAlert
+                            ) {
+                                Button("네", role: .none) {
+                                    Task {
+                                        await viewModel.deleteOutGoing(
+                                            id: data.id
+                                        )
+                                    }
+                                }
+                                Button("취소", role: .cancel) { }
+                            }
                         }
                     } else {
                         DodamEmptyView(
@@ -38,9 +54,27 @@ struct OutView: View {
                     if let data = viewModel.outSleepingData,
                        !data.isEmpty {
                         ForEach(data, id: \.self) { data in
-                            OutSleepingCell(
-                                data: data
-                            )
+                            Button {
+                                viewModel.isShowingDeleteAlert.toggle()
+                            } label: {
+                                OutSleepingCell(
+                                    data: data
+                                )
+                            }
+                            .scaledButtonStyle()
+                            .alert(
+                                "해당 외박 신청을 삭제하시겠습니까?",
+                                isPresented: $viewModel.isShowingDeleteAlert
+                            ) {
+                                Button("네", role: .none) {
+                                    Task {
+                                        await viewModel.deleteOutSleeping(
+                                            id: data.id
+                                        )
+                                    }
+                                }
+                                Button("취소", role: .cancel) { }
+                            }
                         }
                     } else {
                         DodamEmptyView(
