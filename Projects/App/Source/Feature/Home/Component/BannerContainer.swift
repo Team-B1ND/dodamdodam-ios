@@ -20,23 +20,29 @@ struct BannerContainer: View {
     }
     
     var body: some View {
-        if let data = bannerData, !data.isEmpty {
-            TabView {
-                ForEach(data, id: \.self) { data in
-                    Link(destination: URL(string: data.redirectUrl) ?? URL(string: "about:blank")!) {
-                        CachedAsyncImage(url: URL(string: data.imageUrl)) {
-                            $0.resizable()
-                        } placeholder: {
-                            Rectangle()
-                                .shimmer()
+        Group {
+            if let data = bannerData, !data.isEmpty {
+                TabView {
+                    ForEach(data, id: \.self) { data in
+                        Link(destination: URL(string: data.redirectUrl) ?? URL(string: "about:blank")!) {
+                            CachedAsyncImage(url: URL(string: data.imageUrl)) {
+                                $0
+                                    .resizable()
+                            } placeholder: {
+                                Rectangle()
+                                    .shimmer()
+                            }
                         }
                     }
                 }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+            } else {
+                Rectangle()
+                    .shimmer()
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            .aspectRatio(80/12, contentMode: .fill)
-            .frame(maxWidth: .infinity)
-            .clipShape(RoundedRectangle(cornerRadius: 18))
         }
+        .aspectRatio(80/12, contentMode: .fit)
+        .frame(maxWidth: .infinity)
+        .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }

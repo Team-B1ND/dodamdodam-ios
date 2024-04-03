@@ -62,7 +62,6 @@ struct OutView: View {
         .button(icon: .plus) {
             flow.push(OutApplyView())
         }
-        .bottomMask()
     }
 }
 

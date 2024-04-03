@@ -137,7 +137,6 @@ struct WakeupSongApplyView: View {
                 }
             }
         }
-        .bottomMask()
         .background(Dodam.color(.background))
         .task {
             await viewModel.onAppear()

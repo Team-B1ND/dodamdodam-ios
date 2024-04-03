@@ -33,7 +33,6 @@ struct BusApplyView: View {
             }
             .padding([.top, .horizontal], 16)
         }
-        .bottomMask()
         .overlay(alignment: .bottom) {
             DodamButton.fullWidth(
                 title: "확인"

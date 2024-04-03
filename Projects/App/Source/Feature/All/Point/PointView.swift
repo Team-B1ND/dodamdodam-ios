@@ -128,7 +128,6 @@ struct PointView: View {
                     .padding(.top, 24)
             }
         }
-        .bottomMask()
         .task {
             await viewModel.onAppear()
         }

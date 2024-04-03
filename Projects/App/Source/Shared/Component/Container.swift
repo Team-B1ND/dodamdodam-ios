@@ -51,10 +51,11 @@ public struct DodamContainer<Content>: View where Content: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Text("\(title)")
                     .font(.title(.medium))
+                    .minimumScaleFactor(0.01)
                     .dodamColor(.onSurface)
                 Spacer()
             }
-            .padding([.top, .horizontal], 16)
+            .padding([.top, .leading], 16)
             content()
                 .padding([.bottom, .horizontal], 10)
         }

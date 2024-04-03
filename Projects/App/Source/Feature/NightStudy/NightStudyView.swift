@@ -33,7 +33,6 @@ struct NightStudyView: View {
         .button(icon: .plus) {
             flow.push(NightStudyApplyView())
         }
-        .bottomMask()
     }
 }
 

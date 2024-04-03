@@ -53,6 +53,7 @@ struct OutStatusContainer: View {
                 subTitle: "외출, 외박이 필요하다면",
                 title: "외출/외박 신청하기"
             )
+            .minimumScaleFactor(0.01)
         }
     }
 }
