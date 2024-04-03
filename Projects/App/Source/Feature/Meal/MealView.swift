@@ -14,11 +14,7 @@ struct MealView: View {
     @Flow var flow
     
     func isToday(_ dateStr: String) -> Bool {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let date = dateFormatter.date(from: dateStr) else {
-            return false
-        }
+        let date = dateStr.parseDate(format: "yyyy-MM-dd") ?? Date()
         let today = Date()
         return Calendar.current.isDate(date, inSameDayAs: today)
     }
@@ -30,7 +26,7 @@ struct MealView: View {
                    !datas.isEmpty {
                     ForEach({ () -> [MealResponse] in
                         datas.filter {
-                            let date = $0.date.parseDate()
+                            let date = $0.date.parseDate(format: "yyyy-MM-dd")
                             guard let date else {
                                 return false
                             }
@@ -38,7 +34,7 @@ struct MealView: View {
                             return $0.exists && date >= today
                         }
                     }(), id: \.self) { datas in
-                        let date = datas.date.parseDate()
+                        let date = datas.date.parseDate(format: "yyyy-MM-dd")
                         Text({ () -> String in
                             guard let date else {
                                 return "datas.date 가 없습니다"
@@ -76,10 +72,9 @@ struct MealView: View {
                                     }
                                 }()
                                 let date: Date = {
-                                    
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                    guard let date = dateFormatter.date(from: datas.date) else {
+                                    guard let date = datas.date.parseDate(
+                                        format: "yyyy-MM-dd"
+                                    ) else {
                                         return .now
                                     }
                                     return date

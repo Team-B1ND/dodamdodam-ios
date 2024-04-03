@@ -18,32 +18,6 @@ struct OutGoingCell: View {
         self.outGoingData = outGoingData
     }
     
-    func calculatingProgress(
-        _ startAt: String,
-        _ endAt: String
-    ) -> Double {
-        
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        guard let startDate = dateFormatter.date(from: startAt),
-              let endDate = dateFormatter.date(from: endAt) else {
-            return 0.0
-        }
-        let totalDuration = endDate.timeIntervalSince(startDate)
-        
-        if currentDate < startDate {
-            return 0.0
-        } else if currentDate >= endDate {
-            return 1.0
-        } else {
-            let elapsedTime = currentDate.timeIntervalSince(startDate)
-            let progress = elapsedTime / totalDuration
-            return progress
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 16) {
             HStack(spacing: 12) {
@@ -73,12 +47,10 @@ struct OutGoingCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({ () -> String in
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                    if let date = dateFormatter.date(from: outGoingData.createdAt) {
-                        dateFormatter.dateFormat = "M월 d일 (E)"
-                        return dateFormatter.string(from: date)
+                    if let date = outGoingData.createdAt.parseDate(
+                        format: "yyyy-MM-dd HH:mm:ss"
+                    ) {
+                        return date.parseString(format: "M월 d일 (E)")
                     }
                     return "오류"
                 }())
@@ -113,12 +85,10 @@ struct OutGoingCell: View {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text({ () -> String in
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outGoingData.startAt) {
-                                        dateFormatter.dateFormat = "M월 d일"
-                                        return dateFormatter.string(from: date)
+                                    if let date = outGoingData.startAt.parseDate(
+                                        format: "yyyy-MM-dd HH:mm:ss"
+                                    ) {
+                                        return date.parseString(format: "M월 d일")
                                     }
                                     return "오류"
                                 }())
@@ -129,12 +99,10 @@ struct OutGoingCell: View {
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
                                 Text({ () -> String in
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outGoingData.endAt) {
-                                        dateFormatter.dateFormat = "M월 d일"
-                                        return dateFormatter.string(from: date)
+                                    if let date = outGoingData.endAt.parseDate(
+                                        format: "yyyy-MM-dd HH:mm:ss"
+                                    ) {
+                                        return date.parseString(format: "M월 d일")
                                     }
                                     return "오류"
                                 }())
@@ -145,7 +113,7 @@ struct OutGoingCell: View {
                                     .dodamColor(.onSurfaceVariant)
                             }
                             DodamLinearProgressView(
-                                progress: calculatingProgress(
+                                progress: calculatingDateProgress(
                                     outGoingData.startAt,
                                     outGoingData.endAt
                                 ),

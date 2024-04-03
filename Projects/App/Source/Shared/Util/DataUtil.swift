@@ -32,13 +32,26 @@ public func getDate(_ type: DateType) -> Int {
     }
 }
 
-public extension String {
-    func parseDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let date = dateFormatter.date(from: self) else {
-            return nil
-        }
-        return date
+public func calculatingDateProgress(
+    _ startAt: String,
+    _ endAt: String
+) -> Double {
+    
+    let currentDate = Date()
+    
+    guard let startDate = startAt.parseDate(format: "yyyy-MM-dd HH:mm:ss"),
+          let endDate = endAt.parseDate(format: "yyyy-MM-dd HH:mm:ss") else {
+        return 0.0
+    }
+    let totalDuration = endDate.timeIntervalSince(startDate)
+    
+    if currentDate < startDate {
+        return 0.0
+    } else if currentDate >= endDate {
+        return 1.0
+    } else {
+        let elapsedTime = currentDate.timeIntervalSince(startDate)
+        let progress = elapsedTime / totalDuration
+        return progress
     }
 }

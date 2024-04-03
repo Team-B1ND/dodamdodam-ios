@@ -18,32 +18,6 @@ struct OutSleepingCell: View {
         self.outSleepingData = outSleepingData
     }
     
-    func calculatingProgress(
-        _ startAt: String,
-        _ endAt: String
-    ) -> Double {
-        
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        guard let startDate = dateFormatter.date(from: startAt),
-              let endDate = dateFormatter.date(from: endAt) else {
-            return 0.0
-        }
-        let totalDuration = endDate.timeIntervalSince(startDate)
-        
-        if currentDate < startDate {
-            return 0.0
-        } else if currentDate >= endDate {
-            return 1.0
-        } else {
-            let elapsedTime = currentDate.timeIntervalSince(startDate)
-            let progress = elapsedTime / totalDuration
-            return progress
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 16) {
             HStack(spacing: 12) {
@@ -73,12 +47,10 @@ struct OutSleepingCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({ () -> String in
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                    if let date = dateFormatter.date(from: outSleepingData.createdAt) {
-                        dateFormatter.dateFormat = "M월 d일 (E)"
-                        return dateFormatter.string(from: date)
+                    if let date = outSleepingData.createdAt.parseDate(
+                        format: "yyyy-MM-dd HH:mm:ss"
+                    ) {
+                        return date.parseString(format: "M월 d일 (E)")
                     }
                     return "오류"
                 }())
@@ -113,12 +85,10 @@ struct OutSleepingCell: View {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text({ () -> String in
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outSleepingData.startAt) {
-                                        dateFormatter.dateFormat = "M월 d일"
-                                        return dateFormatter.string(from: date)
+                                    if let date = outSleepingData.startAt.parseDate(
+                                        format: "yyyy-MM-dd HH:mm:ss"
+                                    ) {
+                                        return date.parseString(format: "M월 d일")
                                     }
                                     return "오류"
                                 }())
@@ -129,12 +99,10 @@ struct OutSleepingCell: View {
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
                                 Text({ () -> String in
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outSleepingData.endAt) {
-                                        dateFormatter.dateFormat = "M월 d일"
-                                        return dateFormatter.string(from: date)
+                                    if let date = outSleepingData.startAt.parseDate(
+                                        format: "yyyy-MM-dd HH:mm:ss"
+                                    ) {
+                                        return date.parseString(format: "M월 d일")
                                     }
                                     return "오류"
                                 }())
@@ -145,7 +113,7 @@ struct OutSleepingCell: View {
                                     .dodamColor(.onSurfaceVariant)
                             }
                             DodamLinearProgressView(
-                                progress: calculatingProgress(
+                                progress: calculatingDateProgress(
                                     outSleepingData.startAt,
                                     outSleepingData.endAt
                                 ),
