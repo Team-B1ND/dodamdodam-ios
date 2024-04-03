@@ -13,9 +13,8 @@ struct OutApplyView: View {
     @InjectObject var viewModel: OutApplyViewModel
     
     var body: some View {
+        DodamNavigationBar.medium(title: "외출 외박 신청하기")
         VStack(alignment: .leading, spacing: 24) {
-            Text("외출/외박 신청하기")
-                .font(.headline(.small))
             SegmentedView(
                 labels: ["외출", "외박"],
                 selection: $viewModel.selection

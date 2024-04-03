@@ -63,6 +63,7 @@ struct OutView: View {
             flow.push(OutApplyView())
         }
         .bottomMask()
+        .background(Dodam.color(.surface))
     }
 }
 
