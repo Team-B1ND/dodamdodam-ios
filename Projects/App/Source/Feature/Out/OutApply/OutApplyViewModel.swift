@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 
 class OutApplyViewModel: ObservableObject {
     
@@ -16,14 +17,38 @@ class OutApplyViewModel: ObservableObject {
         }
     }
     @Published var reasonText: String = ""
-    @Published var startAt: String = ""
-    @Published var endAt: String = ""
+    @Published var startAt: Date = Date() {
+        didSet {
+            print("test", startAt)
+            startDate = startAt.parseString(format: "M월 d일 HH:MM")
+            print("test", startDate)
+        }
+    }
+    @Published var endAt: Date = Date() {
+        didSet {
+            print("test", endAt)
+            endDate = endAt.parseString(format: "M월 d일 HH:MM")
+            print("test", startDate)
+        }
+    }
+    @Published var startDate: String = ""
+    @Published var endDate: String = ""
+    
+    @Published var isModalPresented: Bool = false
+    @Published var focused: Bool = true
     
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository
     @Inject var outSleepingRepository: any OutSleepingRepository
     
     // MARK: - Method
+    @MainActor
+    func onAppear() {
+        
+        startAt = Date()
+        endAt = Date()
+    }
+    
     @MainActor
     func onTapApplyButton() async {
         
@@ -41,8 +66,12 @@ class OutApplyViewModel: ObservableObject {
             try await outGoingRepository.postOutGoing(
                 .init(
                     reason: reasonText,
-                    startAt: startAt,
-                    endAt: endAt
+                    startAt: startAt.parseString(
+                        format: "yyyy-MM-dd'T'HH:mm:ss"
+                    ),
+                    endAt: endAt.parseString(
+                        format: "yyyy-MM-dd'T'HH:mm:ss"
+                    )
                 )
             )
         } catch let error {
@@ -57,8 +86,12 @@ class OutApplyViewModel: ObservableObject {
             try await outSleepingRepository.postOutSleeping(
                 .init(
                     reason: reasonText,
-                    startAt: startAt,
-                    endAt: endAt
+                    startAt: startAt.parseString(
+                        format: "yyyy-MM-dd"
+                    ),
+                    endAt: endAt.parseString(
+                        format: "yyyy-MM-dd"
+                    )
                 )
             )
         } catch let error {

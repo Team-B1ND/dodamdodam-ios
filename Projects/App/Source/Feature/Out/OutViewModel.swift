@@ -28,8 +28,7 @@ class OutViewModel: ObservableObject {
     
     @MainActor
     func onRefresh() async {
-        
-        clearData()
+
         await fetchOutData()
     }
     
@@ -64,10 +63,12 @@ class OutViewModel: ObservableObject {
         }
     }
     
+    /*
     @MainActor
     func clearData() {
         
         outGoingData = nil
         outSleepingData = nil
     }
+     */
 }
