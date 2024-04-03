@@ -30,6 +30,11 @@ struct AllView: View {
                                     .shimmer()
                             }
                             .clipShape(RoundedRectangle(cornerRadius: 12))
+                        } else {
+                            Image("Profile")
+                                .resizable()
+                                .frame(width: 70, height: 70)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
                         }
                         if let student = data.student {
                             VStack(alignment: .leading) {
@@ -42,10 +47,10 @@ struct AllView: View {
                             }
                         }
                     } else {
-                       Image("Profile")
-                           .resizable()
-                           .frame(width: 70, height: 70)
-                           .clipShape(RoundedRectangle(cornerRadius: 12))
+                        Rectangle()
+                            .frame(width: 70, height: 70)
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .shimmer()
                         VStack(alignment: .leading) {
                             Rectangle()
                                 .frame(width: 150, height: 24)

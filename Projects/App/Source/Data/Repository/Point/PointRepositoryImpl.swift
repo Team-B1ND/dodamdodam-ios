@@ -13,7 +13,7 @@ struct PointRepositoryImpl: PointRepository {
         try await dataSource.fetchPoint(request)
     }
     
-    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> [PointScoreResponse] {
+    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> PointScoreResponse {
         try await dataSource.fetchPointScore(request)
     }
 }

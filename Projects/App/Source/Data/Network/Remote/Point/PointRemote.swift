@@ -14,8 +14,8 @@ struct PointRemote: RemoteProtocol {
             .map(Response<[PointResponse]>.self, using: decoder)
     }
     
-    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> Response<[PointScoreResponse]> {
+    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> Response<PointScoreResponse> {
         try await self.request(target: .fetchPointScore(request))
-            .map(Response<[PointScoreResponse]>.self, using: decoder)
+            .map(Response<PointScoreResponse>.self, using: decoder)
     }
 }

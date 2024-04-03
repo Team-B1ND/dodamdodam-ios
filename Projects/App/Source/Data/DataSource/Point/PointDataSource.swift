@@ -14,7 +14,7 @@ struct PointDataSource: DataSourceProtocol {
         return response.data
     }
     
-    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> [PointScoreResponse] {
+    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> PointScoreResponse {
         let response = try await remote.fetchPointScore(request)
         return response.data
     }

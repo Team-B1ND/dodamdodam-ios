@@ -12,8 +12,8 @@ class PointViewModel: ObservableObject {
     // MARK: - State
     @Published var domitoryPointData: [PointResponse]?
     @Published var schoolPointData: [PointResponse]?
-    @Published var domitoryPointScoreData: [PointScoreResponse]?
-    @Published var schoolPointScoreData: [PointScoreResponse]?
+    @Published var domitoryPointScoreData: PointScoreResponse?
+    @Published var schoolPointScoreData: PointScoreResponse?
     
     @Published var selection: Int = 0
     
@@ -25,6 +25,7 @@ class PointViewModel: ObservableObject {
     func onAppear() async {
         
         await fetchPointScore()
+        await fetchPoint()
     }
     
     @MainActor
