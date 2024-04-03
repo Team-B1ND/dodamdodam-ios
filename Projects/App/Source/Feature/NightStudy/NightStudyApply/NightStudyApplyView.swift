@@ -11,33 +11,40 @@ import DDS
 struct NightStudyApplyView: View {
     
     @InjectObject var viewModel: NightStudyApplyViewModel
+    @Flow var flow
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Text("심야 자습 신청하기")
-                .font(.headline(.small))
-            
-            DodamTextField.default(
-                title: "심야 자습 사유",
-                text: $viewModel.testText1
-            )
-            .padding(.top, 16)
-            /// 컴포넌트 넣기
-            if viewModel.isUsePhone {
-                DodamTextField.default(
-                    title: "휴대폰 사용 사유",
-                    text: $viewModel.testText2
-                )
-            }
-            Spacer()
+        ZStack(alignment: .bottom) {
             DodamButton.fullWidth(
                 title: "확인"
             ) {
-                // action
+                flow.pop()
             }
+            .disabled(
+                false
+            )
             .padding(.bottom, 8)
+            .padding(.horizontal, 16)
+            DodamScrollView.medium(title: "심야 자습 신청하기") {
+                VStack(alignment: .leading, spacing: 24) {
+                    DodamTextField.default(
+                        title: "심야 자습 사유",
+                        text: $viewModel.testText1
+                    )
+                    .padding(.top, 16)
+                    .padding(.horizontal, 8)
+                    
+                    if viewModel.isUsePhone {
+                        DodamTextField.default(
+                            title: "휴대폰 사용 사유",
+                            text: $viewModel.testText2
+                        )
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, 150)
+            }
         }
-        .padding(.horizontal, 24)
     }
 }
 
