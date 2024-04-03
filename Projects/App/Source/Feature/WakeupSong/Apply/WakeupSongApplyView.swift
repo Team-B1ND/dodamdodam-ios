@@ -149,6 +149,7 @@ struct WakeupSongApplyView: View {
             Button("네", role: .none) {
                 Task {
                     await viewModel.postWakeupSong()
+                    viewModel.clearData()
                     flow.pop()
                 }
             }
