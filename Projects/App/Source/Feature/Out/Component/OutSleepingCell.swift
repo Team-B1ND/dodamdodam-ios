@@ -99,7 +99,7 @@ struct OutSleepingCell: View {
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
                                 Text({ () -> String in
-                                    if let date = outSleepingData.startAt.parseDate(
+                                    if let date = outSleepingData.endAt.parseDate(
                                         format: "yyyy-MM-dd"
                                     ) {
                                         return date.parseString(format: "M월 d일")
