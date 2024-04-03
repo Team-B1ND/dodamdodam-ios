@@ -38,10 +38,9 @@ struct OutView: View {
                     if let data = viewModel.outSleepingData,
                        !data.isEmpty {
                         ForEach(data, id: \.self) { data in
-//                            OutGoingCell(
-//                                data: data
-//                            )
-                            Text("\(data.reason)")
+                            OutSleepingCell(
+                                data: data
+                            )
                         }
                     } else {
                         DodamEmptyView(

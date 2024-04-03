@@ -1,21 +1,21 @@
 //
-//  OutGoingCell.swift
+//  OutSleepingCell.swift
 //  DodamDodam
 //
-//  Created by 이민규 on 3/23/24.
+//  Created by 이민규 on 4/3/24.
 //
 
 import SwiftUI
 import DDS
 
-struct OutGoingCell: View {
+struct OutSleepingCell: View {
     
-    private let outGoingData: OutGoingResponse
+    private let outSleepingData: OutSleepingResponse
     
     init(
-        data outGoingData: OutGoingResponse
+        data outSleepingData: OutSleepingResponse
     ) {
-        self.outGoingData = outGoingData
+        self.outSleepingData = outSleepingData
     }
     
     func calculatingProgress(
@@ -49,7 +49,7 @@ struct OutGoingCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch outGoingData.status.rawValue {
+                        switch outSleepingData.status.rawValue {
                         case "ALLOWED": return "승인됨"
                         case "PENDING": return "대기중"
                         case "DENIED": return "거절됨"
@@ -63,7 +63,7 @@ struct OutGoingCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch outGoingData.status.rawValue {
+                    switch outSleepingData.status.rawValue {
                     case "ALLOWED": return Dodam.color(.primary)
                     case "PENDING": return Dodam.color(.onSurfaceVariant)
                     case "DENIED": return Dodam.color(.error)
@@ -76,7 +76,7 @@ struct OutGoingCell: View {
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                    if let date = dateFormatter.date(from: outGoingData.createdAt) {
+                    if let date = dateFormatter.date(from: outSleepingData.createdAt) {
                         dateFormatter.dateFormat = "M월 d일 (E)"
                         return dateFormatter.string(from: date)
                     }
@@ -88,7 +88,7 @@ struct OutGoingCell: View {
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
-                Text("\(outGoingData.reason)")
+                Text("\(outSleepingData.reason)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -96,7 +96,7 @@ struct OutGoingCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if outGoingData.status.rawValue == "DENIED" {
+                if outSleepingData.status.rawValue == "DENIED" {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
@@ -116,7 +116,7 @@ struct OutGoingCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outGoingData.startAt) {
+                                    if let date = dateFormatter.date(from: outSleepingData.startAt) {
                                         dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
@@ -124,7 +124,7 @@ struct OutGoingCell: View {
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
-                                Text("외출")
+                                Text("외박")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
@@ -132,7 +132,7 @@ struct OutGoingCell: View {
                                     let dateFormatter = DateFormatter()
                                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                     dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outGoingData.endAt) {
+                                    if let date = dateFormatter.date(from: outSleepingData.endAt) {
                                         dateFormatter.dateFormat = "M월 d일"
                                         return dateFormatter.string(from: date)
                                     }
@@ -146,10 +146,10 @@ struct OutGoingCell: View {
                             }
                             DodamLinearProgressView(
                                 progress: calculatingProgress(
-                                    outGoingData.startAt,
-                                    outGoingData.endAt
+                                    outSleepingData.startAt,
+                                    outSleepingData.endAt
                                 ),
-                                isDisabled: outGoingData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: outSleepingData.status.rawValue == "PENDING" ? true : false
                             )
                         }
                     }
