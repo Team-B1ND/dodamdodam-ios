@@ -18,12 +18,19 @@ class WakeupSongApplyViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var artist: String = ""
     @Published var isSearchLoading: Bool = false
+    
+    @Published var showDialog = false
     @Published var dialogMessage = "" {
         didSet {
             showDialog = true
         }
     }
-    @Published var showDialog = false
+    @Published var showErrorDialog = false
+    @Published var dialogErrorMessage = "" {
+        didSet {
+            showErrorDialog = true
+        }
+    }
     
     // MARK: - Repository
     @Inject var wakeupSongRepository: any WakeupSongRepository
@@ -60,7 +67,7 @@ class WakeupSongApplyViewModel: ObservableObject {
         } catch let error {
             print(error)
             isSearchLoading = false
-            dialogMessage = "기상송 검색을 실패했어요"
+            dialogErrorMessage = "기상송 검색을 실패했어요"
         }
     }
     
@@ -68,7 +75,6 @@ class WakeupSongApplyViewModel: ObservableObject {
     func postWakeupSong() async {
         
         do {
-            print("videoUrl: \(videoUrl)\ntitle: \(title)\nartist: \(artist)")
             if !videoUrl.isEmpty {
                 try await wakeupSongRepository.postWakeupSong(
                     .init(videoUrl: videoUrl)
@@ -81,6 +87,7 @@ class WakeupSongApplyViewModel: ObservableObject {
             }
         } catch let error {
             print(error)
+            dialogErrorMessage = "기상송 신청을 실패했어요"
         }
     }
     

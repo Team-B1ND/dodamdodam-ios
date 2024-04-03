@@ -17,7 +17,8 @@ struct PointView: View {
         DodamScrollView.medium(title: "내 상벌점") {
             VStack(spacing: 12) {
                 if let data = viewModel.domitoryPointData,
-                   viewModel.selection == 0 {
+                   viewModel.selection == 0,
+                   !data.isEmpty {
                     ForEach(data, id: \.self) { data in
                         HStack {
                             VStack(alignment: .leading, spacing: 0) {
@@ -40,7 +41,8 @@ struct PointView: View {
                         }
                         .padding(.vertical, 8)
                     }
-                } else if let data = viewModel.schoolPointData {
+                } else if let data = viewModel.schoolPointData,
+                          !data.isEmpty {
                     ForEach(data, id: \.self) { data in
                         HStack {
                             VStack(alignment: .leading, spacing: 0) {
@@ -55,9 +57,10 @@ struct PointView: View {
                             Spacer()
                             Text("\(data.reason.score)")
                                 .font(.body(.large))
-                                .dodamColor(data.reason.scoreType == .minus
-                                            ? .error
-                                            : .primary
+                                .dodamColor(
+                                    data.reason.scoreType == .minus
+                                    ? .error
+                                    : .primary
                                 )
                                 .padding(.trailing, 8)
                         }

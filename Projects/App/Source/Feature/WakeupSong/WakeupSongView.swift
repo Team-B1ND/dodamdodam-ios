@@ -54,6 +54,16 @@ struct WakeupSongView: View {
                                         data: data
                                     )
                                 }
+                            } else {
+                                Text("대기중인 기상송이 없어요")
+                                    .font(.body(.medium
+                                               ))
+                                    .dodamColor(.tertiary)
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .center
+                                    )
+                                    .padding(.top, 40)
                             }
                             Spacer()
                         }
@@ -90,8 +100,9 @@ struct WakeupSongView: View {
                                     }
                                 }
                             } else {
-                                Text("기상송을 신청해 보세요!")
-                                    .font(.label(.large))
+                                Text("기상송을 신청해 보세요")
+                                    .font(.body(.medium
+                                               ))
                                     .dodamColor(.tertiary)
                                     .frame(
                                         maxWidth: .infinity,
