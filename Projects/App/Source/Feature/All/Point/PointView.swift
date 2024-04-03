@@ -71,6 +71,7 @@ struct PointView: View {
                 }
             }
             .padding(.horizontal, 16)
+            .padding(.bottom, 150)
         }
         .subView {
             VStack(spacing: 24) {
@@ -104,7 +105,7 @@ struct PointView: View {
                                 .dodamColor(.tertiary)
                             Text("\(data.bonus)점")
                                 .font(.headline(.large))
-                                .dodamColor(.error)
+                                .dodamColor(.primary)
                         }
                         VStack(spacing: 0) {
                             Text("벌점")
@@ -112,7 +113,7 @@ struct PointView: View {
                                 .dodamColor(.tertiary)
                             Text("\(data.minus)점")
                                 .font(.headline(.large))
-                                .dodamColor(.primary)
+                                .dodamColor(.error)
                         }
                     }
                 }
@@ -126,6 +127,9 @@ struct PointView: View {
         }
         .bottomMask()
         .task {
+            await viewModel.onAppear()
+        }
+        .refreshable {
             await viewModel.onAppear()
         }
     }
