@@ -29,21 +29,21 @@ struct MealView: View {
                 if let datas = viewModel.mealData {
                     ForEach({ () -> [MealResponse] in
                         datas.filter {
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy-MM-dd"
-                            guard let date = dateFormatter.date(from: $0.date) else {
+                            let date = $0.date.parseDate()
+                            guard let date else {
                                 return false
                             }
                             let today = Calendar.current.startOfDay(for: Date())
                             return $0.exists && date >= today
                         }
                     }(), id: \.self) { datas in
+                        let date = datas.date.parseDate()
                         Text({ () -> String in
-                            let dateFormatter = DateFormatter()
-                            dateFormatter.dateFormat = "yyyy-MM-dd"
-                            guard let date = dateFormatter.date(from: datas.date) else {
+                            guard let date else {
                                 return "datas.date 가 없습니다"
                             }
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.dateFormat = "yyyy-MM-dd"
                             dateFormatter.locale = Locale(identifier: "ko_KR")
                             dateFormatter.dateFormat = "M월 d일 EEEE"
                             let formattedDate = dateFormatter.string(from: date)
@@ -66,13 +66,28 @@ struct MealView: View {
                             ForEach(0..<3, id: \.self) { idx in
                                 let data: Meal? = {
                                     switch idx {
-                                    case 0: return datas.breakfast
-                                    case 1: return datas.lunch
-                                    case 2: return datas.dinner
-                                    default: return nil
+                                    case 0: datas.breakfast
+                                    case 1: datas.lunch
+                                    case 2: datas.dinner
+                                    default: nil
                                     }
                                 }()
-                                if let data = data {
+                                let date: Date = {
+                                    
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = "yyyy-MM-dd"
+                                    guard let date = dateFormatter.date(from: datas.date) else {
+                                        return .now
+                                    }
+                                    return date
+                                }()
+                                
+                                let isMealTime = isMealTime(date, mealType: idx)
+                                
+                                let backgroundColor = isMealTime ? Dodam.color(.primary) : Dodam.color(.onSurfaceVariant)
+                                
+                                if let data = data
+                                {
                                     VStack(spacing: 16) {
                                         HStack(spacing: 12) {
                                             ZStack {
@@ -88,7 +103,7 @@ struct MealView: View {
                                                 .dodamColor(.onPrimary)
                                             }
                                             .frame(width: 52, height: 27)
-                                            .background(Dodam.color(.primary))
+                                            .background(backgroundColor)
                                             .clipShape(RoundedRectangle(cornerRadius: 32))
                                             Spacer()
                                             Text("\(Int(data.calorie))Kcal")
@@ -123,6 +138,42 @@ struct MealView: View {
         .background(Dodam.color(.surface))
         .task {
             await viewModel.onAppear()
+        }
+    }
+    
+    func isMealTime(_ date: Date, mealType: Int) -> Bool {
+        let c = Calendar.current
+        // 현재 시간의 년, 월, 일
+        let currentDate = Date()
+        let currentYear = c.component(.year, from: currentDate)
+        let currentMonth = c.component(.month, from: currentDate)
+        let currentDay = c.component(.day, from: currentDate)
+        let currentHour = c.component(.hour, from: currentDate)
+        let currentMinute = c.component(.minute, from: currentDate)
+        
+        // 입력된 시간의 년, 월, 일
+        let year = c.component(.year, from: date)
+        let month = c.component(.month, from: date)
+        let day = c.component(.day, from: date)
+        
+        // 날짜가 오늘인지 확인
+        guard currentYear == year && currentMonth == month && currentDay == day else {
+            return false
+        }
+//        print(currentDate, currentYear, currentMonth, currentDay, currentHour, currentMinute)
+        
+        switch mealType {
+        case 0:
+            // 아침: ~ 8:20
+            return (currentHour >= 0 && currentHour < 8) || (currentHour == 8 && currentMinute <= 20)
+        case 1:
+            // 점심: 8:21 ~ 13:30
+            return (currentHour == 8 && currentMinute > 20) || (currentHour > 8 && currentHour < 13) || (currentHour == 13 && currentMinute <= 30)
+        case 2:
+            // 저녁: 13:31 ~ 19:10
+            return (currentHour == 13 && currentMinute > 30) || (currentHour > 13 && currentHour < 19) || (currentHour == 19 && currentMinute <= 10)
+        default:
+            return false
         }
     }
 }
