@@ -15,11 +15,60 @@ struct PointView: View {
     
     var body: some View {
         DodamScrollView.medium(title: "내 상벌점") {
-            VStack(spacing: 24) {
-                Text("상벌점 발급 내역이 없어요.")
-                    .font(.body(.medium))
-                    .dodamColor(.tertiary)
-                    .padding(.top, 24)
+            VStack(spacing: 12) {
+                if let data = viewModel.domitoryPointData,
+                   viewModel.selection == 0 {
+                    ForEach(data, id: \.self) { data in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text("\(data.reason.reason)")
+                                    .font(.body(.large))
+                                    .dodamColor(.onBackground)
+                                Text("\(data.teacher.position) • \(data.issueAt)")
+                                    .font(.label(.large))
+                                    .dodamColor(.onSurfaceVariant)
+                            }
+                            .padding(.leading, 8)
+                            Spacer()
+                            Text("\(data.reason.score)")
+                                .font(.body(.large))
+                                .dodamColor(data.reason.scoreType == .minus
+                                            ? .error
+                                            : .primary
+                                )
+                                .padding(.trailing, 8)
+                        }
+                        .padding(.vertical, 8)
+                    }
+                } else if let data = viewModel.schoolPointData {
+                    ForEach(data, id: \.self) { data in
+                        HStack {
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text("\(data.reason.reason)")
+                                    .font(.body(.large))
+                                    .dodamColor(.onBackground)
+                                Text("\(data.teacher.position) • \(data.issueAt)")
+                                    .font(.label(.large))
+                                    .dodamColor(.onSurfaceVariant)
+                            }
+                            .padding(.leading, 8)
+                            Spacer()
+                            Text("\(data.reason.score)")
+                                .font(.body(.large))
+                                .dodamColor(data.reason.scoreType == .minus
+                                            ? .error
+                                            : .primary
+                                )
+                                .padding(.trailing, 8)
+                        }
+                        .padding(.vertical, 8)
+                    }
+                } else {
+                    Text("상벌점 발급 내역이 없어요.")
+                        .font(.body(.medium))
+                        .dodamColor(.tertiary)
+                        .padding(.top, 24)
+                }
             }
             .padding(.horizontal, 16)
         }
@@ -38,7 +87,7 @@ struct PointView: View {
                                 .dodamColor(.tertiary)
                             Text("\(data.bonus)점")
                                 .font(.headline(.large))
-                                .dodamColor(.error)
+                                .dodamColor(.primary)
                         }
                         VStack(spacing: 0) {
                             Text("벌점")
@@ -46,7 +95,7 @@ struct PointView: View {
                                 .dodamColor(.tertiary)
                             Text("\(data.minus)점")
                                 .font(.headline(.large))
-                                .dodamColor(.primary)
+                                .dodamColor(.error)
                         }
                     } else if let data = viewModel.schoolPointScoreData {
                         VStack(spacing: 0) {
