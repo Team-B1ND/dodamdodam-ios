@@ -52,7 +52,6 @@ struct NightStudyStatusContainer: View {
                 subTitle: "공부할 시간이 필요하다면",
                 title: "심야 자습 신청하기"
             )
-            .minimumScaleFactor(0.01)
         }
     }
 }
