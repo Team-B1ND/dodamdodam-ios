@@ -9,7 +9,7 @@ import Foundation
 
 struct Teacher: Codable, Hashable {
     
-    let id: Int
+    let id: Int?
     let tel: String
     let position: String
 }

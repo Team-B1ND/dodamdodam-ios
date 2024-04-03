@@ -1,19 +1,23 @@
 //
-//  OutSegmentedView.swift
+//  SegmentedView.swift
 //  DodamDodam
 //
-//  Created by 이민규 on 3/22/24.
+//  Created by 이민규 on 4/3/24.
 //
 
 import SwiftUI
 import DDS
 import Combine
 
-struct OutSegmentedView: View {
+struct SegmentedView: View {
+    
+    private let labels: [String]
     
     public init(
+        labels: [String],
         selection: Binding<Int>? = nil
     ) {
+        self.labels = labels
         self.selection = selection
         let selected = selection?.wrappedValue ?? 0
         self.selected = selected
@@ -37,7 +41,7 @@ struct OutSegmentedView: View {
                         }
                     }
                 } label: {
-                    Text(idx == 0 ? "외출" : "외박")
+                    Text(idx == 0 ? labels[0] : labels[1])
                         .font(.body(.large))
                         .dodamColor(
                             isSelected
@@ -86,5 +90,5 @@ struct OutSegmentedView: View {
 }
 
 #Preview {
-    OutSegmentedView()
+    SegmentedView(labels: ["1", "2"])
 }

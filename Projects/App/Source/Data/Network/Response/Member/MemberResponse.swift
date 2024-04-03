@@ -14,8 +14,8 @@ struct MemberResponse: ResponseProtocol {
     let status: ActiveStatus
     let profileImage: String?
     let phone: String
-    let student: Student
-    let teacher: Teacher
+    let student: Student?
+    let teacher: Teacher?
     let createdAt: String
     let modifiedAt: String?
 }

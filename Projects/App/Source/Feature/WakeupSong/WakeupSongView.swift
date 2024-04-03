@@ -22,9 +22,13 @@ struct WakeupSongView: View {
                 if let data = viewModel.allowedWakeupSongData,
                    !data.isEmpty {
                     LazyVStack(spacing: 4) {
-                        ForEach(data, id: \.self) { data in
+                        ForEach(
+                            Array(data.enumerated()),
+                            id: \.element
+                        ) { index, element in
                             TomorrowWakeupSongCell(
-                                data: data
+                                data: element,
+                                id: index + 1
                             )
                         }
                     }
@@ -108,7 +112,6 @@ struct WakeupSongView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 150)
         }
-        .bottomMask()
         .overlay(alignment: .bottom) {
             DodamButton.fullWidth(
                 title: "기상송 신청하기"
@@ -118,6 +121,9 @@ struct WakeupSongView: View {
             .padding([.bottom, .horizontal], 16)
         }
         .task {
+            await viewModel.onAppear()
+        }
+        .refreshable {
             await viewModel.onAppear()
         }
     }

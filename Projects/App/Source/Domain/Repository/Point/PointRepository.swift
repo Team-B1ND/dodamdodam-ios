@@ -9,5 +9,5 @@ protocol PointRepository: RepositoryProtocol {
     
     func fetchPoint(_ request: FetchPointRequest) async throws -> [PointResponse]
     
-    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> [PointScoreResponse]
+    func fetchPointScore(_ request: FetchPointScoreRequest) async throws -> PointScoreResponse
 }
