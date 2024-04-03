@@ -118,10 +118,11 @@ struct HomeView: View {
             await viewModel.onAppear()
             viewModel.ringCount = 0
         }
-        .alert("앗", isPresented: $viewModel.isShowingAlert) {
+        .alert(
+            "도담도담에 무언가 변화가 생겼습니다.",
+            isPresented: $viewModel.isShowingAlert
+        ) {
             Button("확인", role: .none) { }
-        } message: {
-            Text("종을 너무 많이 울려서\n도담도담에 무언가 변화가 생겼습니다.")
         }
     }
 }

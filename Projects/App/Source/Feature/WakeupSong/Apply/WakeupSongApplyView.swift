@@ -150,7 +150,6 @@ struct WakeupSongApplyView: View {
                 Task {
                     await viewModel.postWakeupSong()
                     viewModel.clearData()
-                    flow.pop()
                 }
             }
             Button("취소", role: .cancel) { 
@@ -158,6 +157,14 @@ struct WakeupSongApplyView: View {
             }
         } message: {
             Text("\(viewModel.dialogMessage)")
+        }
+        .alert(
+            viewModel.dialogErrorMessage,
+            isPresented: $viewModel.showErrorDialog
+        ) {
+            Button("확인", role: .none) {
+                viewModel.clearData()
+            }
         }
     }
 }
