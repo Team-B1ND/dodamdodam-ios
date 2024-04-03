@@ -27,6 +27,7 @@ class BusApplyViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func fetchBuses() async {
+        
         do {
             buses = try await busRepository.fetchAllBus()
             if buses.isEmpty {
@@ -40,6 +41,7 @@ class BusApplyViewModel: ObservableObject {
     
     @MainActor
     func fetchAppledBus() async {
+        
         do {
             appliedBus = try await busRepository.fetchAppliedBus()
             self.selectedBus = appliedBus
@@ -51,6 +53,7 @@ class BusApplyViewModel: ObservableObject {
     
     @MainActor
     func completeBus() async {
+        
         print("\(#function)")
         defer {
             Task {

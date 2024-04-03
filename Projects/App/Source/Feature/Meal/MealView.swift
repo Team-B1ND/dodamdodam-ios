@@ -125,8 +125,8 @@ struct MealView: View {
                 }
             }
             .padding(.horizontal, 16)
+            .padding(.bottom, 150)
         }
-        .bottomMask()
         .background(Dodam.color(.surface))
         .task {
             await viewModel.onAppear()

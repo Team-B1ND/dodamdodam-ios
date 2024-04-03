@@ -112,7 +112,6 @@ struct HomeView: View {
                 viewModel.isShowingAlert.toggle()
             }
         }
-        .bottomMask()
         .background(Dodam.color(.surface))
         .task {
             await viewModel.onAppear()

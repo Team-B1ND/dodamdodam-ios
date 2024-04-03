@@ -195,7 +195,6 @@ struct AllView: View {
             }
             .padding([.top, .horizontal], 16)
         }
-        .bottomMask()
         .task {
             await viewModel.onAppear()
         }
