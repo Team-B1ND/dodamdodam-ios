@@ -132,7 +132,7 @@ struct PointView: View {
             await viewModel.onAppear()
         }
         .refreshable {
-            await viewModel.onAppear()
+            await viewModel.onRefresh()
         }
     }
 }

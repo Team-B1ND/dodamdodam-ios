@@ -29,6 +29,14 @@ class PointViewModel: ObservableObject {
     }
     
     @MainActor
+    func onRefresh() async {
+        
+        clearData()
+        await fetchPointScore()
+        await fetchPoint()
+    }
+    
+    @MainActor
     func fetchPoint() async {
         
         do {
@@ -56,5 +64,14 @@ class PointViewModel: ObservableObject {
         } catch let error {
             print(error)
         }
+    }
+    
+    @MainActor
+    func clearData() {
+        
+        domitoryPointData = nil
+        schoolPointData = nil
+        domitoryPointScoreData = nil
+        schoolPointScoreData = nil
     }
 }

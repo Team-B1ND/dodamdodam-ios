@@ -91,6 +91,7 @@ class WakeupSongApplyViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func clearData() {
         
         videoUrl = ""

@@ -1,57 +1,21 @@
 //
-//  OutApplyCell.swift
+//  OutSleepingCell.swift
 //  DodamDodam
 //
-//  Created by 이민규 on 3/23/24.
+//  Created by 이민규 on 4/3/24.
 //
 
 import SwiftUI
 import DDS
-import Combine
 
-struct OutApplyCell: View {
+struct OutSleepingCell: View {
     
-    public enum OutType {
-        case outGoing, outSleeping
-    }
+    private let outSleepingData: OutSleepingResponse
     
-    private let outData: OutResponse
-    private let outType: OutType
-    
-    public init(
-        data outData: OutResponse,
-        outType: OutType
+    init(
+        data outSleepingData: OutSleepingResponse
     ) {
-        self.outData = outData
-        self.outType = outType
-    }
-    
-    func calculatingProgress(
-        _ startAt: String,
-        _ endAt: String
-    ) -> Double {
-        let currentDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        
-        guard let startDate = dateFormatter.date(from: startAt),
-              let endDate = dateFormatter.date(from: endAt) else {
-            return 0.0
-        }
-        let totalDuration = endDate.timeIntervalSince(startDate)
-        
-        print("currentDate : \(currentDate)")
-        print("startDate : \(startDate)")
-        print("endDate : \(endDate)")
-        if currentDate < startDate {
-            return 0.0
-        } else if currentDate >= endDate {
-            return 1.0
-        } else {
-            let elapsedTime = currentDate.timeIntervalSince(startDate)
-            let progress = elapsedTime / totalDuration
-            return progress
-        }
+        self.outSleepingData = outSleepingData
     }
     
     var body: some View {
@@ -59,7 +23,7 @@ struct OutApplyCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch outData.status.rawValue {
+                        switch outSleepingData.status.rawValue {
                         case "ALLOWED": return "승인됨"
                         case "PENDING": return "대기중"
                         case "DENIED": return "거절됨"
@@ -73,7 +37,7 @@ struct OutApplyCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch outData.status.rawValue {
+                    switch outSleepingData.status.rawValue {
                     case "ALLOWED": return Dodam.color(.primary)
                     case "PENDING": return Dodam.color(.onSurfaceVariant)
                     case "DENIED": return Dodam.color(.error)
@@ -83,14 +47,12 @@ struct OutApplyCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({ () -> String in
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                    if let date = dateFormatter.date(from: outData.createdAt) {
-                        dateFormatter.dateFormat = "M월 d일 (E)"
-                        return dateFormatter.string(from: date)
+                    if let date = outSleepingData.createdAt.parseDate(
+                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+                    ) {
+                        return date.parseString(format: "M월 d일 (E)")
                     }
-                    return "오류"
+                    return "시간 오류"
                 }())
                 .font(.label(.large))
                 .dodamColor(.onSurfaceVariant)
@@ -98,7 +60,7 @@ struct OutApplyCell: View {
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
-                Text("\(outData.reason)")
+                Text("\(outSleepingData.reason)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -106,7 +68,7 @@ struct OutApplyCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if outData.status.rawValue == "DENIED" {
+                if outSleepingData.status.rawValue == "DENIED" {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
@@ -123,30 +85,26 @@ struct OutApplyCell: View {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text({ () -> String in
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outData.startAt) {
-                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
-                                        return dateFormatter.string(from: date)
+                                    if let date = outSleepingData.startAt.parseDate(
+                                        format: "yyyy-MM-dd"
+                                    ) {
+                                        return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
-                                Text(outType == .outGoing ? "외출" : "외박")
+                                Text("외박")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
                                 Text({ () -> String in
-                                    let dateFormatter = DateFormatter()
-                                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                                    dateFormatter.locale = Locale(identifier: "ko_KR")
-                                    if let date = dateFormatter.date(from: outData.endAt) {
-                                        dateFormatter.dateFormat = outType == .outGoing ? "M월 d일" : "HH시 mm분"
-                                        return dateFormatter.string(from: date)
+                                    if let date = outSleepingData.endAt.parseDate(
+                                        format: "yyyy-MM-dd"
+                                    ) {
+                                        return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -155,11 +113,12 @@ struct OutApplyCell: View {
                                     .dodamColor(.onSurfaceVariant)
                             }
                             DodamLinearProgressView(
-                                progress: calculatingProgress(
-                                    outData.startAt,
-                                    outData.endAt
+                                progress: calculatingDateProgress(
+                                    startAt: outSleepingData.startAt,
+                                    endAt: outSleepingData.endAt,
+                                    dateFormat: "yyyy-MM-dd"
                                 ),
-                                isDisabled: outData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: outSleepingData.status.rawValue == "PENDING" ? true : false
                             )
                         }
                     }

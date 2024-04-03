@@ -32,13 +32,34 @@ public func getDate(_ type: DateType) -> Int {
     }
 }
 
-public extension String {
-    func parseDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let date = dateFormatter.date(from: self) else {
-            return nil
-        }
-        return date
+public func calculatingDateProgress(
+    startAt: String,
+    endAt: String,
+    dateFormat: String
+) -> Double {
+    
+    let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
+    let currentDate = Date().addingTimeInterval(TimeInterval(koreanTimeZone.secondsFromGMT()))
+    
+    guard let startDate = startAt.parseDate(format: dateFormat),
+          let endDate = endAt.parseDate(format: dateFormat) else {
+        return 0.0
+    }
+    
+    let totalDuration = endDate.timeIntervalSince(startDate)
+    
+    print("\ntest 현재", currentDate)
+    print("test 시작", startDate)
+    print("test 끝", endDate)
+    print("")
+    if currentDate <= startDate {
+        return 0.0
+    } else if currentDate >= endDate {
+        return 1.0
+    } else {
+        let elapsedTime = currentDate.timeIntervalSince(startDate)
+        let totalDuration = endDate.timeIntervalSince(startDate)
+        let progress = elapsedTime / totalDuration
+        return progress
     }
 }

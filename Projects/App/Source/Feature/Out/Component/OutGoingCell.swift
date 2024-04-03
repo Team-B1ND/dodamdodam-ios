@@ -1,22 +1,21 @@
 //
-//  NightStudyApplyCell.swift
+//  OutGoingCell.swift
 //  DodamDodam
 //
-//  Created by 이민규 on 3/29/24.
+//  Created by 이민규 on 3/23/24.
 //
 
 import SwiftUI
 import DDS
-import Combine
 
-struct NightStudyApplyCell: View {
+struct OutGoingCell: View {
     
-    private let nightStudyData: NightStudyResponse
+    private let outGoingData: OutGoingResponse
     
-    public init(
-        data nightStudyData: NightStudyResponse
+    init(
+        data outGoingData: OutGoingResponse
     ) {
-        self.nightStudyData = nightStudyData
+        self.outGoingData = outGoingData
     }
     
     var body: some View {
@@ -24,7 +23,7 @@ struct NightStudyApplyCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch nightStudyData.status.rawValue {
+                        switch outGoingData.status.rawValue {
                         case "ALLOWED": return "승인됨"
                         case "PENDING": return "대기중"
                         case "DENIED": return "거절됨"
@@ -38,7 +37,7 @@ struct NightStudyApplyCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch nightStudyData.status.rawValue {
+                    switch outGoingData.status.rawValue {
                     case "ALLOWED": return Dodam.color(.primary)
                     case "PENDING": return Dodam.color(.onSurfaceVariant)
                     case "DENIED": return Dodam.color(.error)
@@ -48,12 +47,12 @@ struct NightStudyApplyCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({ () -> String in
-                    if let date = nightStudyData.createdAt.parseDate(
-                        format: "yyyy-MM-dd HH:mm:ss"
-                    ) {
-                        return date.parseString(format: "M월 d일 (E)")
+                    guard let date = outGoingData.createdAt.parseDate(
+                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+                    ) else {
+                        return "시간 오류"
                     }
-                    return "오류"
+                    return date.parseString(format: "M월 d일 (E)")
                 }())
                 .font(.label(.large))
                 .dodamColor(.onSurfaceVariant)
@@ -61,7 +60,7 @@ struct NightStudyApplyCell: View {
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
-                Text("\(nightStudyData.content)")
+                Text("\(outGoingData.reason)")
                     .font(.body(.medium))
                     .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -69,13 +68,13 @@ struct NightStudyApplyCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if nightStudyData.status.rawValue == "DENIED" {
+                if outGoingData.status.rawValue == "DENIED" {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
                             .dodamColor(.onSurfaceVariant)
                         // 나중에 거절 사유 추가되면 데이터 넣기
-                        Text("선생님께서 심자 신청을 거절하였습니다")
+                        Text("선생님께서 외출을 거절하였습니다")
                             .font(.system(size: 16, weight: .medium))
                             .dodamColor(.onSurface)
                         Spacer()
@@ -86,54 +85,42 @@ struct NightStudyApplyCell: View {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text({ () -> String in
-                                    if let date = nightStudyData.startAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                    if let date = outGoingData.startAt.parseDate(
+                                        format: "yyyy-MM-dd'T'HH:mm:ss"
                                     ) {
-                                        return date.parseString(format: "M월 d일")
+                                        return date.parseString(format: "H시 m분")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
-                                Text("시작")
+                                Text("외출")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
                                 Text({ () -> String in
-                                    if let date = nightStudyData.endAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                    if let date = outGoingData.endAt.parseDate(
+                                        format: "yyyy-MM-dd'T'HH:mm:ss"
                                     ) {
-                                        return date.parseString(format: "M월 d일")
+                                        return date.parseString(format: "H시 m분")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
-                                Text("종료")
+                                Text("복귀")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                             }
                             DodamLinearProgressView(
                                 progress: calculatingDateProgress(
-                                    startAt: nightStudyData.startAt,
-                                    endAt: nightStudyData.endAt,
+                                    startAt: outGoingData.startAt,
+                                    endAt: outGoingData.endAt,
                                     dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
                                 ),
-                                isDisabled: nightStudyData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: outGoingData.status.rawValue == "PENDING" ? true : false
                             )
                         }
-                    }
-                    if let reasonForPhone = nightStudyData.reasonForPhone {
-                        HStack(spacing: 8) {
-                            Text("휴대폰 사유")
-                                .font(.label(.large))
-                                .dodamColor(.onSurfaceVariant)
-                            Text("\(reasonForPhone)")
-                                .font(.system(size: 16, weight: .medium))
-                                .dodamColor(.onSurface)
-                            Spacer()
-                        }
-                        .padding(.top, 4)
                     }
                 }
             }

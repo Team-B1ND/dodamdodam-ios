@@ -29,6 +29,15 @@ class WakeupSongViewModel: ObservableObject {
     }
     
     @MainActor
+    func onRefresh() async {
+        
+        clearData()
+        await fetchAllowedWakeupSong()
+        await fetchPendingWakeupSong()
+        await fetchMyWakeupSong()
+    }
+    
+    @MainActor
     func fetchAllowedWakeupSong() async {
         
         do {
@@ -72,5 +81,13 @@ class WakeupSongViewModel: ObservableObject {
         } catch let error {
             print(error)
         }
+    }
+    
+    @MainActor
+    func clearData() {
+        
+        allowedWakeupSongData = nil
+        pendingWakeupSongData = nil
+        myWakeupSongData = nil
     }
 }
