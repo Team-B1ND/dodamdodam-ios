@@ -10,7 +10,6 @@ import Foundation
 
 class NightStudyApplyViewModel: ObservableObject {
     
-    
     // MARK: - State
     @Published var place: Place = .programming1
     @Published var reasonText: String = ""
@@ -21,7 +20,6 @@ class NightStudyApplyViewModel: ObservableObject {
     @Published var doNeedPhone: Bool = false
     @Published var isStartAtModalPresented: Bool = false
     @Published var isEndAtModalPresented: Bool = false
-    @Published var isOutDateModalPresented: Bool = false
     @Published var isModalPresented: Bool = false
     
     // MARK: - Repository
