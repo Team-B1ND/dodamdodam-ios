@@ -12,6 +12,7 @@ struct NightStudyApplyView: View {
     
     @InjectObject var viewModel: NightStudyApplyViewModel
     @Flow var flow
+    @FocusState var focused
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -33,6 +34,51 @@ struct NightStudyApplyView: View {
                     )
                     .padding(.top, 16)
                     .padding(.horizontal, 8)
+                    
+                    VStack(spacing: 16) {
+                        Button {
+                            focused = false
+                        } label: {
+                            HStack(spacing: 16) {
+                                Text("시작 날짜")
+                                    .font(.system(size: 18, weight: .medium))
+                                    .dodamColor(.tertiary)
+                                Spacer()
+                                Text("3월 3일")
+                                    .font(.system(size: 18, weight: .regular))
+                                    .dodamColor(.primary)
+                                Image(icon: .chevronRight)
+                                    .resizable()
+                                    .frame(width: 14, height: 14)
+                                    .dodamColor(.onSurfaceVariant)
+                            }
+                            .contentShape(Rectangle())
+                            .padding(.horizontal, 8)
+                            .frame(height: 40)
+                        }
+                        .scaledButtonStyle()
+                        Button {
+                            focused = false
+                        } label: {
+                            HStack(spacing: 16) {
+                                Text("종료 날짜")
+                                    .font(.system(size: 18, weight: .medium))
+                                    .dodamColor(.tertiary)
+                                Spacer()
+                                Text("3월 10일")
+                                    .font(.system(size: 18, weight: .regular))
+                                    .dodamColor(.primary)
+                                Image(icon: .chevronRight)
+                                    .resizable()
+                                    .frame(width: 14, height: 14)
+                                    .dodamColor(.onSurfaceVariant)
+                            }
+                            .contentShape(Rectangle())
+                            .padding(.horizontal, 8)
+                            .frame(height: 40)
+                        }
+                        .scaledButtonStyle()
+                    }
                     
                     if viewModel.isUsePhone {
                         DodamTextField.default(

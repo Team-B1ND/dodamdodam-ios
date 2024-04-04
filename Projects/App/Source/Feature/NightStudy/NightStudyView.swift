@@ -16,10 +16,13 @@ struct NightStudyView: View {
     var body: some View {
         DodamScrollView.default(title: "심야 자습") {
             VStack(spacing: 20) {
-                if let data = viewModel.nightStudyData {
-                    NightStudyApplyCell(
-                        data: data
-                    )
+                if let data = viewModel.nightStudyData,
+                   !data.isEmpty {
+                    ForEach(data, id: \.self) { data in
+                        NightStudyApplyCell(
+                            data: data
+                        )
+                    }
                 } else {
                     DodamEmptyView(
                         .nightStudy

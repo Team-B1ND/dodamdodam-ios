@@ -11,5 +11,5 @@ enum AllowStatus: String, Codable, Hashable {
     
     case allowed = "ALLOWED"
     case pending = "PENDING"
-    case denied = "DENIED"
+    case rejected = "REJECTED"
 }

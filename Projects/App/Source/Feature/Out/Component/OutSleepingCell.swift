@@ -23,11 +23,13 @@ struct OutSleepingCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch outSleepingData.status.rawValue {
-                        case "ALLOWED": return "승인됨"
-                        case "PENDING": return "대기중"
-                        case "DENIED": return "거절됨"
-                        default: return ""
+                        switch outSleepingData.status {
+                        case .allowed: 
+                            return "승인됨"
+                        case .pending: 
+                            return "대기중"
+                        case .rejected:
+                            return "거절됨"
                         }
                     }())
                     .font(.title(.small))
@@ -37,11 +39,13 @@ struct OutSleepingCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch outSleepingData.status.rawValue {
-                    case "ALLOWED": return Dodam.color(.primary)
-                    case "PENDING": return Dodam.color(.onSurfaceVariant)
-                    case "DENIED": return Dodam.color(.error)
-                    default: return Dodam.color(.primary)
+                    switch outSleepingData.status {
+                    case .allowed: 
+                        return Dodam.color(.primary)
+                    case .pending: 
+                        return Dodam.color(.onSurfaceVariant)
+                    case .rejected: 
+                        return Dodam.color(.error)
                     }
                 }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
@@ -68,7 +72,7 @@ struct OutSleepingCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if outSleepingData.status.rawValue == "DENIED" {
+                if outSleepingData.status == .rejected {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
@@ -118,7 +122,7 @@ struct OutSleepingCell: View {
                                     endAt: outSleepingData.endAt,
                                     dateFormat: "yyyy-MM-dd"
                                 ),
-                                isDisabled: outSleepingData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: outSleepingData.status == .pending ? true : false
                             )
                         }
                     }

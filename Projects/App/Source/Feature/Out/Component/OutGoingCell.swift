@@ -23,11 +23,13 @@ struct OutGoingCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch outGoingData.status.rawValue {
-                        case "ALLOWED": return "승인됨"
-                        case "PENDING": return "대기중"
-                        case "DENIED": return "거절됨"
-                        default: return ""
+                        switch outGoingData.status {
+                        case .allowed: 
+                            return "승인됨"
+                        case .pending: 
+                            return "대기중"
+                        case .rejected: 
+                            return "거절됨"
                         }
                     }())
                     .font(.title(.small))
@@ -37,11 +39,13 @@ struct OutGoingCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch outGoingData.status.rawValue {
-                    case "ALLOWED": return Dodam.color(.primary)
-                    case "PENDING": return Dodam.color(.onSurfaceVariant)
-                    case "DENIED": return Dodam.color(.error)
-                    default: return Dodam.color(.primary)
+                    switch outGoingData.status {
+                    case .allowed: 
+                        return Dodam.color(.primary)
+                    case .pending: 
+                        return Dodam.color(.onSurfaceVariant)
+                    case .rejected: 
+                        return Dodam.color(.error)
                     }
                 }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
@@ -68,7 +72,7 @@ struct OutGoingCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if outGoingData.status.rawValue == "DENIED" {
+                if outGoingData.status == .rejected {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
@@ -118,7 +122,7 @@ struct OutGoingCell: View {
                                     endAt: outGoingData.endAt,
                                     dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
                                 ),
-                                isDisabled: outGoingData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: outGoingData.status == .pending ? true : false
                             )
                         }
                     }

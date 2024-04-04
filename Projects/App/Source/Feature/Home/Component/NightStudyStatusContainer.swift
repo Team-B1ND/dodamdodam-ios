@@ -21,7 +21,7 @@ struct NightStudyStatusContainer: View {
     var body: some View {
         if let data = nightStudyData {
             HStack(alignment: .top, spacing: 12) {
-                if data.status.rawValue == "DENIED" {
+                if data.status == .rejected {
                     SupportingContainer(
                         subTitle: "외출이 거절되었어요",
                         title: "다시 신청하기"
@@ -29,13 +29,13 @@ struct NightStudyStatusContainer: View {
                 } else {
                     DodamCircularProgressView(
                         progress: 0.7,
-                        isDisabled: data.status.rawValue == "PENDING"
+                        isDisabled: data.status == .pending
                     )
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(data.status.rawValue == "PENDING" ? "대기 중" : "13시간")
+                        Text(data.status == .pending ? "대기 중" : "13시간")
                             .font(.body(.medium))
                             .dodamColor(.onSurfaceVariant)
-                        if !(data.status.rawValue == "PENDING") {
+                        if !(data.status == .pending) {
                             Text("남음")
                                 .font(.body(.medium))
                                 .dodamColor(.tertiary)

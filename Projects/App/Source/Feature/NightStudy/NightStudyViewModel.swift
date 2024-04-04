@@ -10,7 +10,7 @@ import Combine
 class NightStudyViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var nightStudyData: NightStudyResponse?
+    @Published var nightStudyData: [NightStudyResponse]?
     @Published var isShowingDeleteAlert: Bool = false
     
     // MARK: - Repository
@@ -34,6 +34,7 @@ class NightStudyViewModel: ObservableObject {
         
         do {
             nightStudyData = try await nightStudyRepository.fetchNightStudy()
+            print("test: ", nightStudyData)
         } catch let error {
             print(error)
         }

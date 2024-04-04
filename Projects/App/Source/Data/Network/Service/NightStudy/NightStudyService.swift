@@ -24,7 +24,7 @@ extension NightStudyService {
         switch self {
         case .postNightStudy: ""
         case let .deleteNightStudy(id): "/\(id)"
-        case .fetchNightStudy: ""
+        case .fetchNightStudy: "/my"
         }
     }
     
