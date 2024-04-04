@@ -77,8 +77,7 @@ struct OutGoingCell: View {
                         Text("거절 사유")
                             .font(.label(.large))
                             .dodamColor(.onSurfaceVariant)
-                        // 나중에 거절 사유 추가되면 데이터 넣기
-                        Text("선생님께서 외출을 거절하였습니다")
+                        Text("\(outGoingData.rejectReason ?? "선생님께서 외출 신청을 거절하였습니다.")")
                             .font(.system(size: 16, weight: .medium))
                             .dodamColor(.onSurface)
                         Spacer()

@@ -11,6 +11,7 @@ struct OutGoingResponse: ResponseProtocol {
     let reason: String
     let status: AllowStatus
     let student: Student
+    let rejectReason: String?
     let startAt: String
     let endAt: String
     let createdAt: String

@@ -14,7 +14,7 @@ struct BusApplyView: View {
     @Flow var flow
     
     var body: some View {
-        DodamScrollView(navigationBar: .medium(title: "무슨 버스에\n탑승하실건가요?")) {
+        DodamScrollView.medium(title: "무슨 버스에\n탑승하실건가요?") {
             VStack(spacing: 12) {
                 ForEach(
                     viewModel.buses,

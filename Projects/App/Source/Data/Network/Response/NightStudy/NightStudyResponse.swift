@@ -13,6 +13,7 @@ struct NightStudyResponse: ResponseProtocol {
     let doNeedPhone: Bool
     let reasonForPhone: String?
     let student: Student
+    let rejectReason: String?
     let place: Place
     let startAt: String
     let endAt: String
