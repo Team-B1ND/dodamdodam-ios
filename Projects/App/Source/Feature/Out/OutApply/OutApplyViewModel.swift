@@ -19,7 +19,6 @@ class OutApplyViewModel: ObservableObject {
     @Published var isStartAtModalPresented: Bool = false
     @Published var isEndAtModalPresented: Bool = false
     @Published var isOutDateModalPresented: Bool = false
-    @Published var focused: Bool = true
     
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository

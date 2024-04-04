@@ -30,7 +30,7 @@ struct NightStudyApplyView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     DodamTextField.default(
                         title: "심야 자습 사유",
-                        text: $viewModel.testText1
+                        text: $viewModel.reasonText
                     )
                     .padding(.top, 16)
                     .padding(.horizontal, 8)
@@ -80,10 +80,10 @@ struct NightStudyApplyView: View {
                         .scaledButtonStyle()
                     }
                     
-                    if viewModel.isUsePhone {
+                    if viewModel.doNeedPhone {
                         DodamTextField.default(
                             title: "휴대폰 사용 사유",
-                            text: $viewModel.testText2
+                            text: $viewModel.reasonForPhoneText
                         )
                     }
                 }
