@@ -19,29 +19,60 @@ struct MealContainer: View {
     ) {
         self.mealData = mealData
         self._mealIdx = mealIdx
+        self.animatedIdx = mealIdx.wrappedValue
     }
+    
+    @State private var animatedIdx: Int
+    @State private var heights: [Int: CGFloat] = .init()
     
     var body: some View {
         if let data = mealData {
+            let meals = [
+                data.breakfast,
+                data.lunch,
+                data.dinner
+            ]
             DodamPageView(selection: $mealIdx) {
-                ForEach([
-                    data.breakfast,
-                    data.lunch,
-                    data.dinner
-                ], id: \.self
-                ) { meals in
-                    Text(meals?.details.map {
-                        $0.name
-                    }.joined(separator: ", ") ?? "")
-                    .font(.body(.medium))
-                    .dodamColor(.onSurface)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                ForEach(meals.indices, id: \.self) { idx in
+                    GeometryReader { geometryProxy in
+                        let text = meals[idx]?.details.map {
+                            $0.name
+                        }.joined(separator: ", ") ?? ""
+                        Text(text)
+                            .font(.body(.medium))
+                            .dodamColor(.onSurface)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .onAppear {
+                                withAnimation(.spring) {
+                                    heights[idx] = text.boundingRect(
+                                        with: CGSize(
+                                            width: geometryProxy.size.width,
+                                            height: .greatestFiniteMagnitude
+                                        ),
+                                        options: .usesLineFragmentOrigin,
+                                        attributes: [
+                                            .font: UIFont(
+                                                name: SUIT.Weight.semibold.rawValue,
+                                                size: 18
+                                            )!
+                                        ],
+                                        context: nil
+                                    ).height
+                                }
+                            }
+                    }
                     .padding(.horizontal, 6)
                     .page()
                 }
             }
-            .frame(height: 50)
+            .frame(height: heights[animatedIdx] ?? 44.928)
             .padding(6)
+            .onChange(of: mealIdx) { newValue in
+                withAnimation(.spring(duration: 0.2)) {
+                    animatedIdx = newValue
+                }
+            }
             .onAppear {
                 let currentTime = Date()
                 let calendar = Calendar.current
@@ -65,4 +96,8 @@ struct MealContainer: View {
             .padding(6)
         }
     }
+}
+
+#Preview {
+    HomeView(selection: .constant(0))
 }
