@@ -16,17 +16,6 @@ struct OutApplyView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            DodamButton.fullWidth(
-                title: "확인"
-            ) {
-                await viewModel.onTapApplyButton()
-                flow.pop()
-            }
-            .disabled(
-                viewModel.reasonText.isEmpty
-            )
-            .padding(.bottom, 8)
-            .padding(.horizontal, 16)
             DodamScrollView.medium(title: "외출 외박 신청하기") {
                 VStack(alignment: .leading, spacing: 24) {
                     DodamTextField.default(
@@ -37,11 +26,11 @@ struct OutApplyView: View {
                     .padding(.horizontal, 24)
                     VStack(spacing: 16) {
                         Button {
-                            viewModel.isModalPresented.toggle()
+                            viewModel.isStartAtModalPresented.toggle()
                             focused = false
                         } label: {
                             HStack(spacing: 16) {
-                                Text("\(viewModel.selection == 0 ? "외출" : "외박")날짜")
+                                Text(viewModel.selection == 0 ? "외출 일시" : "외박 날짜")
                                     .font(.system(size: 18, weight: .medium))
                                     .dodamColor(.tertiary)
                                 Spacer()
@@ -59,11 +48,11 @@ struct OutApplyView: View {
                         }
                         .scaledButtonStyle()
                         Button {
-                            viewModel.isModalPresented.toggle()
+                            viewModel.isEndAtModalPresented.toggle()
                             focused = false
                         } label: {
                             HStack(spacing: 16) {
-                                Text("복귀 날짜")
+                                Text(viewModel.selection == 0 ? "복귀 일시" : "복귀 날짜")
                                     .font(.system(size: 18, weight: .medium))
                                     .dodamColor(.tertiary)
                                 Spacer()
@@ -94,22 +83,60 @@ struct OutApplyView: View {
                 .padding(.horizontal, 8)
             }
             .dodamModal(
-                isPresented: $viewModel.isModalPresented
+                isPresented: $viewModel.isStartAtModalPresented,
+                disableGesture: true
             ) {
-                if viewModel.selection == 0 {
-                    // dodam picker
-                    Text("시작 시간 피커")
+                VStack {
+                    Text(viewModel.selection == 0 ? "외출 일시" : "외박 날짜")
+                        .font(.body(.large))
+                        .dodamColor(.onBackground)
                     DatePicker(
-                        "날짜",
+                        "시작",
                         selection: $viewModel.startAt,
-                        displayedComponents: [.hourAndMinute]
+                        displayedComponents: [
+                            viewModel.selection == 0 
+                            ? .hourAndMinute
+                            : .date, .hourAndMinute
+                        ]
                     )
                     .datePickerStyle(WheelDatePickerStyle())
                     .labelsHidden()
-                } else {
-                    // dodam picker
-                    Text("끝 시간 피커")
                 }
+            }
+            .dodamModal(
+                isPresented: $viewModel.isEndAtModalPresented,
+                disableGesture: true
+            ) {
+                VStack {
+                    Text(viewModel.selection == 0 ? "복귀 일시" : "복귀 날짜")
+                        .font(.body(.large))
+                        .dodamColor(.onBackground)
+                    DatePicker(
+                        "끝",
+                        selection: $viewModel.endAt,
+                        displayedComponents: [
+                            viewModel.selection == 0
+                            ? .hourAndMinute
+                            : .date, .hourAndMinute
+                        ]
+                    )
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .labelsHidden()
+                }
+            }
+            if !(viewModel.isStartAtModalPresented ||
+                viewModel.isEndAtModalPresented) {
+                DodamButton.fullWidth(
+                    title: "확인"
+                ) {
+                    await viewModel.onTapApplyButton()
+                    flow.pop()
+                }
+                .disabled(
+                    viewModel.reasonText.isEmpty
+                )
+                .padding(.bottom, 8)
+                .padding(.horizontal, 16)
             }
         }
         .task {

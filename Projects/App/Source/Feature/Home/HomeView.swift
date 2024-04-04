@@ -112,6 +112,7 @@ struct HomeView: View {
                 viewModel.isShowingAlert.toggle()
             }
         }
+        .borderSize(10)
         .background(Dodam.color(.surface))
         .task {
             await viewModel.onAppear()

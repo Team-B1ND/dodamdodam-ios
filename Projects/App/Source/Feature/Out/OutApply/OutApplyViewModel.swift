@@ -19,18 +19,21 @@ class OutApplyViewModel: ObservableObject {
     @Published var reasonText: String = ""
     @Published var startAt: Date = Date() {
         didSet {
-            startDate = startAt.parseString(format: "M월 d일 HH:MM")
+            print("test startAt: ", startAt)
+            startDate = startAt.parseString(format: "M월 d일 HH:mm")
         }
     }
     @Published var endAt: Date = Date() {
         didSet {
-            endDate = endAt.parseString(format: "M월 d일 HH:MM")
+            print("test endAt: ", endAt)
+            endDate = endAt.parseString(format: "M월 d일 HH:mm")
         }
     }
     @Published var startDate: String = ""
     @Published var endDate: String = ""
     
-    @Published var isModalPresented: Bool = false
+    @Published var isStartAtModalPresented: Bool = false
+    @Published var isEndAtModalPresented: Bool = false
     @Published var focused: Bool = true
     
     // MARK: - Repository
