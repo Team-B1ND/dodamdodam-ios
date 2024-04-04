@@ -10,7 +10,6 @@ import Combine
 class NightStudyViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var isFirstLoad: Bool = true
     @Published var nightStudyData: [NightStudyResponse]?
     @Published var isShowingDeleteAlert: Bool = false
     
@@ -21,7 +20,6 @@ class NightStudyViewModel: ObservableObject {
     @MainActor
     func onAppear() async {
         await fetchNightStudy()
-        isFirstLoad = false
     }
     
     @MainActor

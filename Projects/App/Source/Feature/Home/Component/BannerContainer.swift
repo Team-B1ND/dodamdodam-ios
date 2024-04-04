@@ -19,9 +19,11 @@ struct BannerContainer: View {
         self.bannerData = bannerData
     }
     
+    @Environment(\.isFirstLoad) private var isFirstLoad
+    
     var body: some View {
         Group {
-            if let data = bannerData, !data.isEmpty {
+            if let data = bannerData {
                 TabView {
                     ForEach(data, id: \.self) { data in
                         Link(destination: URL(string: data.redirectUrl) ?? URL(string: "about:blank")!) {
@@ -37,10 +39,13 @@ struct BannerContainer: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             } else {
-                Rectangle()
-                    .shimmer()
+                DodamLoadingView.conditional(isFirstLoad) {
+                    Rectangle()
+                        .shimmer()
+                }
             }
         }
+        .background(Dodam.color(.surfaceContainer))
         .aspectRatio(80/12, contentMode: .fit)
         .frame(maxWidth: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: 18))

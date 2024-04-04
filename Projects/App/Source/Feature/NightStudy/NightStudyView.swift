@@ -16,39 +16,42 @@ struct NightStudyView: View {
     var body: some View {
         DodamScrollView.default(title: "심야 자습") {
             VStack(spacing: 20) {
-                if let data = viewModel.nightStudyData,
-                   !data.isEmpty {
-                    ForEach(data, id: \.self) { data in
-                        NightStudyApplyCell(
-                            data: data
-                        )
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                viewModel.isShowingDeleteAlert.toggle()
-                            } label: {
-                                Label("삭제", systemImage: "trash")
-                            }
-                        }
-                        .alert(
-                            "해당 심야 자습을 삭제하시겠습니까?",
-                            isPresented: $viewModel.isShowingDeleteAlert
-                        ) {
-                            Button("삭제", role: .destructive) {
-                                Task {
-                                    await viewModel.deleteNightStudy(
-                                        id: data.id
-                                    )
+                if let data = viewModel.nightStudyData {
+                    if !data.isEmpty {
+                        ForEach(data, id: \.self) { data in
+                            NightStudyApplyCell(
+                                data: data
+                            )
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    viewModel.isShowingDeleteAlert.toggle()
+                                } label: {
+                                    Label("삭제", systemImage: "trash")
                                 }
                             }
-                            Button("취소", role: .cancel) { }
+                            .alert(
+                                "해당 심야 자습을 삭제하시겠습니까?",
+                                isPresented: $viewModel.isShowingDeleteAlert
+                            ) {
+                                Button("삭제", role: .destructive) {
+                                    Task {
+                                        await viewModel.deleteNightStudy(
+                                            id: data.id
+                                        )
+                                    }
+                                }
+                                Button("취소", role: .cancel) { }
+                            }
+                        }
+                    } else {
+                        DodamEmptyView(
+                            .nightStudy
+                        ) {
+                            flow.push(NightStudyApplyView())
                         }
                     }
                 } else {
-                    DodamEmptyView(
-                        .nightStudy
-                    ) {
-                        flow.push(NightStudyApplyView())
-                    }
+                    Text("Loading")
                 }
             }
             .padding([.top, .horizontal], 16)

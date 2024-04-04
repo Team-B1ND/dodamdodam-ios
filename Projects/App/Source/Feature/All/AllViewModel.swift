@@ -11,7 +11,6 @@ import SignKit
 class AllViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var isFirstLoad: Bool = true
     @Published var memberData: MemberResponse?
     @Published var isShowingLogoutAlert: Bool = false
     
@@ -22,7 +21,6 @@ class AllViewModel: ObservableObject {
     @MainActor
     func onAppear() async {
         await fetchMemberData()
-        isFirstLoad = false
     }
     
     @MainActor

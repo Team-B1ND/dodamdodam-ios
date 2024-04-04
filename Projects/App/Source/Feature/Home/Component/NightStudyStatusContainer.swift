@@ -18,6 +18,8 @@ struct NightStudyStatusContainer: View {
         self.nightStudyData = nightStudyData
     }
     
+    @Environment(\.isFirstLoad) private var isFirstLoad
+    
     var body: some View {
         if let data = nightStudyData {
             HStack(alignment: .top, spacing: 12) {

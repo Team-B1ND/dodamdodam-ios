@@ -19,6 +19,8 @@ struct WakeupSongContainer: View {
         self.wakeupSongData = wakeupSongData
     }
     
+    @Environment(\.isFirstLoad) private var isFirstLoad
+    
     var body: some View {
         if let data = wakeupSongData, !data.isEmpty {
             DodamPageView {
@@ -37,7 +39,6 @@ struct WakeupSongContainer: View {
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
                                     .shimmer()
                             }
-                            
                         }
                         /// marquee 적용 하기
                         VStack(alignment: .leading, spacing: 0) {

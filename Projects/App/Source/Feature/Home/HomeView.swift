@@ -104,6 +104,7 @@ struct HomeView: View {
                  }
                  */
             }
+            .environment(\.isFirstLoad, viewModel.isFirstLoad)
             .padding(.horizontal, 16)
         }
         .button(icon: .bell) {

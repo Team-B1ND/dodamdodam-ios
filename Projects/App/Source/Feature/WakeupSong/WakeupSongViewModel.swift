@@ -10,7 +10,6 @@ import Foundation
 class WakeupSongViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var isFirstLoad: Bool = true
     @Published var allowedWakeupSongData: [WakeupSongResponse]?
     @Published var pendingWakeupSongData: [WakeupSongResponse]?
     @Published var myWakeupSongData: [WakeupSongResponse]?
@@ -26,7 +25,6 @@ class WakeupSongViewModel: ObservableObject {
         await fetchAllowedWakeupSong()
         await fetchPendingWakeupSong()
         await fetchMyWakeupSong()
-        isFirstLoad = false
     }
     
     @MainActor
