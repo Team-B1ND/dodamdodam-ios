@@ -3,6 +3,10 @@ import ProjectDescriptionHelpers
 
 let project = Project(
     name: "DodamDodam",
+    options: .options(
+        defaultKnownRegions: ["en", "ko"],
+        developmentRegion: "ko"
+    ), 
     settings: .settings(
         base: .init(),
         configurations: [

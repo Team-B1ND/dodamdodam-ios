@@ -35,11 +35,11 @@ class NightStudyApplyViewModel: ObservableObject {
     
     @MainActor
     func postNightStudy() async {
-
+        
         do {
             try await nightStudyRepository.postNightStudy(
                 .init(
-                    place: place,
+                    place: place.rawValue,
                     content: reasonText,
                     doNeedPhone: doNeedPhone,
                     reasonForPhone: reasonForPhoneText,

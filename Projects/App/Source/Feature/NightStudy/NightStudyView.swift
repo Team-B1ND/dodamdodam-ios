@@ -19,9 +19,14 @@ struct NightStudyView: View {
                 if let data = viewModel.nightStudyData,
                    !data.isEmpty {
                     ForEach(data, id: \.self) { data in
-                        NightStudyApplyCell(
-                            data: data
-                        )
+                        Button {
+                            
+                        } label: {
+                            NightStudyApplyCell(
+                                data: data
+                            )
+                        }
+                        .scaledButtonStyle()
                     }
                 } else {
                     DodamEmptyView(
@@ -31,7 +36,7 @@ struct NightStudyView: View {
                     }
                 }
             }
-            .padding(.horizontal, 16)
+            .padding([.top, .horizontal], 16)
         }
         .button(icon: .plus) {
             flow.push(NightStudyApplyView())

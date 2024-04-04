@@ -25,7 +25,30 @@ struct NightStudyApplyView: View {
                 .padding(.horizontal, 8)
                 
                 VStack(spacing: 16) {
+                    HStack(spacing: 16) {
+                        Text("자습 장소")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.tertiary)
+                        Spacer()
+                        Picker(
+                            "시작 날짜",
+                            selection: $viewModel.place,
+                            content: {
+                                ForEach(
+                                    Place.allCases,
+                                    id: \.self
+                                ) { place in
+                                    Text(place.rawValue)
+                                }
+                            }
+                        )
+                        .labelsHidden()
+                    }
+                    .contentShape(Rectangle())
+                    .padding(.horizontal, 8)
+                    .frame(height: 40)
                     Button {
+                        viewModel.isStartAtModalPresented.toggle()
                         focused = false
                     } label: {
                         HStack(spacing: 16) {
@@ -33,9 +56,13 @@ struct NightStudyApplyView: View {
                                 .font(.system(size: 18, weight: .medium))
                                 .dodamColor(.tertiary)
                             Spacer()
-                            Text("3월 3일")
-                                .font(.system(size: 18, weight: .regular))
-                                .dodamColor(.primary)
+                            Text(
+                                viewModel.startAt.parseString(
+                                    format: "M월 d일"
+                                )
+                            )
+                            .font(.system(size: 18, weight: .regular))
+                            .dodamColor(.primary)
                             Image(icon: .chevronRight)
                                 .resizable()
                                 .frame(width: 14, height: 14)
@@ -47,6 +74,7 @@ struct NightStudyApplyView: View {
                     }
                     .scaledButtonStyle()
                     Button {
+                        viewModel.isEndAtModalPresented.toggle()
                         focused = false
                     } label: {
                         HStack(spacing: 16) {
@@ -54,9 +82,13 @@ struct NightStudyApplyView: View {
                                 .font(.system(size: 18, weight: .medium))
                                 .dodamColor(.tertiary)
                             Spacer()
-                            Text("3월 10일")
-                                .font(.system(size: 18, weight: .regular))
-                                .dodamColor(.primary)
+                            Text(
+                                viewModel.endAt.parseString(
+                                    format: "M월 d일"
+                                )
+                            )
+                            .font(.system(size: 18, weight: .regular))
+                            .dodamColor(.primary)
                             Image(icon: .chevronRight)
                                 .resizable()
                                 .frame(width: 14, height: 14)
@@ -67,13 +99,23 @@ struct NightStudyApplyView: View {
                         .frame(height: 40)
                     }
                     .scaledButtonStyle()
-                }
-                
-                if viewModel.doNeedPhone {
-                    DodamTextField.default(
-                        title: "휴대폰 사용 사유",
-                        text: $viewModel.reasonForPhoneText
-                    )
+                    HStack(spacing: 0) {
+                        Text("휴대폰 사용")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.tertiary)
+                        Spacer()
+                        Checkbox(isChecked: $viewModel.doNeedPhone)
+                    }
+                    .contentShape(Rectangle())
+                    .padding(.horizontal, 8)
+                    .frame(height: 40)
+                    if viewModel.doNeedPhone {
+                        DodamTextField.default(
+                            title: "휴대폰 사용 사유",
+                            text: $viewModel.reasonForPhoneText
+                        )
+                        .padding(.horizontal, 8)
+                    }
                 }
             }
             .padding(.horizontal, 16)
@@ -123,7 +165,7 @@ struct NightStudyApplyView: View {
                     flow.pop()
                 }
                 .disabled(
-                    false
+                    viewModel.reasonText.isEmpty
                 )
                 .padding(.bottom, 8)
                 .padding(.horizontal, 16)
