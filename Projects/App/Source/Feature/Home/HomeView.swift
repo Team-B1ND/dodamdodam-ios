@@ -117,6 +117,9 @@ struct HomeView: View {
             await viewModel.onAppear()
             viewModel.ringCount = 0
         }
+        .refreshable {
+            await viewModel.onRefresh()
+        }
         .alert(
             "도담도담에 무언가 변화가 생겼습니다.",
             isPresented: $viewModel.isShowingAlert

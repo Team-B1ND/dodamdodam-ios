@@ -14,16 +14,16 @@ struct RegisterAuthView: View {
     @Flow var flow
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Text({ () -> String in
+        DodamNavigationBar.medium(
+            title: { () -> String in
                 switch viewModel.authStep {
                 case 0: return "아이디를\n입력해주세요"
                 case 1: return "비밀번호를\n입력해주세요"
                 default: return "비밀번호를\n확인해주세요"
                 }
-            }())
-            .font(.headline(.small))
-            
+            }()
+        )
+        VStack(alignment: .leading, spacing: 24) {
             if viewModel.authStep >= 2 {
                 DodamTextField.default(
                     title: "비밀번호 확인",
@@ -83,7 +83,8 @@ struct RegisterAuthView: View {
                     title: "가입하기"
                 ) {
                     await viewModel.postJoin {
-                        flow.replace([OnboardingView()
+                        flow.replace(
+                            [OnboardingView()
                             .toast(timeout: 3) {
                                 Text("회원가입에 성공했어요!")
                             }]

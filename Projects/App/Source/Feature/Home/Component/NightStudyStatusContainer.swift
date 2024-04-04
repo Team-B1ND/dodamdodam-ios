@@ -28,21 +28,36 @@ struct NightStudyStatusContainer: View {
                     )
                 } else {
                     DodamCircularProgressView(
-                        progress: 0.7,
+                        progress: calculatingDateProgress(
+                            startAt: data.startAt,
+                            endAt: data.endAt,
+                            dateFormat: "yyyy-MM-dd"
+                        ),
                         isDisabled: data.status == .pending
                     )
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(data.status == .pending ? "대기 중" : "13시간")
-                            .font(.body(.medium))
-                            .dodamColor(.onSurfaceVariant)
+                        Text(data.status == .pending
+                             ? "대기 중"
+                             : "12일"
+                        )
+                        .font(.body(.medium))
+                        .dodamColor(.onSurface)
+                        .onAppear {
+                            print("test", data.startAt)
+                            print("test", data.endAt)
+                        }
                         if !(data.status == .pending) {
                             Text("남음")
-                                .font(.body(.medium))
-                                .dodamColor(.tertiary)
+                                .font(.body(.small))
+                                .dodamColor(.onSurfaceVariant)
                         }
-                        Text("13:00 복귀")
-                            .font(.label(.medium))
-                            .dodamColor(.tertiary)
+                        Text({ () -> String in
+                            let components =  data.endAt.components(separatedBy: "-")
+                            let string = "\(components[1]).\(components[2])"
+                            return "\(string)까지"
+                        }())
+                        .font(.label(.large))
+                        .dodamColor(.onSurfaceVariant)
                     }
                 }
             }

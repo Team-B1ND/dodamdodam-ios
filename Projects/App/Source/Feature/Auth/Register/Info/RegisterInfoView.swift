@@ -14,17 +14,17 @@ struct RegisterInfoView: View {
     @Flow var flow
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
-            Text({ () -> String in
+        DodamNavigationBar.medium(
+            title: { () -> String in
                 switch viewModel.infoStep {
-                case 0: "이름을"
-                case 1: "학생정보를"
-                case 2: "이메일"
-                default: "전화번호를"
+                case 0: "이름을\n입력해주세요"
+                case 1: "학생정보를\n입력해주세요"
+                case 2: "이메일을\n입력해주세요"
+                default: "전화번호를\n입력해주세요"
                 }
-            }() + "\n입력해주세요")
-            .font(.headline(.small))
-            
+            }()
+        )
+        VStack(alignment: .leading, spacing: 24) {
             if viewModel.infoStep >= 3 {
                 DodamTextField.default(
                     title: "전화번호",

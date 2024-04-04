@@ -27,13 +27,29 @@ class HomeViewModel: ObservableObject {
     @Inject var bannerRepository: any BannerRepository
     @Inject var mealRepository: any MealRepository
     @Inject var wakeupSongRepository: any WakeupSongRepository
+    @Inject var outGoingRepository: any OutGoingRepository
+    @Inject var outSleepingRepository: any OutSleepingRepository
+    @Inject var nightStudyRepository: any NightStudyRepository
     
     // MARK: - Method
     @MainActor
     func onAppear() async {
+        
         await fetchBannerData()
         await fetchMaelData()
         await fetchWakeupSongData()
+        await fetchOutData()
+        await fetchNightStudy()
+    }
+    
+    @MainActor
+    func onRefresh() async {
+        
+        await fetchBannerData()
+        await fetchMaelData()
+        await fetchWakeupSongData()
+        await fetchOutData()
+        await fetchNightStudy()
     }
     
     @MainActor
@@ -73,6 +89,46 @@ class HomeViewModel: ObservableObject {
                     day: getDate(.day)
                 )
             )
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func fetchOutData() async {
+        
+        do {
+            let outGoingResponse = try await outGoingRepository.fetchOutGoing()
+            let outSleepingResponse = try await outSleepingRepository.fetchOutSleeping()
+            
+            guard let earliestOutGoingResponse = outGoingResponse.min(by: {
+                $0.startAt < $1.startAt
+            }) else {
+                return
+            }
+            guard let earliestOutSleepingResponse = outSleepingResponse.min(by: {
+                $0.startAt < $1.startAt
+            }) else {
+                return
+            }
+            outGoingData = earliestOutGoingResponse
+            outSleepingData = earliestOutSleepingResponse
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func fetchNightStudy() async {
+        
+        do {
+            let response = try await nightStudyRepository.fetchNightStudy()
+            guard let earliestResponse = response.min(by: {
+                $0.startAt < $1.startAt
+            }) else {
+                return
+            }
+            nightStudyData = earliestResponse
         } catch let error {
             print(error)
         }

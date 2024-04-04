@@ -14,9 +14,10 @@ struct LoginView: View {
     @Flow var flow
     
     var body: some View {
+        DodamNavigationBar.medium(
+            title: "아이디와 비밀번호를\n입력해주세요"
+        )
         VStack(alignment: .leading, spacing: 24) {
-            Text("아이디와 비밀번호를\n입력해주세요")
-                .font(.headline(.small))
             DodamTextField.default(
                 title: "아이디",
                 text: $viewModel.idText

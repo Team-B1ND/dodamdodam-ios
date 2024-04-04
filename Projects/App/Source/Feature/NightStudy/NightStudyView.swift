@@ -19,15 +19,26 @@ struct NightStudyView: View {
                 if let data = viewModel.nightStudyData,
                    !data.isEmpty {
                     ForEach(data, id: \.self) { data in
-                        NightStudyApplyCell(
-                            data: data
-                        )
-                        .contextMenu {
-                            Button(role: .destructive) {
-                                viewModel.isShowingDeleteAlert.toggle()
-                            } label: {
-                                Label("삭제", systemImage: "trash")
+                        Button {
+                            viewModel.isShowingDeleteAlert.toggle()
+                        } label: {
+                            NightStudyApplyCell(
+                                data: data
+                            )
+                        }
+                        .scaledButtonStyle()
+                        .alert(
+                            "해당 외박 신청을 삭제하시겠습니까?",
+                            isPresented: $viewModel.isShowingDeleteAlert
+                        ) {
+                            Button("네", role: .none) {
+                                Task {
+                                    await viewModel.deleteNightStudy(
+                                        id: data.id
+                                    )
+                                }
                             }
+                            Button("취소", role: .cancel) { }
                         }
                     }
                 } else {
