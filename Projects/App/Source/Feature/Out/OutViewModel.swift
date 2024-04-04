@@ -10,6 +10,7 @@ import Combine
 class OutViewModel: ObservableObject {
     
     // MARK: - State
+    @Published var isFirstLoad: Bool = true
     @Published var outGoingData: [OutGoingResponse]?
     @Published var outSleepingData: [OutSleepingResponse]?
     @Published var isShowingDeleteAlert: Bool = false
@@ -22,6 +23,7 @@ class OutViewModel: ObservableObject {
     @MainActor
     func onAppear() async {
         await fetchOutData()
+        isFirstLoad = false
     }
     
     @MainActor

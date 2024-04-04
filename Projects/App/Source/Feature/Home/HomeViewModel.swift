@@ -11,6 +11,7 @@ import Foundation
 class HomeViewModel: ObservableObject {
     
     // MARK: - State
+    @Published var isFirstLoad: Bool = true
     @Published var mealIdx: Int = -1
     @Published var isShowingAlert: Bool = false
     @Published var ringCount: Int = 0
@@ -39,6 +40,7 @@ class HomeViewModel: ObservableObject {
         await fetchWakeupSongData()
         await fetchOutData()
         await fetchNightStudy()
+        isFirstLoad = false
     }
     
     @MainActor

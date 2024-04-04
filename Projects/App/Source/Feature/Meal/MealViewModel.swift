@@ -10,6 +10,7 @@ import Combine
 class MealViewModel: ObservableObject {
     
     // MARK: - State
+    @Published var isFirstLoad: Bool = true
     @Published var mealData: [MealResponse]?
     
     // MARK: - Repository
@@ -19,6 +20,7 @@ class MealViewModel: ObservableObject {
     @MainActor
     func onAppear() async {
         await fetchMealData()
+        isFirstLoad = false
     }
     
     @MainActor

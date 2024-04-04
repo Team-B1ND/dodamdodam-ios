@@ -10,6 +10,7 @@ import Combine
 class PointViewModel: ObservableObject {
     
     // MARK: - State
+    @Published var isFirstLoad: Bool = true
     @Published var domitoryPointData: [PointResponse]?
     @Published var schoolPointData: [PointResponse]?
     @Published var domitoryPointScoreData: PointScoreResponse?
@@ -25,6 +26,7 @@ class PointViewModel: ObservableObject {
     func onAppear() async {
         await fetchPointScore()
         await fetchPoint()
+        isFirstLoad = false
     }
     
     @MainActor
