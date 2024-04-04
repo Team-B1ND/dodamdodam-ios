@@ -19,14 +19,16 @@ class HomeViewModel: ObservableObject {
     @Published var mealData: MealResponse?
     @Published var wakeupSongData: [WakeupSongResponse]?
     @Published var nightStudyData: NightStudyResponse?
-    @Published var outGoingData: OutGoingResponse?
-    @Published var outSleepingData: OutSleepingResponse?
+    @Published var outGoingData: [OutGoingResponse]?
+    @Published var outSleepingData: [OutSleepingResponse]?
     @Published var scheduleData: [ScheduleResponse]?
     
     // MARK: - Repository
     @Inject var bannerRepository: any BannerRepository
     @Inject var mealRepository: any MealRepository
     @Inject var wakeupSongRepository: any WakeupSongRepository
+    @Inject var outGoingRepository: any OutGoingRepository
+    @Inject var outSleepingRepository: any OutSleepingRepository
     
     // MARK: - Method
     @MainActor
@@ -77,5 +79,21 @@ class HomeViewModel: ObservableObject {
         } catch let error {
             print(error)
         }
+    }
+    
+    @MainActor
+    func fetchOutData() async {
+        
+        do {
+            outGoingData = try await outGoingRepository.fetchOutGoing()
+            outSleepingData = try await outSleepingRepository.fetchOutSleeping()
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func getOutData() async {
+        
     }
 }

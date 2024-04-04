@@ -40,7 +40,7 @@ class NightStudyViewModel: ObservableObject {
     }
     
     @MainActor
-    func deleteOutGoing(id: Int) async {
+    func deleteNightStudy(id: Int) async {
         
         do {
             try await nightStudyRepository.deleteNightStudy(id: id)
