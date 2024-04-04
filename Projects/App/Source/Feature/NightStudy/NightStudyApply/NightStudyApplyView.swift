@@ -21,6 +21,7 @@ struct NightStudyApplyView: View {
                     title: "심야 자습 사유",
                     text: $viewModel.reasonText
                 )
+                .makeFirstResponder()
                 .padding(.top, 16)
                 .padding(.horizontal, 8)
                 

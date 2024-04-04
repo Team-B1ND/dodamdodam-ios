@@ -121,7 +121,6 @@ struct WakeupSongApplyView: View {
                 }
                 .padding(.top, 16)
             }
-            .padding(.bottom, 150)
             .padding(.horizontal, 16)
         }
         .subView {
