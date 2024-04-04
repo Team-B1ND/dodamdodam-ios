@@ -207,7 +207,7 @@ struct OutApplyView: View {
             }
         }
         .task {
-            viewModel.onAppear()
+            await viewModel.onAppear()
         }
     }
 }

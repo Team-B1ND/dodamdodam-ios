@@ -26,7 +26,7 @@ class OutApplyViewModel: ObservableObject {
     
     // MARK: - Method
     @MainActor
-    func onAppear() {
+    func onAppear() async {
         
         startAt = Date()
         endAt = Date()

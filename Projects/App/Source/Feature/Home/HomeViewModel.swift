@@ -31,6 +31,7 @@ class HomeViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
+        
         await fetchBannerData()
         await fetchMaelData()
         await fetchWakeupSongData()
