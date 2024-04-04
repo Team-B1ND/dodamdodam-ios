@@ -113,7 +113,6 @@ struct WakeupSongView: View {
                             Spacer()
                         }
                         .padding(.top, 12)
-                        .padding(.bottom, 150)
                         .page(.text("MY"))
                     }
                     .padding(.top, 15)
@@ -121,7 +120,6 @@ struct WakeupSongView: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 150)
         }
         .overlay(alignment: .bottom) {
             DodamButton.fullWidth(

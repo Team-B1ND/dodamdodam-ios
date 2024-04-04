@@ -19,14 +19,16 @@ struct NightStudyView: View {
                 if let data = viewModel.nightStudyData,
                    !data.isEmpty {
                     ForEach(data, id: \.self) { data in
-                        Button {
-                            
-                        } label: {
-                            NightStudyApplyCell(
-                                data: data
-                            )
+                        NightStudyApplyCell(
+                            data: data
+                        )
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                viewModel.isShowingDeleteAlert.toggle()
+                            } label: {
+                                Label("삭제", systemImage: "trash")
+                            }
                         }
-                        .scaledButtonStyle()
                     }
                 } else {
                     DodamEmptyView(
