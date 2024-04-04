@@ -43,6 +43,12 @@ class WakeupSongApplyViewModel: ObservableObject {
         await fetchWakeupSongChart()
     }
     
+    func clearData() {
+        videoUrl = ""
+        title = ""
+        artist = ""
+    }
+    
     @MainActor
     func fetchWakeupSongChart() async {
         do {
@@ -85,12 +91,5 @@ class WakeupSongApplyViewModel: ObservableObject {
             print(error)
             dialogErrorMessage = "기상송 신청을 실패했어요"
         }
-    }
-    
-    @MainActor
-    func clearData() {
-        videoUrl = ""
-        title = ""
-        artist = ""
     }
 }

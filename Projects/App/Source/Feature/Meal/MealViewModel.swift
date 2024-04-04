@@ -22,6 +22,16 @@ class MealViewModel: ObservableObject {
     }
     
     @MainActor
+    func onRefresh() async {
+        clearData()
+        await onAppear()
+    }
+    
+    func clearData() {
+        mealData = nil
+    }
+    
+    @MainActor
     func fetchMealData() async {
         do {
             mealData = try await mealRepository.fetchMonthlyMeal(

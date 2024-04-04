@@ -203,6 +203,9 @@ struct AllView: View {
         .task {
             await viewModel.onAppear()
         }
+        .refreshable {
+            await viewModel.onRefresh()
+        }
         .alert(
             "로그아웃",
             isPresented: $viewModel.isShowingLogoutAlert

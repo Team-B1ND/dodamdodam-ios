@@ -24,6 +24,16 @@ class AllViewModel: ObservableObject {
     }
     
     @MainActor
+    func onRefresh() async {
+        clearData()
+        await onAppear()
+    }
+    
+    func clearData() {
+        memberData = nil
+    }
+    
+    @MainActor
     func fetchMemberData() async {
         do {
             memberData = try await memberRepository.fetchInfo()

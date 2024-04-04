@@ -130,6 +130,9 @@ struct MealView: View {
         .task {
             await viewModel.onAppear()
         }
+        .refreshable {
+            await viewModel.onRefresh()
+        }
     }
     
     func isMealTime(_ date: Date, mealType: Int) -> Bool {

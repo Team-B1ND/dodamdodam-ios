@@ -26,8 +26,14 @@ class OutViewModel: ObservableObject {
     
     @MainActor
     func onRefresh() async {
-//        clearData()
+        clearData()
         await fetchOutData()
+    }
+    
+    @MainActor
+    func clearData() {
+        outGoingData = nil
+        outSleepingData = nil
     }
     
     @MainActor
@@ -59,11 +65,4 @@ class OutViewModel: ObservableObject {
             print(error)
         }
     }
-    
-//    @MainActor
-//    func clearData() {
-//        
-//        outGoingData = nil
-//        outSleepingData = nil
-//    }
 }

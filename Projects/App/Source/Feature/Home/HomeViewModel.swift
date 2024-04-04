@@ -35,7 +35,7 @@ class HomeViewModel: ObservableObject {
     @MainActor
     func onAppear() async {
         await fetchBannerData()
-        await fetchMaelData()
+        await fetchMealData()
         await fetchWakeupSongData()
         await fetchOutData()
         await fetchNightStudy()
@@ -43,11 +43,17 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func onRefresh() async {
-        await fetchBannerData()
-        await fetchMaelData()
-        await fetchWakeupSongData()
-        await fetchOutData()
-        await fetchNightStudy()
+        clearData()
+        await onAppear()
+    }
+    
+    func clearData() {
+        bannerData = nil
+        mealData = nil
+        wakeupSongData = nil
+        outGoingData = nil
+        outSleepingData = nil
+        nightStudyData = nil
     }
     
     @MainActor
@@ -60,7 +66,7 @@ class HomeViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchMaelData() async {
+    func fetchMealData() async {
         do {
             mealData = try await mealRepository.fetchMeal(
                 .init(

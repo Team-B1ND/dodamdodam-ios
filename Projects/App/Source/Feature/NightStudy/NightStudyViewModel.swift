@@ -24,7 +24,12 @@ class NightStudyViewModel: ObservableObject {
     
     @MainActor
     func onRefresh() async {
+        clearData()
         await fetchNightStudy()
+    }
+    
+    func clearData() {
+        nightStudyData = nil
     }
     
     @MainActor
