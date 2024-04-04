@@ -36,9 +36,6 @@ struct SegmentedView: View {
                 Button {
                     if selected != idx {
                         selected = idx
-                        withAnimation(.spring(duration: 0.2)) {
-                            animatedSelection = idx
-                        }
                     }
                 } label: {
                     Text(idx == 0 ? labels[0] : labels[1])
@@ -77,6 +74,9 @@ struct SegmentedView: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .onChange(of: selected) { newValue in
             selection?.wrappedValue = newValue
+            withAnimation(.spring(duration: 0.2)) {
+                animatedSelection = newValue
+            }
         }
         .onReceive(Just(selection)) { newValue in
             if let newValue,
@@ -87,8 +87,4 @@ struct SegmentedView: View {
             }
         }
     }
-}
-
-#Preview {
-    SegmentedView(labels: ["1", "2"])
 }

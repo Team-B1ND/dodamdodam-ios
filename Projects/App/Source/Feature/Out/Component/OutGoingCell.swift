@@ -51,8 +51,8 @@ struct OutGoingCell: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({ () -> String in
-                    guard let date = outGoingData.createdAt.parseDate(
-                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+                    guard let date = outGoingData.startAt.parseDate(
+                        format: "yyyy-MM-dd'T'HH:mm:ss"
                     ) else {
                         return "시간 오류"
                     }

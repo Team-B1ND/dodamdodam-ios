@@ -38,15 +38,14 @@ public func calculatingDateProgress(
     dateFormat: String
 ) -> Double {
     
-    let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
-    let currentDate = Date().addingTimeInterval(TimeInterval(koreanTimeZone.secondsFromGMT()))
+//    let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
+//    let currentDate = Date().addingTimeInterval(TimeInterval(koreanTimeZone.secondsFromGMT()))
+    let currentDate = Date()
     
     guard let startDate = startAt.parseDate(format: dateFormat),
           let endDate = endAt.parseDate(format: dateFormat) else {
         return 0.0
     }
-    
-    let totalDuration = endDate.timeIntervalSince(startDate)
     
     if currentDate <= startDate {
         return 0.0

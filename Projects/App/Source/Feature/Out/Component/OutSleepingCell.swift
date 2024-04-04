@@ -54,7 +54,9 @@ struct OutSleepingCell: View {
                     if let date = outSleepingData.createdAt.parseDate(
                         format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
                     ) {
-                        return date.parseString(format: "M월 d일 (E)")
+                        return date.parseString(
+                            format: "M월 d일 (E)"
+                        ) + " 신청"
                     }
                     return "시간 오류"
                 }())

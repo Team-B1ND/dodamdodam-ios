@@ -10,7 +10,6 @@ import Combine
 class OutViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var selection: Int = 0
     @Published var outGoingData: [OutGoingResponse]?
     @Published var outSleepingData: [OutSleepingResponse]?
     @Published var isShowingDeleteAlert: Bool = false
