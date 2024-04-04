@@ -38,7 +38,6 @@ class WakeupSongApplyViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         keywordText = ""
         wakeupSongSearchData = nil
         await fetchWakeupSongChart()
@@ -46,7 +45,6 @@ class WakeupSongApplyViewModel: ObservableObject {
     
     @MainActor
     func fetchWakeupSongChart() async {
-        
         do {
             wakeupSongChartData = try await wakeupSongRepository.fetchWakeupSongChart()
         } catch let error {
@@ -57,7 +55,6 @@ class WakeupSongApplyViewModel: ObservableObject {
     
     @MainActor
     func fetchWakeupSongByKeyword(keyword: String) async {
-        
         isSearchLoading = true
         do {
             wakeupSongSearchData = try await wakeupSongRepository.fetchWakeupSongByKeyword(
@@ -73,7 +70,6 @@ class WakeupSongApplyViewModel: ObservableObject {
     
     @MainActor
     func postWakeupSong() async {
-        
         do {
             if !videoUrl.isEmpty {
                 try await wakeupSongRepository.postWakeupSong(
@@ -93,7 +89,6 @@ class WakeupSongApplyViewModel: ObservableObject {
     
     @MainActor
     func clearData() {
-        
         videoUrl = ""
         title = ""
         artist = ""

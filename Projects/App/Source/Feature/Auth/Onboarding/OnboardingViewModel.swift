@@ -18,12 +18,10 @@ class OnboardingViewModel: ObservableObject {
     
     // MARK: - Method
     func onTapRegisterButton() {
-        
         isModalPresented.toggle()
     }
     
     func isChecked() -> Bool {
-        
         isChecked1 && isChecked2
     }
 }

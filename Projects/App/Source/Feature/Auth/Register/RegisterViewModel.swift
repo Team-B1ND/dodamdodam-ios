@@ -26,7 +26,6 @@ class RegisterViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func postJoin(_ completion: @escaping () -> Void) async {
-        
         do {
             _ = try await memberRepository.postJoin(
                 .init(
@@ -47,7 +46,6 @@ class RegisterViewModel: ObservableObject {
     }
     
     private func getNumbersFromString(_ infoText: String) -> [Int] {
-        
         let components = infoText.split(separator: " ")
         let numbers = components.compactMap {
             Int($0.replacingOccurrences(

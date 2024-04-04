@@ -19,19 +19,16 @@ class NightStudyViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         await fetchNightStudy()
     }
     
     @MainActor
     func onRefresh() async {
-
         await fetchNightStudy()
     }
     
     @MainActor
     func fetchNightStudy() async {
-        
         do {
             nightStudyData = try await nightStudyRepository.fetchNightStudy()
         } catch let error {
@@ -41,7 +38,6 @@ class NightStudyViewModel: ObservableObject {
     
     @MainActor
     func deleteNightStudy(id: Int) async {
-        
         do {
             try await nightStudyRepository.deleteNightStudy(id: id)
             await onRefresh()

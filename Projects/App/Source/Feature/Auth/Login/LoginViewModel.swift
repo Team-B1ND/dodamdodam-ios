@@ -21,7 +21,6 @@ class LoginViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func postLogin(_ completion: @escaping () -> Void) async {
-        
         isShowingAlert = false
         do {
             _ = try await authRepository.postLogin(
@@ -35,7 +34,6 @@ class LoginViewModel: ObservableObject {
     }
     
     func isValidIdAndPw() -> Bool {
-        
         let isValidId: Bool = !idText.isEmpty
         let isValidPw: Bool = !pwText.isEmpty
         

@@ -34,7 +34,6 @@ class HomeViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         await fetchBannerData()
         await fetchMaelData()
         await fetchWakeupSongData()
@@ -44,7 +43,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func onRefresh() async {
-        
         await fetchBannerData()
         await fetchMaelData()
         await fetchWakeupSongData()
@@ -54,7 +52,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchBannerData() async {
-        
         do {
             bannerData = try await bannerRepository.fetchActiveBanner()
         } catch let error {
@@ -64,7 +61,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchMaelData() async {
-        
         do {
             mealData = try await mealRepository.fetchMeal(
                 .init(
@@ -80,7 +76,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchWakeupSongData() async {
-        
         do {
             wakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
                 .init(
@@ -96,7 +91,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchOutData() async {
-        
         do {
             let outGoingResponse = try await outGoingRepository.fetchOutGoing()
             let outSleepingResponse = try await outSleepingRepository.fetchOutSleeping()
@@ -120,7 +114,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchNightStudy() async {
-        
         do {
             let response = try await nightStudyRepository.fetchNightStudy()
             guard let earliestResponse = response.min(by: {

@@ -28,14 +28,12 @@ class NightStudyApplyViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         startAt = Date()
         endAt = Date()
     }
     
     @MainActor
     func postNightStudy() async {
-        
         do {
             try await nightStudyRepository.postNightStudy(
                 .init(

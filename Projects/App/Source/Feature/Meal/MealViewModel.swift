@@ -23,7 +23,6 @@ class MealViewModel: ObservableObject {
     
     @MainActor
     func fetchMaelData() async {
-        
         do {
             mealData = try await mealRepository.fetchMonthlyMeal(
                 .init(

@@ -23,14 +23,12 @@ class PointViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         await fetchPointScore()
         await fetchPoint()
     }
     
     @MainActor
     func onRefresh() async {
-        
         clearData()
         await fetchPointScore()
         await fetchPoint()
@@ -38,7 +36,6 @@ class PointViewModel: ObservableObject {
     
     @MainActor
     func fetchPoint() async {
-        
         do {
             domitoryPointData = try await pointRepository.fetchPoint(
                 .init(type: .dormitory)
@@ -53,7 +50,6 @@ class PointViewModel: ObservableObject {
     
     @MainActor
     func fetchPointScore() async {
-        
         do {
             domitoryPointScoreData = try await pointRepository.fetchPointScore(
                 .init(type: .dormitory)
@@ -68,7 +64,6 @@ class PointViewModel: ObservableObject {
     
     @MainActor
     func clearData() {
-        
         domitoryPointData = nil
         schoolPointData = nil
         domitoryPointScoreData = nil
