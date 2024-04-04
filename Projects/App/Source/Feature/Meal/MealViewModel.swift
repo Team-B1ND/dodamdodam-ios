@@ -18,11 +18,11 @@ class MealViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        await fetchMaelData()
+        await fetchMealData()
     }
     
     @MainActor
-    func fetchMaelData() async {
+    func fetchMealData() async {
         do {
             mealData = try await mealRepository.fetchMonthlyMeal(
                 .init(
