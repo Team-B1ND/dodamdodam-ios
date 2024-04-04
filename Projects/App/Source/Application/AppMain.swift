@@ -8,6 +8,7 @@
 import SwiftUI
 import FlowKit
 import SignKit
+import DDS
 
 @propertyWrapper
 public struct Flow: DynamicProperty {
@@ -37,6 +38,10 @@ public struct FlowPreview<C: View>: View {
 
 @main
 struct AppMain: App {
+    
+    init() {
+        SUIT.register()
+    }
     
     var body: some Scene {
         WindowGroup {

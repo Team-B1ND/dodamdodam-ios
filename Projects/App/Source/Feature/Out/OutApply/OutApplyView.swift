@@ -199,7 +199,8 @@ struct OutApplyView: View {
                     flow.pop()
                 }
                 .disabled(
-                    viewModel.reasonText.isEmpty
+                    viewModel.reasonText.isEmpty ||
+                    viewModel.startAt >= viewModel.endAt
                 )
                 .padding(.bottom, 8)
                 .padding(.horizontal, 16)
