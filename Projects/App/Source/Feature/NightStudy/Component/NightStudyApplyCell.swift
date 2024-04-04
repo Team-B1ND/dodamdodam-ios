@@ -24,11 +24,13 @@ struct NightStudyApplyCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch nightStudyData.status.rawValue {
-                        case "ALLOWED": return "승인됨"
-                        case "PENDING": return "대기중"
-                        case "DENIED": return "거절됨"
-                        default: return ""
+                        switch nightStudyData.status {
+                        case .allowed: 
+                            return "승인됨"
+                        case .pending: 
+                            return "대기중"
+                        case .rejected:
+                            return "거절됨"
                         }
                     }())
                     .font(.title(.small))
@@ -38,22 +40,24 @@ struct NightStudyApplyCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch nightStudyData.status.rawValue {
-                    case "ALLOWED": return Dodam.color(.primary)
-                    case "PENDING": return Dodam.color(.onSurfaceVariant)
-                    case "DENIED": return Dodam.color(.error)
-                    default: return Dodam.color(.primary)
+                    switch nightStudyData.status {
+                    case .allowed: 
+                        return Dodam.color(.primary)
+                    case .pending: 
+                        return Dodam.color(.onSurfaceVariant)
+                    case .rejected:
+                        return Dodam.color(.error)
                     }
                 }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({ () -> String in
                     if let date = nightStudyData.createdAt.parseDate(
-                        format: "yyyy-MM-dd HH:mm:ss"
+                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
                     ) {
                         return date.parseString(format: "M월 d일 (E)")
                     }
-                    return "오류"
+                    return "시간 오류"
                 }())
                 .font(.label(.large))
                 .dodamColor(.onSurfaceVariant)
@@ -69,13 +73,12 @@ struct NightStudyApplyCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if nightStudyData.status.rawValue == "DENIED" {
+                if nightStudyData.status == .rejected {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
                             .dodamColor(.onSurfaceVariant)
-                        // 나중에 거절 사유 추가되면 데이터 넣기
-                        Text("선생님께서 심자 신청을 거절하였습니다")
+                        Text("\(nightStudyData.rejectReason ?? "선생님께서 심야 자습 신청을 거절하였습니다")")
                             .font(.system(size: 16, weight: .medium))
                             .dodamColor(.onSurface)
                         Spacer()
@@ -87,11 +90,11 @@ struct NightStudyApplyCell: View {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text({ () -> String in
                                     if let date = nightStudyData.startAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                        format: "yyyy-MM-dd"
                                     ) {
                                         return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -101,11 +104,11 @@ struct NightStudyApplyCell: View {
                                 Spacer()
                                 Text({ () -> String in
                                     if let date = nightStudyData.endAt.parseDate(
-                                        format: "yyyy-MM-dd HH:mm:ss"
+                                        format: "yyyy-MM-dd"
                                     ) {
                                         return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -117,13 +120,14 @@ struct NightStudyApplyCell: View {
                                 progress: calculatingDateProgress(
                                     startAt: nightStudyData.startAt,
                                     endAt: nightStudyData.endAt,
-                                    dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
+                                    dateFormat: "yyyy-MM-dd"
                                 ),
-                                isDisabled: nightStudyData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: nightStudyData.status == .pending ? true : false
                             )
                         }
                     }
-                    if let reasonForPhone = nightStudyData.reasonForPhone {
+                    if let reasonForPhone = nightStudyData.reasonForPhone,
+                       nightStudyData.doNeedPhone {
                         HStack(spacing: 8) {
                             Text("휴대폰 사유")
                                 .font(.label(.large))

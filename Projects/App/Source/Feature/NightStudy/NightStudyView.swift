@@ -16,9 +16,17 @@ struct NightStudyView: View {
     var body: some View {
         DodamScrollView.default(title: "심야 자습") {
             VStack(spacing: 20) {
-                if let datas = viewModel.nightStudyData {
-                    ForEach(datas, id: \.self) { data in
-                       NightStudyApplyCell(data: data)
+                if let data = viewModel.nightStudyData,
+                   !data.isEmpty {
+                    ForEach(data, id: \.self) { data in
+                        Button {
+                            
+                        } label: {
+                            NightStudyApplyCell(
+                                data: data
+                            )
+                        }
+                        .scaledButtonStyle()
                     }
                 } else {
                     DodamEmptyView(
@@ -28,10 +36,17 @@ struct NightStudyView: View {
                     }
                 }
             }
-            .padding(.horizontal, 16)
+            .padding([.top, .horizontal], 16)
         }
         .button(icon: .plus) {
             flow.push(NightStudyApplyView())
+        }
+        .background(Dodam.color(.surface))
+        .task {
+            await viewModel.onAppear()
+        }
+        .refreshable {
+            await viewModel.onRefresh()
         }
     }
 }

@@ -87,6 +87,7 @@ struct AllView: View {
                             .padding(.trailing, 4)
                     }
                 }
+                .scaledButtonStyle()
                 
                 Button {
                     flow.push(BusApplyView())
@@ -113,6 +114,7 @@ struct AllView: View {
                             .padding(.trailing, 4)
                     }
                 }
+                .scaledButtonStyle()
                 
                 Button {
                     flow.push(WakeupSongView())
@@ -139,6 +141,7 @@ struct AllView: View {
                             .padding(.trailing, 4)
                     }
                 }
+                .scaledButtonStyle()
                 
                 Button {
                     flow.push(WakeupSongApplyView())
@@ -165,6 +168,7 @@ struct AllView: View {
                             .padding(.trailing, 4)
                     }
                 }
+                .scaledButtonStyle()
                 
                 Button {
                     viewModel.isShowingLogoutAlert.toggle()
@@ -192,6 +196,7 @@ struct AllView: View {
                             .padding(.trailing, 4)
                     }
                 }
+                .scaledButtonStyle()
             }
             .padding([.top, .horizontal], 16)
         }

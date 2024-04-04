@@ -10,7 +10,6 @@ import Combine
 class OutViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var selection: Int = 0
     @Published var outGoingData: [OutGoingResponse]?
     @Published var outSleepingData: [OutSleepingResponse]?
     @Published var isShowingDeleteAlert: Bool = false
@@ -29,6 +28,7 @@ class OutViewModel: ObservableObject {
     @MainActor
     func onRefresh() async {
 
+//        clearData()
         await fetchOutData()
     }
     
@@ -48,6 +48,7 @@ class OutViewModel: ObservableObject {
         
         do {
             try await outGoingRepository.deleteOutGoing(id: id)
+            await onRefresh()
         } catch let error {
             print(error)
         }
@@ -58,17 +59,16 @@ class OutViewModel: ObservableObject {
         
         do {
             try await outSleepingRepository.deleteOutSleeping(id: id)
+            await onRefresh()
         } catch let error {
             print(error)
         }
     }
     
-    /*
-    @MainActor
-    func clearData() {
-        
-        outGoingData = nil
-        outSleepingData = nil
-    }
-     */
+//    @MainActor
+//    func clearData() {
+//        
+//        outGoingData = nil
+//        outSleepingData = nil
+//    }
 }

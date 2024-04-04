@@ -17,7 +17,7 @@ struct NightStudyDataSource: DataSourceProtocol {
         _ = try await remote.deleteNightStudy(id: id)
     }
     
-    func fetchNightStudy() async throws -> NightStudyResponse {
+    func fetchNightStudy() async throws -> [NightStudyResponse] {
         let response = try await remote.fetchNightStudy()
         return response.data
     }

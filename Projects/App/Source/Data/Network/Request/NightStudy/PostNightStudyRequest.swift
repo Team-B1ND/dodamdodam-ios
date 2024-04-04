@@ -7,7 +7,7 @@
 
 struct PostNightStudyRequest: RequestProtocol {
     
-    let place: Place
+    let place: String
     let content: String
     let doNeedPhone: Bool
     let reasonForPhone: String?

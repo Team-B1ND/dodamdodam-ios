@@ -13,10 +13,12 @@ struct OutView: View {
     @InjectObject var viewModel: OutViewModel
     @Flow var flow
     
+    @State var selection: Int = 0
+    
     var body: some View {
         DodamScrollView.default(title: "외출/외박") {
             VStack(spacing: 12) {
-                if viewModel.selection == 0 {
+                if selection == 0 {
                     if let data = viewModel.outGoingData,
                        !data.isEmpty {
                         ForEach(data, id: \.self) { data in
@@ -46,11 +48,13 @@ struct OutView: View {
                         DodamEmptyView(
                             .outGoing
                         ) {
-                            flow.push(OutApplyView())
+                            flow.push(OutApplyView(
+                                selected: $selection
+                            ))
                         }
                     }
                 }
-                if viewModel.selection == 1 {
+                if selection == 1 {
                     if let data = viewModel.outSleepingData,
                        !data.isEmpty {
                         ForEach(data, id: \.self) { data in
@@ -80,7 +84,9 @@ struct OutView: View {
                         DodamEmptyView(
                             .outSleeping
                         ) {
-                            flow.push(OutApplyView())
+                            flow.push(OutApplyView(
+                                selected: $selection
+                            ))
                         }
                     }
                 }
@@ -91,11 +97,13 @@ struct OutView: View {
         .subView {
             SegmentedView(
                 labels: ["외출", "외박"],
-                selection: $viewModel.selection
+                selection: $selection
             )
         }
         .button(icon: .plus) {
-            flow.push(OutApplyView())
+            flow.push(OutApplyView(
+                selected: $selection
+            ))
         }
         .background(Dodam.color(.surface))
         .task {

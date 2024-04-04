@@ -11,31 +11,14 @@ import Foundation
 class OutApplyViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var selection: Int = 0 {
-        didSet {
-            reasonText = ""
-        }
-    }
     @Published var reasonText: String = ""
-    @Published var startAt: Date = Date() {
-        didSet {
-            print("test", startAt)
-            startDate = startAt.parseString(format: "M월 d일 HH:MM")
-            print("test", startDate)
-        }
-    }
-    @Published var endAt: Date = Date() {
-        didSet {
-            print("test", endAt)
-            endDate = endAt.parseString(format: "M월 d일 HH:MM")
-            print("test", startDate)
-        }
-    }
-    @Published var startDate: String = ""
-    @Published var endDate: String = ""
+    @Published var dateAt: Date = Date()
+    @Published var startAt: Date = Date()
+    @Published var endAt: Date = Date()
     
-    @Published var isModalPresented: Bool = false
-    @Published var focused: Bool = true
+    @Published var isStartAtModalPresented: Bool = false
+    @Published var isEndAtModalPresented: Bool = false
+    @Published var isOutDateModalPresented: Bool = false
     
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository
@@ -50,28 +33,18 @@ class OutApplyViewModel: ObservableObject {
     }
     
     @MainActor
-    func onTapApplyButton() async {
-        
-        if selection == 0 {
-            await postOutGoing()
-        } else {
-            await postOutSleeping()
-        }
-    }
-    
-    @MainActor
     func postOutGoing() async {
         
         do {
+            let dateAtString = dateAt.parseString(format: "yyyy-MM-dd")
+            let startAtTimeString = startAt.parseString(format: "HH:mm:ss")
+            let entAtTimeString = endAt.parseString(format: "HH:mm:ss")
+            
             try await outGoingRepository.postOutGoing(
                 .init(
                     reason: reasonText,
-                    startAt: startAt.parseString(
-                        format: "yyyy-MM-dd'T'HH:mm:ss"
-                    ),
-                    endAt: endAt.parseString(
-                        format: "yyyy-MM-dd'T'HH:mm:ss"
-                    )
+                    startAt: "\(dateAtString)T\(startAtTimeString)",
+                    endAt: "\(dateAtString)T\(entAtTimeString)"
                 )
             )
         } catch let error {

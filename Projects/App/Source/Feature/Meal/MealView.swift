@@ -37,7 +37,7 @@ struct MealView: View {
                         let date = datas.date.parseDate(format: "yyyy-MM-dd")
                         Text({ () -> String in
                             guard let date else {
-                                return "오류"
+                                return "시간 오류"
                             }
                             let formattedDate = date.parseString(format: "M월 d일 EEEE")
                             return formattedDate

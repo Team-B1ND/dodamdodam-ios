@@ -23,11 +23,13 @@ struct OutSleepingCell: View {
             HStack(spacing: 12) {
                 ZStack {
                     Text({ () -> String in
-                        switch outSleepingData.status.rawValue {
-                        case "ALLOWED": return "승인됨"
-                        case "PENDING": return "대기중"
-                        case "DENIED": return "거절됨"
-                        default: return ""
+                        switch outSleepingData.status {
+                        case .allowed: 
+                            return "승인됨"
+                        case .pending: 
+                            return "대기중"
+                        case .rejected:
+                            return "거절됨"
                         }
                     }())
                     .font(.title(.small))
@@ -37,11 +39,13 @@ struct OutSleepingCell: View {
                 }
                 .frame(height: 27)
                 .background({ () -> Color in
-                    switch outSleepingData.status.rawValue {
-                    case "ALLOWED": return Dodam.color(.primary)
-                    case "PENDING": return Dodam.color(.onSurfaceVariant)
-                    case "DENIED": return Dodam.color(.error)
-                    default: return Dodam.color(.primary)
+                    switch outSleepingData.status {
+                    case .allowed: 
+                        return Dodam.color(.primary)
+                    case .pending: 
+                        return Dodam.color(.onSurfaceVariant)
+                    case .rejected: 
+                        return Dodam.color(.error)
                     }
                 }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
@@ -50,7 +54,9 @@ struct OutSleepingCell: View {
                     if let date = outSleepingData.createdAt.parseDate(
                         format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
                     ) {
-                        return date.parseString(format: "M월 d일 (E)")
+                        return date.parseString(
+                            format: "M월 d일 (E)"
+                        ) + " 신청"
                     }
                     return "시간 오류"
                 }())
@@ -68,13 +74,12 @@ struct OutSleepingCell: View {
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Dodam.color(.secondary))
-                if outSleepingData.status.rawValue == "DENIED" {
+                if outSleepingData.status == .rejected {
                     HStack(spacing: 8) {
                         Text("거절 사유")
                             .font(.label(.large))
                             .dodamColor(.onSurfaceVariant)
-                        // 나중에 거절 사유 추가되면 데이터 넣기
-                        Text("선생님께서 외출을 거절하였습니다")
+                        Text("\(outSleepingData.rejectReason ?? "선생님께서 외박 신청을 거절하였습니다.")")
                             .font(.system(size: 16, weight: .medium))
                             .dodamColor(.onSurface)
                         Spacer()
@@ -118,7 +123,7 @@ struct OutSleepingCell: View {
                                     endAt: outSleepingData.endAt,
                                     dateFormat: "yyyy-MM-dd"
                                 ),
-                                isDisabled: outSleepingData.status.rawValue == "PENDING" ? true : false
+                                isDisabled: outSleepingData.status == .pending ? true : false
                             )
                         }
                     }

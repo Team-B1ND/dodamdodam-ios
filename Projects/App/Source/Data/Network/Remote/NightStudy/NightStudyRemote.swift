@@ -19,8 +19,8 @@ struct NightStudyRemote: RemoteProtocol {
             .map(DefaultResponse.self, using: decoder)
     }
     
-    func fetchNightStudy() async throws -> Response<NightStudyResponse> {
+    func fetchNightStudy() async throws -> Response<[NightStudyResponse]> {
         try await self.request(target: .fetchNightStudy)
-            .map(Response<NightStudyResponse>.self, using: decoder)
+            .map(Response<[NightStudyResponse]>.self, using: decoder)
     }
 }

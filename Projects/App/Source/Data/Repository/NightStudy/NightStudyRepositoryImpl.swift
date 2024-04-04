@@ -17,7 +17,7 @@ struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.deleteNightStudy(id: id)
     }
     
-    func fetchNightStudy() async throws -> NightStudyResponse {
+    func fetchNightStudy() async throws -> [NightStudyResponse] {
         try await dataSource.fetchNightStudy()
     }
 }
