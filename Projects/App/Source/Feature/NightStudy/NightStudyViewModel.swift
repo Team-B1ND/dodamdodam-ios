@@ -44,6 +44,7 @@ class NightStudyViewModel: ObservableObject {
         
         do {
             try await nightStudyRepository.deleteNightStudy(id: id)
+            await onRefresh()
         } catch let error {
             print(error)
         }

@@ -66,7 +66,7 @@ struct HomeView: View {
                             selection = 2
                         } label: {
                             OutStatusContainer(
-                                data: nil
+                                data: viewModel.outGoingData
                             )
                             .padding(6)
                         }
@@ -117,6 +117,9 @@ struct HomeView: View {
         .task {
             await viewModel.onAppear()
             viewModel.ringCount = 0
+        }
+        .refreshable {
+            await viewModel.onRefresh()
         }
         .alert(
             "도담도담에 무언가 변화가 생겼습니다.",
