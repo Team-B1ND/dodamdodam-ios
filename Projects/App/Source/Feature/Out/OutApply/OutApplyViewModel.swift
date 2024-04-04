@@ -19,16 +19,12 @@ class OutApplyViewModel: ObservableObject {
     @Published var reasonText: String = ""
     @Published var startAt: Date = Date() {
         didSet {
-            print("test", startAt)
             startDate = startAt.parseString(format: "M월 d일 HH:MM")
-            print("test", startDate)
         }
     }
     @Published var endAt: Date = Date() {
         didSet {
-            print("test", endAt)
             endDate = endAt.parseString(format: "M월 d일 HH:MM")
-            print("test", startDate)
         }
     }
     @Published var startDate: String = ""

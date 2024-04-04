@@ -57,7 +57,7 @@ struct NightStudyApplyCell: View {
                     ) {
                         return date.parseString(format: "M월 d일 (E)")
                     }
-                    return "오류"
+                    return "시간 오류"
                 }())
                 .font(.label(.large))
                 .dodamColor(.onSurfaceVariant)
@@ -95,7 +95,7 @@ struct NightStudyApplyCell: View {
                                     ) {
                                         return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)
@@ -109,7 +109,7 @@ struct NightStudyApplyCell: View {
                                     ) {
                                         return date.parseString(format: "M월 d일")
                                     }
-                                    return "오류"
+                                    return "시간 오류"
                                 }())
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)

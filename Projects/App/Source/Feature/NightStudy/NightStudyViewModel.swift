@@ -34,7 +34,6 @@ class NightStudyViewModel: ObservableObject {
         
         do {
             nightStudyData = try await nightStudyRepository.fetchNightStudy()
-            print("test: ", nightStudyData)
         } catch let error {
             print(error)
         }

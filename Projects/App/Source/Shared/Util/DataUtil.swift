@@ -48,10 +48,6 @@ public func calculatingDateProgress(
     
     let totalDuration = endDate.timeIntervalSince(startDate)
     
-    print("\ntest 현재", currentDate)
-    print("test 시작", startDate)
-    print("test 끝", endDate)
-    print("")
     if currentDate <= startDate {
         return 0.0
     } else if currentDate >= endDate {

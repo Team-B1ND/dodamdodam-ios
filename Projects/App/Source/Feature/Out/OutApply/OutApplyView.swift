@@ -99,6 +99,13 @@ struct OutApplyView: View {
                 if viewModel.selection == 0 {
                     // dodam picker
                     Text("시작 시간 피커")
+                    DatePicker(
+                        "날짜",
+                        selection: $viewModel.startAt,
+                        displayedComponents: [.hourAndMinute]
+                    )
+                    .datePickerStyle(WheelDatePickerStyle())
+                    .labelsHidden()
                 } else {
                     // dodam picker
                     Text("끝 시간 피커")
