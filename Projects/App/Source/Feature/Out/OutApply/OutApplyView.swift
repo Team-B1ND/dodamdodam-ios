@@ -23,6 +23,7 @@ struct OutApplyView: View {
                     title: "\(selected == 0 ? "외출" : "외박") 사유",
                     text: $viewModel.reasonText
                 )
+                .makeFirstResponder()
                 .focused($focused)
                 .padding(.horizontal, 24)
                 VStack(spacing: 16) {

@@ -125,7 +125,6 @@ struct MealView: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 150)
         }
         .background(Dodam.color(.surface))
         .task {

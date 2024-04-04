@@ -22,19 +22,21 @@ struct OutView: View {
                     if let data = viewModel.outGoingData,
                        !data.isEmpty {
                         ForEach(data, id: \.self) { data in
-                            Button {
-                                viewModel.isShowingDeleteAlert.toggle()
-                            } label: {
-                                OutGoingCell(
-                                    data: data
-                                )
+                            OutGoingCell(
+                                data: data
+                            )
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    viewModel.isShowingDeleteAlert.toggle()
+                                } label: {
+                                    Label("삭제", systemImage: "trash")
+                                }
                             }
-                            .scaledButtonStyle()
                             .alert(
                                 "해당 외출 신청을 삭제하시겠습니까?",
                                 isPresented: $viewModel.isShowingDeleteAlert
                             ) {
-                                Button("네", role: .none) {
+                                Button("삭제", role: .destructive) {
                                     Task {
                                         await viewModel.deleteOutGoing(
                                             id: data.id
@@ -58,19 +60,21 @@ struct OutView: View {
                     if let data = viewModel.outSleepingData,
                        !data.isEmpty {
                         ForEach(data, id: \.self) { data in
-                            Button {
-                                viewModel.isShowingDeleteAlert.toggle()
-                            } label: {
-                                OutSleepingCell(
-                                    data: data
-                                )
+                            OutSleepingCell(
+                                data: data
+                            )
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    viewModel.isShowingDeleteAlert.toggle()
+                                } label: {
+                                    Label("삭제", systemImage: "trash")
+                                }
                             }
-                            .scaledButtonStyle()
                             .alert(
                                 "해당 외박 신청을 삭제하시겠습니까?",
                                 isPresented: $viewModel.isShowingDeleteAlert
                             ) {
-                                Button("네", role: .none) {
+                                Button("삭제", role: .destructive) {
                                     Task {
                                         await viewModel.deleteOutSleeping(
                                             id: data.id
@@ -92,7 +96,6 @@ struct OutView: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 150)
         }
         .subView {
             SegmentedView(
