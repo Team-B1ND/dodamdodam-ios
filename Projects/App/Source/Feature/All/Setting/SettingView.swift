@@ -37,7 +37,6 @@ struct SettingView: View {
                                 .shimmer()
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 48))
-                        .padding([.leading, .vertical], 8)
                     } else {
                         Image("Profile")
                             .resizable()
@@ -49,13 +48,14 @@ struct SettingView: View {
                             Text("\(student.name)")
                                 .font(.body(.large))
                                 .dodamColor(.onBackground)
-                            Text("\(student.grade)학년 \(student.room)반 \(student.number)번")
+                            Text("정보 수정은 곧 추가됩니다")
                                 .font(.label(.large))
                                 .dodamColor(.tertiary)
                         }
                     }
                     Spacer()
                 }
+                .padding([.leading, .vertical], 8)
                 
                 Rectangle()
                     .dodamFill(.outlineVariant)
@@ -108,7 +108,7 @@ struct SettingView: View {
                         .font(.system(size: 18, weight: .medium))
                         .dodamColor(.onBackground)
                     Spacer()
-                    Text("1.0.0")
+                    Text("\(getAppVersion())")
                         .font(.system(size: 18, weight: .regular))
                         .dodamColor(.tertiary)
                 }
@@ -137,7 +137,7 @@ struct SettingView: View {
                 }
                 .scaledButtonStyle()
             }
-            .padding([.top, .horizontal], 16)
+            .padding(.horizontal, 16)
         }
         .alert(
             "로그아웃 하시겠습니까?",

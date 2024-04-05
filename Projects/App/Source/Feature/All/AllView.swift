@@ -126,6 +126,34 @@ struct AllView: View {
                     .scaledButtonStyle()
                     
                     Button {
+                        flow.push(NightStudyApplyView())
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Rectangle()
+                                    .dodamFill(.secondary)
+                                    .frame(width: 32, height: 32)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                Image(icon: .tent)
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            }
+                            .padding(.vertical, 4)
+                            .padding(.leading, 8)
+                            Text("외출/외박 확인하기")
+                                .font(.system(size: 18, weight: .medium))
+                                .dodamColor(.onBackground)
+                            Spacer()
+                            Image(icon: .chevronRight)
+                                .resizable()
+                                .frame(width: 14, height: 14)
+                                .dodamColor(.onSurfaceVariant)
+                                .padding(.trailing, 4)
+                        }
+                    }
+                    .scaledButtonStyle()
+                    
+                    Button {
                         flow.push(WakeupSongView())
                     } label: {
                         HStack(spacing: 16) {
