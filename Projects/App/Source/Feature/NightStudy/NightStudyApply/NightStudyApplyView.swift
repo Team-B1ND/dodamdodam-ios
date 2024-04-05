@@ -24,6 +24,7 @@ struct NightStudyApplyView: View {
                 .makeFirstResponder()
                 .padding(.top, 16)
                 .padding(.horizontal, 8)
+                .focused($focused)
                 
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
@@ -112,6 +113,7 @@ struct NightStudyApplyView: View {
                             text: $viewModel.reasonForPhoneText
                         )
                         .padding(.horizontal, 8)
+                        .focused($focused)
                     }
                 }
             }

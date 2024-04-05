@@ -182,6 +182,7 @@ struct AllView: View {
                     .scaledButtonStyle()
                     
                     Button {
+                        flow.push(WakeupSongView(), animated: false)
                         flow.push(WakeupSongApplyView())
                     } label: {
                         HStack(spacing: 16) {
