@@ -2,7 +2,7 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project = Project(
-    name: "DodamDodam",
+    name: "MealWidget",
     options: .options(
         defaultKnownRegions: ["en", "ko"],
         developmentRegion: "ko"
@@ -17,33 +17,26 @@ let project = Project(
     ),
     targets: [
         .target(
-            name: "DodamDodam",
+            name: "DodamDodam-MealWidget",
             destinations: .iOS,
-            product: .app,
-            bundleId: "com.b1nd.dodam",
+            product: .appExtension,
+            bundleId: "com.b1nd.dodam.widget.meal",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .extendingDefault(
                 with: [
                     "CFBundleDisplayName": "도담도담",
-                    "CFBundleShortVersionString": "1.0",
-                    "CFBundleVersion": "1",
-                    "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
-                    "UIMainStoryboardFile": "",
-                    "UILaunchStoryboardName": "LaunchScreen",
-                    "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true]
+                    "NSExtension": [
+                        "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
+                    ]
                 ]
             ),
             sources: ["Source/**"],
             resources: ["Resource/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .project(target: "DodamDodam-MealWidget", path: "../Widget/Meal"),
                 .external(name: "DDS"),
                 .external(name: "Moya"),
                 .external(name: "Swinject"),
-                .external(name: "FlowKit"),
-                .external(name: "SignKit"),
-                .external(name: "CachedAsyncImage")
             ]
         )
     ]
