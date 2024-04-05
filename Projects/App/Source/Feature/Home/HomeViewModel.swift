@@ -11,6 +11,7 @@ import Foundation
 class HomeViewModel: ObservableObject {
     
     // MARK: - State
+    @Published var isFirstLoad: Bool = true
     @Published var mealIdx: Int = -1
     @Published var isShowingAlert: Bool = false
     @Published var ringCount: Int = 0
@@ -34,27 +35,31 @@ class HomeViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         await fetchBannerData()
-        await fetchMaelData()
+        await fetchMealData()
         await fetchWakeupSongData()
         await fetchOutData()
         await fetchNightStudy()
+        isFirstLoad = false
     }
     
     @MainActor
     func onRefresh() async {
-        
-        await fetchBannerData()
-        await fetchMaelData()
-        await fetchWakeupSongData()
-        await fetchOutData()
-        await fetchNightStudy()
+        clearData()
+        await onAppear()
+    }
+    
+    func clearData() {
+        bannerData = nil
+        mealData = nil
+        wakeupSongData = nil
+        outGoingData = nil
+        outSleepingData = nil
+        nightStudyData = nil
     }
     
     @MainActor
     func fetchBannerData() async {
-        
         do {
             bannerData = try await bannerRepository.fetchActiveBanner()
         } catch let error {
@@ -63,8 +68,7 @@ class HomeViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchMaelData() async {
-        
+    func fetchMealData() async {
         do {
             mealData = try await mealRepository.fetchMeal(
                 .init(
@@ -80,7 +84,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchWakeupSongData() async {
-        
         do {
             wakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
                 .init(
@@ -96,7 +99,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchOutData() async {
-        
         do {
             let outGoingResponse = try await outGoingRepository.fetchOutGoing()
             let outSleepingResponse = try await outSleepingRepository.fetchOutSleeping()
@@ -120,7 +122,6 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchNightStudy() async {
-        
         do {
             let response = try await nightStudyRepository.fetchNightStudy()
             guard let earliestResponse = response.min(by: {

@@ -21,20 +21,23 @@ class OutViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         await fetchOutData()
     }
     
     @MainActor
     func onRefresh() async {
-
-//        clearData()
+        clearData()
         await fetchOutData()
     }
     
     @MainActor
+    func clearData() {
+        outGoingData = nil
+        outSleepingData = nil
+    }
+    
+    @MainActor
     func fetchOutData() async {
-        
         do {
             outGoingData = try await outGoingRepository.fetchOutGoing()
             outSleepingData = try await outSleepingRepository.fetchOutSleeping()
@@ -45,7 +48,6 @@ class OutViewModel: ObservableObject {
     
     @MainActor
     func deleteOutGoing(id: Int) async {
-        
         do {
             try await outGoingRepository.deleteOutGoing(id: id)
             await onRefresh()
@@ -56,7 +58,6 @@ class OutViewModel: ObservableObject {
     
     @MainActor
     func deleteOutSleeping(id: Int) async {
-        
         do {
             try await outSleepingRepository.deleteOutSleeping(id: id)
             await onRefresh()
@@ -64,11 +65,4 @@ class OutViewModel: ObservableObject {
             print(error)
         }
     }
-    
-//    @MainActor
-//    func clearData() {
-//        
-//        outGoingData = nil
-//        outSleepingData = nil
-//    }
 }

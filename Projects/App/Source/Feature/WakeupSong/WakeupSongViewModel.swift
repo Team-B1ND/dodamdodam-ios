@@ -22,7 +22,6 @@ class WakeupSongViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         await fetchAllowedWakeupSong()
         await fetchPendingWakeupSong()
         await fetchMyWakeupSong()
@@ -30,16 +29,18 @@ class WakeupSongViewModel: ObservableObject {
     
     @MainActor
     func onRefresh() async {
-        
         clearData()
-        await fetchAllowedWakeupSong()
-        await fetchPendingWakeupSong()
-        await fetchMyWakeupSong()
+        await onAppear()
+    }
+    
+    func clearData() {
+        allowedWakeupSongData = nil
+        pendingWakeupSongData = nil
+        myWakeupSongData = nil
     }
     
     @MainActor
     func fetchAllowedWakeupSong() async {
-        
         do {
             allowedWakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
                 .init(
@@ -55,7 +56,6 @@ class WakeupSongViewModel: ObservableObject {
     
     @MainActor
     func fetchPendingWakeupSong() async {
-        
         do {
             pendingWakeupSongData = try await wakeupSongRepository.fetchPendingWakeupSong()
         } catch let error {
@@ -65,7 +65,6 @@ class WakeupSongViewModel: ObservableObject {
     
     @MainActor
     func fetchMyWakeupSong() async {
-        
         do {
             myWakeupSongData = try await wakeupSongRepository.fetchWakeupSong()
         } catch let error {
@@ -75,19 +74,10 @@ class WakeupSongViewModel: ObservableObject {
     
     @MainActor
     func deleteWakeupSong(id: Int) async {
-        
         do {
             try await wakeupSongRepository.deleteWakeupSong(id: id)
         } catch let error {
             print(error)
         }
-    }
-    
-    @MainActor
-    func clearData() {
-        
-        allowedWakeupSongData = nil
-        pendingWakeupSongData = nil
-        myWakeupSongData = nil
     }
 }

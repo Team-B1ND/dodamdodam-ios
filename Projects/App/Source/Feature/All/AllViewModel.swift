@@ -20,13 +20,21 @@ class AllViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        
         await fetchMemberData()
     }
     
     @MainActor
+    func onRefresh() async {
+        clearData()
+        await onAppear()
+    }
+    
+    func clearData() {
+        memberData = nil
+    }
+    
+    @MainActor
     func fetchMemberData() async {
-        
         do {
             memberData = try await memberRepository.fetchInfo()
         } catch let error {
@@ -35,7 +43,6 @@ class AllViewModel: ObservableObject {
     }
     
     func logout() {
-        
         isShowingLogoutAlert.toggle()
         Sign.logout()
     }
