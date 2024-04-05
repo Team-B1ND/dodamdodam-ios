@@ -45,7 +45,6 @@ struct OutApplyView: View {
                                     .frame(width: 14, height: 14)
                                     .dodamColor(.onSurfaceVariant)
                             }
-                            .contentShape(Rectangle())
                             .padding(.horizontal, 8)
                             .frame(height: 40)
                         }
@@ -77,7 +76,6 @@ struct OutApplyView: View {
                                 .frame(width: 14, height: 14)
                                 .dodamColor(.onSurfaceVariant)
                         }
-                        .contentShape(Rectangle())
                         .padding(.horizontal, 8)
                         .frame(height: 40)
                     }
@@ -108,7 +106,6 @@ struct OutApplyView: View {
                                 .frame(width: 14, height: 14)
                                 .dodamColor(.onSurfaceVariant)
                         }
-                        .contentShape(Rectangle())
                         .padding(.horizontal, 8)
                         .frame(height: 40)
                     }
