@@ -109,10 +109,12 @@ struct OnboardingView: View {
                                 : .outline
                             )
                     }
-                    Link(
-                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")
-                        ?? URL(string: "about:blank")!
-                    ) {
+                    Button{
+                        guard let url = URL(
+                            string: "https://dodam.b1nd.com/detailed-information/personal-information"
+                        ) else { return }
+                        UIApplication.shared.open(url)
+                    } label: {
                         Text("(필수) 서비스 이용약관")
                             .font(.body(.small))
                             .dodamColor(.tertiary)
@@ -122,6 +124,7 @@ struct OnboardingView: View {
                             .frame(width: 16, height: 16)
                             .dodamColor(.onSurfaceVariant)
                     }
+                    .scaledButtonStyle()
                 }
                 .frame(height: 32)
                 
@@ -138,9 +141,12 @@ struct OnboardingView: View {
                                 : .outline
                             )
                     }
-                    Link(
-                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/service-policy")!
-                    ) {
+                    Button {
+                        guard let url = URL(
+                            string: "https://dodam.b1nd.com/detailed-information/service-policy"
+                        ) else { return }
+                        UIApplication.shared.open(url)
+                    } label: {
                         Text("(필수) 개인정보 수집 및 이용에 대한 안내")
                             .font(.body(.small))
                             .dodamColor(.tertiary)
@@ -150,6 +156,7 @@ struct OnboardingView: View {
                             .frame(width: 16, height: 16)
                             .dodamColor(.onSurfaceVariant)
                     }
+                    .scaledButtonStyle()
                 }
                 .frame(height: 32)
             }

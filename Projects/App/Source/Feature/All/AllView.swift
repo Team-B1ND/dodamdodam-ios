@@ -59,164 +59,143 @@ struct AllView: View {
                                 .frame(width: 90, height: 16)
                                 .shimmer()
                         }
-                   }
+                    }
                     Spacer()
                 }
-                Button {
-                    flow.push(PointView())
-                } label: {
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Rectangle()
-                                .dodamFill(.secondary)
-                                .frame(width: 32, height: 32)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Image(icon: .barChart)
+                VStack(spacing: 12) {
+                    Button {
+                        flow.push(PointView())
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Rectangle()
+                                    .dodamFill(.secondary)
+                                    .frame(width: 32, height: 32)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                Image(icon: .barChart)
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            }
+                            .padding(.vertical, 4)
+                            .padding(.leading, 8)
+                            Text("내 상벌점 보기")
+                                .font(.system(size: 18, weight: .medium))
+                                .dodamColor(.onBackground)
+                            Spacer()
+                            Image(icon: .chevronRight)
                                 .resizable()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 14, height: 14)
+                                .dodamColor(.onSurfaceVariant)
+                                .padding(.trailing, 4)
                         }
-                        .padding(.leading, 8)
-                        Text("내 상벌점 보기")
-                            .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.onBackground)
-                        Spacer()
-                        Image(icon: .chevronRight)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .dodamColor(.onSurfaceVariant)
-                            .padding(.trailing, 4)
                     }
-                }
-                .scaledButtonStyle()
-                
-                Button {
-                    flow.push(BusApplyView())
-                } label: {
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Rectangle()
-                                .dodamFill(.secondary)
-                                .frame(width: 32, height: 32)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Image(icon: .colorfulBus)
+                    .scaledButtonStyle()
+                    
+                    Rectangle()
+                        .dodamFill(.outlineVariant)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 1)
+                        .padding(.horizontal, 8)
+                    
+                    Button {
+                        flow.push(BusApplyView())
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Rectangle()
+                                    .dodamFill(.secondary)
+                                    .frame(width: 32, height: 32)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                Image(icon: .colorfulBus)
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            }
+                            .padding(.vertical, 4)
+                            .padding(.leading, 8)
+                            Text("귀가 버스 신청하기")
+                                .font(.system(size: 18, weight: .medium))
+                                .dodamColor(.onBackground)
+                            Spacer()
+                            Image(icon: .chevronRight)
                                 .resizable()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 14, height: 14)
+                                .dodamColor(.onSurfaceVariant)
+                                .padding(.trailing, 4)
                         }
-                        .padding(.leading, 8)
-                        Text("귀가 버스 신청하기")
-                            .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.onBackground)
-                        Spacer()
-                        Image(icon: .chevronRight)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .dodamColor(.onSurfaceVariant)
-                            .padding(.trailing, 4)
                     }
-                }
-                .scaledButtonStyle()
-                
-                Button {
-                    flow.push(WakeupSongView())
-                } label: {
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Rectangle()
-                                .dodamFill(.secondary)
-                                .frame(width: 32, height: 32)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Image(icon: .wakeupMegaphone)
+                    .scaledButtonStyle()
+                    
+                    Button {
+                        flow.push(WakeupSongView())
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Rectangle()
+                                    .dodamFill(.secondary)
+                                    .frame(width: 32, height: 32)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                Image(icon: .wakeupMegaphone)
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            }
+                            .padding(.vertical, 4)
+                            .padding(.leading, 8)
+                            Text("기상송 확인하기")
+                                .font(.system(size: 18, weight: .medium))
+                                .dodamColor(.onBackground)
+                            Spacer()
+                            Image(icon: .chevronRight)
                                 .resizable()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 14, height: 14)
+                                .dodamColor(.onSurfaceVariant)
+                                .padding(.trailing, 4)
                         }
-                        .padding(.leading, 8)
-                        Text("기상송 확인하기")
-                            .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.onBackground)
-                        Spacer()
-                        Image(icon: .chevronRight)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .dodamColor(.onSurfaceVariant)
-                            .padding(.trailing, 4)
                     }
-                }
-                .scaledButtonStyle()
-                
-                Button {
-                    flow.push(WakeupSongApplyView())
-                } label: {
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Rectangle()
-                                .dodamFill(.secondary)
-                                .frame(width: 32, height: 32)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Image(icon: .wakeupNote)
+                    .scaledButtonStyle()
+                    
+                    Button {
+                        flow.push(WakeupSongApplyView())
+                    } label: {
+                        HStack(spacing: 16) {
+                            ZStack {
+                                Rectangle()
+                                    .dodamFill(.secondary)
+                                    .frame(width: 32, height: 32)
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                                Image(icon: .wakeupNote)
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                            }
+                            .padding(.vertical, 4)
+                            .padding(.leading, 8)
+                            Text("기상송 신청하기")
+                                .font(.system(size: 18, weight: .medium))
+                                .dodamColor(.onBackground)
+                            Spacer()
+                            Image(icon: .chevronRight)
                                 .resizable()
-                                .frame(width: 20, height: 20)
+                                .frame(width: 14, height: 14)
+                                .dodamColor(.onSurfaceVariant)
+                                .padding(.trailing, 4)
                         }
-                        .padding(.leading, 8)
-                        Text("기상송 신청하기")
-                            .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.onBackground)
-                        Spacer()
-                        Image(icon: .chevronRight)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .dodamColor(.onSurfaceVariant)
-                            .padding(.trailing, 4)
                     }
+                    .scaledButtonStyle()
                 }
-                .scaledButtonStyle()
-                
-                Button {
-                    viewModel.isShowingLogoutAlert.toggle()
-                } label: {
-                    HStack(spacing: 16) {
-                        ZStack {
-                            Rectangle()
-                                .dodamFill(.secondary)
-                                .frame(width: 32, height: 32)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Image(icon: .doorOpen)
-                                .resizable()
-                                .dodamColor(.onSurface)
-                                .frame(width: 20, height: 20)
-                        }
-                        .padding(.leading, 8)
-                        Text("로그아웃")
-                            .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.error)
-                        Spacer()
-                        Image(icon: .chevronRight)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .dodamColor(.onSurfaceVariant)
-                            .padding(.trailing, 4)
-                    }
-                }
-                .scaledButtonStyle()
             }
             .padding([.top, .horizontal], 16)
+        }
+        .button(icon: .gear) {
+            if let data = viewModel.memberData {
+                flow.push(SettingView(
+                    data: data
+                ))
+            }
         }
         .task {
             await viewModel.onAppear()
         }
         .refreshable {
             await viewModel.onRefresh()
-        }
-        .alert(
-            "로그아웃",
-            isPresented: $viewModel.isShowingLogoutAlert
-        ) {
-            Button("네", role: .none) {
-                viewModel.logout()
-                flow.replace([OnboardingView()])
-            }
-            Button("취소", role: .cancel) { }
-        } message: {
-            Text("로그아웃 하시겠습니까?")
         }
     }
 }
