@@ -1,8 +1,8 @@
 //
-//  Request.swift
-//  DodamDodam
+//  RequestProtocol.swift
+//  DodamDodam-MealWidget
 //
-//  Created by Mercen on 3/14/24.
+//  Created by Mercen on 4/5/24.
 //
 
 import Foundation

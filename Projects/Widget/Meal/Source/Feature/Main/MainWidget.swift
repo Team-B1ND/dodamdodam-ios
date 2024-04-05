@@ -13,7 +13,7 @@ struct MainWidget: Widget {
     let kind: String = "MealWidget"
     
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+        StaticConfiguration(kind: kind, provider: MainProvider()) { entry in
             MainView(entry: entry)
         }
         .configurationDisplayName("오늘의 급식")
