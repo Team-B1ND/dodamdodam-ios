@@ -8,8 +8,9 @@
 struct MealDataSource: DataSourceProtocol {
     
     let remote: MealRemote
+    let database: MealDatabase
     
-    func fetchMonthlyMeal(_ request: FetchMonthlyMealRequest) async throws -> [MealResponse] {
+    func fetchMonthlyMeal(_ request: FetchMonthlyMealRequest) async throws -> [MealData] {
         let response = try await remote.fetchMonthlyMeal(request)
         return response.data
     }
