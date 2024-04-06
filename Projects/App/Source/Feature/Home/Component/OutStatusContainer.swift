@@ -31,13 +31,40 @@ struct OutStatusContainer: View {
                 } else if data.status == .allowed ||
                             data.status == .pending {
                     DodamCircularProgressView(
-                        progress: 0.7,
+                        progress: calculatingDateProgress(
+                            startAt: data.startAt,
+                            endAt: data.endAt,
+                            dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
+                        ),
                         isDisabled: data.status == .pending
                     )
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(data.status == .pending ? "대기 중" : "13시간")
-                            .font(.body(.medium))
-                            .dodamColor(.onSurface)
+                        Text(data.status == .pending
+                             ? "대기 중"
+                             : { () -> String in
+                            let endDate = data.endAt.parseDate(
+                                format: "yyyy-MM-dd'T'HH:mm:ss"
+                            )
+                            
+                            let calendar = Calendar.current
+                            let currentDate = Date()
+                            
+                            let difference = calendar.dateComponents(
+                                [.hour, .minute],
+                                from: currentDate,
+                                to: endDate!
+                            )
+                            
+                            if let hours = difference.hour, hours >= 1 {
+                                return "\(hours)시간"
+                            } else if let minutes = difference.minute {
+                                return "\(minutes)분"
+                            }
+                            return ""
+                        }()
+                        )
+                        .font(.body(.medium))
+                        .dodamColor(.onSurface)
                         if !(data.status == .pending) {
                             Text("남음")
                                 .font(.label(.large))
@@ -47,14 +74,14 @@ struct OutStatusContainer: View {
                             .font(.label(.large))
                             .dodamColor(.onSurfaceVariant)
                     }
-                } else {
-                    SupportingContainer(
-                        subTitle: "외출, 외박이 필요하다면",
-                        title: "외출/외박 신청하기"
-                    )
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
+        } else if outData == .none {
+            SupportingContainer(
+                subTitle: "외출, 외박이 필요하다면",
+                title: "외출/외박 신청하기"
+            )
         } else {
             DodamLoadingView()
                 .frame(height: 48)
