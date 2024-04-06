@@ -25,10 +25,14 @@ struct BusApplyView: View {
                             viewModel.selectedBus = nil
                             return
                         }
-                        viewModel.selectedBus = bus
+                        withAnimation(.spring(duration: 0.25)) {
+                            viewModel.selectedBus = bus
+                        }
                     } label: {
                         BusApplyCell(bus: bus, selectedBus: viewModel.selectedBus)
                     }
+                    .scaledButtonStyle()
+                    .disabled(bus.applyCount >= bus.peopleLimit)
                 }
             }
             .padding([.top, .horizontal], 16)
