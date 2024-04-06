@@ -69,7 +69,7 @@ struct HomeView: View {
                                 selection = 2
                             } label: {
                                 OutStatusContainer(
-                                    data: viewModel.outGoingData
+                                    data: nil
                                 )
                                 .padding(6)
                             }
@@ -90,22 +90,6 @@ struct HomeView: View {
                             .scaledButtonStyle()
                         }
                     }
-                    /*
-                     DodamContainer.default(
-                     title: "가까운 일정",
-                     icon: Dodam.icon(.calendar)
-                     ) {
-                     Button {
-                     // navigate action
-                     } label: {
-                     ScheduleContainer(
-                     data: viewModel.scheduleData
-                     )
-                     .padding(6)
-                     }
-                     .scaledButtonStyle()
-                     }
-                     */
                 }
                 .environment(\.isFirstLoad, viewModel.isFirstLoad)
                 .padding(.horizontal, 16)

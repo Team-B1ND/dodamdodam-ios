@@ -25,10 +25,11 @@ struct OutStatusContainer: View {
             HStack(alignment: .top, spacing: 12) {
                 if data.status == .rejected {
                     SupportingContainer(
-                        subTitle: "심야 자습이 거절되었어요",
+                        subTitle: "외출/외박이 거절되었어요",
                         title: "다시 신청하기"
                     )
-                } else {
+                } else if data.status == .allowed ||
+                            data.status == .pending {
                     DodamCircularProgressView(
                         progress: 0.7,
                         isDisabled: data.status == .pending
@@ -46,15 +47,17 @@ struct OutStatusContainer: View {
                             .font(.label(.large))
                             .dodamColor(.onSurfaceVariant)
                     }
-                    
+                } else {
+                    SupportingContainer(
+                        subTitle: "외출, 외박이 필요하다면",
+                        title: "외출/외박 신청하기"
+                    )
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } else {
-            SupportingContainer(
-                subTitle: "외출, 외박이 필요하다면",
-                title: "외출/외박 신청하기"
-            )
+            DodamLoadingView()
+                .frame(height: 48)
         }
     }
 }

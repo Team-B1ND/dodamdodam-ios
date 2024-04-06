@@ -28,7 +28,8 @@ struct NightStudyStatusContainer: View {
                         subTitle: "외출이 거절되었어요",
                         title: "다시 신청하기"
                     )
-                } else {
+                } else if data.status == .allowed ||
+                            data.status == .pending {
                     DodamCircularProgressView(
                         progress: calculatingDateProgress(
                             startAt: data.startAt,
@@ -57,14 +58,17 @@ struct NightStudyStatusContainer: View {
                         .font(.label(.large))
                         .dodamColor(.onSurfaceVariant)
                     }
+                } else {
+                    SupportingContainer(
+                        subTitle: "공부할 시간이 필요하다면",
+                        title: "심야 자습 신청하기"
+                    )
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         } else {
-            SupportingContainer(
-                subTitle: "공부할 시간이 필요하다면",
-                title: "심야 자습 신청하기"
-            )
+            DodamLoadingView()
+                .frame(height: 48)
         }
     }
 }
