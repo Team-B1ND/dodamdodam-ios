@@ -93,11 +93,17 @@ struct RegisterInfoView: View {
             }
             Spacer()
             
-            if viewModel.infoStep >= 4 {
+            let info = viewModel.infoStep == 1 && viewModel.infoText.count >= 9
+            let call = viewModel.infoStep == 3 && viewModel.phoneText.count == 13
+            if info || call {
                 DodamButton.fullWidth(
                     title: "다음"
                 ) {
-                    flow.push(RegisterAuthView())
+                    if info {
+                        viewModel.infoStep = 2
+                    } else {
+                        flow.push(RegisterAuthView())
+                    }
                 }
                 .padding(.bottom, 24)
             }
@@ -148,25 +154,8 @@ struct RegisterInfoView: View {
                 break
             }
         }
-        .ignoresSafeArea(.keyboard)
+//        .ignoresSafeArea(.keyboard)
         .padding(.horizontal, 16)
-        .toolbar {
-            let info = viewModel.infoStep == 1 && viewModel.infoText.count >= 9
-            let call = viewModel.infoStep == 3 && viewModel.phoneText.count == 13
-            if info || call {
-                Button("완료") {
-                    if info {
-                        viewModel.infoStep = 2
-                    } else {
-                        viewModel.infoStep = 4
-                        UIApplication.shared.sendAction(
-                            #selector(UIResponder.resignFirstResponder)
-                            , to: nil, from: nil, for: nil
-                        )
-                    }
-                }
-            }
-        }
     }
 }
 

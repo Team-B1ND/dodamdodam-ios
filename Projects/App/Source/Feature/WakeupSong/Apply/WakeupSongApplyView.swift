@@ -149,6 +149,7 @@ struct WakeupSongApplyView: View {
                     await viewModel.postWakeupSong()
                     viewModel.clearData()
                 }
+                flow.pop()
             }
             Button("취소", role: .cancel) { 
                 viewModel.clearData()

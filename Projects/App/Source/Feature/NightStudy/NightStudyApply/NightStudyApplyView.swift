@@ -24,6 +24,7 @@ struct NightStudyApplyView: View {
                 .makeFirstResponder()
                 .padding(.top, 16)
                 .padding(.horizontal, 8)
+                .focused($focused)
                 
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
@@ -45,7 +46,6 @@ struct NightStudyApplyView: View {
                         )
                         .labelsHidden()
                     }
-                    .contentShape(Rectangle())
                     .padding(.horizontal, 8)
                     .frame(height: 40)
                     Button {
@@ -69,7 +69,6 @@ struct NightStudyApplyView: View {
                                 .frame(width: 14, height: 14)
                                 .dodamColor(.onSurfaceVariant)
                         }
-                        .contentShape(Rectangle())
                         .padding(.horizontal, 8)
                         .frame(height: 40)
                     }
@@ -95,7 +94,6 @@ struct NightStudyApplyView: View {
                                 .frame(width: 14, height: 14)
                                 .dodamColor(.onSurfaceVariant)
                         }
-                        .contentShape(Rectangle())
                         .padding(.horizontal, 8)
                         .frame(height: 40)
                     }
@@ -107,7 +105,6 @@ struct NightStudyApplyView: View {
                         Spacer()
                         Checkbox(isChecked: $viewModel.doNeedPhone)
                     }
-                    .contentShape(Rectangle())
                     .padding(.horizontal, 8)
                     .frame(height: 40)
                     if viewModel.doNeedPhone {
@@ -116,6 +113,7 @@ struct NightStudyApplyView: View {
                             text: $viewModel.reasonForPhoneText
                         )
                         .padding(.horizontal, 8)
+                        .focused($focused)
                     }
                 }
             }

@@ -23,13 +23,15 @@ struct BusApplyCell: View {
             Text("\(bus.applyCount)/\(bus.peopleLimit)")
                 .font(.title(.medium))
                 .fontWeight(.regular)
-                .dodamColor(bus.applyCount >= bus.peopleLimit ? .error : .primary)
-            
-            let myBus = bus.id == selectedBus?.id ?? 0
-            Image(icon: .checkmark)
-                .resizable()
-                .frame(width: 32, height: 32)
-                .opacity(myBus ? 1 : 0)
+                .dodamColor(
+                    bus.applyCount >= bus.peopleLimit ? .error
+                    : bus.id == selectedBus?.id ? .primary : .tertiary
+                )
+            if bus.id == selectedBus?.id ?? 0 {
+                Image(icon: .checkmark)
+                    .resizable()
+                    .frame(width: 32, height: 32)
+            }
         }
         .frame(height: 40)
         .padding(.horizontal, 8)

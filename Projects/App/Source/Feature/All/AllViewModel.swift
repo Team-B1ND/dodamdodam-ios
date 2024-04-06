@@ -12,7 +12,6 @@ class AllViewModel: ObservableObject {
     
     // MARK: - State
     @Published var memberData: MemberResponse?
-    @Published var isShowingLogoutAlert: Bool = false
     
     // MARK: - Repository
     @Inject var memberRepository: any MemberRepository
@@ -40,10 +39,5 @@ class AllViewModel: ObservableObject {
         } catch let error {
             print(error)
         }
-    }
-    
-    func logout() {
-        isShowingLogoutAlert.toggle()
-        Sign.logout()
     }
 }
