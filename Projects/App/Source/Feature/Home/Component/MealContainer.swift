@@ -98,10 +98,8 @@ struct MealContainer: View {
                 .padding(6)
             }
         } else {
-            DodamLoadingView.conditional(isFirstLoad) {
-                DodamLoadingView()
-            }
-            .padding(.bottom, 12)
+            DodamLoadingView()
+                .frame(height: 61.928)
         }
     }
 }

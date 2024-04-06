@@ -44,10 +44,6 @@ struct NightStudyStatusContainer: View {
                         )
                         .font(.body(.medium))
                         .dodamColor(.onSurface)
-                        .onAppear {
-                            print("test", data.startAt)
-                            print("test", data.endAt)
-                        }
                         if !(data.status == .pending) {
                             Text("남음")
                                 .font(.body(.small))

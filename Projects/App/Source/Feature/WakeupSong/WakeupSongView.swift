@@ -46,6 +46,8 @@ struct WakeupSongView: View {
                     }
                 } else {
                     DodamLoadingView()
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 40)
                 }
                 LazyVStack(pinnedViews: [.sectionHeaders]) {
                     DodamTopTabView {
@@ -70,6 +72,7 @@ struct WakeupSongView: View {
                                 }
                             } else {
                                 DodamLoadingView()
+                                    .padding(.top, 40)
                             }
                             Spacer()
                         }
@@ -118,6 +121,7 @@ struct WakeupSongView: View {
                                 }
                             } else {
                                 DodamLoadingView()
+                                    .padding(.top, 40)
                             }
                             Spacer()
                         }
