@@ -12,9 +12,10 @@ import SignKit
 
 struct SettingView: View {
     
-    let data: MemberResponse
+    @InjectObject var viewModel: SettingViewModel
     @Flow var flow
-    @State var isShowingLogoutAlert: Bool = false
+    
+    let data: MemberResponse
     
     init(
         data: MemberResponse
@@ -121,10 +122,27 @@ struct SettingView: View {
                     .padding(.horizontal, 8)
                 
                 Button {
-                    isShowingLogoutAlert.toggle()
+                    viewModel.isShowingLogoutAlert.toggle()
                 } label: {
                     HStack(spacing: 16) {
                         Text("로그아웃")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.onSurface)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                    }
+                    .padding(8)
+                }
+                .scaledButtonStyle()
+                
+                Button {
+                    viewModel.isShowingDeactivationAlert.toggle()
+                } label: {
+                    HStack(spacing: 16) {
+                        Text("회원탈퇴")
                             .font(.system(size: 18, weight: .medium))
                             .dodamColor(.error)
                         Spacer()
@@ -141,11 +159,28 @@ struct SettingView: View {
         }
         .alert(
             "로그아웃 하시겠습니까?",
-            isPresented: $isShowingLogoutAlert
+            isPresented: $viewModel.isShowingLogoutAlert
         ) {
-            Button("네", role: .destructive) {
+            Button("로그아웃", role: .destructive) {
                 Sign.logout()
                 flow.replace([OnboardingView()])
+            }
+            Button("취소", role: .cancel) { }
+        }
+        .alert(
+            "정말 탈퇴하시겠습니까?",
+            isPresented: $viewModel.isShowingDeactivationAlert
+        ) {
+            Button("회원탈퇴", role: .destructive) {
+                Task {
+                    do {
+                        try await viewModel.patchDeactivate()
+                        Sign.logout()
+                        flow.replace([OnboardingView()])
+                    } catch {
+                        print(error)
+                    }
+                }
             }
             Button("취소", role: .cancel) { }
         }

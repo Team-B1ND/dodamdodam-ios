@@ -62,6 +62,10 @@ struct ViewModelAssembly: Assembly {
                 .init()
         }.inObjectScope(.container)
         
+        container.register(SettingViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(PointViewModel.self) { _ in
                 .init()
         }.inObjectScope(.container)
