@@ -9,6 +9,8 @@ protocol MemberRepository: RepositoryProtocol {
     
     func postJoin(_ request: PostJoinRequest) async throws
     
+    func patchDeactivate() async throws
+    
     func patchPassword(_ request: PatchPasswordRequest) async throws
     
     func patchMemberInfo(_ request: PatchMemberInfoRequest) async throws

@@ -13,6 +13,10 @@ struct MemberDataSource: DataSourceProtocol {
         _ = try await remote.postJoin(request)
     }
     
+    func patchDeactivate() async throws {
+        _ = try await remote.patchDeactivate()
+    }
+    
     func patchPassword(_ request: PatchPasswordRequest) async throws {
         _ = try await remote.patchPassword(request)
     }
