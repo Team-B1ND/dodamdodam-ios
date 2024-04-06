@@ -110,8 +110,7 @@ struct OnboardingView: View {
                             )
                     }
                     Link(
-                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")
-                        ?? URL(string: "about:blank")!
+                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")!
                     ) {
                         Text("(필수) 서비스 이용약관")
                             .font(.body(.small))

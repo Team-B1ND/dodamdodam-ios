@@ -19,8 +19,9 @@ extension Button {
         
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
+                .contentShape(Rectangle())
                 .scaleEffect(configuration.isPressed ? 0.96 : 1)
-                .opacity(configuration.isPressed ? 0.8 : 1.0)
+                .background(Color.black.opacity(configuration.isPressed ? 0.05 : 0))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .animation(.easeIn(duration: 0.15), value: configuration.isPressed)
         }
