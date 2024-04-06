@@ -20,7 +20,7 @@ let project = Project(
             name: "DodamDodam",
             destinations: .iOS,
             product: .app,
-            bundleId: "com.b1nd.dodam",
+            bundleId: "com.b1nd.dodam.student",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .extendingDefault(
                 with: [
