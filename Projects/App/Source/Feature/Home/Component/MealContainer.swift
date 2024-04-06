@@ -99,7 +99,7 @@ struct MealContainer: View {
             }
         } else {
             DodamLoadingView.conditional(isFirstLoad) {
-                Text("Loading")
+                DodamLoadingView()
             }
             .padding(.bottom, 12)
         }

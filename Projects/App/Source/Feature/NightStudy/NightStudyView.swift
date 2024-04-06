@@ -51,7 +51,7 @@ struct NightStudyView: View {
                         }
                     }
                 } else {
-                    Text("Loading")
+                    DodamLoadingView()
                 }
             }
             .padding([.top, .horizontal], 16)
