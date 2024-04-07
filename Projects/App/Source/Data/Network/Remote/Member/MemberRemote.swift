@@ -14,6 +14,11 @@ struct MemberRemote: RemoteProtocol {
             .map(DefaultResponse.self, using: decoder)
     }
     
+    func patchDeactivate() async throws -> DefaultResponse {
+        try await self.request(target: .patchDeactivate)
+            .map(DefaultResponse.self, using: decoder)
+    }
+    
     func patchPassword(_ request: PatchPasswordRequest) async throws -> DefaultResponse {
         try await self.request(target: .patchPassword(request))
             .map(DefaultResponse.self, using: decoder)

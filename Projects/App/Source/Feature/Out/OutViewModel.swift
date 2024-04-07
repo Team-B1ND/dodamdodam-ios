@@ -12,7 +12,6 @@ class OutViewModel: ObservableObject {
     // MARK: - State
     @Published var outGoingData: [OutGoingResponse]?
     @Published var outSleepingData: [OutSleepingResponse]?
-    @Published var isShowingDeleteAlert: Bool = false
     
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository

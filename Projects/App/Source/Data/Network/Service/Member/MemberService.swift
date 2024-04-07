@@ -10,6 +10,7 @@ import Moya
 enum MemberService: ServiceProtocol {
     
     case postJoin(_ request: PostJoinRequest)
+    case patchDeactivate
     case patchPassword(_ request: PatchPasswordRequest)
     case patchMemberInfo(_ request: PatchMemberInfoRequest)
     case patchStudentInfo(_ request: PatchStudentInfoRequest)
@@ -25,6 +26,7 @@ extension MemberService {
     var path: String {
         switch self {
         case .postJoin: "/join-student"
+        case .patchDeactivate: "/deactivate"
         case .patchPassword: "/password"
         case .patchMemberInfo: "/info"
         case .patchStudentInfo: "/student/info"
@@ -35,6 +37,7 @@ extension MemberService {
     var method: Moya.Method {
         switch self {
         case .postJoin: .post
+        case .patchDeactivate: .patch
         case .patchPassword: .patch
         case .patchMemberInfo: .patch
         case .patchStudentInfo: .patch
@@ -46,6 +49,8 @@ extension MemberService {
         switch self {
         case let .postJoin(request):
             request.toJSONParameters()
+        case .patchDeactivate:
+                .requestPlain
         case let .patchPassword(request):
             request.toJSONParameters()
         case let .patchMemberInfo(request):

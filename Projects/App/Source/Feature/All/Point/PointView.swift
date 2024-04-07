@@ -101,6 +101,7 @@ struct PointView: View {
                     }
                 }
                 .padding(.top, 24)
+                .frame(height: 85)
                 Text("상벌점 발급 내역")
                     .font(.title(.medium))
                     .dodamColor(.onBackground)

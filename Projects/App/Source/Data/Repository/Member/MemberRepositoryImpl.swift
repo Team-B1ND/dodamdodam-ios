@@ -13,6 +13,10 @@ struct MemberRepositoryImpl: MemberRepository {
         try await dataSource.postJoin(request)
     }
     
+    func patchDeactivate() async throws {
+        try await dataSource.patchDeactivate()
+    }
+    
     func patchPassword(_ request: PatchPasswordRequest) async throws {
         try await dataSource.patchPassword(request)
     }

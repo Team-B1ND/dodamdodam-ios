@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FlowKit
 import DDS
 
 struct NightStudyView: View {
@@ -24,23 +25,21 @@ struct NightStudyView: View {
                             )
                             .contextMenu {
                                 Button(role: .destructive) {
-                                    viewModel.isShowingDeleteAlert.toggle()
+                                    let alert = Alert(
+                                        title: "해당 심야 자습을 삭제하시겠습니까?",
+                                        primaryButton: .destructive("삭제") {
+                                            Task {
+                                                await viewModel.deleteNightStudy(
+                                                    id: data.id
+                                                )
+                                            }
+                                        },
+                                        secondaryButton: .cancel("취소")
+                                    )
+                                    flow.alert(alert)
                                 } label: {
                                     Label("삭제", systemImage: "trash")
                                 }
-                            }
-                            .alert(
-                                "해당 심야 자습을 삭제하시겠습니까?",
-                                isPresented: $viewModel.isShowingDeleteAlert
-                            ) {
-                                Button("삭제", role: .destructive) {
-                                    Task {
-                                        await viewModel.deleteNightStudy(
-                                            id: data.id
-                                        )
-                                    }
-                                }
-                                Button("취소", role: .cancel) { }
                             }
                         }
                     } else {

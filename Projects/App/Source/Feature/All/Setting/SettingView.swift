@@ -9,12 +9,14 @@ import SwiftUI
 import DDS
 import CachedAsyncImage
 import SignKit
+import FlowKit
 
 struct SettingView: View {
     
-    let data: MemberResponse
+    @InjectObject var viewModel: SettingViewModel
     @Flow var flow
-    @State var isShowingLogoutAlert: Bool = false
+    
+    let data: MemberResponse
     
     init(
         data: MemberResponse
@@ -121,10 +123,50 @@ struct SettingView: View {
                     .padding(.horizontal, 8)
                 
                 Button {
-                    isShowingLogoutAlert.toggle()
+                    let alert = Alert(
+                        title: "로그아웃 하시겠습니까?",
+                        primaryButton: .destructive("로그아웃") {
+                            Sign.logout()
+                            flow.replace([OnboardingView()])
+                        },
+                        secondaryButton: .cancel("취소")
+                    )
+                    flow.alert(alert)
                 } label: {
                     HStack(spacing: 16) {
                         Text("로그아웃")
+                            .font(.system(size: 18, weight: .medium))
+                            .dodamColor(.onSurface)
+                        Spacer()
+                        Image(icon: .chevronRight)
+                            .resizable()
+                            .frame(width: 14, height: 14)
+                            .dodamColor(.onSurfaceVariant)
+                    }
+                    .padding(8)
+                }
+                .scaledButtonStyle()
+                
+                Button {
+                    let alert = Alert(
+                        title: "정말 탈퇴하시겠습니까?",
+                        primaryButton: .destructive("회원탈퇴") {
+                            Task {
+                                do {
+                                    try await viewModel.patchDeactivate()
+                                    Sign.logout()
+                                    flow.replace([OnboardingView()])
+                                } catch {
+                                    print(error)
+                                }
+                            }
+                        },
+                        secondaryButton: .cancel("취소")
+                    )
+                    flow.alert(alert)
+                } label: {
+                    HStack(spacing: 16) {
+                        Text("회원탈퇴")
                             .font(.system(size: 18, weight: .medium))
                             .dodamColor(.error)
                         Spacer()
@@ -138,16 +180,6 @@ struct SettingView: View {
                 .scaledButtonStyle()
             }
             .padding(.horizontal, 16)
-        }
-        .alert(
-            "로그아웃 하시겠습니까?",
-            isPresented: $isShowingLogoutAlert
-        ) {
-            Button("네", role: .destructive) {
-                Sign.logout()
-                flow.replace([OnboardingView()])
-            }
-            Button("취소", role: .cancel) { }
         }
     }
 }
