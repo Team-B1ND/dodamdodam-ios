@@ -31,6 +31,7 @@ struct BusApplyCell: View {
                 Image(icon: .checkmark)
                     .resizable()
                     .frame(width: 32, height: 32)
+                    .dodamColor(.primary)
             }
         }
         .frame(height: 40)

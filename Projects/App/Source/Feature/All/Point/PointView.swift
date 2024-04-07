@@ -83,41 +83,21 @@ struct PointView: View {
                     selection: $viewModel.selection
                 )
                 HStack(spacing: 32) {
-                    if let data = viewModel.domitoryPointScoreData,
-                       viewModel.selection == 0 {
-                        VStack(spacing: 0) {
-                            Text("상점")
-                                .font(.body(.medium))
-                                .dodamColor(.tertiary)
-                            Text("\(data.bonus)점")
-                                .font(.headline(.large))
-                                .dodamColor(.primary)
-                        }
-                        VStack(spacing: 0) {
-                            Text("벌점")
-                                .font(.body(.medium))
-                                .dodamColor(.tertiary)
-                            Text("\(data.minus)점")
-                                .font(.headline(.large))
-                                .dodamColor(.error)
-                        }
-                    } else if let data = viewModel.schoolPointScoreData {
-                        VStack(spacing: 0) {
-                            Text("상점")
-                                .font(.body(.medium))
-                                .dodamColor(.tertiary)
-                            Text("\(data.bonus)점")
-                                .font(.headline(.large))
-                                .dodamColor(.primary)
-                        }
-                        VStack(spacing: 0) {
-                            Text("벌점")
-                                .font(.body(.medium))
-                                .dodamColor(.tertiary)
-                            Text("\(data.minus)점")
-                                .font(.headline(.large))
-                                .dodamColor(.error)
-                        }
+                    VStack(spacing: 0) {
+                        Text("상점")
+                            .font(.body(.medium))
+                            .dodamColor(.tertiary)
+                        Text("\(viewModel.bonus[viewModel.selection])점")
+                            .font(.headline(.large))
+                            .dodamColor(.primary)
+                    }
+                    VStack(spacing: 0) {
+                        Text("벌점")
+                            .font(.body(.medium))
+                            .dodamColor(.tertiary)
+                        Text("\(viewModel.minus[viewModel.selection])점")
+                            .font(.headline(.large))
+                            .dodamColor(.error)
                     }
                 }
                 .padding(.top, 24)
