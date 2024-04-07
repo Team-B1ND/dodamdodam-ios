@@ -56,7 +56,7 @@ struct OutView: View {
                             }
                         }
                     } else {
-                        Text("Loading")
+                        DodamLoadingView()
                     }
                 }
                 if selection == 1 {
@@ -97,7 +97,7 @@ struct OutView: View {
                             }
                         }
                     } else {
-                        Text("Loading")
+                        DodamLoadingView()
                     }
                 }
             }

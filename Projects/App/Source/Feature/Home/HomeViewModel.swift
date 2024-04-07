@@ -106,11 +106,13 @@ class HomeViewModel: ObservableObject {
             guard let earliestOutGoingResponse = outGoingResponse.min(by: {
                 $0.startAt < $1.startAt
             }) else {
+                outGoingData = .none
                 return
             }
             guard let earliestOutSleepingResponse = outSleepingResponse.min(by: {
                 $0.startAt < $1.startAt
             }) else {
+                outSleepingData = .none
                 return
             }
             outGoingData = earliestOutGoingResponse
@@ -127,6 +129,7 @@ class HomeViewModel: ObservableObject {
             guard let earliestResponse = response.min(by: {
                 $0.startAt < $1.startAt
             }) else {
+                nightStudyData = .none
                 return
             }
             nightStudyData = earliestResponse

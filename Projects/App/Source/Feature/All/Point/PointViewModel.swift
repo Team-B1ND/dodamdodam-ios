@@ -12,9 +12,21 @@ class PointViewModel: ObservableObject {
     // MARK: - State
     @Published var domitoryPointData: [PointResponse]?
     @Published var schoolPointData: [PointResponse]?
-    @Published var domitoryPointScoreData: PointScoreResponse?
-    @Published var schoolPointScoreData: PointScoreResponse?
+    @Published var domitoryPointScoreData: PointScoreResponse? {
+        didSet {
+            bonus[0] = domitoryPointScoreData?.bonus ?? 0
+            minus[0] = domitoryPointScoreData?.minus ?? 0
+        }
+    }
+    @Published var schoolPointScoreData: PointScoreResponse? {
+        didSet {
+            bonus[1] = schoolPointScoreData?.bonus ?? 0
+            minus[1] = schoolPointScoreData?.minus ?? 0
+        }
+    }
     
+    @Published var bonus: [Int] = [0, 0]
+    @Published var minus: [Int] = [0, 0]
     @Published var selection: Int = 0
     
     // MARK: - Repository

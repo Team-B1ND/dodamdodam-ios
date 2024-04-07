@@ -25,10 +25,11 @@ struct NightStudyStatusContainer: View {
             HStack(alignment: .top, spacing: 12) {
                 if data.status == .rejected {
                     SupportingContainer(
-                        subTitle: "외출이 거절되었어요",
+                        subTitle: "심야 자습이 거절되었어요",
                         title: "다시 신청하기"
                     )
-                } else {
+                } else if data.status == .allowed ||
+                            data.status == .pending {
                     DodamCircularProgressView(
                         progress: calculatingDateProgress(
                             startAt: data.startAt,
@@ -40,14 +41,29 @@ struct NightStudyStatusContainer: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(data.status == .pending
                              ? "대기 중"
-                             : "12일"
+                             : { () -> String in
+                            let endDate = data.endAt.parseDate(
+                                format: "yyyy-MM-dd"
+                            )
+                            
+                            let calendar = Calendar.current
+                            let currentDate = Date()
+                            
+                            let components = calendar.dateComponents(
+                                [.day],
+                                from: currentDate,
+                                to: endDate!
+                            )
+                            
+                            guard let days = components.day else {
+                                return "error"
+                            }
+                            
+                            return "\(days)일"
+                        }()
                         )
                         .font(.body(.medium))
                         .dodamColor(.onSurface)
-                        .onAppear {
-                            print("test", data.startAt)
-                            print("test", data.endAt)
-                        }
                         if !(data.status == .pending) {
                             Text("남음")
                                 .font(.body(.small))
@@ -64,11 +80,14 @@ struct NightStudyStatusContainer: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-        } else {
+        } else if nightStudyData == .none {
             SupportingContainer(
                 subTitle: "공부할 시간이 필요하다면",
                 title: "심야 자습 신청하기"
             )
+        } else {
+            DodamLoadingView()
+                .frame(height: 48)
         }
     }
 }

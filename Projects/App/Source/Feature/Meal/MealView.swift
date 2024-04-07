@@ -124,7 +124,7 @@ struct MealView: View {
                             .frame(maxWidth: .infinity)
                     }
                 } else {
-                    Text("Loading")
+                    DodamLoadingView()
                 }
             }
             .padding(.horizontal, 16)
