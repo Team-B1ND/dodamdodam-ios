@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "dds-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Team-B1ND/dds-ios",
+      "state" : {
+        "revision" : "6e964a251b097792f256f5b5e8c783360305e00d",
+        "version" : "0.1.20"
+      }
+    },
+    {
       "identity" : "flowkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Mercen-Lee/FlowKit",
@@ -43,6 +52,24 @@
       "state" : {
         "revision" : "9dcaa4b333db437b0fbfaf453fad29069044a8b4",
         "version" : "6.6.0"
+      }
+    },
+    {
+      "identity" : "signkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Mercen-Lee/SignKit",
+      "state" : {
+        "revision" : "11c0dd643e163f7c6c8f64e1b588d2825c0d26c9",
+        "version" : "0.0.2"
+      }
+    },
+    {
+      "identity" : "swiftui-cached-async-image",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/lorenzofiamingo/swiftui-cached-async-image",
+      "state" : {
+        "revision" : "467a3d17479887943ab917a379e62bbaff60ac8a",
+        "version" : "2.1.1"
       }
     },
     {

@@ -6,13 +6,25 @@
 //
 
 import SwiftUI
+import DDS
 
 struct MainView: View {
     
-    @InjectObject var viewModel: MainViewModel
+    @State var selection: Int = 0
     
     var body: some View {
-        Text("Hello, world!")
+        DodamTabView(selection: $selection) {
+            HomeView(selection: $selection)
+                .page(.icon(.home))
+            MealView()
+                .page(.icon(.forkAndKnife))
+            OutView()
+                .page(.icon(.doorOpen))
+            NightStudyView()
+                .page(.icon(.moonPlus))
+            AllView()
+                .page(.icon(.menu))
+        }
     }
 }
 

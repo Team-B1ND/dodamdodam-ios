@@ -7,11 +7,67 @@
 
 import Swinject
 
-class ViewModelAssembly: Assembly {
+struct ViewModelAssembly: Assembly {
     
     func assemble(container: Container) {
-        container.register(MainViewModel.self) { _ in
-            MainViewModel()
-        }
+        container.register(OnboardingViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(LoginViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(RegisterViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(HomeViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(MealViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(OutViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(OutApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(NightStudyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(NightStudyApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(AllViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(BusApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(WakeupSongViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(WakeupSongApplyViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(SettingViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(PointViewModel.self) { _ in
+                .init()
+        }.inObjectScope(.container)
     }
 }
