@@ -165,7 +165,8 @@ struct NightStudyApplyView: View {
                 }
                 .disabled(
                     viewModel.reasonText.isEmpty ||
-                    viewModel.startAt >= viewModel.endAt
+                    viewModel.startAt >= viewModel.endAt ||
+                    viewModel.reasonText.count <= 10
                 )
                 .padding(.bottom, 8)
                 .padding(.horizontal, 16)
