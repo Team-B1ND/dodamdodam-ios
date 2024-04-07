@@ -10,10 +10,6 @@ import SignKit
 
 class SettingViewModel: ObservableObject {
     
-    // MARK: - State
-    @Published var isShowingLogoutAlert: Bool = false
-    @Published var isShowingDeactivationAlert: Bool = false
-    
     // MARK: - Repository
     @Inject var memberRepository: any MemberRepository
     

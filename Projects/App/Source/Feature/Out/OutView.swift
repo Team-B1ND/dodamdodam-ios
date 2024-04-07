@@ -5,6 +5,7 @@
 //  Created by 이민규 on 3/21/24.
 //
 
+import FlowKit
 import SwiftUI
 import DDS
 
@@ -27,23 +28,21 @@ struct OutView: View {
                                 )
                                 .contextMenu {
                                     Button(role: .destructive) {
-                                        viewModel.isShowingDeleteAlert.toggle()
+                                        let alert = Alert(
+                                            title: "해당 외출 신청을 삭제하시겠습니까?",
+                                            primaryButton: .destructive("삭제") {
+                                                Task {
+                                                    await viewModel.deleteOutGoing(
+                                                        id: data.id
+                                                    )
+                                                }
+                                            },
+                                            secondaryButton: .cancel("취소")
+                                        )
+                                        flow.alert(alert)
                                     } label: {
                                         Label("삭제", systemImage: "trash")
                                     }
-                                }
-                                .alert(
-                                    "해당 외출 신청을 삭제하시겠습니까?",
-                                    isPresented: $viewModel.isShowingDeleteAlert
-                                ) {
-                                    Button("삭제", role: .destructive) {
-                                        Task {
-                                            await viewModel.deleteOutGoing(
-                                                id: data.id
-                                            )
-                                        }
-                                    }
-                                    Button("취소", role: .cancel) { }
                                 }
                             }
                         } else {
@@ -68,23 +67,21 @@ struct OutView: View {
                                 )
                                 .contextMenu {
                                     Button(role: .destructive) {
-                                        viewModel.isShowingDeleteAlert.toggle()
+                                        let alert = Alert(
+                                            title: "해당 외박 신청을 삭제하시겠습니까?",
+                                            primaryButton: .destructive("삭제") {
+                                                Task {
+                                                    await viewModel.deleteOutSleeping(
+                                                        id: data.id
+                                                    )
+                                                }
+                                            },
+                                            secondaryButton: .cancel("취소")
+                                        )
+                                        flow.alert(alert)
                                     } label: {
                                         Label("삭제", systemImage: "trash")
                                     }
-                                }
-                                .alert(
-                                    "해당 외박 신청을 삭제하시겠습니까?",
-                                    isPresented: $viewModel.isShowingDeleteAlert
-                                ) {
-                                    Button("삭제", role: .destructive) {
-                                        Task {
-                                            await viewModel.deleteOutSleeping(
-                                                id: data.id
-                                            )
-                                        }
-                                    }
-                                    Button("취소", role: .cancel) { }
                                 }
                             }
                         } else {
