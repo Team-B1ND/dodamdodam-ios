@@ -38,10 +38,17 @@ struct WakeupSongCell: View {
                 .padding(.vertical, 8)
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(data.videoTitle)")
-                    .font(.body(.medium))
-                    .dodamColor(.onSurface)
-                    .lineLimit(1)
+                HStack(spacing: 2) {
+                    if !(data.status == .pending) {
+                        Text("\(data.status.rawValue)")
+                            .font(.body(.medium))
+                            .dodamColor(data.status == .rejected ? .error : .primary)
+                    }
+                    Text("\(data.videoTitle)")
+                        .font(.body(.medium))
+                        .dodamColor(.onSurface)
+                        .lineLimit(1)
+                }
                 Text("\(data.channelTitle)")
                     .font(.label(.large))
                     .dodamColor(.onSurfaceVariant)

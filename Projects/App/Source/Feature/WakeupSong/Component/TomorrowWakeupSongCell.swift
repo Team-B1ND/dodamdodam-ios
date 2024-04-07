@@ -28,16 +28,21 @@ struct TomorrowWakeupSongCell: View {
                 .font(.label(.large))
                 .dodamColor(.primary)
                 .frame(width: 8, height: 20)
-            CachedAsyncImage(url: URL(string: data.thumbnail)) {
-                $0
-                    .resizable()
-                    .frame(width: 120, height: 67)
-            } placeholder: {
-                Rectangle()
-                    .frame(width: 120, height: 67)
-                    .shimmer()
+            Link(
+                destination: URL(string: data.videoUrl)
+                ?? URL(string: "about:blank")!
+            ) {
+                CachedAsyncImage(url: URL(string: data.thumbnail)) {
+                    $0
+                        .resizable()
+                        .frame(width: 120, height: 67)
+                } placeholder: {
+                    Rectangle()
+                        .frame(width: 120, height: 67)
+                        .shimmer()
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 10))
             }
-            .clipShape(RoundedRectangle(cornerRadius: 10))
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(data.videoTitle)")
                     .font(.body(.medium))

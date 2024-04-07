@@ -69,10 +69,21 @@ struct OutStatusContainer: View {
                             Text("남음")
                                 .font(.label(.large))
                                 .dodamColor(.onSurfaceVariant)
+                        } else {
+                            Text({ () -> String in
+                                let startAt = data.startAt.parseDate(
+                                    format: "yyyy-MM-dd'T'HH:mm:ss"
+                                )
+                                guard let startAtString = startAt?.parseString(
+                                    format: "HH:mm"
+                                ) else {
+                                    return "시간 오류"
+                                }
+                                return startAtString
+                            }() + " 출발")
+                                .font(.label(.large))
+                                .dodamColor(.onSurfaceVariant)
                         }
-                        Text("13:00 복귀")
-                            .font(.label(.large))
-                            .dodamColor(.onSurfaceVariant)
                     }
                 }
             }
