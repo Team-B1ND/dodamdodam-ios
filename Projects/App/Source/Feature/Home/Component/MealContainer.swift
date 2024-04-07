@@ -39,7 +39,7 @@ struct MealContainer: View {
                         GeometryReader { geometryProxy in
                             let text = meals[idx]?.details.map {
                                 $0.name
-                            }.joined(separator: ", ") ?? "급식이 없습니다"
+                            }.joined(separator: ", ") ?? "급식이 없어요."
                             Text(text)
                                 .font(.body(.medium))
                                 .dodamColor(.onSurface)

@@ -25,12 +25,11 @@ let project = Project(
             infoPlist: .extendingDefault(
                 with: [
                     "CFBundleDisplayName": "도담도담",
-                    "CFBundleShortVersionString": "1.0",
+                    "CFBundleShortVersionString": "3.0.0",
                     "CFBundleVersion": "1",
                     "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
                     "UIMainStoryboardFile": "",
-                    "UILaunchStoryboardName": "LaunchScreen",
-                    "NSAppTransportSecurity": ["NSAllowsArbitraryLoads": true]
+                    "UILaunchStoryboardName": "LaunchScreen"
                 ]
             ),
             sources: ["Source/**"],
