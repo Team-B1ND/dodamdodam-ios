@@ -214,11 +214,7 @@ struct AllView: View {
             .padding([.top, .horizontal], 16)
         }
         .button(icon: .gear) {
-            if let data = viewModel.memberData {
-                flow.push(SettingView(
-                    data: data
-                ))
-            }
+            flow.push(SettingView())
         }
         .task {
             await viewModel.onAppear()

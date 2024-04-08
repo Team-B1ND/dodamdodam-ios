@@ -45,13 +45,8 @@ struct AppMain: App {
     
     var body: some Scene {
         WindowGroup {
-            if Sign.isLoggedIn {
-                FlowPresenter(rootView: MainView())
-                    .ignoresSafeArea()
-            } else {
-                FlowPresenter(rootView: OnboardingView())
-                    .ignoresSafeArea()
-            }
+            FlowPresenter(rootView: MainView())
+                .ignoresSafeArea()
         }
     }
 }
