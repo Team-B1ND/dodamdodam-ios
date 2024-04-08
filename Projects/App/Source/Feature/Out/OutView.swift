@@ -8,6 +8,7 @@
 import FlowKit
 import SwiftUI
 import DDS
+import SignKit
 
 struct OutView: View {
     
@@ -106,7 +107,7 @@ struct OutView: View {
                 selection: $selection
             )
         }
-        .button(icon: .plus) {
+        .button(icon: .plus, hidden: !Sign.isLoggedIn) {
             flow.push(OutApplyView(
                 selected: $selection
             ))

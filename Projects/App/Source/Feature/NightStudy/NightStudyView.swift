@@ -8,6 +8,7 @@
 import SwiftUI
 import FlowKit
 import DDS
+import SignKit
 
 struct NightStudyView: View {
     
@@ -55,7 +56,7 @@ struct NightStudyView: View {
             }
             .padding([.top, .horizontal], 16)
         }
-        .button(icon: .plus) {
+        .button(icon: .plus, hidden: !Sign.isLoggedIn) {
             flow.push(NightStudyApplyView())
         }
         .background(Dodam.color(.surface))
