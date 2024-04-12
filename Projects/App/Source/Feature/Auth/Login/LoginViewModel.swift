@@ -14,6 +14,9 @@ class LoginViewModel: ObservableObject {
     @Published var idText: String = ""
     @Published var pwText: String = ""
     @Published var isShowingAlert: Bool = false
+    @Published var isChecked1: Bool = false
+    @Published var isChecked2: Bool = false
+    @Published var isModalPresented: Bool = false
     
     // MARK: - Repository
     @Inject var authRepository: any AuthRepository
@@ -31,6 +34,10 @@ class LoginViewModel: ObservableObject {
             print(error)
             isShowingAlert = true
         }
+    }
+    
+    var isChecked: Bool {
+        isChecked1 && isChecked2
     }
     
     func isValidIdAndPw() -> Bool {

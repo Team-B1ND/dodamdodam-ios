@@ -189,21 +189,6 @@ struct SettingView: View {
                         .padding(8)
                     }
                     .scaledButtonStyle()
-                    Button {
-                        flow.push(RegisterInfoView())
-                    } label: {
-                        HStack(spacing: 16) {
-                            Text("회원가입")
-                                .font(.system(size: 18, weight: .medium))
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                        }
-                        .padding(8)
-                    }
-                    .scaledButtonStyle()
                 }
             }
             .padding(.horizontal, 16)
