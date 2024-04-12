@@ -10,7 +10,7 @@ import DDS
 
 struct LoginView: View {
     
-    @InjectObject var viewModel: LoginViewModel
+    @StateObject var viewModel = LoginViewModel()
     @Flow var flow
     
     var body: some View {

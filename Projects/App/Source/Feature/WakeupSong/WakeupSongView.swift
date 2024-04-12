@@ -10,7 +10,7 @@ import DDS
 
 struct WakeupSongView: View {
     
-    @InjectObject var viewModel: WakeupSongViewModel
+    @StateObject var viewModel = WakeupSongViewModel()
     @Flow var flow
     
     var body: some View {

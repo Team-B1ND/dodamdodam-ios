@@ -7,10 +7,11 @@
 
 import SwiftUI
 import DDS
+import SignKit
 
 struct HomeView: View {
     
-    @InjectObject var viewModel: HomeViewModel
+    @StateObject var viewModel = HomeViewModel()
     @Flow var flow
     @Binding var selection: Int
     @State private var ringABellRight = false
@@ -65,29 +66,55 @@ struct HomeView: View {
                             title: "외출 외박",
                             icon: Dodam.icon(.doorOpen)
                         ) {
-                            Button {
-                                selection = 2
-                            } label: {
-                                OutStatusContainer(
-                                    data: viewModel.outGoingData
-                                )
-                                .padding(6)
+                            if Sign.isLoggedIn {
+                                Button {
+                                    selection = 2
+                                } label: {
+                                    OutStatusContainer(
+                                        data: viewModel.outGoingData
+                                    )
+                                    .padding(6)
+                                }
+                                .scaledButtonStyle()
+                            } else {
+                                Button {
+                                    flow.push(LoginView())
+                                } label: {
+                                    SupportingContainer(
+                                        subTitle: "외출, 외박을 신청하려면",
+                                        title: "로그인하세요"
+                                    )
+                                    .padding(6)
+                                }
+                                .scaledButtonStyle()
                             }
-                            .scaledButtonStyle()
                         }
                         DodamContainer.default(
                             title: "심야 자습",
                             icon: Dodam.icon(.moonPlus)
                         ) {
-                            Button {
-                                selection = 3
-                            } label: {
-                                NightStudyStatusContainer(
-                                    data: viewModel.nightStudyData
-                                )
-                                .padding(6)
+                            if Sign.isLoggedIn {
+                                Button {
+                                    selection = 3
+                                } label: {
+                                    NightStudyStatusContainer(
+                                        data: viewModel.nightStudyData
+                                    )
+                                    .padding(6)
+                                }
+                                .scaledButtonStyle()
+                            } else {
+                                Button {
+                                    flow.push(LoginView())
+                                } label: {
+                                    SupportingContainer(
+                                        subTitle: "심야 자습을 신청하려면",
+                                        title: "로그인하세요"
+                                    )
+                                    .padding(6)
+                                }
+                                .scaledButtonStyle()
                             }
-                            .scaledButtonStyle()
                         }
                     }
                 }

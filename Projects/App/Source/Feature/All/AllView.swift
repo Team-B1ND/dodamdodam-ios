@@ -11,7 +11,7 @@ import CachedAsyncImage
 
 struct AllView: View {
     
-    @InjectObject var viewModel: AllViewModel
+    @StateObject var viewModel = AllViewModel()
     @Flow var flow
     @Binding var selection: Int
     

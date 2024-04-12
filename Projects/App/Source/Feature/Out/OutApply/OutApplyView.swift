@@ -10,7 +10,7 @@ import DDS
 
 struct OutApplyView: View {
     
-    @InjectObject var viewModel: OutApplyViewModel
+    @StateObject var viewModel = OutApplyViewModel()
     @Flow var flow
     
     @Binding var selected: Int

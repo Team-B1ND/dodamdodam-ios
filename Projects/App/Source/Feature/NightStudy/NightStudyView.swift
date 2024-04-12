@@ -12,7 +12,7 @@ import SignKit
 
 struct NightStudyView: View {
     
-    @InjectObject var viewModel: NightStudyViewModel
+    @StateObject var viewModel = NightStudyViewModel()
     @Flow var flow
     
     var body: some View {

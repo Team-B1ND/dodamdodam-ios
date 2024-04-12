@@ -13,7 +13,7 @@ import FlowKit
 
 struct SettingView: View {
     
-    @InjectObject var viewModel: SettingViewModel
+    @StateObject var viewModel = SettingViewModel()
     @Flow var flow
     
     var body: some View {
@@ -121,7 +121,7 @@ struct SettingView: View {
                             title: "로그아웃 하시겠습니까?",
                             primaryButton: .destructive("로그아웃") {
                                 Sign.logout()
-                                flow.replace([OnboardingView()])
+                                flow.replace([MainView()])
                             },
                             secondaryButton: .cancel("취소")
                         )
@@ -148,7 +148,7 @@ struct SettingView: View {
                                     do {
                                         try await viewModel.patchDeactivate()
                                         Sign.logout()
-                                        flow.replace([OnboardingView()])
+                                        flow.replace([MainView()])
                                     } catch {
                                         print(error)
                                     }

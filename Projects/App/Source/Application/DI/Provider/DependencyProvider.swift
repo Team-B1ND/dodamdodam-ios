@@ -19,7 +19,6 @@ class DependencyProvider {
         assembler = Assembler(
             [
                 FlowAssembly(),
-                ViewModelAssembly(),
                 DataSourceAssembly(),
                 RemoteAssembly(),
                 RepositoryAssembly()

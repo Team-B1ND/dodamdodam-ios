@@ -12,7 +12,7 @@ import SignKit
 
 struct OutView: View {
     
-    @InjectObject var viewModel: OutViewModel
+    @StateObject var viewModel = OutViewModel()
     @Flow var flow
     
     @State var selection: Int = 0
