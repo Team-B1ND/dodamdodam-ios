@@ -13,6 +13,7 @@ struct AllView: View {
     
     @InjectObject var viewModel: AllViewModel
     @Flow var flow
+    @Binding var selection: Int
     
     var body: some View {
         DodamScrollView.default(title: "전체") {
@@ -126,7 +127,7 @@ struct AllView: View {
                     .scaledButtonStyle()
                     
                     Button {
-                        flow.push(NightStudyApplyView())
+                        selection = 2
                     } label: {
                         HStack(spacing: 16) {
                             ZStack {
@@ -227,6 +228,6 @@ struct AllView: View {
 
 #Preview {
     FlowPreview {
-        AllView()
+        AllView(selection: .constant(4))
     }
 }
