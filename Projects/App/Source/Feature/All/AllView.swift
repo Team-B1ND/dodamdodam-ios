@@ -64,8 +64,8 @@ struct AllView: View {
                                     .shimmer()
                             }
                         }
+                        Spacer()
                     }
-                    Spacer()
                 } else {
                     Button {
                         flow.push(LoginView())

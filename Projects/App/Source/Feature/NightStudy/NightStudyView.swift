@@ -71,6 +71,7 @@ struct NightStudyView: View {
         .button(icon: .plus, hidden: !Sign.isLoggedIn) {
             flow.push(NightStudyApplyView())
         }
+        .borderSize(16)
         .background(Dodam.color(.surface))
         .task {
             await viewModel.onAppear()

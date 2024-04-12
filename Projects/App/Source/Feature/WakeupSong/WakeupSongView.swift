@@ -7,6 +7,8 @@
 
 import SwiftUI
 import DDS
+import FlowKit
+import SignKit
 
 struct WakeupSongView: View {
     
@@ -81,47 +83,64 @@ struct WakeupSongView: View {
                         .page(.text("대기중"))
                         
                         LazyVStack(spacing: 4) {
-                            if let data = viewModel.myWakeupSongData {
-                                if !data.isEmpty {
-                                    ForEach(data, id: \.self) { data in
-                                        Button {
-                                            viewModel.showDialog = true
-                                        } label: {
-                                            WakeupSongCell(
-                                                data: data
-                                            )
-                                        }
-                                        .scaledButtonStyle()
-                                        .alert(
-                                            "기상송을 삭제하시겠습니까?",
-                                            isPresented: $viewModel.showDialog
-                                        ) {
-                                            Button("네", role: .none) {
-                                                Task {
-                                                    await viewModel.deleteWakeupSong(
-                                                        id: data.id
-                                                    )
-                                                    await viewModel.fetchMyWakeupSong()
-                                                    await viewModel.fetchPendingWakeupSong()
-                                                }
+                            if Sign.isLoggedIn {
+                                if let data = viewModel.myWakeupSongData {
+                                    if !data.isEmpty {
+                                        ForEach(data, id: \.self) { data in
+                                            Button {
+                                                viewModel.showDialog = true
+                                            } label: {
+                                                WakeupSongCell(
+                                                    data: data
+                                                )
                                             }
-                                            Button("취소", role: .cancel) { }
+                                            .scaledButtonStyle()
+                                            .alert(
+                                                "기상송을 삭제하시겠습니까?",
+                                                isPresented: $viewModel.showDialog
+                                            ) {
+                                                Button("네", role: .none) {
+                                                    Task {
+                                                        await viewModel.deleteWakeupSong(
+                                                            id: data.id
+                                                        )
+                                                        await viewModel.fetchMyWakeupSong()
+                                                        await viewModel.fetchPendingWakeupSong()
+                                                    }
+                                                }
+                                                Button("취소", role: .cancel) { }
+                                            }
                                         }
+                                    } else {
+                                        Text("기상송을 신청해 보세요")
+                                            .font(.body(.medium
+                                                       ))
+                                            .dodamColor(.tertiary)
+                                            .frame(
+                                                maxWidth: .infinity,
+                                                alignment: .center
+                                            )
+                                            .padding(.top, 40)
                                     }
                                 } else {
-                                    Text("기상송을 신청해 보세요")
-                                        .font(.body(.medium
-                                                   ))
-                                        .dodamColor(.tertiary)
-                                        .frame(
-                                            maxWidth: .infinity,
-                                            alignment: .center
-                                        )
+                                    DodamLoadingView()
                                         .padding(.top, 40)
                                 }
                             } else {
-                                DodamLoadingView()
-                                    .padding(.top, 40)
+                                DodamEmptyView(
+                                    title: "기상송을 신청하려면 로그인하세요.",
+                                    icon: .note,
+                                    buttonTitle: "로그인"
+                                ) {
+                                    flow.push(LoginView())
+                                }
+                                .background(
+                                    RoundedRectangle(cornerRadius: 18)
+                                        .stroke(
+                                            Dodam.color(.secondaryContainer),
+                                            lineWidth: 2
+                                        )
+                                )
                             }
                             Spacer()
                         }
@@ -138,7 +157,19 @@ struct WakeupSongView: View {
             DodamButton.fullWidth(
                 title: "기상송 신청하기"
             ) {
-                flow.push(WakeupSongApplyView())
+                if Sign.isLoggedIn {
+                    flow.push(WakeupSongApplyView())
+                } else {
+                    let alert = Alert(
+                        title: "로그인이 필요한 기능입니다",
+                        message: "로그인하시겠습니까?",
+                        primaryButton: .default("로그인") {
+                            flow.push(LoginView())
+                        },
+                        secondaryButton: .cancel("취소")
+                    )
+                    flow.alert(alert)
+                }
             }
             .padding([.bottom, .horizontal], 16)
         }
