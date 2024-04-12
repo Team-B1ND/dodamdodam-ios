@@ -21,7 +21,7 @@ struct MealView: View {
     
     var body: some View {
         DodamScrollView.default(title: "급식") {
-            VStack(spacing: 20) {
+            LazyVStack(spacing: 20) {
                 if let datas = viewModel.mealData {
                     if !datas.isEmpty {
                         ForEach({ () -> [MealResponse] in
@@ -57,7 +57,7 @@ struct MealView: View {
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 32))
                             
-                            VStack(spacing: 12) {
+                            LazyVStack(spacing: 12) {
                                 ForEach(0..<3, id: \.self) { idx in
                                     let data: Meal? = {
                                         switch idx {
