@@ -8,6 +8,8 @@
 import SwiftUI
 import DDS
 import CachedAsyncImage
+import SignKit
+import FlowKit
 
 struct AllView: View {
     
@@ -18,54 +20,84 @@ struct AllView: View {
     var body: some View {
         DodamScrollView.default(title: "전체") {
             VStack(spacing: 24) {
-                HStack(spacing: 16) {
-                    if let data = viewModel.memberData {
-                        if let profileImage = data.profileImage {
-                            CachedAsyncImage(url: URL(string: profileImage)) {
-                                $0
+                if Sign.isLoggedIn {
+                    HStack(spacing: 16) {
+                        if let data = viewModel.memberData {
+                            if let profileImage = data.profileImage {
+                                CachedAsyncImage(url: URL(string: profileImage)) {
+                                    $0
+                                        .resizable()
+                                        .frame(width: 70, height: 70)
+                                } placeholder: {
+                                    Rectangle()
+                                        .frame(width: 70, height: 70)
+                                        .shimmer()
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                            } else {
+                                Image("Profile")
                                     .resizable()
                                     .frame(width: 70, height: 70)
-                            } placeholder: {
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            }
+                            if let student = data.student {
+                                VStack(alignment: .leading) {
+                                    Text("환영합니다, \(student.name)님")
+                                        .font(.body(.large))
+                                        .dodamColor(.onSurface)
+                                    Text("\(student.grade)학년 \(student.room)반 \(student.number)번")
+                                        .font(.label(.large))
+                                        .dodamColor(.onSurfaceVariant)
+                                }
+                            }
+                        } else {
+                            Rectangle()
+                                .frame(width: 70, height: 70)
+                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .shimmer()
+                            VStack(alignment: .leading) {
                                 Rectangle()
-                                    .frame(width: 70, height: 70)
+                                    .frame(width: 150, height: 24)
+                                    .shimmer()
+                                Rectangle()
+                                    .frame(width: 90, height: 16)
                                     .shimmer()
                             }
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                        } else {
+                        }
+                    }
+                    Spacer()
+                } else {
+                    Button {
+                        flow.push(LoginView())
+                    } label: {
+                        HStack(spacing: 16) {
                             Image("Profile")
                                 .resizable()
                                 .frame(width: 70, height: 70)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
-                        }
-                        if let student = data.student {
-                            VStack(alignment: .leading) {
-                                Text("환영합니다, \(student.name)님")
-                                    .font(.body(.large))
-                                    .dodamColor(.onSurface)
-                                Text("\(student.grade)학년 \(student.room)반 \(student.number)번")
-                                    .font(.label(.large))
-                                    .dodamColor(.onSurfaceVariant)
-                            }
-                        }
-                    } else {
-                        Rectangle()
-                            .frame(width: 70, height: 70)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
-                            .shimmer()
-                        VStack(alignment: .leading) {
-                            Rectangle()
-                                .frame(width: 150, height: 24)
-                                .shimmer()
-                            Rectangle()
-                                .frame(width: 90, height: 16)
-                                .shimmer()
+                            Text("로그인하세요.")
+                                .font(.body(.large))
+                                .dodamColor(.onSurface)
+                            Spacer()
                         }
                     }
-                    Spacer()
+                    .scaledButtonStyle()
                 }
                 VStack(spacing: 12) {
                     Button {
-                        flow.push(PointView())
+                        if Sign.isLoggedIn {
+                            flow.push(PointView())
+                        } else {
+                            let alert = Alert(
+                                title: "로그인이 필요한 기능입니다",
+                                message: "로그인하시겠습니까?",
+                                primaryButton: .default("로그인") {
+                                    flow.push(LoginView())
+                                },
+                                secondaryButton: .cancel("취소")
+                            )
+                            flow.alert(alert)
+                        }
                     } label: {
                         HStack(spacing: 16) {
                             ZStack {
@@ -99,7 +131,19 @@ struct AllView: View {
                         .padding(.horizontal, 8)
                     
                     Button {
-                        flow.push(BusApplyView())
+                        if Sign.isLoggedIn {
+                            flow.push(BusApplyView())
+                        } else {
+                            let alert = Alert(
+                                title: "로그인이 필요한 기능입니다",
+                                message: "로그인하시겠습니까?",
+                                primaryButton: .default("로그인") {
+                                    flow.push(LoginView())
+                                },
+                                secondaryButton: .cancel("취소")
+                            )
+                            flow.alert(alert)
+                        }
                     } label: {
                         HStack(spacing: 16) {
                             ZStack {
@@ -183,8 +227,20 @@ struct AllView: View {
                     .scaledButtonStyle()
                     
                     Button {
-                        flow.push(WakeupSongView(), animated: false)
-                        flow.push(WakeupSongApplyView())
+                        if Sign.isLoggedIn {
+                            flow.push(WakeupSongView(), animated: false)
+                            flow.push(WakeupSongApplyView())
+                        } else {
+                            let alert = Alert(
+                                title: "로그인이 필요한 기능입니다",
+                                message: "로그인하시겠습니까?",
+                                primaryButton: .default("로그인") {
+                                    flow.push(LoginView())
+                                },
+                                secondaryButton: .cancel("취소")
+                            )
+                            flow.alert(alert)
+                        }
                     } label: {
                         HStack(spacing: 16) {
                             ZStack {

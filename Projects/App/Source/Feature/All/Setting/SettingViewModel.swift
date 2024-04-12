@@ -19,7 +19,9 @@ class SettingViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        await fetchMemberData()
+        if Sign.isLoggedIn {
+            await fetchMemberData()
+        }
     }
     
     @MainActor

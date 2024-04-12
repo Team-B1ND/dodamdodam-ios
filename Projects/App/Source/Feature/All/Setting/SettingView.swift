@@ -19,45 +19,47 @@ struct SettingView: View {
     var body: some View {
         DodamScrollView.medium(title: "설정") {
             VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 12) {
-                    if let data = viewModel.memberData {
-                        if let profileImage = data.profileImage {
-                            CachedAsyncImage(url: URL(string: profileImage)) {
-                                $0
+                if Sign.isLoggedIn {
+                    HStack(spacing: 12) {
+                        if let data = viewModel.memberData {
+                            if let profileImage = data.profileImage {
+                                CachedAsyncImage(url: URL(string: profileImage)) {
+                                    $0
+                                        .resizable()
+                                        .frame(width: 48, height: 48)
+                                } placeholder: {
+                                    Rectangle()
+                                        .frame(width: 48, height: 48)
+                                        .shimmer()
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 48))
+                            } else {
+                                Image("Profile")
                                     .resizable()
                                     .frame(width: 48, height: 48)
-                            } placeholder: {
-                                Rectangle()
-                                    .frame(width: 48, height: 48)
-                                    .shimmer()
+                                    .clipShape(RoundedRectangle(cornerRadius: 48))
                             }
-                            .clipShape(RoundedRectangle(cornerRadius: 48))
-                        } else {
-                            Image("Profile")
-                                .resizable()
-                                .frame(width: 48, height: 48)
-                                .clipShape(RoundedRectangle(cornerRadius: 48))
-                        }
-                        if let student = data.student {
-                            VStack(alignment: .leading) {
-                                Text("\(student.name)")
-                                    .font(.body(.large))
-                                    .dodamColor(.onBackground)
-                                Text("정보 수정은 곧 추가됩니다")
-                                    .font(.label(.large))
-                                    .dodamColor(.tertiary)
+                            if let student = data.student {
+                                VStack(alignment: .leading) {
+                                    Text("\(student.name)")
+                                        .font(.body(.large))
+                                        .dodamColor(.onBackground)
+                                    Text("정보 수정은 곧 추가됩니다")
+                                        .font(.label(.large))
+                                        .dodamColor(.tertiary)
+                                }
                             }
+                            Spacer()
                         }
-                        Spacer()
                     }
+                    .padding([.leading, .vertical], 8)
+                    
+                    Rectangle()
+                        .dodamFill(.outlineVariant)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 1)
+                        .padding(.horizontal, 8)
                 }
-                .padding([.leading, .vertical], 8)
-                
-                Rectangle()
-                    .dodamFill(.outlineVariant)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 1)
-                    .padding(.horizontal, 8)
                 
                 Button {
                     guard let url = URL(
