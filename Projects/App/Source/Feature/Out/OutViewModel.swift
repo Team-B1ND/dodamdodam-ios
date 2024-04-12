@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SignKit
 
 class OutViewModel: ObservableObject {
     
@@ -20,7 +21,9 @@ class OutViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        await fetchOutData()
+        if Sign.isLoggedIn {
+            await fetchOutData()
+        }
     }
     
     @MainActor

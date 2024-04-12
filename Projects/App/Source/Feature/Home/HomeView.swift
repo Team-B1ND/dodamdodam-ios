@@ -51,28 +51,19 @@ struct HomeView: View {
                         title: "오늘의 기상송",
                         icon: Dodam.icon(.note)
                     ) {
-                        if Sign.isLoggedIn {
-                            Button {
+                        Button {
+                            if Sign.isLoggedIn || !(viewModel.wakeupSongData?.isEmpty ?? true) {
                                 flow.push(WakeupSongView())
-                            } label: {
-                                WakeupSongContainer(
-                                    data: viewModel.wakeupSongData
-                                )
-                                .padding(6)
-                            }
-                            .scaledButtonStyle()
-                        } else {
-                            Button {
+                            } else {
                                 flow.push(LoginView())
-                            } label: {
-                                SupportingContainer(
-                                    subTitle: "승인된 기상송이 없어요",
-                                    title: "신청하려면 로그인하세요"
-                                )
-                                .padding(6)
                             }
-                            .scaledButtonStyle()
+                        } label: {
+                            WakeupSongContainer(
+                                data: viewModel.wakeupSongData
+                            )
+                            .padding(6)
                         }
+                        .scaledButtonStyle()
                     }
                     HStack(alignment: .top, spacing: 12) {
                         DodamContainer.default(
