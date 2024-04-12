@@ -10,7 +10,7 @@ import DDS
 
 struct BusApplyView: View {
     
-    @InjectObject var viewModel: BusApplyViewModel
+    @StateObject var viewModel = BusApplyViewModel()
     @Flow var flow
     
     var body: some View {

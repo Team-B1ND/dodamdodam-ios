@@ -10,7 +10,7 @@ import DDS
 
 struct RegisterInfoView: View {
     
-    @InjectObject var viewModel: RegisterViewModel
+    @StateObject var viewModel = RegisterViewModel()
     @Flow var flow
     
     var body: some View {

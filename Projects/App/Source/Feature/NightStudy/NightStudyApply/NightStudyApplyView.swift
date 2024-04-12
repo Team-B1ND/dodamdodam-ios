@@ -10,7 +10,7 @@ import DDS
 
 struct NightStudyApplyView: View {
     
-    @InjectObject var viewModel: NightStudyApplyViewModel
+    @StateObject var viewModel = NightStudyApplyViewModel()
     @Flow var flow
     @FocusState var focused
     

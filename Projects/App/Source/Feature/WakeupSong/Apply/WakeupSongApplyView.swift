@@ -11,7 +11,7 @@ import CachedAsyncImage
 
 struct WakeupSongApplyView: View {
     
-    @InjectObject var viewModel: WakeupSongApplyViewModel
+    @StateObject var viewModel = WakeupSongApplyViewModel()
     @Flow var flow
     
     var body: some View {

@@ -22,7 +22,7 @@ struct MainView: View {
                 .page(.icon(.doorOpen))
             NightStudyView()
                 .page(.icon(.moonPlus))
-            AllView()
+            AllView(selection: $selection)
                 .page(.icon(.menu))
         }
     }

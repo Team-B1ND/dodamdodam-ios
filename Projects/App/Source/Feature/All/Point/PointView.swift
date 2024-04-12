@@ -10,7 +10,7 @@ import DDS
 
 struct PointView: View {
     
-    @InjectObject var viewModel: PointViewModel
+    @StateObject var viewModel = PointViewModel()
     @Flow var flow
     
     var body: some View {

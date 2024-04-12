@@ -10,7 +10,7 @@ import DDS
 
 struct RegisterAuthView: View {
     
-    @InjectObject var viewModel: RegisterViewModel
+    @StateObject var viewModel = RegisterViewModel()
     @Flow var flow
     
     var body: some View {
@@ -84,10 +84,10 @@ struct RegisterAuthView: View {
                 ) {
                     await viewModel.postJoin {
                         flow.replace(
-                            [OnboardingView()
-                            .toast(timeout: 3) {
-                                Text("회원가입에 성공했어요!")
-                            }]
+                            [MainView()
+                                .toast(timeout: 3) {
+                                    Text("회원가입에 성공했어요!")
+                                }]
                         )
                     }
                 }

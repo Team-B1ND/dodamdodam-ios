@@ -7,6 +7,7 @@
 
 import Combine
 import Foundation
+import SignKit
 
 class HomeViewModel: ObservableObject {
     
@@ -38,8 +39,10 @@ class HomeViewModel: ObservableObject {
         await fetchBannerData()
         await fetchMealData()
         await fetchWakeupSongData()
-        await fetchOutData()
-        await fetchNightStudy()
+        if Sign.isLoggedIn {
+            await fetchOutData()
+            await fetchNightStudy()
+        }
         isFirstLoad = false
     }
     

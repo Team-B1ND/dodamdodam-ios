@@ -10,7 +10,7 @@ import DDS
 
 struct MealView: View {
     
-    @InjectObject var viewModel: MealViewModel
+    @StateObject var viewModel = MealViewModel()
     @Flow var flow
     
     func isToday(_ dateStr: String) -> Bool {
