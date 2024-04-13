@@ -18,50 +18,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="obG-Y5-kRd">
-                                <rect key="frame" x="0.0" y="832" width="393" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="B1NDLogo" translatesAutoresizingMaskIntoConstraints="NO" id="nAX-Dh-hd3">
-                                <rect key="frame" x="166.66666666666666" y="778" width="60" height="16"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="IdF-Zt-jCq"/>
-                                    <constraint firstAttribute="height" constant="16" id="lCL-1Y-elb"/>
-                                </constraints>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="bBx-jB-VsV">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DodamLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="kjs-R5-rHH">
                                 <rect key="frame" x="106.66666666666669" y="403.66666666666669" width="180" height="45"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="180" id="2cZ-5i-tII"/>
-                                    <constraint firstAttribute="height" constant="45" id="Crv-uS-e0l"/>
+                                    <constraint firstAttribute="width" constant="180" id="ABq-Ie-qRf"/>
+                                    <constraint firstAttribute="height" constant="45" id="NVR-Iy-qvp"/>
+                                    <constraint firstAttribute="width" secondItem="kjs-R5-rHH" secondAttribute="height" multiplier="4:1" id="mk6-Cb-pZp"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="B1NDLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="e8m-on-unZ">
+                                <rect key="frame" x="166.66666666666666" y="774" width="60" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="16" id="kHC-JG-OSD"/>
+                                    <constraint firstAttribute="width" constant="60" id="o5v-Ve-VfH"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <color key="tintColor" name="PrimaryBlue"/>
+                        <color key="tintColor" name="AccentColor"/>
                         <constraints>
-                            <constraint firstItem="bBx-jB-VsV" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="272-ew-1rj"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="obG-Y5-kRd" secondAttribute="centerX" id="5cz-MP-9tL"/>
-                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="20" symbolic="YES" id="SfN-ll-jLj"/>
-                            <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" id="Y44-ml-fuU"/>
-                            <constraint firstItem="nAX-Dh-hd3" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="fSN-IT-A6J"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="nAX-Dh-hd3" secondAttribute="bottom" constant="24" id="k9Y-xR-tKP"/>
-                            <constraint firstItem="bBx-jB-VsV" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="kOU-80-ax1"/>
+                            <constraint firstItem="kjs-R5-rHH" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="HdL-Ho-e8E"/>
+                            <constraint firstItem="e8m-on-unZ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="NiJ-gq-IX2"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="e8m-on-unZ" secondAttribute="bottom" constant="28" id="j9y-ID-rQT"/>
+                            <constraint firstItem="kjs-R5-rHH" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="tJz-tJ-PAO"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.671755725190835" y="374.64788732394368"/>
         </scene>
     </scenes>
+    <color key="tintColor" name="AccentColor"/>
     <resources>
-        <image name="B1NDLogo" width="102.41000366210938" height="28.340000152587891"/>
-        <image name="Logo" width="89" height="23"/>
-        <namedColor name="PrimaryBlue">
+        <image name="B1NDLogo.png" width="60" height="16"/>
+        <image name="DodamLogo.png" width="1800" height="450"/>
+        <namedColor name="AccentColor">
             <color red="0.0" green="0.51399999856948853" blue="0.94099998474121094" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">

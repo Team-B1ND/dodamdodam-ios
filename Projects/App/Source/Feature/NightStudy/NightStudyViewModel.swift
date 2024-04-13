@@ -6,6 +6,7 @@
 //
 
 import Combine
+import SignKit
 
 class NightStudyViewModel: ObservableObject {
     
@@ -19,7 +20,9 @@ class NightStudyViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        await fetchNightStudy()
+        if Sign.isLoggedIn {
+            await fetchNightStudy()
+        }
     }
     
     @MainActor

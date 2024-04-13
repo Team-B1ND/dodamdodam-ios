@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SignKit
 
 class WakeupSongViewModel: ObservableObject {
     
@@ -24,7 +25,9 @@ class WakeupSongViewModel: ObservableObject {
     func onAppear() async {
         await fetchAllowedWakeupSong()
         await fetchPendingWakeupSong()
-        await fetchMyWakeupSong()
+        if Sign.isLoggedIn {
+            await fetchMyWakeupSong()
+        }
     }
     
     @MainActor

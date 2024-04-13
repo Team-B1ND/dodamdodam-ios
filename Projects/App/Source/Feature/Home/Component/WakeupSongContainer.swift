@@ -8,6 +8,7 @@
 import SwiftUI
 import DDS
 import CachedAsyncImage
+import SignKit
 
 struct WakeupSongContainer: View {
     
@@ -60,10 +61,17 @@ struct WakeupSongContainer: View {
                 .frame(height: 80)
 
             } else {
-                SupportingContainer(
-                    subTitle: "승인된 기상송이 없어요",
-                    title: "기상송 신청하기"
-                )
+                if Sign.isLoggedIn {
+                    SupportingContainer(
+                        subTitle: "승인된 기상송이 없어요",
+                        title: "기상송 신청하기"
+                    )
+                } else {
+                    SupportingContainer(
+                        subTitle: "승인된 기상송이 없어요",
+                        title: "신청하려면 로그인하세요"
+                    )
+                }
             }
         } else {
             DodamLoadingView()
