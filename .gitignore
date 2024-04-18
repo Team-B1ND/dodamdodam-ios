@@ -144,3 +144,6 @@ Derived/
 
 ### Tuist managed dependencies ###
 Tuist/Dependencies
+
+### Firebase Analytics configurations ###
+GoogleService-Info.plist
