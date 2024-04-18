@@ -41,7 +41,8 @@ let project = Project(
                 .external(name: "Swinject"),
                 .external(name: "FlowKit"),
                 .external(name: "SignKit"),
-                .external(name: "CachedAsyncImage")
+                .external(name: "CachedAsyncImage"),
+                .external(name: "FirebaseAnalytics")
             ]
         )
     ]

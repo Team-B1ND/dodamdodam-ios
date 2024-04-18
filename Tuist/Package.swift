@@ -29,6 +29,7 @@ let package = Package(
         .package(url: "https://github.com/Swinject/Swinject.git", from: "2.8.0"),
         .package(url: "https://github.com/Mercen-Lee/FlowKit", branch: "main"),
         .package(url: "https://github.com/Mercen-Lee/SignKit", exact: "0.0.2"),
-        .package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image", exact: "2.1.1")
+        .package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image", exact: "2.1.1"),
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", from: "10.24.0")
     ]
 )

@@ -39,6 +39,8 @@ public struct FlowPreview<C: View>: View {
 @main
 struct AppMain: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     init() {
         SUIT.register()
     }
