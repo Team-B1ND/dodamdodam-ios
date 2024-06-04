@@ -1,6 +1,6 @@
 generate:
-	tuist install
-	tuist generate
+	mise exec -- tuist install
+	mise exec -- tuist generate
 
 clean:
 	rm -rf **/*.xcodeproj
