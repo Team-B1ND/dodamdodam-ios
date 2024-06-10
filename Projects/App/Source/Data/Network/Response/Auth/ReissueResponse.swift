@@ -5,4 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-typealias ReissueResponse = String
+struct ReissueResponse: ResponseProtocol {
+    let accessToken: String
+}
