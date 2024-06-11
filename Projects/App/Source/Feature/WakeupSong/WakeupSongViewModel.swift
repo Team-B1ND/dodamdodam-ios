@@ -23,8 +23,9 @@ class WakeupSongViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        await fetchAllowedWakeupSong()
-        await fetchPendingWakeupSong()
+        async let fetchAllowedWakeupSong: () = await fetchAllowedWakeupSong()
+        async let fetchPendingWakeupSong: () = await fetchPendingWakeupSong()
+        _ = await [fetchAllowedWakeupSong, fetchPendingWakeupSong]
         if Sign.isLoggedIn {
             await fetchMyWakeupSong()
         }
