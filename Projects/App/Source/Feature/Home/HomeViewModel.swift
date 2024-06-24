@@ -36,12 +36,14 @@ class HomeViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        await fetchBannerData()
-        await fetchMealData()
-        await fetchWakeupSongData()
+        async let fetchBannerData: () = await fetchBannerData()
+        async let fetchMealData: () = await fetchMealData()
+        async let fetchWakeupSongData: () = await fetchWakeupSongData()
+        _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData]
         if Sign.isLoggedIn {
-            await fetchOutData()
-            await fetchNightStudy()
+            async let fetchOutData: () = await fetchOutData()
+            async let fetchNightStudy: () = await fetchNightStudy()
+            _ = await [fetchOutData, fetchNightStudy]
         }
         isFirstLoad = false
     }

@@ -28,4 +28,5 @@ extension ServiceProtocol {
         }
         return headers
     }
+    var validationType: ValidationType { .successCodes }
 }

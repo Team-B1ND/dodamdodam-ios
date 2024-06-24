@@ -27,6 +27,7 @@ struct LoginView: View {
                 )
                 .makeFirstResponder()
                 .focused($idFocsused)
+                .keyboardType(.asciiCapable)
                 DodamTextField.secured(
                     title: "비밀번호",
                     text: $viewModel.pwText

@@ -66,6 +66,7 @@ struct RegisterAuthView: View {
                     .onSubmit {
                         viewModel.authStep = 1
                     }
+                    .keyboardType(.asciiCapable)
                     Text("아이디는 영문과 숫자로 5 ~ 20글자 이내여야 해요.")
                         .font(.label(.large))
                         .dodamColor(.onSurfaceVariant)
