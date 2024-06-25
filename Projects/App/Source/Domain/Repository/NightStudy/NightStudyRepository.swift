@@ -7,7 +7,7 @@
 
 protocol NightStudyRepository: RepositoryProtocol {
     
-    func postNightStudy(_ request: PostNightStudyRequest) async throws
+    func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse
     
     func deleteNightStudy(id: Int) async throws
     
