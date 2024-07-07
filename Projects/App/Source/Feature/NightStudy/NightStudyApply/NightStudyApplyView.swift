@@ -164,10 +164,15 @@ struct NightStudyApplyView: View {
                     flow.pop()
                 }
                 .disabled(
-                    viewModel.reasonText.isEmpty ||
-                    viewModel.startAt >= viewModel.endAt ||
-                    viewModel.reasonText.count <= 10
+                    viewModel.startAt > viewModel.endAt ||
+                    viewModel.endAt.timeIntervalSinceReferenceDate -  viewModel.startAt.timeIntervalSinceReferenceDate > 86400 * 13 ||
+                    viewModel.reasonText.count < 10
                 )
+                .alert("실패", isPresented: $viewModel.nightStudyApplyFailed) {
+                    Button("확인", role: .none) { }
+                } message: {
+                    Text("\(viewModel.nightStudyApplyAlertMessage)")
+                }
                 .padding(.bottom, 8)
                 .padding(.horizontal, 16)
             }
