@@ -9,7 +9,7 @@ struct NightStudyRepositoryImpl: NightStudyRepository {
     
     let dataSource: NightStudyDataSource
     
-    func postNightStudy(_ request: PostNightStudyRequest) async throws {
+    func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse{
         try await dataSource.postNightStudy(request)
     }
     

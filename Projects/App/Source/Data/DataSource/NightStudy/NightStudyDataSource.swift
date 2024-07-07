@@ -9,8 +9,8 @@ struct NightStudyDataSource: DataSourceProtocol {
     
     let remote: NightStudyRemote
     
-    func postNightStudy(_ request: PostNightStudyRequest) async throws {
-        _ = try await remote.postNightStudy(request)
+    func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
+        try await remote.postNightStudy(request)
     }
     
     func deleteNightStudy(id: Int) async throws {

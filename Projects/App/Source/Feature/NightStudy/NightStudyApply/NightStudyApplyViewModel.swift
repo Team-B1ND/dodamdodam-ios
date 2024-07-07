@@ -22,6 +22,9 @@ class NightStudyApplyViewModel: ObservableObject {
     @Published var isEndAtModalPresented: Bool = false
     @Published var isModalPresented: Bool = false
     
+    @Published var nightStudyApplyFailed: Bool = false
+    @Published var nightStudyApplyAlertMessage: String = "심야 자습 신청에 실패했습니다."
+    
     // MARK: - Repository
     @Inject var nightStudyRepository: any NightStudyRepository
     
@@ -35,7 +38,7 @@ class NightStudyApplyViewModel: ObservableObject {
     @MainActor
     func postNightStudy() async {
         do {
-            try await nightStudyRepository.postNightStudy(
+            let result = try await nightStudyRepository.postNightStudy(
                 .init(
                     place: place.rawValue,
                     content: reasonText,
@@ -45,6 +48,13 @@ class NightStudyApplyViewModel: ObservableObject {
                     endAt: endAt.parseString(format: "yyyy-MM-dd")
                 )
             )
+            print("날짜 : \(startAt.timeIntervalSinceReferenceDate - endAt.timeIntervalSinceReferenceDate)")
+            if result.status == 403 {
+                nightStudyApplyFailed = true
+                nightStudyApplyAlertMessage = "심야 자습 신청 기간이 아닙니다."
+            } else {
+                nightStudyApplyFailed = true
+            }
         } catch let error {
             print(error)
         }
