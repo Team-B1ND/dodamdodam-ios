@@ -22,11 +22,7 @@ extension ServiceProtocol {
     }
     
     var headers: [String: String]? {
-        var headers = ["Content-Type": "application/json"]
-        if let authorization = Sign.accessToken {
-            headers["Authorization"] = "Bearer \(authorization)"
-        }
-        return headers
+        return ["Content-Type": "application/json"]
     }
     var validationType: ValidationType { .successCodes }
 }

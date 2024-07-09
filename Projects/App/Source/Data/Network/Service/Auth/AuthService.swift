@@ -45,4 +45,8 @@ extension AuthService {
     var headers: [String: String]? {
         ["Content-Type": "application/json"]
     }
+    
+    var validationType: ValidationType {
+        .none
+    }
 }
