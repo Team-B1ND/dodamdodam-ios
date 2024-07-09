@@ -23,15 +23,12 @@ class RemoteInterceptor: RequestInterceptor {
         }
         
         for path in notReissuePaths {
-            print("path - \(path), absoluteString - \(urlRequest.url?.absoluteString ?? "nil")")
-            guard urlRequest.url?.absoluteString.contains(path) ?? false else {
+            if urlRequest.url?.absoluteString.contains(path) ?? true {
                 completion(.success(urlRequest))
                 return
             }
         }
-        
         var modifiedRequest = urlRequest
-        print("accessToken - \(accessToken)")
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         completion(.success(modifiedRequest))
     }
