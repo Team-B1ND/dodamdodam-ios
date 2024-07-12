@@ -16,8 +16,7 @@ struct PointView: View {
     var body: some View {
         DodamScrollView.medium(title: "내 상벌점") {
             VStack(spacing: 12) {
-                if let data = viewModel.domitoryPointData,
-                   viewModel.selection == 0,
+                if let data = viewModel.pointData,
                    !data.isEmpty {
                     ForEach(data, id: \.self) { data in
                         HStack {
@@ -41,31 +40,8 @@ struct PointView: View {
                         }
                         .padding(.vertical, 8)
                     }
-                } else if let data = viewModel.schoolPointData,
-                          !data.isEmpty {
-                    ForEach(data, id: \.self) { data in
-                        HStack {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("\(data.reason.reason)")
-                                    .font(.body(.large))
-                                    .dodamColor(.onBackground)
-                                Text("\(data.teacher.position) • \(data.issueAt)")
-                                    .font(.label(.large))
-                                    .dodamColor(.onSurfaceVariant)
-                            }
-                            .padding(.leading, 8)
-                            Spacer()
-                            Text("\(data.reason.score)")
-                                .font(.body(.large))
-                                .dodamColor(
-                                    data.reason.scoreType == .minus
-                                    ? .error
-                                    : .primary
-                                )
-                                .padding(.trailing, 8)
-                        }
-                        .padding(.vertical, 8)
-                    }
+                } else if viewModel.pointData == nil {
+                    DodamLoadingView()
                 } else {
                     Text("상벌점 발급 내역이 없어요.")
                         .font(.body(.medium))
@@ -87,17 +63,27 @@ struct PointView: View {
                         Text("상점")
                             .font(.body(.medium))
                             .dodamColor(.tertiary)
-                        Text("\(viewModel.bonus[viewModel.selection])점")
-                            .font(.headline(.large))
-                            .dodamColor(.primary)
+                        if let bonus = viewModel.bocus {
+                            Text("\(bonus)점")
+                                .font(.headline(.large))
+                                .dodamColor(.primary)
+                        } else {
+                            DodamLoadingView()
+                                .frame(height: 44)
+                        }
                     }
                     VStack(spacing: 0) {
                         Text("벌점")
                             .font(.body(.medium))
                             .dodamColor(.tertiary)
-                        Text("\(viewModel.minus[viewModel.selection])점")
-                            .font(.headline(.large))
-                            .dodamColor(.error)
+                        if let minus = viewModel.minus {
+                            Text("\(minus)점")
+                                .font(.headline(.large))
+                                .dodamColor(.error)
+                        } else {
+                            DodamLoadingView()
+                                .frame(height: 44)
+                        }
                     }
                 }
                 .padding(.top, 24)
