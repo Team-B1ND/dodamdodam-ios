@@ -39,11 +39,13 @@ class HomeViewModel: ObservableObject {
         async let fetchBannerData: () = await fetchBannerData()
         async let fetchMealData: () = await fetchMealData()
         async let fetchWakeupSongData: () = await fetchWakeupSongData()
-        _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData]
+        
         if Sign.isLoggedIn {
             async let fetchOutData: () = await fetchOutData()
             async let fetchNightStudy: () = await fetchNightStudy()
-            _ = await [fetchOutData, fetchNightStudy]
+            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData, fetchOutData, fetchNightStudy]
+        } else {
+            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData]
         }
         isFirstLoad = false
     }
@@ -105,16 +107,16 @@ class HomeViewModel: ObservableObject {
     @MainActor
     func fetchOutData() async {
         do {
-            let outGoingResponse = try await outGoingRepository.fetchOutGoing()
-            let outSleepingResponse = try await outSleepingRepository.fetchOutSleeping()
+            async let outGoingResponse = outGoingRepository.fetchOutGoing()
+            async let outSleepingResponse = outSleepingRepository.fetchOutSleeping()
             
-            guard let earliestOutGoingResponse = outGoingResponse.min(by: {
+            guard let earliestOutGoingResponse = try await outGoingResponse.min(by: {
                 $0.startAt < $1.startAt
             }) else {
                 outGoingData = .none
                 return
             }
-            guard let earliestOutSleepingResponse = outSleepingResponse.min(by: {
+            guard let earliestOutSleepingResponse = try await outSleepingResponse.min(by: {
                 $0.startAt < $1.startAt
             }) else {
                 outSleepingData = .none
