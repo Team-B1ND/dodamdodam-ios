@@ -34,7 +34,7 @@ struct SettingView: View {
                                 }
                                 .clipShape(RoundedRectangle(cornerRadius: 48))
                             } else {
-                                Image("Profile")
+                                Image(.profile)
                                     .resizable()
                                     .frame(width: 48, height: 48)
                                     .clipShape(RoundedRectangle(cornerRadius: 48))
@@ -50,6 +50,19 @@ struct SettingView: View {
                                 }
                             }
                             Spacer()
+                        } else {
+                            Rectangle()
+                                .frame(width: 48, height: 48)
+                                .shimmer()
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            VStack(alignment: .leading) {
+                                Rectangle()
+                                    .frame(width: 80, height: 24)
+                                    .shimmer()
+                                Rectangle()
+                                    .frame(width: 240, height: 20)
+                                    .shimmer()
+                            }
                         }
                     }
                     .padding([.leading, .vertical], 8)

@@ -35,7 +35,7 @@ struct AllView: View {
                                 }
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                             } else {
-                                Image("Profile")
+                                Image(.profile)
                                     .resizable()
                                     .frame(width: 70, height: 70)
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -71,7 +71,7 @@ struct AllView: View {
                         flow.push(LoginView())
                     } label: {
                         HStack(spacing: 16) {
-                            Image("Profile")
+                            Image(.profile)
                                 .resizable()
                                 .frame(width: 70, height: 70)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
