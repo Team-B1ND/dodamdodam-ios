@@ -5,7 +5,6 @@
 //  Created by 이민규 on 3/16/24.
 //
 
-import Combine
 import Foundation
 import SignKit
 
@@ -106,25 +105,37 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchOutData() async {
+        async let fetchOutGoingData: () = fetchOutGoingData()
+        async let fetchOutSleepingData: () = fetchOutSleepingData()
+        _ = await [fetchOutGoingData, fetchOutSleepingData]
+    }
+    
+    private func fetchOutSleepingData() async {
         do {
-            async let outGoingResponse = outGoingRepository.fetchOutGoing()
-            async let outSleepingResponse = outSleepingRepository.fetchOutSleeping()
-            
-            guard let earliestOutGoingResponse = try await outGoingResponse.min(by: {
-                $0.startAt < $1.startAt
-            }) else {
-                outGoingData = .none
-                return
-            }
-            guard let earliestOutSleepingResponse = try await outSleepingResponse.min(by: {
+            let outSleepingResponse = try await outSleepingRepository.fetchOutSleeping()
+            guard let earliestOutSleepingResponse = outSleepingResponse.min(by: {
                 $0.startAt < $1.startAt
             }) else {
                 outSleepingData = .none
                 return
             }
-            outGoingData = earliestOutGoingResponse
             outSleepingData = earliestOutSleepingResponse
-        } catch let error {
+        } catch {
+            print(error)
+        }
+    }
+    
+    private func fetchOutGoingData() async {
+        do {
+            let outGoingResponse = try await outGoingRepository.fetchOutGoing()
+            guard let earliestOutGoingResponse = outGoingResponse.min(by: {
+                $0.startAt < $1.startAt
+            }) else {
+                outGoingData = .none
+                return
+            }
+            outGoingData = earliestOutGoingResponse
+        } catch {
             print(error)
         }
     }
