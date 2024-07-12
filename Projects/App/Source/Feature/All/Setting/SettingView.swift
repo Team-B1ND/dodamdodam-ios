@@ -73,57 +73,9 @@ struct SettingView: View {
                         .frame(height: 1)
                         .padding(.horizontal, 8)
                 }
-                
-                Button {
-                    guard let url = URL(
-                        string: "https://dodam.b1nd.com/detailed-information/service-policy"
-                    ) else { return }
-                    UIApplication.shared.open(url)
-                } label: {
-                    HStack(spacing: 16) {
-                        Text("서비스 운영 정책")
-                            .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.onBackground)
-                        Spacer()
-                        Image(icon: .chevronRight)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .dodamColor(.onSurfaceVariant)
-                    }
-                    .padding(8)
-                }
-                .scaledButtonStyle()
-                
-                Button {
-                    guard let url = URL(
-                        string: "https://dodam.b1nd.com/detailed-information/personal-information"
-                    ) else { return }
-                    UIApplication.shared.open(url)
-                } label: {
-                    HStack(spacing: 16) {
-                        Text("개인정보 처리 방침")
-                            .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.onBackground)
-                        Spacer()
-                        Image(icon: .chevronRight)
-                            .resizable()
-                            .frame(width: 14, height: 14)
-                            .dodamColor(.onSurfaceVariant)
-                    }
-                    .padding(8)
-                }
-                .scaledButtonStyle()
-                
-                HStack(spacing: 16) {
-                    Text("버전 정보")
-                        .font(.system(size: 18, weight: .medium))
-                        .dodamColor(.onBackground)
-                    Spacer()
-                    Text("\(getAppVersion())")
-                        .font(.system(size: 18, weight: .regular))
-                        .dodamColor(.tertiary)
-                }
-                .padding(8)
+                SettingCell.link("서비스 운영 정책", link: URL(string: "https://dodam.b1nd.com/detailed-information/service-policy")!)
+                SettingCell.link("개인정보 처리 방침", link: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")!)
+                SettingCell.description("버전 정보", description: "\(getAppVersion())")
                 
                 Rectangle()
                     .dodamFill(.outlineVariant)
@@ -131,7 +83,7 @@ struct SettingView: View {
                     .frame(height: 1)
                     .padding(.horizontal, 8)
                 if Sign.isLoggedIn {
-                    Button {
+                    SettingCell.action("로그아웃") {
                         let alert = Alert(
                             title: "로그아웃 하시겠습니까?",
                             primaryButton: .destructive("로그아웃") {
@@ -141,21 +93,8 @@ struct SettingView: View {
                             secondaryButton: .cancel("취소")
                         )
                         flow.alert(alert)
-                    } label: {
-                        HStack(spacing: 16) {
-                            Text("로그아웃")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.onSurface)
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                        }
-                        .padding(8)
                     }
-                    .scaledButtonStyle()
-                    Button {
+                    SettingCell.action("회원탈퇴") {
                         let alert = Alert(
                             title: "정말 탈퇴하시겠습니까?",
                             primaryButton: .destructive("회원탈퇴") {
@@ -172,36 +111,12 @@ struct SettingView: View {
                             secondaryButton: .cancel("취소")
                         )
                         flow.alert(alert)
-                    } label: {
-                        HStack(spacing: 16) {
-                            Text("회원탈퇴")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.error)
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                        }
-                        .padding(8)
                     }
-                    .scaledButtonStyle()
+                    .destructive()
                 } else {
-                    Button {
+                    SettingCell.action("로그인") {
                         flow.push(LoginView())
-                    } label: {
-                        HStack(spacing: 16) {
-                            Text("로그인")
-                                .font(.system(size: 18, weight: .medium))
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                        }
-                        .padding(8)
                     }
-                    .scaledButtonStyle()
                 }
             }
             .padding(.horizontal, 16)
