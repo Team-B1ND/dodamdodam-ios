@@ -12,21 +12,33 @@ class PointViewModel: ObservableObject {
     // MARK: - State
     @Published var domitoryPointData: [PointResponse]?
     @Published var schoolPointData: [PointResponse]?
-    @Published var domitoryPointScoreData: PointScoreResponse? {
-        didSet {
-            bonus[0] = domitoryPointScoreData?.bonus ?? 0
-            minus[0] = domitoryPointScoreData?.minus ?? 0
+    @Published var domitoryPointScoreData: PointScoreResponse?
+    @Published var schoolPointScoreData: PointScoreResponse?
+    
+    var bocus: Int? {
+        guard let domitoryBonus = domitoryPointScoreData?.bonus,
+              let schoolBonus = schoolPointScoreData?.bonus else {
+            return nil
         }
-    }
-    @Published var schoolPointScoreData: PointScoreResponse? {
-        didSet {
-            bonus[1] = schoolPointScoreData?.bonus ?? 0
-            minus[1] = schoolPointScoreData?.minus ?? 0
-        }
+        return selection == 0 ? domitoryBonus : schoolBonus
     }
     
-    @Published var bonus: [Int] = [0, 0]
-    @Published var minus: [Int] = [0, 0]
+    var minus: Int? {
+        guard let domitoryMinus = domitoryPointScoreData?.minus,
+              let schoolMinus = schoolPointScoreData?.minus else {
+            return nil
+        }
+        return selection == 0 ? domitoryMinus : schoolMinus
+    }
+    
+    var pointData: [PointResponse]? {
+        guard let domitoryPointData,
+              let schoolPointData else {
+            return nil
+        }
+        return selection == 0 ? domitoryPointData : schoolPointData
+    }
+    
     @Published var selection: Int = 0
     
     // MARK: - Repository
@@ -35,8 +47,9 @@ class PointViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func onAppear() async {
-        await fetchPointScore()
-        await fetchPoint()
+        async let fetchPointScore: () = fetchPointScore()
+        async let fetchPoint: () = fetchPoint()
+        _ = await [fetchPointScore, fetchPoint]
     }
     
     @MainActor
