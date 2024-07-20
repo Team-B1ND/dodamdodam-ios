@@ -17,9 +17,14 @@ protocol RemoteProtocol {
     
     var decoder: JSONDecoder { get }
     
+    func request<D: ResponseProtocol>(
+        target:  MoyaProvider<Target>.Target,
+        res: D.Type
+    ) async throws -> Response<D>
+    
     func request(
-        target: MoyaProvider<Target>.Target
-    ) async throws -> Moya.Response
+        target:  MoyaProvider<Target>.Target
+    ) async throws -> DefaultResponse
 }
 
 extension RemoteProtocol {
@@ -61,7 +66,7 @@ extension RemoteProtocol {
         return decoder
     }
     
-    func request(
+    private func request(
         target: MoyaProvider<Target>.Target
     ) async throws -> Moya.Response {
         try await withUnsafeThrowingContinuation { continuation in
@@ -74,5 +79,20 @@ extension RemoteProtocol {
                 }
             }
         }
+    }
+    
+    func request<D: ResponseProtocol>(
+        target:  MoyaProvider<Target>.Target,
+        res: D.Type
+    ) async throws -> Response<D> {
+        try await self.request(target: target)
+            .map(Response<D>.self, using: decoder)
+    }
+    
+    func request(
+        target:  MoyaProvider<Target>.Target
+    ) async throws -> DefaultResponse {
+        try await self.request(target: target)
+            .map(DefaultResponse.self, using: decoder)
     }
 }
