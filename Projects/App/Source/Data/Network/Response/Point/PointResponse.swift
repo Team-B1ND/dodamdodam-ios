@@ -5,7 +5,7 @@
 //  Created by Mercen on 3/28/24.
 //
 
-struct PointResponse: ResponseProtocol {
+public struct PointResponse: ResponseProtocol {
     
     let id: Int
     let student: Student
