@@ -84,7 +84,7 @@ struct AllView: View {
                     .scaledButtonStyle()
                 }
                 VStack(spacing: 12) {
-                    Button {
+                    AllCell("내 상벌점 보기", icon: .barChart) {
                         if Sign.isLoggedIn {
                             flow.push(PointView())
                         } else {
@@ -98,39 +98,14 @@ struct AllView: View {
                             )
                             flow.alert(alert)
                         }
-                    } label: {
-                        HStack(spacing: 16) {
-                            ZStack {
-                                Rectangle()
-                                    .dodamFill(.secondary)
-                                    .frame(width: 32, height: 32)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                                Image(icon: .barChart)
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                            }
-                            .padding(.vertical, 4)
-                            .padding(.leading, 8)
-                            Text("내 상벌점 보기")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.onBackground)
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                                .padding(.trailing, 4)
-                        }
                     }
-                    .scaledButtonStyle()
-                    
                     Rectangle()
                         .dodamFill(.outlineVariant)
                         .frame(maxWidth: .infinity)
                         .frame(height: 1)
                         .padding(.horizontal, 8)
                     
-                    Button {
+                    AllCell("귀가 버스 신청하기", icon: .colorfulBus) {
                         if Sign.isLoggedIn {
                             flow.push(BusApplyView())
                         } else {
@@ -144,89 +119,17 @@ struct AllView: View {
                             )
                             flow.alert(alert)
                         }
-                    } label: {
-                        HStack(spacing: 16) {
-                            ZStack {
-                                Rectangle()
-                                    .dodamFill(.secondary)
-                                    .frame(width: 32, height: 32)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                                Image(icon: .colorfulBus)
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                            }
-                            .padding(.vertical, 4)
-                            .padding(.leading, 8)
-                            Text("귀가 버스 신청하기")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.onBackground)
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                                .padding(.trailing, 4)
-                        }
                     }
-                    .scaledButtonStyle()
                     
-                    Button {
+                    AllCell("외출/외박 확인하기", icon: .tent) {
                         selection = 2
-                    } label: {
-                        HStack(spacing: 16) {
-                            ZStack {
-                                Rectangle()
-                                    .dodamFill(.secondary)
-                                    .frame(width: 32, height: 32)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                                Image(icon: .tent)
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                            }
-                            .padding(.vertical, 4)
-                            .padding(.leading, 8)
-                            Text("외출/외박 확인하기")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.onBackground)
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                                .padding(.trailing, 4)
-                        }
                     }
-                    .scaledButtonStyle()
                     
-                    Button {
+                    AllCell("기상송 확인하기", icon: .wakeupMegaphone) {
                         flow.push(WakeupSongView())
-                    } label: {
-                        HStack(spacing: 16) {
-                            ZStack {
-                                Rectangle()
-                                    .dodamFill(.secondary)
-                                    .frame(width: 32, height: 32)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                                Image(icon: .wakeupMegaphone)
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                            }
-                            .padding(.vertical, 4)
-                            .padding(.leading, 8)
-                            Text("기상송 확인하기")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.onBackground)
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                                .padding(.trailing, 4)
-                        }
                     }
-                    .scaledButtonStyle()
                     
-                    Button {
+                    AllCell("기상송 신청하기", icon: .wakeupNote) {
                         if Sign.isLoggedIn {
                             flow.push(WakeupSongView(), animated: false)
                             flow.push(WakeupSongApplyView())
@@ -241,31 +144,7 @@ struct AllView: View {
                             )
                             flow.alert(alert)
                         }
-                    } label: {
-                        HStack(spacing: 16) {
-                            ZStack {
-                                Rectangle()
-                                    .dodamFill(.secondary)
-                                    .frame(width: 32, height: 32)
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                                Image(icon: .wakeupNote)
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                            }
-                            .padding(.vertical, 4)
-                            .padding(.leading, 8)
-                            Text("기상송 신청하기")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.onBackground)
-                            Spacer()
-                            Image(icon: .chevronRight)
-                                .resizable()
-                                .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
-                                .padding(.trailing, 4)
-                        }
                     }
-                    .scaledButtonStyle()
                 }
             }
             .padding([.top, .horizontal], 16)
