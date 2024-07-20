@@ -5,6 +5,8 @@
 //  Created by Mercen on 3/28/24.
 //
 
+import Foundation
+
 struct NightStudyResponse: ResponseProtocol {
     
     let id: Int
@@ -15,8 +17,8 @@ struct NightStudyResponse: ResponseProtocol {
     let student: Student
     let rejectReason: String?
     let place: Place
-    let startAt: String
-    let endAt: String
-    let createdAt: String
-    let modifiedAt: String?
+    let startAt: Date
+    let endAt: Date
+    let createdAt: Date
+    let modifiedAt: Date?
 }

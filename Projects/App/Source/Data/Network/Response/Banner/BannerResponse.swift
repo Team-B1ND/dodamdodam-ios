@@ -4,10 +4,11 @@
 //
 //  Created by Mercen on 3/27/24.
 //
+import Foundation
 
 struct BannerResponse: ResponseProtocol {
     
-    let expireAt: String
+    let expireAt: Date
     let id: Int
     let imageUrl: String
     let redirectUrl: String

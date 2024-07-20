@@ -13,14 +13,12 @@ public enum DateType: Int {
     case day = 2
 }
 
-public func getDate(_ type: DateType) -> Int {
-    
-    let currentDate = Date()
+public func getDate(_ type: DateType, date: Date = .now) -> Int {
     let calendar = Calendar.current
     
-    let year = calendar.component(.year, from: currentDate)
-    let month = calendar.component(.month, from: currentDate)
-    let day = calendar.component(.day, from: currentDate)
+    let year = calendar.component(.year, from: date)
+    let month = calendar.component(.month, from: date)
+    let day = calendar.component(.day, from: date)
     
     switch type {
     case .year:
@@ -33,27 +31,19 @@ public func getDate(_ type: DateType) -> Int {
 }
 
 public func calculatingDateProgress(
-    startAt: String,
-    endAt: String,
+    startAt: Date,
+    endAt: Date,
     dateFormat: String
 ) -> Double {
-    
-//    let koreanTimeZone = TimeZone(identifier: "Asia/Seoul")!
-//    let currentDate = Date().addingTimeInterval(TimeInterval(koreanTimeZone.secondsFromGMT()))
     let currentDate = Date()
     
-    guard let startDate = startAt.parseDate(format: dateFormat),
-          let endDate = endAt.parseDate(format: dateFormat) else {
+    if currentDate <= startAt {
         return 0.0
-    }
-    
-    if currentDate <= startDate {
-        return 0.0
-    } else if currentDate >= endDate {
+    } else if currentDate >= endAt {
         return 1.0
     } else {
-        let elapsedTime = currentDate.timeIntervalSince(startDate)
-        let totalDuration = endDate.timeIntervalSince(startDate)
+        let elapsedTime = currentDate.timeIntervalSince(startAt)
+        let totalDuration = endAt.timeIntervalSince(startAt)
         let progress = elapsedTime / totalDuration
         return progress
     }
