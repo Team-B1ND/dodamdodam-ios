@@ -19,26 +19,7 @@ struct PointView: View {
                 if let data = viewModel.pointData,
                    !data.isEmpty {
                     ForEach(data, id: \.self) { data in
-                        HStack {
-                            VStack(alignment: .leading, spacing: 0) {
-                                Text("\(data.reason.reason)")
-                                    .font(.body(.large))
-                                    .dodamColor(.onBackground)
-                                Text("\(data.teacher.position) • \(data.issueAt)")
-                                    .font(.label(.large))
-                                    .dodamColor(.onSurfaceVariant)
-                            }
-                            .padding(.leading, 8)
-                            Spacer()
-                            Text("\(data.reason.score)")
-                                .font(.body(.large))
-                                .dodamColor(data.reason.scoreType == .minus
-                                            ? .error
-                                            : .primary
-                                )
-                                .padding(.trailing, 8)
-                        }
-                        .padding(.vertical, 8)
+                        PointCell(point: data)
                     }
                 } else if viewModel.pointData == nil {
                     DodamLoadingView()

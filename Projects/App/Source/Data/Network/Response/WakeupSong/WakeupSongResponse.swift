@@ -5,6 +5,8 @@
 //  Created by Mercen on 3/28/24.
 //
 
+import Foundation
+
 struct WakeupSongResponse: ResponseProtocol {
     
     let id: Int
@@ -14,5 +16,5 @@ struct WakeupSongResponse: ResponseProtocol {
     let videoUrl: String
     let channelTitle: String
     let status: AllowStatus
-    let createdAt: String
+    let createdAt: Date
 }

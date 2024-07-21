@@ -42,9 +42,6 @@ struct OutStatusContainer: View {
                         Text(data.status == .pending
                              ? "대기 중"
                              : { () -> String in
-                            let endDate = data.endAt.parseDate(
-                                format: "yyyy-MM-dd'T'HH:mm:ss"
-                            )
                             
                             let calendar = Calendar.current
                             let currentDate = Date()
@@ -52,7 +49,7 @@ struct OutStatusContainer: View {
                             let difference = calendar.dateComponents(
                                 [.hour, .minute],
                                 from: currentDate,
-                                to: endDate!
+                                to: data.endAt
                             )
                             
                             if let hours = difference.hour, hours >= 1 {
@@ -70,17 +67,7 @@ struct OutStatusContainer: View {
                                 .font(.label(.large))
                                 .dodamColor(.onSurfaceVariant)
                         } else {
-                            Text({ () -> String in
-                                let startAt = data.startAt.parseDate(
-                                    format: "yyyy-MM-dd'T'HH:mm:ss"
-                                )
-                                guard let startAtString = startAt?.parseString(
-                                    format: "HH:mm"
-                                ) else {
-                                    return "시간 오류"
-                                }
-                                return startAtString
-                            }() + " 출발")
+                            Text("\(data.startAt.parseString(format: "HH:mm")) 출발")
                                 .font(.label(.large))
                                 .dodamColor(.onSurfaceVariant)
                         }

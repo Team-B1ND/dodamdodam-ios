@@ -50,17 +50,10 @@ struct OutGoingCell: View {
                 }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
-                Text({ () -> String in
-                    guard let date = outGoingData.startAt.parseDate(
-                        format: "yyyy-MM-dd'T'HH:mm:ss"
-                    ) else {
-                        return "시간 오류"
-                    }
-                    return date.parseString(format: "M월 d일 (E)")
-                }())
-                .font(.label(.large))
-                .dodamColor(.onSurfaceVariant)
-                .padding(.top, 5)
+                Text(outGoingData.startAt.parseString(format: "M월 d일 (E)"))
+                    .font(.label(.large))
+                    .dodamColor(.onSurfaceVariant)
+                    .padding(.top, 5)
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
@@ -87,30 +80,16 @@ struct OutGoingCell: View {
                     HStack(alignment: .bottom, spacing: 16) {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
-                                Text({ () -> String in
-                                    if let date = outGoingData.startAt.parseDate(
-                                        format: "yyyy-MM-dd'T'HH:mm:ss"
-                                    ) {
-                                        return date.parseString(format: "H시 m분")
-                                    }
-                                    return "시간 오류"
-                                }())
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                Text(outGoingData.startAt.parseString(format: "H시 m분"))
+                                    .font(.body(.medium))
+                                    .dodamColor(.onSurface)
                                 Text("외출")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
-                                Text({ () -> String in
-                                    if let date = outGoingData.endAt.parseDate(
-                                        format: "yyyy-MM-dd'T'HH:mm:ss"
-                                    ) {
-                                        return date.parseString(format: "H시 m분")
-                                    }
-                                    return "시간 오류"
-                                }())
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                Text(outGoingData.endAt.parseString(format: "H시 m분"))
+                                    .font(.body(.medium))
+                                    .dodamColor(.onSurface)
                                 Text("복귀")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)

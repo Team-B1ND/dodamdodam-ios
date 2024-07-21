@@ -51,13 +51,9 @@ struct NightStudyApplyCell: View {
                 }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
-                Text({ () -> String in
-                    if let date = nightStudyData.createdAt.parseDate(
-                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-                    ) {
-                        return date.parseString(format: "M월 d일 (E)")
-                    }
-                    return "시간 오류"
+                Text({
+                    let date = nightStudyData.createdAt.parseString(format: "M월 d일 (E)")
+                    return date
                 }())
                 .font(.label(.large))
                 .dodamColor(.onSurfaceVariant)
@@ -88,30 +84,16 @@ struct NightStudyApplyCell: View {
                     HStack(alignment: .bottom, spacing: 16) {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
-                                Text({ () -> String in
-                                    if let date = nightStudyData.startAt.parseDate(
-                                        format: "yyyy-MM-dd"
-                                    ) {
-                                        return date.parseString(format: "M월 d일")
-                                    }
-                                    return "시간 오류"
-                                }())
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                Text(nightStudyData.startAt.parseString(format: "M월 d일"))
+                                    .font(.body(.medium))
+                                    .dodamColor(.onSurface)
                                 Text("시작")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
-                                Text({ () -> String in
-                                    if let date = nightStudyData.endAt.parseDate(
-                                        format: "yyyy-MM-dd"
-                                    ) {
-                                        return date.parseString(format: "M월 d일")
-                                    }
-                                    return "시간 오류"
-                                }())
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                Text(nightStudyData.endAt.parseString(format: "M월 d일"))
+                                    .font(.body(.medium))
+                                    .dodamColor(.onSurface)
                                 Text("종료")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)

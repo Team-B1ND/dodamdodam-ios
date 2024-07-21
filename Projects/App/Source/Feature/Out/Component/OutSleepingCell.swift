@@ -50,19 +50,10 @@ struct OutSleepingCell: View {
                 }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
-                Text({ () -> String in
-                    if let date = outSleepingData.createdAt.parseDate(
-                        format: "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
-                    ) {
-                        return date.parseString(
-                            format: "M월 d일 (E)"
-                        ) + " 신청"
-                    }
-                    return "시간 오류"
-                }())
-                .font(.label(.large))
-                .dodamColor(.onSurfaceVariant)
-                .padding(.top, 5)
+                Text(outSleepingData.createdAt.parseString(format: "M월 d일 (E)"))
+                    .font(.label(.large))
+                    .dodamColor(.onSurfaceVariant)
+                    .padding(.top, 5)
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
@@ -89,30 +80,16 @@ struct OutSleepingCell: View {
                     HStack(alignment: .bottom, spacing: 16) {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
-                                Text({ () -> String in
-                                    if let date = outSleepingData.startAt.parseDate(
-                                        format: "yyyy-MM-dd"
-                                    ) {
-                                        return date.parseString(format: "M월 d일")
-                                    }
-                                    return "시간 오류"
-                                }())
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                Text(outSleepingData.startAt.parseString(format: "M월 d일"))
+                                    .font(.body(.medium))
+                                    .dodamColor(.onSurface)
                                 Text("외박")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)
                                 Spacer()
-                                Text({ () -> String in
-                                    if let date = outSleepingData.endAt.parseDate(
-                                        format: "yyyy-MM-dd"
-                                    ) {
-                                        return date.parseString(format: "M월 d일")
-                                    }
-                                    return "시간 오류"
-                                }())
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                Text(outSleepingData.endAt.parseString(format: "M월 d일"))
+                                    .font(.body(.medium))
+                                    .dodamColor(.onSurface)
                                 Text("복귀")
                                     .font(.label(.large))
                                     .dodamColor(.onSurfaceVariant)

@@ -4,6 +4,7 @@
 //
 //  Created by Mercen on 3/28/24.
 //
+import Foundation
 
 struct MemberResponse: ResponseProtocol {
     
@@ -16,6 +17,6 @@ struct MemberResponse: ResponseProtocol {
     let phone: String
     let student: Student?
     let teacher: Teacher?
-    let createdAt: String
-    let modifiedAt: String?
+    let createdAt: Date
+    let modifiedAt: Date?
 }

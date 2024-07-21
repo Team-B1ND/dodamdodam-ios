@@ -42,22 +42,8 @@ struct NightStudyStatusContainer: View {
                         Text(data.status == .pending
                              ? "대기 중"
                              : { () -> String in
-                            let endDate = data.endAt.parseDate(
-                                format: "yyyy-MM-dd"
-                            )
                             
-                            let calendar = Calendar.current
-                            let currentDate = Date()
-                            
-                            let components = calendar.dateComponents(
-                                [.day],
-                                from: currentDate,
-                                to: endDate!
-                            )
-                            
-                            guard let days = components.day else {
-                                return "error"
-                            }
+                            let days = getDate(.day, date: data.endAt)
                             
                             return "\(days)일"
                         }()
@@ -70,8 +56,9 @@ struct NightStudyStatusContainer: View {
                                 .dodamColor(.onSurfaceVariant)
                         }
                         Text({ () -> String in
-                            let components =  data.endAt.components(separatedBy: "-")
-                            let string = "\(components[1]).\(components[2])"
+                            let month = getDate(.month, date: data.endAt)
+                            let day = getDate(.day, date: data.endAt)
+                            let string = "\(month).\(day)"
                             return "\(string)까지"
                         }())
                         .font(.label(.large))

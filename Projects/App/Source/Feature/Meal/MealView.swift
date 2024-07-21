@@ -13,8 +13,7 @@ struct MealView: View {
     @StateObject var viewModel = MealViewModel()
     @Flow var flow
     
-    func isToday(_ dateStr: String) -> Bool {
-        let date = dateStr.parseDate(format: "yyyy-MM-dd") ?? Date()
+    func isToday(_ date: Date) -> Bool {
         let today = Date()
         return Calendar.current.isDate(date, inSameDayAs: today)
     }
@@ -26,25 +25,14 @@ struct MealView: View {
                     if !datas.isEmpty {
                         ForEach({ () -> [MealResponse] in
                             datas.filter {
-                                let date = $0.date.parseDate(format: "yyyy-MM-dd")
-                                guard let date else {
-                                    return false
-                                }
                                 let today = Calendar.current.startOfDay(for: Date())
-                                return $0.exists && date >= today
+                                return $0.exists && $0.date >= today
                             }
                         }(), id: \.self) { datas in
-                            let date = datas.date.parseDate(format: "yyyy-MM-dd")
-                            Text({ () -> String in
-                                guard let date else {
-                                    return "시간 오류"
-                                }
-                                let formattedDate = date.parseString(format: "M월 d일 EEEE")
-                                return formattedDate
-                            }())
-                            .font(.body(.medium))
-                            .dodamColor(
-                                isToday(datas.date)
+                            Text(datas.date.parseString(format: "M월 d일 EEEE"))
+                                .font(.body(.medium))
+                                .dodamColor(
+                                    isToday(datas.date)
                                 ? .onPrimary
                                 : .onSecondaryContainer
                             )
@@ -67,24 +55,16 @@ struct MealView: View {
                                         default: nil
                                         }
                                     }()
-                                    let date: Date = {
-                                        guard let date = datas.date.parseDate(
-                                            format: "yyyy-MM-dd"
-                                        ) else {
-                                            return .now
-                                        }
-                                        return date
-                                    }()
                                     if let data = data {
                                         VStack(spacing: 16) {
                                             HStack(spacing: 12) {
                                                 ZStack {
                                                     Text({ () -> String in
-                                                        switch idx {
-                                                        case 0: return "아침"
-                                                        case 1: return "점심"
-                                                        case 2: return "저녁"
-                                                        default: return ""
+                                                        return switch idx {
+                                                        case 0: "아침"
+                                                        case 1: "점심"
+                                                        case 2:"저녁"
+                                                        default: ""
                                                         }
                                                     }())
                                                     .font(.body(.medium))
@@ -92,7 +72,7 @@ struct MealView: View {
                                                 }
                                                 .frame(width: 52, height: 27)
                                                 .background(
-                                                    isMealTime(date, mealType: idx)
+                                                    isMealTime(datas.date, mealType: idx)
                                                     ? Dodam.color(.primary)
                                                     : Dodam.color(.onSurfaceVariant)
                                                 )
