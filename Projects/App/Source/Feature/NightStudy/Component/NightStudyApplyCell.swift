@@ -33,50 +33,50 @@ struct NightStudyApplyCell: View {
                             return "거절됨"
                         }
                     }())
-                    .font(.title(.small))
-                    .dodamColor(.onPrimary)
+//                    .font(.title(.small))
+//                    .dodamColor(.onPrimary)
                     .padding(.vertical, 4)
                     .padding(.horizontal, 12)
                 }
                 .frame(height: 27)
-                .background({ () -> Color in
-                    switch nightStudyData.status {
-                    case .allowed: 
-                        return Dodam.color(.primary)
-                    case .pending: 
-                        return Dodam.color(.onSurfaceVariant)
-                    case .rejected:
-                        return Dodam.color(.error)
-                    }
-                }())
+//                .background({ () -> Color in
+//                    switch nightStudyData.status {
+//                    case .allowed: 
+//                        return Dodam.color(.primary)
+//                    case .pending: 
+//                        return Dodam.color(.onSurfaceVariant)
+//                    case .rejected:
+//                        return Dodam.color(.error)
+//                    }
+//                }())
                 .clipShape(RoundedRectangle(cornerRadius: 32))
                 Spacer()
                 Text({
                     let date = nightStudyData.createdAt.parseString(format: "M월 d일 (E)")
                     return date
                 }())
-                .font(.label(.large))
-                .dodamColor(.onSurfaceVariant)
+//                .font(.label(.large))
+//                .dodamColor(.onSurfaceVariant)
                 .padding(.top, 5)
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
                 Text("\(nightStudyData.content)")
-                    .font(.body(.medium))
-                    .dodamColor(.onSurface)
+//                    .font(.body(.medium))
+//                    .dodamColor(.onSurface)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Rectangle()
                     .frame(height: 1)
                     .frame(maxWidth: .infinity)
-                    .foregroundStyle(Dodam.color(.secondary))
+//                    .foregroundStyle(Dodam.color(.secondary))
                 if nightStudyData.status == .rejected {
                     HStack(spacing: 8) {
                         Text("거절 사유")
-                            .font(.label(.large))
-                            .dodamColor(.onSurfaceVariant)
+//                            .font(.label(.large))
+//                            .dodamColor(.onSurfaceVariant)
                         Text("\(nightStudyData.rejectReason ?? "선생님께서 심야 자습 신청을 거절하였습니다")")
                             .font(.system(size: 16, weight: .medium))
-                            .dodamColor(.onSurface)
+//                            .dodamColor(.onSurface)
                         Spacer()
                     }
                     .padding(.top, 4)
@@ -85,18 +85,18 @@ struct NightStudyApplyCell: View {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text(nightStudyData.startAt.parseString(format: "M월 d일"))
-                                    .font(.body(.medium))
-                                    .dodamColor(.onSurface)
+//                                    .font(.body(.medium))
+//                                    .dodamColor(.onSurface)
                                 Text("시작")
-                                    .font(.label(.large))
-                                    .dodamColor(.onSurfaceVariant)
+//                                    .font(.label(.large))
+//                                    .dodamColor(.onSurfaceVariant)
                                 Spacer()
                                 Text(nightStudyData.endAt.parseString(format: "M월 d일"))
-                                    .font(.body(.medium))
-                                    .dodamColor(.onSurface)
+//                                    .font(.body(.medium))
+//                                    .dodamColor(.onSurface)
                                 Text("종료")
-                                    .font(.label(.large))
-                                    .dodamColor(.onSurfaceVariant)
+//                                    .font(.label(.large))
+//                                    .dodamColor(.onSurfaceVariant)
                             }
                             DodamLinearProgressView(
                                 progress: calculatingDateProgress(
@@ -112,11 +112,11 @@ struct NightStudyApplyCell: View {
                        nightStudyData.doNeedPhone {
                         HStack(spacing: 8) {
                             Text("휴대폰 사유")
-                                .font(.label(.large))
-                                .dodamColor(.onSurfaceVariant)
+//                                .font(.label(.large))
+//                                .dodamColor(.onSurfaceVariant)
                             Text("\(reasonForPhone)")
                                 .font(.system(size: 16, weight: .medium))
-                                .dodamColor(.onSurface)
+//                                .dodamColor(.onSurface)
                             Spacer()
                         }
                         .padding(.top, 4)
@@ -125,7 +125,7 @@ struct NightStudyApplyCell: View {
             }
             .padding([.bottom, .horizontal], 16)
         }
-        .background(Dodam.color(.surfaceContainer))
+//        .background(Dodam.color(.surfaceContainer))
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }

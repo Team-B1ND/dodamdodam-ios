@@ -45,7 +45,7 @@ struct BannerContainer: View {
                 }
             }
         }
-        .background(Dodam.color(.surfaceContainer))
+        .background(DodamColor.Background.normal)
         .aspectRatio(80/12, contentMode: .fit)
         .frame(maxWidth: .infinity)
         .clipShape(RoundedRectangle(cornerRadius: 18))

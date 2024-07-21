@@ -42,11 +42,11 @@ struct SettingView: View {
                             if let student = data.student {
                                 VStack(alignment: .leading) {
                                     Text("\(student.name)")
-                                        .font(.body(.large))
-                                        .dodamColor(.onBackground)
+                                        .headline(.bold)
+                                        .foreground(DodamColor.Label.normal)
                                     Text("정보 수정은 곧 추가됩니다")
-                                        .font(.label(.large))
-                                        .dodamColor(.tertiary)
+                                        .label(.medium)
+                                        .foreground(DodamColor.Label.alternative)
                                 }
                             }
                             Spacer()
@@ -66,21 +66,13 @@ struct SettingView: View {
                         }
                     }
                     .padding([.leading, .vertical], 8)
-                    
-                    Rectangle()
-                        .dodamFill(.outlineVariant)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 1)
+                    DodamDivider()
                         .padding(.horizontal, 8)
                 }
                 SettingCell.link("서비스 운영 정책", link: URL(string: "https://dodam.b1nd.com/detailed-information/service-policy")!)
                 SettingCell.link("개인정보 처리 방침", link: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")!)
                 SettingCell.description("버전 정보", description: "\(getAppVersion())")
-                
-                Rectangle()
-                    .dodamFill(.outlineVariant)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 1)
+                DodamDivider()
                     .padding(.horizontal, 8)
                 if Sign.isLoggedIn {
                     SettingCell.action("로그아웃") {

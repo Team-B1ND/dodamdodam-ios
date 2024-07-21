@@ -19,8 +19,8 @@ struct WakeupSongView: View {
         DodamScrollView.medium(title: "기상송") {
             VStack(alignment: .leading, spacing: 0) {
                 Text("내일의 기상송")
-                    .font(.title(.medium))
-                    .dodamColor(.onBackground)
+                    .headline(.bold)
+                    .foreground(DodamColor.Label.normal)
                 if let data = viewModel.allowedWakeupSongData {
                     if !data.isEmpty {
                         LazyVStack(spacing: 4) {
@@ -38,8 +38,8 @@ struct WakeupSongView: View {
                         .padding(.bottom, 6)
                     } else {
                         Text("승인된 기상송이 아직 없어요.")
-                            .font(.label(.large))
-                            .dodamColor(.tertiary)
+                            .body(.bold)
+                            .foreground(DodamColor.Label.assistive)
                             .frame(
                                 maxWidth: .infinity,
                                 alignment: .center
@@ -63,9 +63,8 @@ struct WakeupSongView: View {
                                     }
                                 } else {
                                     Text("대기중인 기상송이 없어요")
-                                        .font(.body(.medium
-                                                   ))
-                                        .dodamColor(.tertiary)
+                                        .body(.bold)
+                                        .foreground(DodamColor.Label.assistive)
                                         .frame(
                                             maxWidth: .infinity,
                                             alignment: .center
@@ -113,9 +112,7 @@ struct WakeupSongView: View {
                                         }
                                     } else {
                                         Text("기상송을 신청해 보세요")
-                                            .font(.body(.medium
-                                                       ))
-                                            .dodamColor(.tertiary)
+                                            .body(.bold)
                                             .frame(
                                                 maxWidth: .infinity,
                                                 alignment: .center
@@ -134,13 +131,13 @@ struct WakeupSongView: View {
                                 ) {
                                     flow.push(LoginView())
                                 }
-                                .background(
-                                    RoundedRectangle(cornerRadius: 18)
-                                        .stroke(
-                                            Dodam.color(.secondaryContainer),
-                                            lineWidth: 2
-                                        )
-                                )
+//                                .background(
+//                                    DodamShape.large
+//                                        .stroke(
+//                                            Dodam.color(.secondaryContainer),
+//                                            lineWidth: 2
+//                                        )
+//                                )
                             }
                             Spacer()
                         }

@@ -41,8 +41,8 @@ struct MealContainer: View {
                                 $0.name
                             }.joined(separator: ", ") ?? "급식이 없어요."
                             Text(text)
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                .body(.medium)
+                                .foreground(DodamColor.Label.normal)
                                 .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .onAppear {

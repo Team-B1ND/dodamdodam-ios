@@ -14,7 +14,7 @@ struct RegisterAuthView: View {
     @Flow var flow
     
     var body: some View {
-        DodamNavigationBar.medium(
+        DodamTopAppBar.medium(
             title: { () -> String in
                 switch viewModel.authStep {
                 case 0: return "아이디를\n입력해주세요"
@@ -68,8 +68,8 @@ struct RegisterAuthView: View {
                     }
                     .keyboardType(.asciiCapable)
                     Text("아이디는 영문과 숫자로 5 ~ 20글자 이내여야 해요.")
-                        .font(.label(.large))
-                        .dodamColor(.onSurfaceVariant)
+                        .label(.medium)
+                        .foreground(DodamColor.Label.alternative)
                 }
                 .transition(.slide)
                 .animation(

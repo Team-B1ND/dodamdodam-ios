@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DDS
 
 public struct PointCell: View {
     
@@ -19,19 +20,20 @@ public struct PointCell: View {
         HStack {
             VStack(alignment: .leading, spacing: 0) {
                 Text("\(point.reason.reason)")
-                    .font(.body(.large))
-                    .dodamColor(.onBackground)
+                    .headline(.bold)
+                    .foreground(DodamColor.Label.normal)
                 Text("\(point.teacher.position) • \(point.issueAt)")
-                    .font(.label(.large))
-                    .dodamColor(.onSurfaceVariant)
+                    .label(.medium)
+                    .foreground(DodamColor.Label.assistive)
             }
             .padding(.leading, 8)
             Spacer()
             Text("\(point.reason.score)")
-                .font(.body(.large))
-                .dodamColor(point.reason.scoreType == .minus
-                            ? .error
-                            : .primary
+                .headline(.bold)
+                .foreground(
+                    point.reason.scoreType == .minus
+                    ? DodamColor.Status.negative
+                    : DodamColor.Primary.normal
                 )
                 .padding(.trailing, 8)
         }

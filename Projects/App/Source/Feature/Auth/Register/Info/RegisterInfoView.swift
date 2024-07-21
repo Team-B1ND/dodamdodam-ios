@@ -14,7 +14,7 @@ struct RegisterInfoView: View {
     @Flow var flow
     
     var body: some View {
-        DodamNavigationBar.medium(
+        DodamTopAppBar.medium(
             title: { () -> String in
                 switch viewModel.infoStep {
                 case 0: "이름을\n입력해주세요"

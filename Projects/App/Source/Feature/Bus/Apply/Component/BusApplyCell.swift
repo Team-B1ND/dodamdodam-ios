@@ -16,22 +16,20 @@ struct BusApplyCell: View {
     var body: some View {
         HStack {
             Text(bus.busName)
-                .font(.title(.medium))
-                .fontWeight(.medium)
-                .dodamColor(.tertiary)
+                .headline(.medium)
+                .foreground(DodamColor.Label.normal)
             Spacer()
             Text("\(bus.applyCount)/\(bus.peopleLimit)")
-                .font(.title(.medium))
-                .fontWeight(.regular)
-                .dodamColor(
-                    bus.applyCount >= bus.peopleLimit ? .error
-                    : bus.id == selectedBus?.id ? .primary : .tertiary
+                .headline(.regular)
+                .foreground(
+                    bus.applyCount >= bus.peopleLimit ? DodamColor.Status.negative
+                    : bus.id == selectedBus?.id ? DodamColor.Primary.normal as DodamColorable : DodamColor.Label.alternative
                 )
             if bus.id == selectedBus?.id ?? 0 {
                 Image(icon: .checkmark)
                     .resizable()
                     .frame(width: 32, height: 32)
-                    .dodamColor(.primary)
+                    .foreground(DodamColor.Primary.normal)
             }
         }
         .frame(height: 40)

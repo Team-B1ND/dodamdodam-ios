@@ -47,20 +47,20 @@ public struct DodamContainer<Content>: View where Content: View {
                         .padding(6)
                 }
                 .frame(width: 32, height: 32)
-                .background(Dodam.color(.primary).opacity(0.65))
-                .clipShape(RoundedRectangle(cornerRadius: 32))
+                .background(DodamColor.Primary.alternative)
+                .clipShape(Circle())
                 Text("\(title)")
-                    .font(.title(.medium))
+                    .headline(.bold)
+                    .foreground(DodamColor.Label.strong)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
-                    .dodamColor(.onSurface)
                 Spacer()
             }
             .padding([.top, .leading], 16)
             content()
                 .padding([.bottom, .horizontal], 10)
         }
-        .background(Dodam.color(.surfaceContainer))
+        .background(DodamColor.Background.normal)
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }
@@ -86,7 +86,7 @@ public struct DodamContainer<Content>: View where Content: View {
                 }
             }
             .padding(16)
-            .background(Dodam.color(.surface))
+            .background(DodamColor.Background.neutral)
         }
     }
     return DodamContainerPreview()

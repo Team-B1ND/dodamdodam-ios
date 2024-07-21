@@ -125,7 +125,7 @@ struct HomeView: View {
                 .environment(\.isFirstLoad, viewModel.isFirstLoad)
                 .padding(.horizontal, 16)
             }
-            .background(Dodam.color(.surface))
+            .background(DodamColor.Background.neutral)
             .task {
                 await viewModel.onAppear()
                 viewModel.ringCount = 0
@@ -157,7 +157,7 @@ struct HomeView: View {
                     .rotationEffect(.degrees(ringABellRight ? -30 : 0))
                     .rotationEffect(.degrees(ringABellLeft ? 30 : 0))
             }
-            .dodamColor(.onSurfaceVariant)
+            .foreground(DodamColor.Label.alternative)
             .onChange(of: ringABellRight) { newValue in
                 if newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
