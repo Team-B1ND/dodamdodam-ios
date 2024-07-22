@@ -44,6 +44,25 @@ let project = Project(
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
                 .external(name: "DDS")
             ]
+        ),
+        .target(
+            name: "DodamDodamWidget",
+            destinations: [.iPhone],
+            product: .appExtension,
+            bundleId: "com.b1nd.dodam.studentWidget",
+            deploymentTargets: .iOS("15.0"),
+            infoPlist: .default,
+            sources: ["iOS-Widget/Source/**"],
+            resources: ["iOS-Widget/Resource/**"],
+            scripts: [.swiftLint],
+            dependencies: [
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
+                .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
+                .project(target: "DataSource", path: .relativeToRoot("Projects/Data")),
+                .project(target: "Network", path: .relativeToRoot("Projects/Data")),
+                .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
+                .external(name: "DDS")
+            ]
         )
     ]
 )

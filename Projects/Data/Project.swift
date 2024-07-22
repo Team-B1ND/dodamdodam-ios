@@ -37,6 +37,7 @@ let project = Project(
             bundleId: "com.b1nd.dodam.studentNetwork",
             deploymentTargets: .iOS("15.0"),
             sources: ["Network/Source/**"],
+            scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .external(name: "Moya")
