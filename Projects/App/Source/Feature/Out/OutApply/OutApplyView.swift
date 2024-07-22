@@ -117,7 +117,7 @@ struct OutApplyView: View {
             }
         }
         .subView {
-            SegmentedButton(
+            DodamSegmentedButton(
                 labels: ["외출", "외박"],
                 selection: $selected
             )

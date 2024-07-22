@@ -20,7 +20,7 @@ struct LoginView: View {
             DodamTopAppBar.medium(
                 title: "아이디와 비밀번호를\n입력해주세요"
             )
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(spacing: 24) {
                 DodamTextField.default(
                     title: "아이디",
                     text: $viewModel.idText
@@ -33,24 +33,21 @@ struct LoginView: View {
                     text: $viewModel.pwText
                 )
                 .focused($pwFocsused)
-                Button {
-                    idFocsused = false
-                    pwFocsused = false
-                    viewModel.isModalPresented = true
-                } label: {
-                    HStack(spacing: 0) {
-                        Text("계정이 없으신가요? ")
-                            .foreground(DodamColor.Label.alternative)
+                HStack(spacing: 0) {
+                    Text("계정이 없으신가요? ")
+                        .foreground(DodamColor.Label.alternative)
+                    Button {
+                        idFocsused = false
+                        pwFocsused = false
+                        viewModel.isModalPresented = true
+                    } label: {
                         Text("회원가입")
                             .underline()
                             .foreground(DodamColor.Label.normal)
                     }
-                    .label(.medium)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
+                    .scaledButtonStyle()
                 }
-                .scaledButtonStyle()
-                .frame(maxWidth: .infinity)
+                .label(.medium)
                 DodamButton.fullWidth(
                     title: "로그인"
                 ) {
@@ -116,7 +113,7 @@ struct LoginView: View {
                     } label: {
                         Dodam.icon(.checkmark)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 16, height: 16)
                             .foreground(
                                 viewModel.isChecked
                                 ? DodamColor.Primary.normal
@@ -150,7 +147,7 @@ struct LoginView: View {
                     } label: {
                         Dodam.icon(.checkmark)
                             .resizable()
-                            .frame(width: 24, height: 24)
+                            .frame(width: 16, height: 16)
                             .foreground(
                                 viewModel.isChecked
                                 ? DodamColor.Primary.normal

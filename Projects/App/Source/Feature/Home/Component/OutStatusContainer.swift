@@ -60,16 +60,16 @@ struct OutStatusContainer: View {
                             return ""
                         }()
                         )
-//                        .font(.body(.medium))
-//                        .dodamColor(.onSurface) // TODO: Add color
+                        .label(.regular)
+                        .foreground(DodamColor.Label.alternative)
                         if !(data.status == .pending) {
                             Text("남음")
-//                                .font(.label(.large))
-//                                .dodamColor(.onSurfaceVariant)
+                                .label(.medium)
+                                .foreground(DodamColor.Label.alternative)
                         } else {
                             Text("\(data.startAt.parseString(format: "HH:mm")) 출발")
-//                                .font(.label(.large))
-//                                .dodamColor(.onSurfaceVariant)
+                                .label(.regular)
+                                .foreground(DodamColor.Label.alternative)
                         }
                     }
                 }

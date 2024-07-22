@@ -154,7 +154,6 @@ struct RegisterInfoView: View {
                 break
             }
         }
-//        .ignoresSafeArea(.keyboard)
         .padding(.horizontal, 16)
     }
 }

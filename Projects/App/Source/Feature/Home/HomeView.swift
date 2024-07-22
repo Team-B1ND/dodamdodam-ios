@@ -44,6 +44,7 @@ struct HomeView: View {
                                 data: viewModel.mealData,
                                 mealIdx: $viewModel.mealIdx
                             )
+                            .padding(6)
                         }
                         .scaledButtonStyle()
                     }
@@ -91,6 +92,7 @@ struct HomeView: View {
                                     .padding(6)
                                 }
                                 .scaledButtonStyle()
+                                .padding(6)
                             }
                         }
                         DodamContainer.default(
@@ -158,6 +160,7 @@ struct HomeView: View {
                     .rotationEffect(.degrees(ringABellLeft ? 30 : 0))
             }
             .foreground(DodamColor.Label.alternative)
+            .opacity(0.5)
             .onChange(of: ringABellRight) { newValue in
                 if newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

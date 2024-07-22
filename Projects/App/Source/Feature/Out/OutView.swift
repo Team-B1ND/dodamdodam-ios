@@ -126,7 +126,7 @@ struct OutView: View {
             .padding(.horizontal, 16)
         }
         .subView {
-            SegmentedButton(
+            DodamSegmentedButton(
                 labels: ["외출", "외박"],
                 selection: $selection
             )

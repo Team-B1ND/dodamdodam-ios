@@ -35,7 +35,7 @@ struct PointView: View {
         }
         .subView {
             VStack(spacing: 24) {
-                SegmentedButton(
+                DodamSegmentedButton(
                     labels: ["기숙사", "학교"],
                     selection: $viewModel.selection
                 )

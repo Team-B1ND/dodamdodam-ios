@@ -103,7 +103,7 @@ struct NightStudyApplyView: View {
                             .font(.system(size: 18, weight: .medium))
 //                            .dodamColor(.tertiary)
                         Spacer()
-                        Checkbox(isChecked: $viewModel.doNeedPhone)
+                        DodamCheckbox(isChecked: $viewModel.doNeedPhone)
                     }
                     .padding(.horizontal, 8)
                     .frame(height: 40)

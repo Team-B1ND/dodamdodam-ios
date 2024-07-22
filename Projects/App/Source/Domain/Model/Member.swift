@@ -9,7 +9,7 @@ import Foundation
 
 struct Member: Codable, Hashable {
     
-    let createdAt: Data
+    let createdAt: Date
     let modifiedAt: Date?
     let id: String
     let name: String
