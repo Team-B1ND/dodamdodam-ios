@@ -26,7 +26,7 @@ struct PointView: View {
                 } else {
                     Text("상벌점 발급 내역이 없어요.")
                         .font(.body(.medium))
-                        .dodamColor(.tertiary)
+                        .foreground(DodamColor.Label.assistive)
                         .padding(.top, 24)
                 }
             }
@@ -35,19 +35,19 @@ struct PointView: View {
         }
         .subView {
             VStack(spacing: 24) {
-                SegmentedView(
+                DodamSegmentedButton(
                     labels: ["기숙사", "학교"],
                     selection: $viewModel.selection
                 )
                 HStack(spacing: 32) {
                     VStack(spacing: 0) {
                         Text("상점")
-                            .font(.body(.medium))
-                            .dodamColor(.tertiary)
+                            .body(.bold)
+                            .foreground(DodamColor.Label.assistive)
                         if let bonus = viewModel.bocus {
                             Text("\(bonus)점")
-                                .font(.headline(.large))
-                                .dodamColor(.primary)
+                                .title1(.bold)
+                                .foreground(DodamColor.Primary.normal)
                         } else {
                             DodamLoadingView()
                                 .frame(height: 44)
@@ -55,12 +55,12 @@ struct PointView: View {
                     }
                     VStack(spacing: 0) {
                         Text("벌점")
-                            .font(.body(.medium))
-                            .dodamColor(.tertiary)
+                            .body(.bold)
+                            .foreground(DodamColor.Label.assistive)
                         if let minus = viewModel.minus {
                             Text("\(minus)점")
-                                .font(.headline(.large))
-                                .dodamColor(.error)
+                                .title1(.bold)
+                                .foreground(DodamColor.Status.negative)
                         } else {
                             DodamLoadingView()
                                 .frame(height: 44)
@@ -70,8 +70,8 @@ struct PointView: View {
                 .padding(.top, 24)
                 .frame(height: 85)
                 Text("상벌점 발급 내역")
-                    .font(.title(.medium))
-                    .dodamColor(.onBackground)
+                    .headline(.bold)
+                    .foreground(DodamColor.Label.normal)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 24)
             }

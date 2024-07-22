@@ -30,7 +30,7 @@ struct NightStudyApplyView: View {
                     HStack(spacing: 16) {
                         Text("자습 장소")
                             .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.tertiary)
+//                            .dodamColor(.tertiary)
                         Spacer()
                         Picker(
                             "시작 날짜",
@@ -55,7 +55,7 @@ struct NightStudyApplyView: View {
                         HStack(spacing: 16) {
                             Text("시작 날짜")
                                 .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.tertiary)
+//                                .dodamColor(.tertiary)
                             Spacer()
                             Text(
                                 viewModel.startAt.parseString(
@@ -63,11 +63,11 @@ struct NightStudyApplyView: View {
                                 )
                             )
                             .font(.system(size: 18, weight: .regular))
-                            .dodamColor(.primary)
+//                            .dodamColor(.primary)
                             Image(icon: .chevronRight)
                                 .resizable()
                                 .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
+//                                .dodamColor(.onSurfaceVariant)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
@@ -80,7 +80,7 @@ struct NightStudyApplyView: View {
                         HStack(spacing: 16) {
                             Text("종료 날짜")
                                 .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.tertiary)
+//                                .dodamColor(.tertiary)
                             Spacer()
                             Text(
                                 viewModel.endAt.parseString(
@@ -88,11 +88,11 @@ struct NightStudyApplyView: View {
                                 )
                             )
                             .font(.system(size: 18, weight: .regular))
-                            .dodamColor(.primary)
+//                            .dodamColor(.primary)
                             Image(icon: .chevronRight)
                                 .resizable()
                                 .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
+//                                .dodamColor(.onSurfaceVariant)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
@@ -101,9 +101,9 @@ struct NightStudyApplyView: View {
                     HStack(spacing: 0) {
                         Text("휴대폰 사용")
                             .font(.system(size: 18, weight: .medium))
-                            .dodamColor(.tertiary)
+//                            .dodamColor(.tertiary)
                         Spacer()
-                        Checkbox(isChecked: $viewModel.doNeedPhone)
+                        DodamCheckbox(isChecked: $viewModel.doNeedPhone)
                     }
                     .padding(.horizontal, 8)
                     .frame(height: 40)
@@ -126,8 +126,8 @@ struct NightStudyApplyView: View {
         ) {
             VStack {
                 Text("시작 날짜")
-                    .font(.body(.large))
-                    .dodamColor(.onBackground)
+//                    .font(.body(.large))
+//                    .dodamColor(.onBackground)
                 DatePicker(
                     "시작 날짜",
                     selection: $viewModel.startAt,
@@ -143,8 +143,8 @@ struct NightStudyApplyView: View {
         ) {
             VStack {
                 Text("종료 날짜")
-                    .font(.body(.large))
-                    .dodamColor(.onBackground)
+//                    .font(.body(.large))
+//                    .dodamColor(.onBackground)
                 DatePicker(
                     "종료 날짜",
                     selection: $viewModel.endAt,

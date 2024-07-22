@@ -24,7 +24,7 @@ struct MealContainer: View {
     
     @Environment(\.isFirstLoad) private var isFirstLoad
     @State private var animatedIdx: Int
-    @State private var heights: [Int: CGFloat] = .init()
+    @State private var heights: [Int: CGFloat] = [:]
     
     var body: some View {
         if let data = mealData {
@@ -41,8 +41,8 @@ struct MealContainer: View {
                                 $0.name
                             }.joined(separator: ", ") ?? "급식이 없어요."
                             Text(text)
-                                .font(.body(.medium))
-                                .dodamColor(.onSurface)
+                                .body(.medium)
+                                .foreground(DodamColor.Label.normal)
                                 .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .onAppear {
@@ -69,7 +69,6 @@ struct MealContainer: View {
                     }
                 }
                 .frame(height: heights[animatedIdx] ?? 44.928)
-                .padding(6)
                 .onChange(of: mealIdx) { newValue in
                     withAnimation(.spring(duration: 0.2)) {
                         animatedIdx = newValue
@@ -95,7 +94,6 @@ struct MealContainer: View {
                     subTitle: "오늘은 급식이 없어요",
                     title: "내일 급식 보러가기"
                 )
-                .padding(6)
             }
         } else {
             DodamLoadingView()

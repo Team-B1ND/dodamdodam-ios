@@ -37,31 +37,30 @@ public struct DodamContainer<Content>: View where Content: View {
     }
     
     public var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 6) {
             HStack(spacing: 12) {
-                ZStack {
-                    icon
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundStyle(Color(.white))
-                        .padding(6)
-                }
-                .frame(width: 32, height: 32)
-                .background(Dodam.color(.primary).opacity(0.65))
-                .clipShape(RoundedRectangle(cornerRadius: 32))
+                icon
+                    .resizable()
+                    .frame(width: 16, height: 16)
+                    .foreground(DodamColor.Static.white)
+                    .frame(width: 32, height: 32)
+                    .background(DodamColor.Primary.alternative)
+                    .clipShape(Circle())
+                    .padding(.leading, 6)
                 Text("\(title)")
-                    .font(.title(.medium))
+                    .headline(.bold)
+                    .foreground(DodamColor.Label.strong)
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
-                    .dodamColor(.onSurface)
                 Spacer()
             }
-            .padding([.top, .leading], 16)
             content()
-                .padding([.bottom, .horizontal], 10)
         }
-        .background(Dodam.color(.surfaceContainer))
-        .clipShape(RoundedRectangle(cornerRadius: 18))
+        .padding(.top, 16)
+        .padding(.bottom, 10)
+        .padding(.horizontal, 10)
+        .background(DodamColor.Background.normal)
+        .clipShape(.large)
     }
 }
 
@@ -86,7 +85,7 @@ public struct DodamContainer<Content>: View where Content: View {
                 }
             }
             .padding(16)
-            .background(Dodam.color(.surface))
+            .background(DodamColor.Background.neutral)
         }
     }
     return DodamContainerPreview()

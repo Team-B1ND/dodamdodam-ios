@@ -31,9 +31,9 @@ public struct AllCell: View {
             HStack(spacing: 16) {
                 ZStack {
                     Rectangle()
-                        .dodamFill(.secondary)
+                        .dodamFill(DodamColor.Fill.alternative)
                         .frame(width: 32, height: 32)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipShape(.extraSmall)
                     Image(icon: icon)
                         .resizable()
                         .frame(width: 20, height: 20)
@@ -42,12 +42,12 @@ public struct AllCell: View {
                 .padding(.leading, 8)
                 Text(title)
                     .font(.system(size: 18, weight: .medium))
-                    .dodamColor(.onBackground)
+                    .foreground(DodamColor.Label.normal)
                 Spacer()
                 Image(icon: .chevronRight)
                     .resizable()
                     .frame(width: 14, height: 14)
-                    .dodamColor(.onSurfaceVariant)
+                    .foreground(DodamColor.Label.assistive)
                     .padding(.trailing, 4)
             }
         }

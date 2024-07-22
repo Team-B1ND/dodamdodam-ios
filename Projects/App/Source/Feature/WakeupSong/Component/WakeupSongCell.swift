@@ -42,20 +42,20 @@ struct WakeupSongCell: View {
                     if !(data.status == .pending) {
                         Text("\(data.status.rawValue)")
                             .font(.body(.medium))
-                            .dodamColor(data.status == .rejected ? .error : .primary)
+                            .foreground(data.status == .rejected ? DodamColor.Status.negative : DodamColor.Primary.normal)
                     }
                     Text("\(data.videoTitle)")
-                        .font(.body(.medium))
-                        .dodamColor(.onSurface)
+                        .body(.bold)
+                        .foreground(DodamColor.Label.normal)
                         .lineLimit(1)
                 }
                 Text("\(data.channelTitle)")
-                    .font(.label(.large))
-                    .dodamColor(.onSurfaceVariant)
+                    .caption1(.medium)
+                    .foreground(DodamColor.Label.alternative)
                     .lineLimit(1)
                 Text("\(data.createdAt)")
-                    .font(.label(.small))
-                    .dodamColor(.onSurfaceVariant)
+                    .caption2(.regular)
+                    .foreground(DodamColor.Label.alternative)
             }
             .padding(.vertical, 12)
             Spacer()

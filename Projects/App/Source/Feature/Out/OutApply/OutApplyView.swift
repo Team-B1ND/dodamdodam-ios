@@ -34,16 +34,17 @@ struct OutApplyView: View {
                         } label: {
                             HStack(spacing: 16) {
                                 Text("외출 날짜")
-                                    .font(.system(size: 18, weight: .medium))
-                                    .dodamColor(.tertiary)
+                                    .headline(.medium)
+                                    .foreground(DodamColor.Label.alternative)
                                 Spacer()
                                 Text("\(viewModel.dateAt.parseString(format: "M월 d일 (E)"))")
-                                .font(.system(size: 18, weight: .regular))
-                                .dodamColor(.primary)
+                                    .headline(.regular)
+                                    .foreground(DodamColor.Primary.normal)
                                 Image(icon: .chevronRight)
                                     .resizable()
                                     .frame(width: 14, height: 14)
-                                    .dodamColor(.onSurfaceVariant)
+                                    .foreground(DodamColor.Label.alternative)
+                                    .opacity(0.5)
                             }
                             .padding(.horizontal, 8)
                             .frame(height: 40)
@@ -56,8 +57,8 @@ struct OutApplyView: View {
                     } label: {
                         HStack(spacing: 16) {
                             Text(selected == 0 ? "외출 시간" : "외박 날짜")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.tertiary)
+                                .headline(.medium)
+                                .foreground(DodamColor.Label.alternative)
                             Spacer()
                             Text({ () -> String in
                                 if selected == 1 {
@@ -69,12 +70,12 @@ struct OutApplyView: View {
                                     format: "HH:mm"
                                 )
                             }())
-                            .font(.system(size: 18, weight: .regular))
-                            .dodamColor(.primary)
+                            .headline(.regular)
+                            .foreground(DodamColor.Primary.normal)
                             Image(icon: .chevronRight)
                                 .resizable()
                                 .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
+                                .foreground(DodamColor.Label.alternative)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
@@ -86,8 +87,8 @@ struct OutApplyView: View {
                     } label: {
                         HStack(spacing: 16) {
                             Text(selected == 0 ? "복귀 시간" : "복귀 날짜")
-                                .font(.system(size: 18, weight: .medium))
-                                .dodamColor(.tertiary)
+                                .headline(.medium)
+                                .foreground(DodamColor.Label.alternative)
                             Spacer()
                             Text({ () -> String in
                                 if selected == 1 {
@@ -99,12 +100,12 @@ struct OutApplyView: View {
                                     format: "HH:mm"
                                 )
                             }())
-                            .font(.system(size: 18, weight: .regular))
-                            .dodamColor(.primary)
+                            .headline(.regular)
+                            .foreground(DodamColor.Primary.normal)
                             Image(icon: .chevronRight)
                                 .resizable()
                                 .frame(width: 14, height: 14)
-                                .dodamColor(.onSurfaceVariant)
+                                .foreground(DodamColor.Label.alternative)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
@@ -116,7 +117,7 @@ struct OutApplyView: View {
             }
         }
         .subView {
-            SegmentedView(
+            DodamSegmentedButton(
                 labels: ["외출", "외박"],
                 selection: $selected
             )
@@ -129,8 +130,8 @@ struct OutApplyView: View {
         ) {
             VStack {
                 Text(selected == 0 ? "외출 일시" : "외박 날짜")
-                    .font(.body(.large))
-                    .dodamColor(.onBackground)
+//                    .font(.body(.large))
+//                    .dodamColor(.onBackground)
                 DatePicker(
                     "시작",
                     selection: $viewModel.startAt,
@@ -150,8 +151,8 @@ struct OutApplyView: View {
         ) {
             VStack {
                 Text(selected == 0 ? "복귀 일시" : "복귀 날짜")
-                    .font(.body(.large))
-                    .dodamColor(.onBackground)
+//                    .font(.body(.large))
+//                    .dodamColor(.onBackground)
                 DatePicker(
                     "끝",
                     selection: $viewModel.endAt,
@@ -171,8 +172,8 @@ struct OutApplyView: View {
         ) {
             VStack {
                 Text("외출 날짜")
-                    .font(.body(.large))
-                    .dodamColor(.onBackground)
+//                    .font(.body(.large))
+//                    .dodamColor(.onBackground)
                 DatePicker(
                     "외출 날짜",
                     selection: $viewModel.dateAt,

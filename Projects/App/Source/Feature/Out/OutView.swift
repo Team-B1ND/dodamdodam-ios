@@ -126,7 +126,7 @@ struct OutView: View {
             .padding(.horizontal, 16)
         }
         .subView {
-            SegmentedView(
+            DodamSegmentedButton(
                 labels: ["외출", "외박"],
                 selection: $selection
             )
@@ -136,7 +136,7 @@ struct OutView: View {
                 selected: $selection
             ))
         }
-        .background(Dodam.color(.surface))
+        .background(DodamColor.Background.neutral)
         .task {
             await viewModel.onAppear()
         }

@@ -43,11 +43,11 @@ struct AllView: View {
                             if let student = data.student {
                                 VStack(alignment: .leading) {
                                     Text("환영합니다, \(student.name)님")
-                                        .font(.body(.large))
-                                        .dodamColor(.onSurface)
+                                        .headline(.bold)
+                                        .foreground(DodamColor.Label.normal)
                                     Text("\(student.grade)학년 \(student.room)반 \(student.number)번")
-                                        .font(.label(.large))
-                                        .dodamColor(.onSurfaceVariant)
+                                        .label(.medium)
+                                        .foreground(DodamColor.Label.alternative)
                                 }
                             }
                         } else {
@@ -76,8 +76,8 @@ struct AllView: View {
                                 .frame(width: 70, height: 70)
                                 .clipShape(RoundedRectangle(cornerRadius: 12))
                             Text("로그인하세요.")
-                                .font(.body(.large))
-                                .dodamColor(.onSurface)
+                                .headline(.bold)
+                                .foreground(DodamColor.Label.normal)
                             Spacer()
                         }
                     }
@@ -99,10 +99,7 @@ struct AllView: View {
                             flow.alert(alert)
                         }
                     }
-                    Rectangle()
-                        .dodamFill(.outlineVariant)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 1)
+                    DodamDivider()
                         .padding(.horizontal, 8)
                     
                     AllCell("귀가 버스 신청하기", icon: .colorfulBus) {

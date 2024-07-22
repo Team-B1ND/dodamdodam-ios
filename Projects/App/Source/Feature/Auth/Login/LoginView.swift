@@ -17,10 +17,10 @@ struct LoginView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            DodamNavigationBar.medium(
+            DodamTopAppBar.medium(
                 title: "아이디와 비밀번호를\n입력해주세요"
             )
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(spacing: 24) {
                 DodamTextField.default(
                     title: "아이디",
                     text: $viewModel.idText
@@ -33,24 +33,21 @@ struct LoginView: View {
                     text: $viewModel.pwText
                 )
                 .focused($pwFocsused)
-                Button {
-                    idFocsused = false
-                    pwFocsused = false
-                    viewModel.isModalPresented = true
-                } label: {
-                    HStack(spacing: 0) {
-                        Text("계정이 없으신가요? ")
-                            .dodamColor(.onSurfaceVariant)
+                HStack(spacing: 0) {
+                    Text("계정이 없으신가요? ")
+                        .foreground(DodamColor.Label.alternative)
+                    Button {
+                        idFocsused = false
+                        pwFocsused = false
+                        viewModel.isModalPresented = true
+                    } label: {
                         Text("회원가입")
                             .underline()
-                            .dodamColor(.onBackground)
+                            .foreground(DodamColor.Label.normal)
                     }
-                    .font(.label(.large))
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 6)
+                    .scaledButtonStyle()
                 }
-                .scaledButtonStyle()
-                .frame(maxWidth: .infinity)
+                .label(.medium)
                 DodamButton.fullWidth(
                     title: "로그인"
                 ) {
@@ -88,24 +85,26 @@ struct LoginView: View {
                     Dodam.icon(.checkmarkCircle)
                         .resizable()
                         .frame(width: 24, height: 24)
-                        .dodamColor(
+                        .foreground(
                             viewModel.isChecked
-                            ? .primary
-                            : .outline
+                            ? DodamColor.Primary.normal
+                            : DodamColor.Label.alternative
+                        )
+                        .opacity(
+                            viewModel.isChecked
+                            ? 1
+                            : 0.5
                         )
                         .padding(.leading, 18)
                         .padding(.vertical, 12)
                     Text("모두 동의합니다")
                         .font(.body(.medium))
-                        .dodamColor(.onBackground)
+                        .foreground(DodamColor.Label.normal)
                     Spacer()
                 }
                 .frame(maxWidth: .infinity)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Dodam.color(.outline), lineWidth: 1.5)
-                }
+                .background(DodamColor.Fill.normal)
+                .clipShape(.small)
             }
             VStack(spacing: 4) {
                 HStack(spacing: 4) {
@@ -114,24 +113,30 @@ struct LoginView: View {
                     } label: {
                         Dodam.icon(.checkmark)
                             .resizable()
-                            .frame(width: 24, height: 24)
-                            .dodamColor(
-                                viewModel.isChecked1
-                                ? .primary
-                                : .outline
+                            .frame(width: 16, height: 16)
+                            .foreground(
+                                viewModel.isChecked
+                                ? DodamColor.Primary.normal
+                                : DodamColor.Label.alternative
+                            )
+                            .opacity(
+                                viewModel.isChecked
+                                ? 1
+                                : 0.5
                             )
                     }
                     Link(
                         destination: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")!
                     ) {
                         Text("(필수) 서비스 이용약관")
-                            .font(.body(.small))
-                            .dodamColor(.tertiary)
+                            .body(.regular)
+                            .foreground(DodamColor.Label.alternative)
+                            .opacity(0.5)
                         Spacer()
                         Dodam.icon(.chevronRight)
                             .resizable()
                             .frame(width: 16, height: 16)
-                            .dodamColor(.onSurfaceVariant)
+                            .foreground(DodamColor.Label.alternative)
                     }
                 }
                 .frame(height: 32)
@@ -142,24 +147,30 @@ struct LoginView: View {
                     } label: {
                         Dodam.icon(.checkmark)
                             .resizable()
-                            .frame(width: 24, height: 24)
-                            .dodamColor(
-                                viewModel.isChecked2
-                                ? .primary
-                                : .outline
+                            .frame(width: 16, height: 16)
+                            .foreground(
+                                viewModel.isChecked
+                                ? DodamColor.Primary.normal
+                                : DodamColor.Label.alternative
+                            )
+                            .opacity(
+                                viewModel.isChecked
+                                ? 1
+                                : 0.5
                             )
                     }
                     Link(
                         destination: URL(string: "https://dodam.b1nd.com/detailed-information/service-policy")!
                     ) {
                         Text("(필수) 개인정보 수집 및 이용에 대한 안내")
-                            .font(.body(.small))
-                            .dodamColor(.tertiary)
+                            .body(.regular)
+                            .foreground(DodamColor.Label.alternative)
+                            .opacity(0.5)
                         Spacer()
                         Dodam.icon(.chevronRight)
                             .resizable()
                             .frame(width: 16, height: 16)
-                            .dodamColor(.onSurfaceVariant)
+                            .foreground(DodamColor.Label.alternative)
                     }
                 }
                 .frame(height: 32)
@@ -172,7 +183,7 @@ struct LoginView: View {
             }
             .disabled(!viewModel.isChecked)
         }
-        .background(Dodam.color(.background))
+        .background(DodamColor.Background.normal)
     }
 }
 

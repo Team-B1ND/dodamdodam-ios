@@ -20,8 +20,8 @@ struct SettingCell: View {
     private let type: SettingType
     private let isDestructive: Bool
     
-    private var textColor: DodamColor {
-        isDestructive ? .error : .onBackground
+    private var textColor: DodamColorable {
+        isDestructive ? DodamColor.Status.negative : DodamColor.Label.normal
     }
     
     private init(text: String, type: SettingType, isDestructive: Bool = false) {
@@ -69,17 +69,17 @@ struct SettingCell: View {
         HStack(spacing: 16) {
             Text(text)
                 .font(.system(size: 18, weight: .medium))
-                .dodamColor(textColor)
+                .foreground(textColor)
             Spacer()
             if case .description(let string) = type {
                 Text(string)
-                    .font(.system(size: 18, weight: .regular))
-                    .dodamColor(.tertiary)
+                    .headline(.regular)
+                    .foreground(DodamColor.Label.assistive)
             } else {
                 Image(icon: .chevronRight)
                     .resizable()
                     .frame(width: 14, height: 14)
-                    .dodamColor(.onSurfaceVariant)
+                    .foreground(DodamColor.Label.assistive)
             }
         }
         .padding(8)

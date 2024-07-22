@@ -36,16 +36,16 @@ struct WakeupSongApplyView: View {
                                             .frame(width: 120, height: 67)
                                             .shimmer()
                                     }
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .clipShape(.small)
                                     .padding(.vertical, 8)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("\(data.videoTitle)")
-                                            .font(.body(.medium))
-                                            .dodamColor(.onSurface)
+                                            .body(.bold)
+                                            .foreground(DodamColor.Label.normal)
                                             .lineLimit(1)
                                         Text("\(data.channelTitle)")
-                                            .font(.label(.large))
-                                            .dodamColor(.onSurfaceVariant)
+                                            .caption1(.medium)
+                                            .foreground(DodamColor.Label.alternative)
                                             .lineLimit(1)
                                     }
                                     .padding(.vertical, 12)
@@ -66,11 +66,11 @@ struct WakeupSongApplyView: View {
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text("이런 노래는 어떤가요?")
-                        .font(.title(.medium))
-                        .dodamColor(.onSurface)
+                        .headline(.bold)
+                        .foreground(DodamColor.Label.normal)
                     Text("요즘 인기있는 노래를 바로 신청해보세요")
-                        .font(.body(.small))
-                        .dodamColor(.onSurface)
+                        .label(.medium)
+                        .foreground(DodamColor.Label.normal)
                 }
                 .padding(.top, 20)
                 LazyVStack(spacing: 4) {
@@ -83,8 +83,8 @@ struct WakeupSongApplyView: View {
                             } label: {
                                 HStack(spacing: 16) {
                                     Text("\(data.rank)")
-                                        .font(.label(.large))
-                                        .dodamColor(.onBackground)
+                                        .label(.bold)
+                                        .foreground(DodamColor.Primary.normal)
                                         .frame(width: 25, height: 20)
                                     CachedAsyncImage(url: URL(
                                         string: data.thumbnail
@@ -103,12 +103,12 @@ struct WakeupSongApplyView: View {
                                     .padding(.vertical, 8)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("\(data.name)")
-                                            .font(.body(.medium))
-                                            .dodamColor(.onSurface)
+                                            .body(.bold)
+                                            .foreground(DodamColor.Label.normal)
                                             .lineLimit(1)
                                         Text("\(data.artist)")
-                                            .font(.label(.large))
-                                            .dodamColor(.onSurfaceVariant)
+                                            .caption1(.medium)
+                                            .foreground(DodamColor.Label.alternative)
                                             .lineLimit(1)
                                     }
                                     .padding(.vertical, 12)
@@ -136,7 +136,7 @@ struct WakeupSongApplyView: View {
                 }
             }
         }
-        .background(Dodam.color(.background))
+        .background(DodamColor.Background.normal)
         .task {
             await viewModel.onAppear()
         }

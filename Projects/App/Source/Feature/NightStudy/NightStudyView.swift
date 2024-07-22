@@ -72,7 +72,7 @@ struct NightStudyView: View {
             flow.push(NightStudyApplyView())
         }
         .borderSize(16)
-        .background(Dodam.color(.surface))
+        .background(DodamColor.Background.neutral)
         .task {
             await viewModel.onAppear()
         }

@@ -45,12 +45,12 @@ struct WakeupSongContainer: View {
                             /// marquee 적용 하기
                             VStack(alignment: .leading, spacing: 0) {
                                 Text("\(data.videoTitle)")
-                                    .font(.body(.medium))
-                                    .dodamColor(.onSurface)
+                                    .body(.medium)
+                                    .foreground(DodamColor.Label.normal)
                                     .lineLimit(1)
                                 Text("\(data.channelTitle)")
-                                    .font(.label(.large))
-                                    .dodamColor(.onSurfaceVariant)
+                                    .label(.medium)
+                                    .foreground(DodamColor.Label.alternative)
                                     .lineLimit(1)
                             }
                         }

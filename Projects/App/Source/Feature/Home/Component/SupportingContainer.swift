@@ -22,17 +22,17 @@ struct SupportingContainer: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 2) {
             Text(subTitle)
-                .font(.label(.large))
+                .caption1(.medium)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-                .dodamColor(.onSurfaceVariant)
+                .foreground(DodamColor.Label.alternative)
             Text(title)
-                .font(.body(.large))
+                .body(.bold)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
-                .dodamColor(.primary)
+                .foreground(DodamColor.Primary.normal)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

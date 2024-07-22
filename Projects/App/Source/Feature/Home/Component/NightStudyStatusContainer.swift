@@ -46,14 +46,13 @@ struct NightStudyStatusContainer: View {
                             let days = getDate(.day, date: data.endAt)
                             
                             return "\(days)일"
-                        }()
-                        )
-                        .font(.body(.medium))
-                        .dodamColor(.onSurface)
+                        }())
+                        .body(.medium)
+                        .foreground(DodamColor.Label.normal)
                         if !(data.status == .pending) {
                             Text("남음")
-                                .font(.body(.small))
-                                .dodamColor(.onSurfaceVariant)
+                                .label(.medium)
+                                .foreground(DodamColor.Label.alternative)
                         }
                         Text({ () -> String in
                             let month = getDate(.month, date: data.endAt)
@@ -61,8 +60,8 @@ struct NightStudyStatusContainer: View {
                             let string = "\(month).\(day)"
                             return "\(string)까지"
                         }())
-                        .font(.label(.large))
-                        .dodamColor(.onSurfaceVariant)
+                        .label(.regular)
+                        .foreground(DodamColor.Label.alternative)
                     }
                 }
             }

@@ -25,8 +25,8 @@ struct TomorrowWakeupSongCell: View {
     var body: some View {
         HStack(spacing: 16) {
             Text("\(id)")
-                .font(.label(.large))
-                .dodamColor(.primary)
+                .label(.bold)
+                .foreground(DodamColor.Primary.normal)
                 .frame(width: 8, height: 20)
             Link(
                 destination: URL(string: data.videoUrl)
@@ -46,11 +46,11 @@ struct TomorrowWakeupSongCell: View {
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(data.videoTitle)")
                     .font(.body(.medium))
-                    .dodamColor(.onSurface)
+                    .foreground(DodamColor.Label.normal)
                     .lineLimit(1)
                 Text("\(data.channelTitle)")
-                    .font(.label(.large))
-                    .dodamColor(.onSurfaceVariant)
+                    .caption1(.medium)
+                    .foreground(DodamColor.Label.alternative)
                     .lineLimit(1)
             }
             .padding(.vertical, 12)
