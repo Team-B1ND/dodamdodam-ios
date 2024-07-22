@@ -6,6 +6,9 @@
 //
 
 import Swinject
+import DataSource
+import Network
+import Repository
 
 struct DataSourceAssembly: Assembly {
     

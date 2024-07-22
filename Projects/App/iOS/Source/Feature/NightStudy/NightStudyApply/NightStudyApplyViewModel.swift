@@ -7,6 +7,8 @@
 
 import Combine
 import Foundation
+import Domain
+import DIContainer
 
 class NightStudyApplyViewModel: ObservableObject {
     

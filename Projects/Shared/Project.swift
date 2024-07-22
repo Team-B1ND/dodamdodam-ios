@@ -9,15 +9,9 @@ let project = Project(
             destinations: [.iPhone],
             product: .framework,
             bundleId: "com.b1nd.dodam.studentShared",
+            deploymentTargets: .iOS("15.0"),
             sources: ["Source/**"],
-            scripts: [.swiftLint],
-            dependencies: [
-                .external(name: "DDS"),
-                .external(name: "Swinject"),
-                .external(name: "FlowKit"),
-                .external(name: "SignKit"),
-                .external(name: "CachedAsyncImage")
-            ]
+            scripts: [.swiftLint]
         )
     ]
 )

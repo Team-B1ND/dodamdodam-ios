@@ -6,6 +6,7 @@
 //
 
 import Swinject
+import Network
 
 struct RemoteAssembly: Assembly {
     

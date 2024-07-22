@@ -7,6 +7,8 @@
 
 import Combine
 import SignKit
+import Domain
+import DIContainer
 
 class SettingViewModel: ObservableObject {
     

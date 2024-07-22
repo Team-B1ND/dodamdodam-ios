@@ -7,6 +7,8 @@
 
 import SwiftUI
 import DDS
+import Domain
+import Shared
 
 struct OutSleepingCell: View {
     

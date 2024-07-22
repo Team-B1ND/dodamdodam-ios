@@ -8,6 +8,7 @@
 import SwiftUI
 import DDS
 import CachedAsyncImage
+import Domain
 
 struct WakeupSongCell: View {
     

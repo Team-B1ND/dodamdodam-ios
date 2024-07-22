@@ -7,6 +7,9 @@
 
 import Foundation
 import SignKit
+import Domain
+import DIContainer
+import Shared
 
 class WakeupSongViewModel: ObservableObject {
     

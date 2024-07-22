@@ -41,6 +41,7 @@ let project = Project(
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DataSource", path: .relativeToRoot("Projects/Data")),
                 .project(target: "Network", path: .relativeToRoot("Projects/Data")),
+                .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
                 .external(name: "DDS")
             ]
         )

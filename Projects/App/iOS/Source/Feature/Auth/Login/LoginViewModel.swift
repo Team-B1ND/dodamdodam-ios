@@ -7,6 +7,8 @@
 
 import Combine
 import SignKit
+import DIContainer
+import Domain
 
 class LoginViewModel: ObservableObject {
     

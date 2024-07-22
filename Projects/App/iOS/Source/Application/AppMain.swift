@@ -9,6 +9,7 @@ import SwiftUI
 import FlowKit
 import SignKit
 import DDS
+import DIContainer
 
 @propertyWrapper
 public struct Flow: DynamicProperty {
@@ -41,6 +42,7 @@ struct AppMain: App {
     
     init() {
         SUIT.register()
+        DependencyProvider.shared.register()
     }
     
     var body: some Scene {

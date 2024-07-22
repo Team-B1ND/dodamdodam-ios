@@ -9,6 +9,7 @@ import SwiftUI
 import DDS
 import CachedAsyncImage
 import SignKit
+import Domain
 
 struct WakeupSongContainer: View {
     

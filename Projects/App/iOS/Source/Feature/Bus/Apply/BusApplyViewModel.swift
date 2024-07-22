@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Domain
+import DIContainer
 
 class BusApplyViewModel: ObservableObject {
     

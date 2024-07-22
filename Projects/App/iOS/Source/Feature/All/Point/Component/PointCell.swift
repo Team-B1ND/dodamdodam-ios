@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import Domain
 
 public struct PointCell: View {
     

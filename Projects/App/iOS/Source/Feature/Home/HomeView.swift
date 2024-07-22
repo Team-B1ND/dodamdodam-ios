@@ -8,6 +8,7 @@
 import SwiftUI
 import DDS
 import SignKit
+import Shared
 
 struct HomeView: View {
     

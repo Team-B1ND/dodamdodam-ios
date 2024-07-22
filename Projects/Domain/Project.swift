@@ -9,10 +9,12 @@ let project = Project(
             destinations: [.iPhone],
             product: .framework,
             bundleId: "com.b1nd.dodam.studentDomain",
+            deploymentTargets: .iOS("15.0"),
             sources: ["Source/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .project(target: "Shared", path: .relativeToRoot("Projects/Shared"))
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
+                .external(name: "SwiftBok")
             ]
         )
     ]

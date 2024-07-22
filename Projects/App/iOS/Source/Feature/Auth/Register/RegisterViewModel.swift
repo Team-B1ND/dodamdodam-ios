@@ -6,6 +6,8 @@
 //
 
 import Combine
+import Domain
+import DIContainer
 
 class RegisterViewModel: ObservableObject {
     

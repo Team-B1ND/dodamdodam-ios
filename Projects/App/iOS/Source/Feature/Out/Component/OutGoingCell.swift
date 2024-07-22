@@ -7,6 +7,9 @@
 
 import SwiftUI
 import DDS
+import Domain
+import DIContainer
+import Shared
 
 struct OutGoingCell: View {
     

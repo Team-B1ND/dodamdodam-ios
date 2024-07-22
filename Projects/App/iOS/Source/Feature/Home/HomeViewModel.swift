@@ -7,6 +7,9 @@
 
 import Foundation
 import SignKit
+import DIContainer
+import Domain
+import Shared
 
 class HomeViewModel: ObservableObject {
     

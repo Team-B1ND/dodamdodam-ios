@@ -10,6 +10,7 @@ import DDS
 import CachedAsyncImage
 import SignKit
 import FlowKit
+import Shared
 
 struct SettingView: View {
     

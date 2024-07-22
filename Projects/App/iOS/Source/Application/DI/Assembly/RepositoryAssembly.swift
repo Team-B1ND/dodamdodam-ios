@@ -6,6 +6,9 @@
 //
 
 import Swinject
+import Repository
+import DataSource
+import Domain
 
 struct RepositoryAssembly: Assembly {
     

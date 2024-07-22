@@ -6,6 +6,9 @@
 //
 
 import Combine
+import Domain
+import DIContainer
+import Shared
 
 class MealViewModel: ObservableObject {
     
