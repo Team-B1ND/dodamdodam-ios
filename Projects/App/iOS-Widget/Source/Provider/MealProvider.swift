@@ -14,18 +14,25 @@ struct MealProvider: TimelineProvider {
     }
     
     func getSnapshot(in context: Context, completion: @escaping (MealEntry) -> Void) {
+        let meal = Meal(
+            details: [
+                .init(name: "퀴노아녹두죽", allergies: []),
+                .init(name: "채소샐러드", allergies: []),
+                .init(name: "우자드레싱", allergies: []),
+                .init(name: "깍두기", allergies: []),
+                .init(name: "초코첵스시리얼+우ㅁㅁㅁㅁㅁ유", allergies: []),
+                .init(name: "초코크로와상", allergies: [])
+            ],
+            calorie: 941
+        )
         let entry = MealEntry(
             date: .now,
-            meal: .init(
-                details: [
-                    .init(name: "퀴노아녹두죽", allergies: []),
-                    .init(name: "채소샐러드", allergies: []),
-                    .init(name: "우자드레싱", allergies: []),
-                    .init(name: "깍두기", allergies: []),
-                    .init(name: "초코첵스시리얼+우ㅁㅁㅁㅁㅁ유", allergies: []),
-                    .init(name: "초코크로와상", allergies: [])
-                ],
-                calorie: 941
+            meal: MealResponse(
+                exists: true,
+                date: .now,
+                breakfast: meal,
+                lunch: nil,
+                dinner: nil
             )
         )
         completion(entry)

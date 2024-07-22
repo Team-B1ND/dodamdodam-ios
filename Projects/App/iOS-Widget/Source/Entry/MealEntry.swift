@@ -6,20 +6,23 @@
 //
 
 import WidgetKit
-import Domain
+import Domain   
 
 struct MealEntry: TimelineEntry {
     let date: Date
-    let meal: Meal
+    let meal: MealResponse
 }
 
 extension MealEntry {
     static var empty: MealEntry {
         MealEntry(
             date: .now,
-            meal: .init(
-                details: [],
-                calorie: 0
+            meal: MealResponse(
+                exists: true, 
+                date: .now,
+                breakfast: nil,
+                lunch: nil,
+                dinner: nil
             )
         )
     }
