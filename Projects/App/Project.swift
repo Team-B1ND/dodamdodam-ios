@@ -38,6 +38,9 @@ let project = Project(
             dependencies: [
                 .project(target: "Feature", path: .relativeToRoot("Projects/Feature")),
                 .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
+                .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
+                .project(target: "DataSource", path: .relativeToRoot("Projects/Data")),
+                .project(target: "Network", path: .relativeToRoot("Projects/Data")),
                 .external(name: "DDS")
             ]
         )

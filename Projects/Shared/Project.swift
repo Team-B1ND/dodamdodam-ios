@@ -13,7 +13,6 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .external(name: "DDS"),
-                .external(name: "Moya"),
                 .external(name: "Swinject"),
                 .external(name: "FlowKit"),
                 .external(name: "SignKit"),
