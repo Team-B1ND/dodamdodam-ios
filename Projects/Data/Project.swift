@@ -14,7 +14,7 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .project(target: "DataSource", path: "")
+                .target(name: "DataSource")
             ]
         ),
         .target(
@@ -27,7 +27,7 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .project(target: "Network", path: "")
+                .target(name: "Network")
             ]
         ),
         .target(

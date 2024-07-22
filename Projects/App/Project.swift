@@ -42,16 +42,22 @@ let project = Project(
                 .project(target: "DataSource", path: .relativeToRoot("Projects/Data")),
                 .project(target: "Network", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
-                .external(name: "DDS")
+                .external(name: "DDS"),
+                .target(name: "DodamDodamWidget")
             ]
         ),
         .target(
             name: "DodamDodamWidget",
             destinations: [.iPhone],
             product: .appExtension,
-            bundleId: "com.b1nd.dodam.studentWidget",
+            bundleId: "com.b1nd.dodam.student.WidgetExtension",
             deploymentTargets: .iOS("15.0"),
-            infoPlist: .default,
+            infoPlist: .extendingDefault(with: [
+                "CFBundleDisplayName": "$(PRODUCT_NAME)",
+                "NSExtension": [
+                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
+                ]
+            ]),
             sources: ["iOS-Widget/Source/**"],
             resources: ["iOS-Widget/Resource/**"],
             scripts: [.swiftLint],
