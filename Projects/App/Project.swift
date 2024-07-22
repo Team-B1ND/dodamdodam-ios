@@ -32,16 +32,13 @@ let project = Project(
                     "UILaunchStoryboardName": "LaunchScreen"
                 ]
             ),
-            sources: ["Source/**"],
-            resources: ["Resource/**"],
+            sources: ["iOS/Source/**"],
+            resources: ["iOS/Resource/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .external(name: "DDS"),
-                .external(name: "Moya"),
-                .external(name: "Swinject"),
-                .external(name: "FlowKit"),
-                .external(name: "SignKit"),
-                .external(name: "CachedAsyncImage")
+                .project(target: "Feature", path: .relativeToRoot("Projects/Feature")),
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
+                .external(name: "DDS")
             ]
         )
     ]
