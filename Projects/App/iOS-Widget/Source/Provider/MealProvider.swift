@@ -7,13 +7,14 @@
 
 import WidgetKit
 import Domain
+import Shared
+import DIContainer
 
 struct MealProvider: TimelineProvider {
-    func placeholder(in context: Context) -> MealEntry {
-        .empty
-    }
     
-    func getSnapshot(in context: Context, completion: @escaping (MealEntry) -> Void) {
+    @Inject var mealRepository: any MealRepository
+    func placeholder(in context: Context) -> MealEntry {
+        
         let meal = Meal(
             details: [
                 .init(name: "퀴노아녹두죽", allergies: []),
@@ -31,14 +32,59 @@ struct MealProvider: TimelineProvider {
                 exists: true,
                 date: .now,
                 breakfast: meal,
-                lunch: nil,
-                dinner: nil
+                lunch: meal,
+                dinner: meal
             )
         )
-        completion(entry)
+        return entry
+    }
+    
+    func getSnapshot(in context: Context, completion: @escaping (MealEntry) -> Void) {
+        Task {
+            var currentDate = Date.now
+            if getDate(.hour, date: currentDate) >= 20 {
+                currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+            }
+            do {
+                let year = getDate(.year, date: currentDate)
+                let month = getDate(.month, date: currentDate)
+                let day = getDate(.day, date: currentDate)
+                let request = FetchMealRequest(year: year, month: month, day: day)
+                let meal = try await mealRepository.fetchMeal(request)
+                let entry = MealEntry(
+                    date: currentDate,
+                    meal: meal
+                )
+                completion(entry)
+            } catch {
+                let entry = MealEntry.empty
+                completion(entry)
+            }
+        }
     }
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        
+        let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date()) ?? .init()
+        Task {
+            var currentDate = Date()
+            // 오후 8시가 지나면 다음날로
+            if getDate(.hour, date: currentDate) >= 20 {
+                currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
+            }
+            
+            do {
+                let meal = try await mealRepository.fetchMeal(.init(year: getDate(.year, date: currentDate), month: getDate(.month, date: currentDate), day: getDate(.day, date: currentDate)))
+                let entry = MealEntry(
+                    date: currentDate,
+                    meal: meal
+                )
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            } catch {
+                let entry = MealEntry.empty
+                let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+                completion(timeline)
+            }
+        }
     }
 }

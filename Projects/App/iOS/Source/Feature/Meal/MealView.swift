@@ -64,7 +64,7 @@ struct MealView: View {
                                                         return switch idx {
                                                         case 0: "아침"
                                                         case 1: "점심"
-                                                        case 2:"저녁"
+                                                        case 2: "저녁"
                                                         default: ""
                                                         }
                                                     }())

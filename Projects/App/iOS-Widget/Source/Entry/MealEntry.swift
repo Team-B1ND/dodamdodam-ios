@@ -14,16 +14,14 @@ struct MealEntry: TimelineEntry {
 }
 
 extension MealEntry {
-    static var empty: MealEntry {
-        MealEntry(
+    static let empty = MealEntry(
+        date: .now,
+        meal: MealResponse(
+            exists: true,
             date: .now,
-            meal: MealResponse(
-                exists: true, 
-                date: .now,
-                breakfast: nil,
-                lunch: nil,
-                dinner: nil
-            )
+            breakfast: nil,
+            lunch: nil,
+            dinner: nil
         )
-    }
+    )
 }
