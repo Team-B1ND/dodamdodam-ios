@@ -11,7 +11,10 @@ let project = Project(
             bundleId: "com.b1nd.dodam.studentShared",
             deploymentTargets: .iOS("15.0"),
             sources: ["Source/**"],
-            scripts: [.swiftLint]
+            scripts: [.swiftLint],
+            dependencies: [
+                .external(name: "FlowKit")
+            ]
         )
     ]
 )
