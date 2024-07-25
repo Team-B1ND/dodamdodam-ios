@@ -14,7 +14,8 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer"))
+                .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
+                .external(name: "CachedAsyncImage")
             ]
         )
     ]

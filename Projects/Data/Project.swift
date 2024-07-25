@@ -39,7 +39,8 @@ let project = Project(
             sources: ["Network/Source/**"],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .external(name: "Moya")
+                .external(name: "Moya"),
+                .external(name: "SignKit")
             ]
         )
     ]
