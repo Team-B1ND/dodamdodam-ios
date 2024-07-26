@@ -123,7 +123,7 @@ struct NightStudyApplyView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 150)
         }
-        .dodamModal(
+        .dodamSheet(
             isPresented: $viewModel.isStartAtModalPresented,
             disableGesture: true
         ) {
@@ -140,7 +140,7 @@ struct NightStudyApplyView: View {
                 .labelsHidden()
             }
         }
-        .dodamModal(
+        .dodamSheet(
             isPresented: $viewModel.isEndAtModalPresented,
             disableGesture: true
         ) {

@@ -126,7 +126,7 @@ struct OutApplyView: View {
             .padding(.top, 6)
             .padding(.horizontal, 8)
         }
-        .dodamModal(
+        .dodamSheet(
             isPresented: $viewModel.isStartAtModalPresented,
             disableGesture: true
         ) {
@@ -147,7 +147,7 @@ struct OutApplyView: View {
                 .labelsHidden()
             }
         }
-        .dodamModal(
+        .dodamSheet(
             isPresented: $viewModel.isEndAtModalPresented,
             disableGesture: true
         ) {
@@ -168,7 +168,7 @@ struct OutApplyView: View {
                 .labelsHidden()
             }
         }
-        .dodamModal(
+        .dodamSheet(
             isPresented: $viewModel.isOutDateModalPresented,
             disableGesture: true
         ) {

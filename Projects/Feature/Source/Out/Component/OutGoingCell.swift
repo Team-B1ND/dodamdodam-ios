@@ -35,7 +35,7 @@ struct OutGoingCell: View {
                             return "거절됨"
                         }
                     }())
-                    .body(.bold)
+                    .body1(.bold)
                     .foreground(DodamColor.Static.white)
                     .padding(.vertical, 4)
                     .padding(.horizontal, 12)
@@ -87,7 +87,7 @@ struct OutGoingCell: View {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
                                 Text(outGoingData.startAt.parseString(format: "H시 m분"))
-                                    .font(.body(.medium))
+                                    .font(.body1(.medium))
 //                                    .dodamColor(.onSurface)
                                 Text("외출")
 //                                    .font(.label(.large))

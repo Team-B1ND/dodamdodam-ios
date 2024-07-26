@@ -27,7 +27,7 @@ struct PointView: View {
                     DodamLoadingView()
                 } else {
                     Text("상벌점 발급 내역이 없어요.")
-                        .font(.body(.medium))
+                        .font(.body1(.medium))
                         .foreground(DodamColor.Label.assistive)
                         .padding(.top, 24)
                 }
@@ -44,7 +44,7 @@ struct PointView: View {
                 HStack(spacing: 32) {
                     VStack(spacing: 0) {
                         Text("상점")
-                            .body(.bold)
+                            .body1(.bold)
                             .foreground(DodamColor.Label.assistive)
                         if let bonus = viewModel.bocus {
                             Text("\(bonus)점")
@@ -57,7 +57,7 @@ struct PointView: View {
                     }
                     VStack(spacing: 0) {
                         Text("벌점")
-                            .body(.bold)
+                            .body1(.bold)
                             .foreground(DodamColor.Label.assistive)
                         if let minus = viewModel.minus {
                             Text("\(minus)점")

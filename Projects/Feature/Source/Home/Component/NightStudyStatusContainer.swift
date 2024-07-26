@@ -49,7 +49,7 @@ struct NightStudyStatusContainer: View {
                             
                             return "\(days)일"
                         }())
-                        .body(.medium)
+                        .body1(.medium)
                         .foreground(DodamColor.Label.normal)
                         if !(data.status == .pending) {
                             Text("남음")

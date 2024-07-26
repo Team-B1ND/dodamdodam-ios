@@ -39,7 +39,7 @@ struct WakeupSongView: View {
                         .padding(.bottom, 6)
                     } else {
                         Text("승인된 기상송이 아직 없어요.")
-                            .body(.bold)
+                            .body1(.bold)
                             .foreground(DodamColor.Label.assistive)
                             .frame(
                                 maxWidth: .infinity,
@@ -64,7 +64,7 @@ struct WakeupSongView: View {
                                     }
                                 } else {
                                     Text("대기중인 기상송이 없어요")
-                                        .body(.bold)
+                                        .body1(.bold)
                                         .foreground(DodamColor.Label.assistive)
                                         .frame(
                                             maxWidth: .infinity,
@@ -113,7 +113,7 @@ struct WakeupSongView: View {
                                         }
                                     } else {
                                         Text("기상송을 신청해 보세요")
-                                            .body(.bold)
+                                            .body1(.bold)
                                             .frame(
                                                 maxWidth: .infinity,
                                                 alignment: .center

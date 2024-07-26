@@ -29,7 +29,7 @@ struct SupportingContainer: View {
                 .minimumScaleFactor(0.7)
                 .foreground(DodamColor.Label.alternative)
             Text(title)
-                .body(.bold)
+                .body1(.bold)
                 .lineLimit(1)
                 .minimumScaleFactor(0.7)
                 .foreground(DodamColor.Primary.normal)
