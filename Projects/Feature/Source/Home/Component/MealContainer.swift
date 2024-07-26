@@ -56,7 +56,7 @@ struct MealContainer: View {
                                             options: .usesLineFragmentOrigin,
                                             attributes: [
                                                 .font: UIFont(
-                                                    name: SUIT.Weight.semibold.rawValue,
+                                                    name: Pretendard.Weight.semibold.rawValue,
                                                     size: 18
                                                 )!
                                             ],

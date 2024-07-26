@@ -94,7 +94,6 @@ struct HomeView: View {
                                     .padding(6)
                                 }
                                 .scaledButtonStyle()
-                                .padding(6)
                             }
                         }
                         DodamContainer.default(
