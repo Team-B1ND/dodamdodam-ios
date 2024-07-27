@@ -14,7 +14,7 @@ import Shared
 struct NightStudyView: View {
     
     @StateObject var viewModel = NightStudyViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     var body: some View {
         DodamScrollView.default(title: "심야 자습") {

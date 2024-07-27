@@ -15,7 +15,7 @@ import Shared
 struct AllView: View {
     
     @StateObject var viewModel = AllViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     @Binding var selection: Int
     
     var body: some View {

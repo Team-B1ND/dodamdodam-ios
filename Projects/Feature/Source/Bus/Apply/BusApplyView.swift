@@ -13,7 +13,7 @@ import Shared
 struct BusApplyView: View {
     
     @StateObject var viewModel = BusApplyViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     var body: some View {
         DodamScrollView.medium(title: "무슨 버스에\n탑승하실건가요?") {
