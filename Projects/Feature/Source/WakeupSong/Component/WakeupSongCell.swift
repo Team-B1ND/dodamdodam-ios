@@ -42,11 +42,11 @@ struct WakeupSongCell: View {
                 HStack(spacing: 2) {
                     if !(data.status == .pending) {
                         Text("\(data.status.rawValue)")
-                            .font(.body(.medium))
+                            .font(.body1(.medium))
                             .foreground(data.status == .rejected ? DodamColor.Status.negative : DodamColor.Primary.normal)
                     }
                     Text("\(data.videoTitle)")
-                        .body(.bold)
+                        .body1(.bold)
                         .foreground(DodamColor.Label.normal)
                         .lineLimit(1)
                 }

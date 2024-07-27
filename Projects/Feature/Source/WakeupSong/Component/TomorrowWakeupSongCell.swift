@@ -46,7 +46,7 @@ struct TomorrowWakeupSongCell: View {
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(data.videoTitle)")
-                    .font(.body(.medium))
+                    .font(.body1(.medium))
                     .foreground(DodamColor.Label.normal)
                     .lineLimit(1)
                 Text("\(data.channelTitle)")

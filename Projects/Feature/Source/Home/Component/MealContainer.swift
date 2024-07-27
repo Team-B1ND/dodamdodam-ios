@@ -42,7 +42,7 @@ struct MealContainer: View {
                                 $0.name
                             }.joined(separator: ", ") ?? "급식이 없어요."
                             Text(text)
-                                .body(.medium)
+                                .body1(.medium)
                                 .foreground(DodamColor.Label.normal)
                                 .multilineTextAlignment(.leading)
                                 .fixedSize(horizontal: false, vertical: true)
@@ -56,7 +56,7 @@ struct MealContainer: View {
                                             options: .usesLineFragmentOrigin,
                                             attributes: [
                                                 .font: UIFont(
-                                                    name: SUIT.Weight.semibold.rawValue,
+                                                    name: Pretendard.Weight.semibold.rawValue,
                                                     size: 18
                                                 )!
                                             ],

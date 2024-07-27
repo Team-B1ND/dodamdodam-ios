@@ -42,7 +42,7 @@ struct WakeupSongApplyView: View {
                                     .padding(.vertical, 8)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("\(data.videoTitle)")
-                                            .body(.bold)
+                                            .body1(.bold)
                                             .foreground(DodamColor.Label.normal)
                                             .lineLimit(1)
                                         Text("\(data.channelTitle)")
@@ -105,7 +105,7 @@ struct WakeupSongApplyView: View {
                                     .padding(.vertical, 8)
                                     VStack(alignment: .leading, spacing: 2) {
                                         Text("\(data.name)")
-                                            .body(.bold)
+                                            .body1(.bold)
                                             .foreground(DodamColor.Label.normal)
                                             .lineLimit(1)
                                         Text("\(data.artist)")

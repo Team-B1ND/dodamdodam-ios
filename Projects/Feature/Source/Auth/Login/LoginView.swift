@@ -69,7 +69,7 @@ struct LoginView: View {
         } message: {
             Text("로그인에 실패했습니다.")
         }
-        .dodamModal(isPresented: $viewModel.isModalPresented) {
+        .dodamSheet(isPresented: $viewModel.isModalPresented) {
             modalSheetView
         }
     }
@@ -100,7 +100,7 @@ struct LoginView: View {
                         .padding(.leading, 18)
                         .padding(.vertical, 12)
                     Text("모두 동의합니다")
-                        .font(.body(.medium))
+                        .font(.body1(.medium))
                         .foreground(DodamColor.Label.normal)
                     Spacer()
                 }
@@ -131,7 +131,7 @@ struct LoginView: View {
                         destination: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")!
                     ) {
                         Text("(필수) 서비스 이용약관")
-                            .body(.regular)
+                            .body1(.regular)
                             .foreground(DodamColor.Label.alternative)
                             .opacity(0.5)
                         Spacer()
@@ -165,7 +165,7 @@ struct LoginView: View {
                         destination: URL(string: "https://dodam.b1nd.com/detailed-information/service-policy")!
                     ) {
                         Text("(필수) 개인정보 수집 및 이용에 대한 안내")
-                            .body(.regular)
+                            .body1(.regular)
                             .foreground(DodamColor.Label.alternative)
                             .opacity(0.5)
                         Spacer()

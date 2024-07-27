@@ -17,7 +17,7 @@ import Shared
 struct AppMain: App {
     
     init() {
-        SUIT.register()
+        Pretendard.register()
         DependencyProvider.shared.register()
     }
     
