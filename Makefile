@@ -10,3 +10,6 @@ reset:
 	tuist clean
 	rm -rf **/*.xcodeproj
 	rm -rf *.xcworkspace
+clean-spm:
+	rm -rf ~/Library/Caches/org.swift.swiftpm
+	rm -rf ~/Library/org.swift.swiftpm

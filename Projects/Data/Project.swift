@@ -7,8 +7,8 @@ let project = Project(
         .target(
             name: "Repository",
             destinations: [.iPhone],
-            product: .staticLibrary,
-            bundleId: "com.b1nd.dodam.studentDataSource",
+            product: .staticFramework,
+            bundleId: "com.b1nd.dodam.studentRepository",
             deploymentTargets: .iOS("15.0"),
             sources: ["Repository/Source/**"],
             scripts: [.swiftLint],
@@ -20,7 +20,7 @@ let project = Project(
         .target(
             name: "DataSource",
             destinations: [.iPhone],
-            product: .staticLibrary,
+            product: .staticFramework,
             bundleId: "com.b1nd.dodam.studentDataSource",
             deploymentTargets: .iOS("15.0"),
             sources: ["DataSource/Source/**"],
@@ -33,7 +33,7 @@ let project = Project(
         .target(
             name: "Network",
             destinations: [.iPhone],
-            product: .staticLibrary,
+            product: .staticFramework,
             bundleId: "com.b1nd.dodam.studentNetwork",
             deploymentTargets: .iOS("15.0"),
             sources: ["Network/Source/**"],
