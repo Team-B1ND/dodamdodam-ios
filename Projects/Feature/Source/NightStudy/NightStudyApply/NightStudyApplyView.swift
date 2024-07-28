@@ -14,7 +14,7 @@ import Shared
 struct NightStudyApplyView: View {
     
     @StateObject var viewModel = NightStudyApplyViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     @FocusState var focused
     
     var body: some View {

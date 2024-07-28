@@ -15,7 +15,7 @@ struct LoginView: View {
     @StateObject var viewModel = LoginViewModel()
     @FocusState var idFocsused: Bool
     @FocusState var pwFocsused: Bool
-    @Shared.Flow var flow
+    @Flow var flow
     
     var body: some View {
         VStack(spacing: 0) {

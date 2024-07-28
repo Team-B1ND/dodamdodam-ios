@@ -14,7 +14,7 @@ import Shared
 struct OutView: View {
     
     @StateObject var viewModel = OutViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     @State var selection: Int = 0
     

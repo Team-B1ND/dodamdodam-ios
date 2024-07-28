@@ -14,7 +14,7 @@ import FlowKit
 struct HomeView: View {
     
     @StateObject var viewModel = HomeViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     @Binding var selection: Int
     @State private var ringABellRight = false
     @State private var ringABellLeft = false

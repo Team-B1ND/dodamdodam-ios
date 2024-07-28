@@ -14,7 +14,7 @@ import Shared
 struct MealView: View {
     
     @StateObject var viewModel = MealViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     func isToday(_ date: Date) -> Bool {
         let today = Date()

@@ -13,7 +13,7 @@ import Shared
 struct RegisterAuthView: View {
     
     @StateObject var viewModel = RegisterViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     var body: some View {
         DodamTopAppBar.medium(

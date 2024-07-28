@@ -1,18 +1,18 @@
 import FlowKit
 import SwiftUI
 
-@available(iOS 13, *)
-@propertyWrapper
-public struct Flow: DynamicProperty {
-  
-  @EnvironmentObject private var object: FlowProvider
-  
-  public var wrappedValue: FlowProvider {
-    object
-  }
-  
-  public init() { }
-}
+//@available(iOS 13, *)
+//@propertyWrapper
+//public struct Flow: DynamicProperty {
+//  
+//  @EnvironmentObject private var object: FlowProvider
+//  
+//  public var wrappedValue: FlowProvider {
+//    object
+//  }
+//  
+//  public init() { }
+//}
 
 public struct FlowPreview<C: View>: View {
     
