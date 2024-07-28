@@ -24,61 +24,43 @@ struct OutGoingCell: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack(spacing: 12) {
-                ZStack {
-                    Text({ () -> String in
-                        switch outGoingData.status {
-                        case .allowed: 
-                            return "승인됨"
-                        case .pending: 
-                            return "대기중"
-                        case .rejected: 
-                            return "거절됨"
-                        }
-                    }())
-                    .body1(.bold)
-                    .foreground(DodamColor.Static.white)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal, 12)
-                }
-                .frame(height: 27)
-                .background {
-                    Group {
-                        let color: DodamColorable = switch outGoingData.status {
-                        case .allowed:
-                            DodamColor.Primary.normal
-                        case .pending:
-                            DodamColor.Line.normal
-                        case .rejected:
-                            DodamColor.Status.negative
-                        }
-                        Dodam.color(color)
+                DodamTag({
+                    switch outGoingData.status {
+                    case .allowed: "승인됨"
+                    case .pending: "대기중"
+                    case .rejected: "거절됨"
                     }
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 32))
+                }(), type: {
+                    switch outGoingData.status {
+                    case .allowed: .primary
+                    case .pending: .secondary
+                    case .rejected: .negative
+                    }
+                }())
                 Spacer()
-                Text(outGoingData.startAt.parseString(format: "M월 d일 (E)"))
-//                    .font(.label(.large))
-//                    .dodamColor(.onSurfaceVariant)
-//                    .padding(.top, 5)
+                Text({
+                    let date = outGoingData.createdAt.parseString(format: "M월 d일 (E)")
+                    return date
+                }())
+                .label(.medium)
+                .foreground(DodamColor.Label.normal)
+                .padding(.top, 5)
             }
             .padding([.top, .horizontal], 16)
             VStack(spacing: 12) {
                 Text("\(outGoingData.reason)")
-//                    .font(.body(.medium))
-//                    .dodamColor(.onSurface)
-//                    .frame(maxWidth: .infinity, alignment: .leading)
-                Rectangle()
-                    .frame(height: 1)
-                    .frame(maxWidth: .infinity)
-//                    .foregroundStyle(Dodam.color(.secondary))
+                    .body1(.medium)
+                    .foreground(DodamColor.Label.normal)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                DodamDivider()
                 if outGoingData.status == .rejected {
                     HStack(spacing: 8) {
                         Text("거절 사유")
-//                            .font(.label(.large))
-//                            .dodamColor(.onSurfaceVariant)
+                            .label(.regular)
+                            .foreground(DodamColor.Label.alternative)
                         Text("\(outGoingData.rejectReason ?? "선생님께서 외출 신청을 거절하였습니다.")")
                             .font(.system(size: 16, weight: .medium))
-//                            .dodamColor(.onSurface)
+                            .foreground(DodamColor.Label.normal)
                         Spacer()
                     }
                     .padding(.top, 4)
@@ -86,19 +68,19 @@ struct OutGoingCell: View {
                     HStack(alignment: .bottom, spacing: 16) {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
-                                Text(outGoingData.startAt.parseString(format: "H시 m분"))
-                                    .font(.body1(.medium))
-//                                    .dodamColor(.onSurface)
                                 Text("외출")
-//                                    .font(.label(.large))
-//                                    .dodamColor(.onSurfaceVariant)
+                                    .label(.medium)
+                                    .foreground(DodamColor.Label.alternative)
+                                Text(outGoingData.startAt.parseString(format: "H시 m분"))
+                                    .body1(.medium)
+                                    .foreground(DodamColor.Label.neutral)
                                 Spacer()
-                                Text(outGoingData.endAt.parseString(format: "H시 m분"))
-//                                    .font(.body(.medium))
-//                                    .dodamColor(.onSurface)
                                 Text("복귀")
-//                                    .font(.label(.large))
-//                                    .dodamColor(.onSurfaceVariant)
+                                    .label(.medium)
+                                    .foreground(DodamColor.Label.alternative)
+                                Text(outGoingData.endAt.parseString(format: "H시 m분"))
+                                    .body1(.medium)
+                                    .foreground(DodamColor.Label.neutral)
                             }
                             DodamLinearProgressView(
                                 progress: calculatingDateProgress(
@@ -114,7 +96,7 @@ struct OutGoingCell: View {
             }
             .padding([.bottom, .horizontal], 16)
         }
-//        .background(Dodam.color(.surfaceContainer))
+        .background(DodamColor.Background.normal)
         .clipShape(RoundedRectangle(cornerRadius: 18))
     }
 }

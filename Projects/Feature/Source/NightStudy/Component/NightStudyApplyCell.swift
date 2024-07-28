@@ -68,19 +68,19 @@ struct NightStudyApplyCell: View {
                     HStack(alignment: .bottom, spacing: 16) {
                         VStack(spacing: 8) {
                             HStack(alignment: .bottom, spacing: 4) {
-                                Text(nightStudyData.startAt.parseString(format: "M월 d일"))
-                                    .body1(.medium)
-                                    .foreground(DodamColor.Label.normal)
                                 Text("시작")
                                     .label(.medium)
-                                    .foreground(DodamColor.Label.normal)
-                                Spacer()
-                                Text(nightStudyData.endAt.parseString(format: "M월 d일"))
+                                    .foreground(DodamColor.Label.alternative)
+                                Text(nightStudyData.startAt.parseString(format: "M월 d일"))
                                     .body1(.medium)
-                                    .foreground(DodamColor.Label.normal)
+                                    .foreground(DodamColor.Label.neutral)
+                                Spacer()
                                 Text("종료")
                                     .label(.medium)
-                                    .foreground(DodamColor.Label.normal)
+                                    .foreground(DodamColor.Label.alternative)
+                                Text(nightStudyData.endAt.parseString(format: "M월 d일"))
+                                    .body1(.medium)
+                                    .foreground(DodamColor.Label.neutral)
                             }
                             DodamLinearProgressView(
                                 progress: calculatingDateProgress(
