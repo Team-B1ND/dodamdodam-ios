@@ -23,7 +23,6 @@ struct MealContainer: View {
         self.animatedIdx = mealIdx.wrappedValue
     }
     
-    @Environment(\.isFirstLoad) private var isFirstLoad
     @State private var animatedIdx: Int
     @State private var heights: [Int: CGFloat] = [:]
     

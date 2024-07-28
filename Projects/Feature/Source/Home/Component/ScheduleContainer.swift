@@ -19,8 +19,6 @@ struct ScheduleContainer: View {
         self.scheduleData = scheduleData
     }
     
-    @Environment(\.isFirstLoad) private var isFirstLoad
-    
     var body: some View {
         if let data = scheduleData {
             HStack(alignment: .top, spacing: 12) {

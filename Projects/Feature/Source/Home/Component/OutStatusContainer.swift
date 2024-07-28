@@ -20,8 +20,6 @@ struct OutStatusContainer: View {
         self.outData = outData
     }
     
-    @Environment(\.isFirstLoad) private var isFirstLoad
-    
     var body: some View {
         if let data = outData {
             HStack(alignment: .top, spacing: 12) {

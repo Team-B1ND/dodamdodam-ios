@@ -21,8 +21,6 @@ struct WakeupSongContainer: View {
         self.wakeupSongData = wakeupSongData
     }
     
-    @Environment(\.isFirstLoad) private var isFirstLoad
-    
     var body: some View {
         if let data = wakeupSongData {
             if !data.isEmpty {
