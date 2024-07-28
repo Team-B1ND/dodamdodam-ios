@@ -18,10 +18,6 @@ class OutApplyViewModel: ObservableObject {
     @Published var startAt: Date = Date()
     @Published var endAt: Date = Date()
     
-    @Published var isStartAtModalPresented: Bool = false
-    @Published var isEndAtModalPresented: Bool = false
-    @Published var isOutDateModalPresented: Bool = false
-    
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository
     @Inject var outSleepingRepository: any OutSleepingRepository

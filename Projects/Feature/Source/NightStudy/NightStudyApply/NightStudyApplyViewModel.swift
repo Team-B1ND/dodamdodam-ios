@@ -20,8 +20,8 @@ class NightStudyApplyViewModel: ObservableObject {
     @Published var endAt: Date = Date()
     
     @Published var doNeedPhone: Bool = false
-    @Published var isStartAtModalPresented: Bool = false
-    @Published var isEndAtModalPresented: Bool = false
+//    @Published var isStartAtModalPresented: Bool = false
+//    @Published var isEndAtModalPresented: Bool = false
     @Published var isModalPresented: Bool = false
     
     @Published var nightStudyApplyFailed: Bool = false
