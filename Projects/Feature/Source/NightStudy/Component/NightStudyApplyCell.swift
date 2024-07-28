@@ -24,19 +24,6 @@ struct NightStudyApplyCell: View {
         self.removeAction = removeAction
     }
     
-    private func remainingTimeText(from end: Date) -> String {
-        let now = Date()
-        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: now, to: end)
-        
-        return if let days = components.day, days > 0 {
-            "\(days)일"
-        } else if let hours = components.hour, let minutes = components.minute {
-            "\(hours)시간 \(minutes)분"
-        } else {
-            "-"
-        }
-    }
-    
     var body: some View {
         VStack(spacing: 12) {
             HStack {
@@ -71,7 +58,7 @@ struct NightStudyApplyCell: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             DodamDivider()
             HStack(alignment: .bottom, spacing: 4) {
-                Text(remainingTimeText(from: nightStudyData.endAt))
+                Text(nightStudyData.endAt.remainingTimeText)
                     .heading2(.bold)
                     .foreground(DodamColor.Label.normal)
                 Text("남음")
