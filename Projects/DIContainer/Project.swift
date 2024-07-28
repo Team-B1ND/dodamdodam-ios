@@ -7,7 +7,7 @@ let project = Project(
         .target(
             name: "DIContainer",
             destinations: [.iPhone],
-            product: .staticFramework,
+            product: .framework,
             bundleId: "com.b1nd.dodam.studentDIContainer",
             deploymentTargets: .iOS("15.0"),
             sources: ["Source/**"],

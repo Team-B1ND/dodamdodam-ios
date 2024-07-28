@@ -7,13 +7,12 @@ let project = Project(
         .target(
             name: "Domain",
             destinations: [.iPhone],
-            product: .staticFramework,
+            product: .framework,
             bundleId: "com.b1nd.dodam.studentDomain",
             deploymentTargets: .iOS("15.0"),
             sources: ["Source/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
                 .external(name: "SwiftBok")
             ]
         )
