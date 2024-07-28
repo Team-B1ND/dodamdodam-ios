@@ -14,16 +14,32 @@ import Shared
 struct NightStudyApplyCell: View {
     
     private let nightStudyData: NightStudyResponse
+    private let removeAction: () -> Void
     
     public init(
-        data nightStudyData: NightStudyResponse
+        data nightStudyData: NightStudyResponse,
+        removeAction: @escaping () -> Void
     ) {
         self.nightStudyData = nightStudyData
+        self.removeAction = removeAction
+    }
+    
+    private func remainingTimeText(from end: Date) -> String {
+        let now = Date()
+        let components = Calendar.current.dateComponents([.day, .hour, .minute], from: now, to: end)
+        
+        return if let days = components.day, days > 0 {
+            "\(days)일"
+        } else if let hours = components.hour, let minutes = components.minute {
+            "\(hours)시간 \(minutes)분"
+        } else {
+            "-"
+        }
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-            HStack(spacing: 12) {
+        VStack(spacing: 12) {
+            HStack {
                 DodamTag({
                     switch nightStudyData.status {
                     case .allowed: "승인됨"
@@ -38,77 +54,83 @@ struct NightStudyApplyCell: View {
                     }
                 }())
                 Spacer()
-                Text({
-                    let date = nightStudyData.createdAt.parseString(format: "M월 d일 (E)")
-                    return date
-                }())
-                .label(.medium)
-                .foreground(DodamColor.Label.normal)
-                .padding(.top, 5)
+                Button {
+                    removeAction()
+                } label: {
+                    Image("Trash")
+                        .renderingMode(.template)
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .foreground(DodamColor.Line.normal)
+                }
+                .scaledButtonStyle()
             }
-            .padding([.top, .horizontal], 16)
-            VStack(spacing: 12) {
-                Text("\(nightStudyData.content)")
-                    .body1(.medium)
+            Text("\(nightStudyData.content)")
+                .body1(.medium)
+                .foreground(DodamColor.Label.normal)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            DodamDivider()
+            HStack(alignment: .bottom, spacing: 4) {
+                Text(remainingTimeText(from: nightStudyData.endAt))
+                    .heading2(.bold)
                     .foreground(DodamColor.Label.normal)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                DodamDivider()
-                if nightStudyData.status == .rejected {
+                Text("남음")
+                    .label(.medium)
+                    .foreground(DodamColor.Label.alternative)
+                Spacer()
+            }
+            if nightStudyData.status == .rejected {
+                HStack(spacing: 8) {
+                    Text("거절 사유")
+                        .label(.medium)
+                        .foreground(DodamColor.Label.alternative)
+                    Text("\(nightStudyData.rejectReason ?? "선생님께서 심야 자습 신청을 거절하였습니다")")
+                        .body1(.medium)
+                        .foreground(DodamColor.Label.normal)
+                    Spacer()
+                }
+            } else {
+                VStack(spacing: 4) {
+                    DodamLinearProgressView(
+                        progress: calculatingDateProgress(
+                            startAt: nightStudyData.startAt,
+                            endAt: nightStudyData.endAt,
+                            dateFormat: "yyyy-MM-dd"
+                        ),
+                        isDisabled: nightStudyData.status == .pending
+                    )
+                    HStack(spacing: 4) {
+                        Text("시작")
+                            .label(.medium)
+                            .foreground(DodamColor.Label.alternative)
+                        Text(nightStudyData.startAt.parseString(format: "M월 d일"))
+                            .body1(.medium)
+                            .foreground(DodamColor.Label.neutral)
+                        Spacer()
+                        Text("종료")
+                            .label(.medium)
+                            .foreground(DodamColor.Label.alternative)
+                        Text(nightStudyData.endAt.parseString(format: "M월 d일"))
+                            .body1(.medium)
+                            .foreground(DodamColor.Label.neutral)
+                    }
+                }
+                if let reasonForPhone = nightStudyData.reasonForPhone,
+                   nightStudyData.doNeedPhone {
                     HStack(spacing: 8) {
-                        Text("거절 사유")
+                        Text("휴대폰 사유")
                             .label(.regular)
                             .foreground(DodamColor.Label.alternative)
-                        Text("\(nightStudyData.rejectReason ?? "선생님께서 심야 자습 신청을 거절하였습니다")")
-                            .font(.system(size: 16, weight: .medium))
+                        Text("\(reasonForPhone)")
+                            .label(.medium)
                             .foreground(DodamColor.Label.normal)
                         Spacer()
                     }
-                    .padding(.top, 4)
-                } else {
-                    HStack(alignment: .bottom, spacing: 16) {
-                        VStack(spacing: 8) {
-                            HStack(alignment: .bottom, spacing: 4) {
-                                Text("시작")
-                                    .label(.medium)
-                                    .foreground(DodamColor.Label.alternative)
-                                Text(nightStudyData.startAt.parseString(format: "M월 d일"))
-                                    .body1(.medium)
-                                    .foreground(DodamColor.Label.neutral)
-                                Spacer()
-                                Text("종료")
-                                    .label(.medium)
-                                    .foreground(DodamColor.Label.alternative)
-                                Text(nightStudyData.endAt.parseString(format: "M월 d일"))
-                                    .body1(.medium)
-                                    .foreground(DodamColor.Label.neutral)
-                            }
-                            DodamLinearProgressView(
-                                progress: calculatingDateProgress(
-                                    startAt: nightStudyData.startAt,
-                                    endAt: nightStudyData.endAt,
-                                    dateFormat: "yyyy-MM-dd"
-                                ),
-                                isDisabled: nightStudyData.status == .pending ? true : false
-                            )
-                        }
-                    }
-                    if let reasonForPhone = nightStudyData.reasonForPhone,
-                       nightStudyData.doNeedPhone {
-                        HStack(spacing: 8) {
-                            Text("휴대폰 사유")
-                                .label(.regular)
-                                .foreground(DodamColor.Label.alternative)
-                            Text("\(reasonForPhone)")
-                                .label(.medium)
-                                .foreground(DodamColor.Label.normal)
-                            Spacer()
-                        }
-                        .padding(.top, 4)
-                    }
                 }
             }
-            .padding([.bottom, .horizontal], 16)
         }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 16)
         .background(DodamColor.Background.normal)
         .clipShape(.large)
     }

@@ -26,22 +26,17 @@ struct NightStudyView: View {
                             ForEach(data, id: \.self) { data in
                                 NightStudyApplyCell(
                                     data: data
-                                )
-                                .contextMenu {
-                                    Button(role: .destructive) {
-                                        let dialog = Dialog(title: "해당 심야 자습을 삭제하시겠습니까?")
-                                            .primaryButton("삭제") {
-                                                Task {
-                                                    await viewModel.deleteNightStudy(
-                                                        id: data.id
-                                                    )
-                                                }
+                                ) {
+                                    let dialog = Dialog(title: "해당 심야 자습을 삭제하시겠습니까?")
+                                        .primaryButton("삭제") {
+                                            Task {
+                                                await viewModel.deleteNightStudy(
+                                                    id: data.id
+                                                )
                                             }
-                                            .secondaryButton("취소")
-                                        self.dialog.present(dialog)
-                                    } label: {
-                                        Label("삭제", systemImage: "trash")
-                                    }
+                                        }
+                                        .secondaryButton("취소")
+                                    self.dialog.present(dialog)
                                 }
                             }
                         } else {
