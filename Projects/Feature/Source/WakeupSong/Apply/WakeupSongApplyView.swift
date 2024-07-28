@@ -13,6 +13,7 @@ import Shared
 
 struct WakeupSongApplyView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = WakeupSongApplyViewModel()
     @Flow var flow
     
@@ -142,30 +143,28 @@ struct WakeupSongApplyView: View {
         .task {
             await viewModel.onAppear()
         }
-        .alert(
-            "기상송을 신청하시겠습니까?",
-            isPresented: $viewModel.showDialog
-        ) {
-            Button("네", role: .none) {
-                Task {
-                    await viewModel.postWakeupSong()
+        .onChange(of: viewModel.showDialog) { _ in
+            defer {
+                viewModel.showDialog = false
+            }
+            let dialog = Dialog(title: "기상송을 신청하시겠습니까")
+                .message(viewModel.dialogMessage)
+                .primaryButton("신청") {
+                    Task {
+                        await viewModel.postWakeupSong()
+                        viewModel.clearData()
+                    }
+                    flow.pop()
+                }
+                .secondaryButton("취소")
+            self.dialog.present(dialog)
+        }
+        .onChange(of: viewModel.dialogErrorMessage) {
+            let dialog = Dialog(title: $0)
+                .primaryButton("확인") {
                     viewModel.clearData()
                 }
-                flow.pop()
-            }
-            Button("취소", role: .cancel) { 
-                viewModel.clearData()
-            }
-        } message: {
-            Text("\(viewModel.dialogMessage)")
-        }
-        .alert(
-            viewModel.dialogErrorMessage,
-            isPresented: $viewModel.showErrorDialog
-        ) {
-            Button("확인", role: .none) {
-                viewModel.clearData()
-            }
+            self.dialog.present(dialog)
         }
     }
 }

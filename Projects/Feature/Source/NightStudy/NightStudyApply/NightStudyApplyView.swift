@@ -13,6 +13,7 @@ import Shared
 
 struct NightStudyApplyView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = NightStudyApplyViewModel()
     @Flow var flow
     @FocusState var focused
@@ -168,13 +169,14 @@ struct NightStudyApplyView: View {
                 }
                 .disabled(
                     viewModel.startAt > viewModel.endAt ||
-                    viewModel.endAt.timeIntervalSinceReferenceDate -  viewModel.startAt.timeIntervalSinceReferenceDate > 86400 * 13 ||
+                    viewModel.endAt.timeIntervalSinceReferenceDate - viewModel.startAt.timeIntervalSinceReferenceDate > 86400 * 13 ||
                     viewModel.reasonText.count < 10
                 )
-                .alert("실패", isPresented: $viewModel.nightStudyApplyFailed) {
-                    Button("확인", role: .none) { }
-                } message: {
-                    Text("\(viewModel.nightStudyApplyAlertMessage)")
+                .onChange(of: viewModel.nightStudyApplyFailed) { _ in
+                    let dialog = Dialog(title: "실패")
+                        .message(viewModel.nightStudyApplyAlertMessage)
+                        .primaryButton("확인")
+                    self.dialog.present(dialog)
                 }
                 .padding(.bottom, 8)
                 .padding(.horizontal, 16)

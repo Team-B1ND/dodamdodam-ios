@@ -16,12 +16,7 @@ class BusApplyViewModel: ObservableObject {
     @Published var appliedBus: BusResponse?
     @Published var selectedBus: BusResponse?
     @Published var showNotFoundBus = false
-    @Published var dialogMessage = "" {
-        didSet {
-            showDialog = true
-        }
-    }
-    @Published var showDialog = false
+    @Published var dialogMessage = ""
     
     // MARK: - Repository
     @Inject var busRepository: any BusRepository

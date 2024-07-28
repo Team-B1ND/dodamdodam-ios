@@ -39,6 +39,7 @@ class NightStudyApplyViewModel: ObservableObject {
     
     @MainActor
     func postNightStudy() async {
+        self.nightStudyApplyFailed = false
         do {
             let result = try await nightStudyRepository.postNightStudy(
                 .init(
@@ -54,11 +55,10 @@ class NightStudyApplyViewModel: ObservableObject {
             if result.status == 403 {
                 nightStudyApplyFailed = true
                 nightStudyApplyAlertMessage = "심야 자습 신청 기간이 아닙니다."
-            } else {
-                nightStudyApplyFailed = true
             }
         } catch let error {
             print(error)
+            nightStudyApplyFailed = true
         }
     }
 }

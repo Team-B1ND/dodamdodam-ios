@@ -12,6 +12,7 @@ import FlowKit
 
 struct LoginView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = LoginViewModel()
     @FocusState var idFocsused: Bool
     @FocusState var pwFocsused: Bool
@@ -64,10 +65,13 @@ struct LoginView: View {
             }
             .padding(.horizontal, 16)
         }
-        .alert("실패", isPresented: $viewModel.isShowingAlert) {
-            Button("확인", role: .none) { }
-        } message: {
-            Text("로그인에 실패했습니다.")
+        .onChange(of: viewModel.isShowingAlert) {
+            if $0 {
+                let dialog = Dialog(title: "로그인 실패")
+                    .message("잠시 후 다시 시도해 주세요")
+                    .primaryButton("확인")
+                self.dialog.present(dialog)
+            }
         }
         .dodamSheet(isPresented: $viewModel.isModalPresented) {
             modalSheetView
