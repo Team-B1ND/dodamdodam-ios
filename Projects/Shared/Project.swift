@@ -13,7 +13,8 @@ let project = Project(
             sources: ["Source/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .external(name: "FlowKit")
+                .external(name: "FlowKit"),
+                .external(name: "DDS")
             ]
         )
     ]

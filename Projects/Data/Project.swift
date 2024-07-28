@@ -8,7 +8,7 @@ let project = Project(
             name: "Repository",
             destinations: [.iPhone],
             product: .staticLibrary,
-            bundleId: "com.b1nd.dodam.studentDataSource",
+            bundleId: "com.b1nd.dodam.studentRepository",
             deploymentTargets: .iOS("15.0"),
             sources: ["Repository/Source/**"],
             scripts: [.swiftLint],

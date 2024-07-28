@@ -13,7 +13,7 @@ import Shared
 struct OutApplyView: View {
     
     @StateObject var viewModel = OutApplyViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     @Binding var selected: Int
     @FocusState var focused

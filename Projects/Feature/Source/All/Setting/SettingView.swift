@@ -15,7 +15,7 @@ import Shared
 struct SettingView: View {
     
     @StateObject var viewModel = SettingViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     var body: some View {
         DodamScrollView.medium(title: "설정") {

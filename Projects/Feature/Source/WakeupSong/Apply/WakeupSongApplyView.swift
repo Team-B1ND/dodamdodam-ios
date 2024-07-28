@@ -14,7 +14,7 @@ import Shared
 struct WakeupSongApplyView: View {
     
     @StateObject var viewModel = WakeupSongApplyViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     var body: some View {
         DodamScrollView.medium(title: "기상송을\n검색해주세요") {

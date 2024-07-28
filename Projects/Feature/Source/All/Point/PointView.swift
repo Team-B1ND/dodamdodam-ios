@@ -13,7 +13,7 @@ import FlowKit
 struct PointView: View {
     
     @StateObject var viewModel = PointViewModel()
-    @Shared.Flow var flow
+    @Flow var flow
     
     var body: some View {
         DodamScrollView.medium(title: "내 상벌점") {
