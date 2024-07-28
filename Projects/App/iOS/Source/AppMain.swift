@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
-import FlowKit
 import SignKit
-import DDS
 import DIContainer
 import Feature
 import Shared
+import DDS
+import FlowKit
 
 @main
 struct AppMain: App {
@@ -21,10 +21,21 @@ struct AppMain: App {
         DependencyProvider.shared.register()
     }
     
+    @StateObject private var dialogProvider = DialogProvider()
+    @StateObject private var datePickerProvider = DatePickerProvider()
+    @StateObject private var timePickerProvider = TimePickerProvider()
+    @StateObject private var flow = FlowProvider(rootView: MainView())
+    
     var body: some Scene {
         WindowGroup {
-            FlowPresenter(rootView: MainView())
-                .ignoresSafeArea()
+            DodamModalProvider(
+                dialogProvider: dialogProvider,
+                datePickerProvider: datePickerProvider,
+                timePickerProvider: timePickerProvider
+            ) {
+                Shared.FlowPresenter(flow: flow)
+            }
+            .ignoresSafeArea()
         }
     }
 }
