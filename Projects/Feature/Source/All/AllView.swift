@@ -13,10 +13,20 @@ import FlowKit
 import Shared
 
 struct AllView: View {
-    
+    @DodamDialog private var dialog
     @StateObject var viewModel = AllViewModel()
     @Flow var flow
     @Binding var selection: Int
+    
+    private func presentLoginDialog() {
+        dialog.present(
+            .init(title: "로그인이 필요한 기능입니다", message: "로그인 하시겠습니까")
+            .primaryButton("로그인") {
+                flow.push(LoginView())
+            }
+            .secondaryButton("취소") {}
+        )
+    }
     
     var body: some View {
         DodamScrollView.default(title: "전체") {
@@ -69,6 +79,7 @@ struct AllView: View {
                     }
                 } else {
                     Button {
+                        dump(flow)
                         flow.push(LoginView())
                     } label: {
                         HStack(spacing: 16) {
@@ -89,15 +100,7 @@ struct AllView: View {
                         if Sign.isLoggedIn {
                             flow.push(PointView())
                         } else {
-                            let alert = Alert(
-                                title: "로그인이 필요한 기능입니다",
-                                message: "로그인하시겠습니까?",
-                                primaryButton: .default("로그인") {
-                                    flow.push(LoginView())
-                                },
-                                secondaryButton: .cancel("취소")
-                            )
-                            flow.alert(alert)
+                            presentLoginDialog()
                         }
                     }
                     DodamDivider()
@@ -107,15 +110,7 @@ struct AllView: View {
                         if Sign.isLoggedIn {
                             flow.push(BusApplyView())
                         } else {
-                            let alert = Alert(
-                                title: "로그인이 필요한 기능입니다",
-                                message: "로그인하시겠습니까?",
-                                primaryButton: .default("로그인") {
-                                    flow.push(LoginView())
-                                },
-                                secondaryButton: .cancel("취소")
-                            )
-                            flow.alert(alert)
+                            presentLoginDialog()
                         }
                     }
                     
@@ -132,15 +127,7 @@ struct AllView: View {
                             flow.push(WakeupSongView(), animated: false)
                             flow.push(WakeupSongApplyView())
                         } else {
-                            let alert = Alert(
-                                title: "로그인이 필요한 기능입니다",
-                                message: "로그인하시겠습니까?",
-                                primaryButton: .default("로그인") {
-                                    flow.push(LoginView())
-                                },
-                                secondaryButton: .cancel("취소")
-                            )
-                            flow.alert(alert)
+                            presentLoginDialog()
                         }
                     }
                 }

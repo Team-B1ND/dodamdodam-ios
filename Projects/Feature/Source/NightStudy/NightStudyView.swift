@@ -13,6 +13,7 @@ import Shared
 
 struct NightStudyView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = NightStudyViewModel()
     @Flow var flow
     
@@ -28,18 +29,16 @@ struct NightStudyView: View {
                                 )
                                 .contextMenu {
                                     Button(role: .destructive) {
-                                        let alert = Alert(
-                                            title: "해당 심야 자습을 삭제하시겠습니까?",
-                                            primaryButton: .destructive("삭제") {
+                                        let dialog = Dialog(title: "해당 심야 자습을 삭제하시겠습니까?")
+                                            .primaryButton("삭제") {
                                                 Task {
                                                     await viewModel.deleteNightStudy(
                                                         id: data.id
                                                     )
                                                 }
-                                            },
-                                            secondaryButton: .cancel("취소")
-                                        )
-                                        flow.alert(alert)
+                                            }
+                                            .secondaryButton("취소")
+                                        self.dialog.present(dialog)
                                     } label: {
                                         Label("삭제", systemImage: "trash")
                                     }

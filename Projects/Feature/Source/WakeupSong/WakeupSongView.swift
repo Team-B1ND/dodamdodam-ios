@@ -13,6 +13,7 @@ import Shared
 
 struct WakeupSongView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = WakeupSongViewModel()
     @Flow var flow
     
@@ -158,15 +159,13 @@ struct WakeupSongView: View {
                 if Sign.isLoggedIn {
                     flow.push(WakeupSongApplyView())
                 } else {
-                    let alert = Alert(
-                        title: "로그인이 필요한 기능입니다",
-                        message: "로그인하시겠습니까?",
-                        primaryButton: .default("로그인") {
+                    let dialog = Dialog(title: "로그인이 필요한 기능입니다")
+                        .message("로그인하시겠습니까?")
+                        .primaryButton("로그인") {
                             flow.push(LoginView())
-                        },
-                        secondaryButton: .cancel("취소")
-                    )
-                    flow.alert(alert)
+                        }
+                        .secondaryButton("취소")
+                    self.dialog.present(dialog)
                 }
             }
             .padding([.bottom, .horizontal], 16)

@@ -14,6 +14,7 @@ import Shared
 
 struct SettingView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = SettingViewModel()
     @Flow var flow
     
@@ -77,33 +78,42 @@ struct SettingView: View {
                     .padding(.horizontal, 8)
                 if Sign.isLoggedIn {
                     SettingCell.action("로그아웃") {
-                        let alert = Alert(
-                            title: "로그아웃 하시겠습니까?",
-                            primaryButton: .destructive("로그아웃") {
+                        let dialog = Dialog(title: "로그아웃 하시겠습니까?")
+                            .primaryButton("로그아웃") {
                                 Sign.logout()
                                 flow.replace([MainView()])
-                            },
-                            secondaryButton: .cancel("취소")
-                        )
-                        flow.alert(alert)
+                            }
+                            .secondaryButton("취소")
+                        self.dialog.present(dialog)
                     }
                     SettingCell.action("회원탈퇴") {
-                        let alert = Alert(
-                            title: "정말 탈퇴하시겠습니까?",
-                            primaryButton: .destructive("회원탈퇴") {
+                        let lastDialog = Dialog(title: "정말 정말 정말 탈퇴하시겠습니까?", message: "회원 탈퇴 시 모든 정보가 삭제됩니다!!!!!!")
+                            .primaryButton("회원 탈퇴") {
                                 Task {
-                                    do {
-                                        try await viewModel.patchDeactivate()
-                                        Sign.logout()
-                                        flow.replace([MainView()])
-                                    } catch {
-                                        print(error)
-                                    }
+                                     try await viewModel.patchDeactivate()
+                                    Sign.logout()
+                                    flow.replace([MainView()])
                                 }
-                            },
-                            secondaryButton: .cancel("취소")
-                        )
-                        flow.alert(alert)
+                            }
+                            .secondaryButton("취소")
+                        let secondDialog = Dialog(title: "정말 정말 탈퇴하시겠습니까?", message: "회원 탈퇴 시 모든 정보가 삭제됩니다")
+                            .primaryButton("회원 탈퇴") {
+                                Task {
+                                    try? await Task.sleep(seconds: 0.3)
+                                    dialog.present(lastDialog)
+                                }
+                            }
+                            .secondaryButton("취소")
+                        
+                        let firstDialog = Dialog(title: "정말 탈퇴하시겠습니까")
+                            .primaryButton("회원탈퇴") {
+                                Task {
+                                    try? await Task.sleep(seconds: 0.3)
+                                    dialog.present(secondDialog)
+                                }
+                            }
+                            .secondaryButton("취소")
+                        dialog.present(firstDialog)
                     }
                     .destructive()
                 } else {

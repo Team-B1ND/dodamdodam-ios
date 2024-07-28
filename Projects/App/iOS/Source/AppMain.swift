@@ -33,7 +33,7 @@ struct AppMain: App {
                 datePickerProvider: datePickerProvider,
                 timePickerProvider: timePickerProvider
             ) {
-                Shared.FlowPresenter(flow: flow)
+                FlowPresenter(flow: flow)
             }
             .ignoresSafeArea()
         }
