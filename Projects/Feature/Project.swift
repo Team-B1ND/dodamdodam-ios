@@ -15,7 +15,8 @@ let project = Project(
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
-                .external(name: "CachedAsyncImage")
+                .external(name: "CachedAsyncImage"),
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared"))
             ]
         )
     ]

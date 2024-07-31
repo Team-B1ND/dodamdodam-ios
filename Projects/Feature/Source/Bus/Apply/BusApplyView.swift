@@ -12,6 +12,7 @@ import Shared
 
 struct BusApplyView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = BusApplyViewModel()
     @Flow var flow
     
@@ -54,13 +55,19 @@ struct BusApplyView: View {
             await viewModel.fetchBuses()
             await viewModel.fetchAppledBus()
         }
-        .alert("현재 탑승할 수 있는 버스가 없습니다", isPresented: $viewModel.showNotFoundBus) {
-            Button("확인", role: .none) {
-                flow.pop()
+        .onChange(of: viewModel.showNotFoundBus) {
+            if $0 {
+                let dialog = Dialog(title: "현재 탑승할 수 있는 버스가 없습니다")
+                    .primaryButton("확인") {
+                        flow.pop()
+                    }
+                self.dialog.present(dialog)
             }
         }
-        .alert(viewModel.dialogMessage, isPresented: $viewModel.showDialog) {
-            Button("확인", role: .none) {}
+        .onChange(of: viewModel.dialogMessage) {
+            let dialog = Dialog(title: $0)
+                .primaryButton("확인")
+            self.dialog.present(dialog)
         }
     }
 }

@@ -13,6 +13,7 @@ import Shared
 
 struct WakeupSongView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = WakeupSongViewModel()
     @Flow var flow
     
@@ -88,28 +89,24 @@ struct WakeupSongView: View {
                                     if !data.isEmpty {
                                         ForEach(data, id: \.self) { data in
                                             Button {
-                                                viewModel.showDialog = true
+                                                let dialog = Dialog(title: "기상송을 삭제하시겠습니까?")
+                                                    .primaryButton("삭제") {
+                                                        Task {
+                                                            await viewModel.deleteWakeupSong(
+                                                                id: data.id
+                                                            )
+                                                            await viewModel.fetchMyWakeupSong()
+                                                            await viewModel.fetchPendingWakeupSong()
+                                                        }
+                                                    }
+                                                    .secondaryButton("취소")
+                                                self.dialog.present(dialog)
                                             } label: {
                                                 WakeupSongCell(
                                                     data: data
                                                 )
                                             }
                                             .scaledButtonStyle()
-                                            .alert(
-                                                "기상송을 삭제하시겠습니까?",
-                                                isPresented: $viewModel.showDialog
-                                            ) {
-                                                Button("네", role: .none) {
-                                                    Task {
-                                                        await viewModel.deleteWakeupSong(
-                                                            id: data.id
-                                                        )
-                                                        await viewModel.fetchMyWakeupSong()
-                                                        await viewModel.fetchPendingWakeupSong()
-                                                    }
-                                                }
-                                                Button("취소", role: .cancel) { }
-                                            }
                                         }
                                     } else {
                                         Text("기상송을 신청해 보세요")
@@ -132,13 +129,6 @@ struct WakeupSongView: View {
                                 ) {
                                     flow.push(LoginView())
                                 }
-//                                .background(
-//                                    DodamShape.large
-//                                        .stroke(
-//                                            Dodam.color(.secondaryContainer),
-//                                            lineWidth: 2
-//                                        )
-//                                )
                             }
                             Spacer()
                         }
@@ -158,15 +148,13 @@ struct WakeupSongView: View {
                 if Sign.isLoggedIn {
                     flow.push(WakeupSongApplyView())
                 } else {
-                    let alert = Alert(
-                        title: "로그인이 필요한 기능입니다",
-                        message: "로그인하시겠습니까?",
-                        primaryButton: .default("로그인") {
+                    let dialog = Dialog(title: "로그인이 필요한 기능입니다")
+                        .message("로그인하시겠습니까?")
+                        .primaryButton("로그인") {
                             flow.push(LoginView())
-                        },
-                        secondaryButton: .cancel("취소")
-                    )
-                    flow.alert(alert)
+                        }
+                        .secondaryButton("취소")
+                    self.dialog.present(dialog)
                 }
             }
             .padding([.bottom, .horizontal], 16)

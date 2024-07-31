@@ -21,18 +21,13 @@ class WakeupSongApplyViewModel: ObservableObject {
     @Published var artist: String = ""
     @Published var isSearchLoading: Bool = false
     
-    @Published var showDialog = false
+    @Published var showDialog: Bool = false
     @Published var dialogMessage = "" {
         didSet {
             showDialog = true
         }
     }
-    @Published var showErrorDialog = false
-    @Published var dialogErrorMessage = "" {
-        didSet {
-            showErrorDialog = true
-        }
-    }
+    @Published var dialogErrorMessage = ""
     
     // MARK: - Repository
     @Inject var wakeupSongRepository: any WakeupSongRepository

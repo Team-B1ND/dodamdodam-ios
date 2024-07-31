@@ -13,6 +13,7 @@ import Shared
 
 struct OutView: View {
     
+    @DodamDialog private var dialog
     @StateObject var viewModel = OutViewModel()
     @Flow var flow
     
@@ -28,24 +29,17 @@ struct OutView: View {
                                 ForEach(data, id: \.self) { data in
                                     OutGoingCell(
                                         data: data
-                                    )
-                                    .contextMenu {
-                                        Button(role: .destructive) {
-                                            let alert = Alert(
-                                                title: "해당 외출 신청을 삭제하시겠습니까?",
-                                                primaryButton: .destructive("삭제") {
-                                                    Task {
-                                                        await viewModel.deleteOutGoing(
-                                                            id: data.id
-                                                        )
-                                                    }
-                                                },
-                                                secondaryButton: .cancel("취소")
-                                            )
-                                            flow.alert(alert)
-                                        } label: {
-                                            Label("삭제", systemImage: "trash")
-                                        }
+                                    ) {
+                                        let dialog = Dialog(title: "해당 외출 신청을 삭제하시겠습니까?")
+                                            .primaryButton("삭제") {
+                                                Task {
+                                                    await viewModel.deleteOutGoing(
+                                                        id: data.id
+                                                    )
+                                                }
+                                            }
+                                            .secondaryButton("취소")
+                                        self.dialog.present(dialog)
                                     }
                                 }
                             } else {
@@ -82,18 +76,16 @@ struct OutView: View {
                                     )
                                     .contextMenu {
                                         Button(role: .destructive) {
-                                            let alert = Alert(
-                                                title: "해당 외박 신청을 삭제하시겠습니까?",
-                                                primaryButton: .destructive("삭제") {
+                                            let dialog = Dialog(title: "해당 외박 신청을 삭제하시겠습니까?")
+                                                .primaryButton("삭제") {
                                                     Task {
                                                         await viewModel.deleteOutSleeping(
                                                             id: data.id
                                                         )
                                                     }
-                                                },
-                                                secondaryButton: .cancel("취소")
-                                            )
-                                            flow.alert(alert)
+                                                }
+                                                .secondaryButton("취소")
+                                            self.dialog.present(dialog)
                                         } label: {
                                             Label("삭제", systemImage: "trash")
                                         }

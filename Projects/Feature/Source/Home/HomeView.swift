@@ -125,7 +125,6 @@ struct HomeView: View {
                         }
                     }
                 }
-                .environment(\.isFirstLoad, viewModel.isFirstLoad)
                 .padding(.horizontal, 16)
             }
             .background(DodamColor.Background.neutral)

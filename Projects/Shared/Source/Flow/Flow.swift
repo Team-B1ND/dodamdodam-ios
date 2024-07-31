@@ -1,18 +1,6 @@
 import FlowKit
 import SwiftUI
-
-//@available(iOS 13, *)
-//@propertyWrapper
-//public struct Flow: DynamicProperty {
-//  
-//  @EnvironmentObject private var object: FlowProvider
-//  
-//  public var wrappedValue: FlowProvider {
-//    object
-//  }
-//  
-//  public init() { }
-//}
+import DDS
 
 public struct FlowPreview<C: View>: View {
     
@@ -23,7 +11,7 @@ public struct FlowPreview<C: View>: View {
     }
     
     public var body: some View {
-        FlowPresenter(rootView: content())
+        FlowKit.FlowPresenter(rootView: content())
             .ignoresSafeArea()
     }
 }

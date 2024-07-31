@@ -18,8 +18,6 @@ class WakeupSongViewModel: ObservableObject {
     @Published var pendingWakeupSongData: [WakeupSongResponse]?
     @Published var myWakeupSongData: [WakeupSongResponse]?
     
-    @Published var showDialog = false
-    
     // MARK: - Repository
     @Inject var wakeupSongRepository: any WakeupSongRepository
     

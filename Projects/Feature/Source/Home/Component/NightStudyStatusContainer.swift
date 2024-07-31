@@ -20,11 +20,9 @@ struct NightStudyStatusContainer: View {
         self.nightStudyData = nightStudyData
     }
     
-    @Environment(\.isFirstLoad) private var isFirstLoad
-    
     var body: some View {
         if let data = nightStudyData {
-            HStack(alignment: .top, spacing: 12) {
+            VStack(alignment: .leading, spacing: 12) {
                 if data.status == .rejected {
                     SupportingContainer(
                         subTitle: "심야 자습이 거절되었어요",
@@ -32,38 +30,26 @@ struct NightStudyStatusContainer: View {
                     )
                 } else if data.status == .allowed ||
                             data.status == .pending {
-                    DodamCircularProgressView(
-                        progress: calculatingDateProgress(
-                            startAt: data.startAt,
-                            endAt: data.endAt,
-                            dateFormat: "yyyy-MM-dd"
-                        ),
-                        isDisabled: data.status == .pending
-                    )
+                    HStack(alignment: .bottom, spacing: 4) {
+                        Text(data.endAt.remainingTimeText)
+                            .heading2(.bold)
+                            .foreground(DodamColor.Label.normal)
+                        Text("남음")
+                            .foreground(DodamColor.Label.alternative)
+                            .label(.medium)
+                    }
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(data.status == .pending
-                             ? "대기 중"
-                             : { () -> String in
-                            
-                            let days = getDate(.day, date: data.endAt)
-                            
-                            return "\(days)일"
-                        }())
-                        .body1(.medium)
-                        .foreground(DodamColor.Label.normal)
-                        if !(data.status == .pending) {
-                            Text("남음")
-                                .label(.medium)
-                                .foreground(DodamColor.Label.alternative)
-                        }
-                        Text({ () -> String in
-                            let month = getDate(.month, date: data.endAt)
-                            let day = getDate(.day, date: data.endAt)
-                            let string = "\(month).\(day)"
-                            return "\(string)까지"
-                        }())
-                        .label(.regular)
-                        .foreground(DodamColor.Label.alternative)
+                        DodamLinearProgressView(
+                            progress: calculatingDateProgress(
+                                startAt: data.startAt,
+                                endAt: data.endAt,
+                                dateFormat: "yyyy-MM-dd"
+                            ),
+                            isDisabled: data.status == .pending
+                        )
+                        Text("\(data.endAt.parseString(format: "MM월 dd"))일 까지")
+                            .label(.regular)
+                            .foreground(DodamColor.Label.alternative)
                     }
                 }
             }

@@ -20,8 +20,6 @@ struct BannerContainer: View {
         self.bannerData = bannerData
     }
     
-    @Environment(\.isFirstLoad) private var isFirstLoad
-    
     var body: some View {
         Group {
             if let data = bannerData {
@@ -40,7 +38,7 @@ struct BannerContainer: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             } else {
-                DodamLoadingView.conditional(isFirstLoad) {
+                DodamLoadingView.conditional(true) {
                     Rectangle()
                         .shimmer()
                 }

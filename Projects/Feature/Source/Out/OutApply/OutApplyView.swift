@@ -12,9 +12,13 @@ import Shared
 
 struct OutApplyView: View {
     
+    @DodamTimePicker private var timePicker
+    @DodamDatePicker private var datePicker
     @StateObject var viewModel = OutApplyViewModel()
     @Flow var flow
     
+    // 0: 외출
+    // 1: 외박
     @Binding var selected: Int
     @FocusState var focused
     
@@ -31,10 +35,13 @@ struct OutApplyView: View {
                 VStack(spacing: 16) {
                     if selected == 0 {
                         Button {
-                            viewModel.isOutDateModalPresented.toggle()
+                            let datePicker = DatePicker(title: "외출 날짜", startDate: .now, endDate: .distantFuture) {
+                                viewModel.dateAt = self.datePicker.date
+                            }
+                            self.datePicker.present(datePicker, date: viewModel.dateAt)
                             focused = false
                         } label: {
-                            HStack(spacing: 16) {
+                            HStack(spacing: 12) {
                                 Text("외출 날짜")
                                     .headline(.medium)
                                     .foreground(DodamColor.Label.alternative)
@@ -42,11 +49,10 @@ struct OutApplyView: View {
                                 Text("\(viewModel.dateAt.parseString(format: "M월 d일 (E)"))")
                                     .headline(.regular)
                                     .foreground(DodamColor.Primary.normal)
-                                Image(icon: .chevronRight)
+                                Image(icon: .calendar)
                                     .resizable()
-                                    .frame(width: 14, height: 14)
-                                    .foreground(DodamColor.Label.alternative)
-                                    .opacity(0.5)
+                                    .frame(width: 24, height: 24)
+                                    .foreground(DodamColor.Primary.normal)
                             }
                             .padding(.horizontal, 8)
                             .frame(height: 40)
@@ -54,60 +60,63 @@ struct OutApplyView: View {
                         .scaledButtonStyle()
                     }
                     Button {
-                        viewModel.isStartAtModalPresented.toggle()
+                        // TODO: Improve code
+                        if selected == 0 {
+                            let timePicker = TimePicker(title: "외출 일시") {
+                                viewModel.startAt = self.timePicker.date
+                            }
+                            self.timePicker.present(timePicker, date: viewModel.startAt)
+                        } else {
+                            let datePicker = DatePicker(title: "외박 날짜", startDate: .now, endDate: .distantFuture) {
+                                viewModel.startAt = self.datePicker.date
+                            }
+                            self.datePicker.present(datePicker, date: viewModel.startAt)
+                        }
                         focused = false
                     } label: {
-                        HStack(spacing: 16) {
+                        HStack(spacing: 12) {
                             Text(selected == 0 ? "외출 시간" : "외박 날짜")
                                 .headline(.medium)
                                 .foreground(DodamColor.Label.alternative)
                             Spacer()
-                            Text({ () -> String in
-                                if selected == 1 {
-                                    return viewModel.startAt.parseString(
-                                        format: "M월 d일 (E)"
-                                    )
-                                }
-                                return viewModel.startAt.parseString(
-                                    format: "HH:mm"
-                                )
-                            }())
-                            .headline(.regular)
-                            .foreground(DodamColor.Primary.normal)
-                            Image(icon: .chevronRight)
+                            Text(viewModel.startAt.parseString(format: selected == 1 ? "M월 d일 (E)" : "HH:mm"))
+                                .headline(.regular)
+                                .foreground(DodamColor.Primary.normal)
+                            Image(icon: .calendar)
                                 .resizable()
-                                .frame(width: 14, height: 14)
-                                .foreground(DodamColor.Label.alternative)
+                                .frame(width: 24, height: 24)
+                                .foreground(DodamColor.Primary.normal)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
                     }
                     .scaledButtonStyle()
                     Button {
-                        viewModel.isEndAtModalPresented.toggle()
+                        if selected == 0 {
+                            let timePicker = TimePicker(title: "복귀 일시") {
+                                viewModel.endAt = self.timePicker.date
+                            }
+                            self.timePicker.present(timePicker, date: viewModel.endAt)
+                        } else {
+                            let datePicker = DatePicker(title: "복귀 날짜", startDate: .now, endDate: .distantFuture) {
+                                viewModel.endAt = self.datePicker.date
+                            }
+                            self.datePicker.present(datePicker, date: viewModel.endAt)
+                        }
                         focused = false
                     } label: {
-                        HStack(spacing: 16) {
+                        HStack(spacing: 12) {
                             Text(selected == 0 ? "복귀 시간" : "복귀 날짜")
                                 .headline(.medium)
                                 .foreground(DodamColor.Label.alternative)
                             Spacer()
-                            Text({ () -> String in
-                                if selected == 1 {
-                                    return viewModel.endAt.parseString(
-                                        format: "M월 d일 (E)"
-                                    )
-                                }
-                                return viewModel.endAt.parseString(
-                                    format: "HH:mm"
-                                )
-                            }())
-                            .headline(.regular)
-                            .foreground(DodamColor.Primary.normal)
-                            Image(icon: .chevronRight)
+                            Text(viewModel.endAt.parseString(format: selected == 1 ? "M월 d일 (E)" : "HH:mm"))
+                                .headline(.regular)
+                                .foreground(DodamColor.Primary.normal)
+                            Image(icon: .calendar)
                                 .resizable()
-                                .frame(width: 14, height: 14)
-                                .foreground(DodamColor.Label.alternative)
+                                .frame(width: 24, height: 24)
+                                .foreground(DodamColor.Primary.normal)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
@@ -126,86 +135,23 @@ struct OutApplyView: View {
             .padding(.top, 6)
             .padding(.horizontal, 8)
         }
-        .dodamSheet(
-            isPresented: $viewModel.isStartAtModalPresented,
-            disableGesture: true
-        ) {
-            VStack {
-                Text(selected == 0 ? "외출 일시" : "외박 날짜")
-//                    .font(.body(.large))
-//                    .dodamColor(.onBackground)
-                DatePicker(
-                    "시작",
-                    selection: $viewModel.startAt,
-                    displayedComponents: [
-                        selected == 0
-                        ? .hourAndMinute
-                        : .date
-                    ]
-                )
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-            }
-        }
-        .dodamSheet(
-            isPresented: $viewModel.isEndAtModalPresented,
-            disableGesture: true
-        ) {
-            VStack {
-                Text(selected == 0 ? "복귀 일시" : "복귀 날짜")
-//                    .font(.body(.large))
-//                    .dodamColor(.onBackground)
-                DatePicker(
-                    "끝",
-                    selection: $viewModel.endAt,
-                    displayedComponents: [
-                        selected == 0
-                        ? .hourAndMinute
-                        : .date
-                    ]
-                )
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-            }
-        }
-        .dodamSheet(
-            isPresented: $viewModel.isOutDateModalPresented,
-            disableGesture: true
-        ) {
-            VStack {
-                Text("외출 날짜")
-//                    .font(.body(.large))
-//                    .dodamColor(.onBackground)
-                DatePicker(
-                    "외출 날짜",
-                    selection: $viewModel.dateAt,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-            }
-        }
         .overlay(alignment: .bottom) {
-            if !(viewModel.isStartAtModalPresented ||
-                 viewModel.isEndAtModalPresented ||
-                 viewModel.isOutDateModalPresented) {
-                DodamButton.fullWidth(
-                    title: "확인"
-                ) {
-                    if selected == 0 {
-                        await viewModel.postOutGoing()
-                    } else {
-                        await viewModel.postOutSleeping()
-                    }
-                    flow.pop()
+            DodamButton.fullWidth(
+                title: "확인"
+            ) {
+                if selected == 0 {
+                    await viewModel.postOutGoing()
+                } else {
+                    await viewModel.postOutSleeping()
                 }
-                .disabled(
-                    viewModel.reasonText.isEmpty ||
-                    viewModel.startAt >= viewModel.endAt
-                )
-                .padding(.bottom, 8)
-                .padding(.horizontal, 16)
+                flow.pop()
             }
+            .disabled(
+                viewModel.reasonText.isEmpty ||
+                viewModel.startAt >= viewModel.endAt
+            )
+            .padding(.bottom, 8)
+            .padding(.horizontal, 16)
         }
         .task {
             await viewModel.onAppear()

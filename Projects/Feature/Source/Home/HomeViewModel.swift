@@ -14,7 +14,6 @@ import Shared
 class HomeViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var isFirstLoad: Bool = true
     @Published var mealIdx: Int = -1
     @Published var isShowingAlert: Bool = false
     @Published var ringCount: Int = 0
@@ -49,7 +48,6 @@ class HomeViewModel: ObservableObject {
         } else {
             _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData]
         }
-        isFirstLoad = false
     }
     
     @MainActor
@@ -113,6 +111,7 @@ class HomeViewModel: ObservableObject {
         _ = await [fetchOutGoingData, fetchOutSleepingData]
     }
     
+    @MainActor
     private func fetchOutSleepingData() async {
         do {
             let outSleepingResponse = try await outSleepingRepository.fetchOutSleeping()
@@ -128,6 +127,7 @@ class HomeViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     private func fetchOutGoingData() async {
         do {
             let outGoingResponse = try await outGoingRepository.fetchOutGoing()

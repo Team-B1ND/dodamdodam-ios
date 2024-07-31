@@ -13,6 +13,8 @@ import Shared
 
 struct NightStudyApplyView: View {
     
+    @DodamDatePicker private var datePicker
+    @DodamDialog private var dialog
     @StateObject var viewModel = NightStudyApplyViewModel()
     @Flow var flow
     @FocusState var focused
@@ -32,70 +34,105 @@ struct NightStudyApplyView: View {
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
                         Text("자습 장소")
+                            .headline(.medium)
                             .font(.system(size: 18, weight: .medium))
-//                            .dodamColor(.tertiary)
+                            .foreground(DodamColor.Label.alternative)
                         Spacer()
-                        Picker(
-                            "시작 날짜",
-                            selection: $viewModel.place,
-                            content: {
-                                ForEach(
-                                    Place.allCases,
-                                    id: \.self
-                                ) { place in
-                                    Text(place.rawValue)
+                        Menu {
+                            Picker(
+                                "시작 날짜",
+                                selection: $viewModel.place,
+                                content: {
+                                    ForEach(
+                                        Place.allCases,
+                                        id: \.self
+                                    ) { place in
+                                        Text(place.rawValue)
+                                    }
+                                }
+                            )
+                        } label: {
+                            HStack(spacing: 4) {
+                                Text("\(viewModel.place.rawValue)")
+                                    .headline(.regular)
+                                    .foreground(DodamColor.Primary.normal)
+                                VStack(spacing: -4) {
+                                    Image(icon: .chevronLeft)
+                                        .resizable()
+                                        .frame(width: 12, height: 12)
+                                        .rotationEffect(.degrees(90))
+                                    Image(icon: .chevronLeft)
+                                        .resizable()
+                                        .frame(width: 12, height: 12)
+                                        .rotationEffect(.degrees(-90))
                                 }
                             }
-                        )
-                        .labelsHidden()
+                        }
                     }
                     .padding(.horizontal, 8)
                     .frame(height: 40)
                     Button {
-                        viewModel.isStartAtModalPresented.toggle()
+                        let datePicker = DatePicker(
+                            title: "시작 날짜",
+                            startDate: .now,
+                            endDate: Calendar.current.date(byAdding: .day, value: 6, to: .now) ?? .now
+                        ) {
+                            viewModel.startAt = self.datePicker.date
+                        }
+                        self.datePicker.present(datePicker, date: viewModel.startAt, monthDate: viewModel.startAt)
                         focused = false
                     } label: {
-                        HStack(spacing: 16) {
+                        HStack(spacing: 12) {
                             Text("시작 날짜")
                                 .font(.system(size: 18, weight: .medium))
-//                                .dodamColor(.tertiary)
+                                .foreground(DodamColor.Label.alternative)
+                                .headline(.medium)
                             Spacer()
                             Text(
                                 viewModel.startAt.parseString(
                                     format: "M월 d일"
                                 )
                             )
+                            .headline(.regular)
                             .font(.system(size: 18, weight: .regular))
-//                            .dodamColor(.primary)
-                            Image(icon: .chevronRight)
+                            .foreground(DodamColor.Primary.normal)
+                            Image(icon: .calendar)
                                 .resizable()
-                                .frame(width: 14, height: 14)
-//                                .dodamColor(.onSurfaceVariant)
+                                .frame(width: 24, height: 24)
+                                .foreground(DodamColor.Primary.normal)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
                     }
                     .scaledButtonStyle()
                     Button {
-                        viewModel.isEndAtModalPresented.toggle()
+                        let datePicker = DatePicker(
+                            title: "종료 날짜",
+                            startDate: .now,
+                            endDate: Calendar.current.date(byAdding: .day, value: 6, to: .now) ?? .now
+                        ) {
+                            viewModel.endAt = self.datePicker.date
+                        }
+                        self.datePicker.present(datePicker, date: viewModel.endAt, monthDate: viewModel.endAt)
                         focused = false
                     } label: {
-                        HStack(spacing: 16) {
+                        HStack(spacing: 12) {
                             Text("종료 날짜")
                                 .font(.system(size: 18, weight: .medium))
-//                                .dodamColor(.tertiary)
+                                .foreground(DodamColor.Label.alternative)
                             Spacer()
                             Text(
                                 viewModel.endAt.parseString(
                                     format: "M월 d일"
                                 )
                             )
+                            .headline(.regular)
                             .font(.system(size: 18, weight: .regular))
-//                            .dodamColor(.primary)
-                            Image(icon: .chevronRight)
+                            .foreground(DodamColor.Primary.normal)
+                            Image(icon: .calendar)
                                 .resizable()
-                                .frame(width: 14, height: 14)
-//                                .dodamColor(.onSurfaceVariant)
+                                .frame(width: 24, height: 24)
+                                .foreground(DodamColor.Primary.normal)
                         }
                         .padding(.horizontal, 8)
                         .frame(height: 40)
@@ -104,7 +141,7 @@ struct NightStudyApplyView: View {
                     HStack(spacing: 0) {
                         Text("휴대폰 사용")
                             .font(.system(size: 18, weight: .medium))
-//                            .dodamColor(.tertiary)
+                            .foreground(DodamColor.Label.alternative)
                         Spacer()
                         DodamCheckbox(isChecked: $viewModel.doNeedPhone)
                     }
@@ -121,64 +158,27 @@ struct NightStudyApplyView: View {
                 }
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 150)
-        }
-        .dodamSheet(
-            isPresented: $viewModel.isStartAtModalPresented,
-            disableGesture: true
-        ) {
-            VStack {
-                Text("시작 날짜")
-//                    .font(.body(.large))
-//                    .dodamColor(.onBackground)
-                DatePicker(
-                    "시작 날짜",
-                    selection: $viewModel.startAt,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-            }
-        }
-        .dodamSheet(
-            isPresented: $viewModel.isEndAtModalPresented,
-            disableGesture: true
-        ) {
-            VStack {
-                Text("종료 날짜")
-//                    .font(.body(.large))
-//                    .dodamColor(.onBackground)
-                DatePicker(
-                    "종료 날짜",
-                    selection: $viewModel.endAt,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(WheelDatePickerStyle())
-                .labelsHidden()
-            }
         }
         .overlay(alignment: .bottom) {
-            if !(viewModel.isStartAtModalPresented ||
-                 viewModel.isEndAtModalPresented) {
-                DodamButton.fullWidth(
-                    title: "확인"
-                ) {
-                    await viewModel.postNightStudy()
-                    flow.pop()
-                }
-                .disabled(
-                    viewModel.startAt > viewModel.endAt ||
-                    viewModel.endAt.timeIntervalSinceReferenceDate -  viewModel.startAt.timeIntervalSinceReferenceDate > 86400 * 13 ||
-                    viewModel.reasonText.count < 10
-                )
-                .alert("실패", isPresented: $viewModel.nightStudyApplyFailed) {
-                    Button("확인", role: .none) { }
-                } message: {
-                    Text("\(viewModel.nightStudyApplyAlertMessage)")
-                }
-                .padding(.bottom, 8)
-                .padding(.horizontal, 16)
+            DodamButton.fullWidth(
+                title: "확인"
+            ) {
+                await viewModel.postNightStudy()
+                flow.pop()
             }
+            .disabled(
+                viewModel.startAt > viewModel.endAt ||
+                viewModel.endAt.timeIntervalSinceReferenceDate - viewModel.startAt.timeIntervalSinceReferenceDate > 86400 * 13 ||
+                viewModel.reasonText.count < 10
+            )
+            .onChange(of: viewModel.nightStudyApplyFailed) { _ in
+                let dialog = Dialog(title: "실패")
+                    .message(viewModel.nightStudyApplyAlertMessage)
+                    .primaryButton("확인")
+                self.dialog.present(dialog)
+            }
+            .padding(.bottom, 8)
+            .padding(.horizontal, 16)
         }
     }
 }

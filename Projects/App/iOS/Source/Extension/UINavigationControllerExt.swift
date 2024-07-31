@@ -2,12 +2,12 @@
 //  UINavigationControllerExt.swift
 //  DodamDodam
 //
-//  Created by 이민규 on 4/2/24.
+//  Created by hhhello0507 on 7/28/24.
 //
 
 import UIKit
 
-extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
+extension UINavigationController: UIGestureRecognizerDelegate {
     
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +16,6 @@ extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate 
     }
 
     public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        return viewControllers.count > 1
+        viewControllers.count > 1
     }
 }
