@@ -24,25 +24,25 @@ struct MealView: View {
     var body: some View {
         DodamScrollView.default(title: "급식") {
             LazyVStack(spacing: 20) {
-                if let datas = viewModel.mealData {
-                    if !datas.isEmpty {
+                if let mealData = viewModel.mealData {
+                    if !mealData.isEmpty {
                         ForEach({ () -> [MealResponse] in
-                            datas.filter {
+                            mealData.filter {
                                 let today = Calendar.current.startOfDay(for: Date())
                                 return $0.exists && $0.date >= today
                             }
-                        }(), id: \.self) { datas in
-                            Text(datas.date.parseString(format: "M월 d일 EEEE"))
+                        }(), id: \.self) { mealData in
+                            Text(mealData.date.parseString(format: "M월 d일 EEEE"))
 //                                .font(.body(.medium)) // TODO: Add color
                             //                                .dodamColor(
-                            //                                    isToday(datas.date)
+                            //                                    isToday(mealData.date)
                             //                                ? .onPrimary
                             //                                : .onSecondaryContainer
                             //                            )
                                 .padding(.vertical, 4)
                                 .frame(width: 218, height: 31)
 //                                .background(
-//                                    isToday(datas.date)
+//                                    isToday(mealData.date)
 //                                    ? Dodam.color(.primary).opacity(0.65)
 //                                    : Dodam.color(.secondaryContainer)
 //                                )
@@ -52,9 +52,9 @@ struct MealView: View {
                                 ForEach(0..<3, id: \.self) { idx in
                                     let data: Meal? = {
                                         switch idx {
-                                        case 0: datas.breakfast
-                                        case 1: datas.lunch
-                                        case 2: datas.dinner
+                                        case 0: mealData.breakfast
+                                        case 1: mealData.lunch
+                                        case 2: mealData.dinner
                                         default: nil
                                         }
                                     }()
@@ -75,7 +75,7 @@ struct MealView: View {
                                                 }
                                                 .frame(width: 52, height: 27)
 //                                                .background(
-//                                                    isMealTime(datas.date, mealType: idx)
+//                                                    isMealTime(mealData.date, mealType: idx)
 //                                                    ? Dodam.color(.primary)
 //                                                    : Dodam.color(.onSurfaceVariant)
 //                                                )
