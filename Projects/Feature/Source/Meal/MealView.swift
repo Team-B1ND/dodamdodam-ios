@@ -31,70 +31,13 @@ struct MealView: View {
                                 let today = Calendar.current.startOfDay(for: Date())
                                 return $0.exists && $0.date >= today
                             }
-                        }(), id: \.self) { datas in
-                            Text(datas.date.parseString(format: "M월 d일 EEEE"))
-//                                .font(.body(.medium)) // TODO: Add color
-                            //                                .dodamColor(
-                            //                                    isToday(datas.date)
-                            //                                ? .onPrimary
-                            //                                : .onSecondaryContainer
-                            //                            )
-                                .padding(.vertical, 4)
-                                .frame(width: 218, height: 31)
-//                                .background(
-//                                    isToday(datas.date)
-//                                    ? Dodam.color(.primary).opacity(0.65)
-//                                    : Dodam.color(.secondaryContainer)
-//                                )
-                                .clipShape(RoundedRectangle(cornerRadius: 32))
-                            
+                        }(), id: \.self) { meals in
+                            let meals = Array([meals.breakfast, meals.lunch, meals.dinner].enumerated())
                             LazyVStack(spacing: 12) {
-                                ForEach(0..<3, id: \.self) { idx in
-                                    let data: Meal? = {
-                                        switch idx {
-                                        case 0: datas.breakfast
-                                        case 1: datas.lunch
-                                        case 2: datas.dinner
-                                        default: nil
-                                        }
-                                    }()
-                                    if let data = data {
-                                        VStack(spacing: 16) {
-                                            HStack(spacing: 12) {
-                                                ZStack {
-                                                    Text({ () -> String in
-                                                        return switch idx {
-                                                        case 0: "아침"
-                                                        case 1: "점심"
-                                                        case 2:"저녁"
-                                                        default: ""
-                                                        }
-                                                    }())
-//                                                    .font(.body(.medium))
-//                                                    .dodamColor(.onPrimary)
-                                                }
-                                                .frame(width: 52, height: 27)
-//                                                .background(
-//                                                    isMealTime(datas.date, mealType: idx)
-//                                                    ? Dodam.color(.primary)
-//                                                    : Dodam.color(.onSurfaceVariant)
-//                                                )
-                                                .clipShape(RoundedRectangle(cornerRadius: 32))
-                                                Spacer()
-                                                Text("\(Int(data.calorie))Kcal")
-//                                                    .font(.label(.large))
-//                                                    .dodamColor(.onSurfaceVariant)
-                                                    .padding(.top, 5)
-                                            }
-                                            .padding([.top, .horizontal], 16)
-                                            Text(data.details.map { $0.name }.joined(separator: "\n"))
-//                                                .font(.body(.medium))
-//                                                .dodamColor(.onSurface)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .padding([.bottom, .horizontal], 16)
-                                        }
-//                                        .background(Dodam.color(.surfaceContainer))
-                                        .clipShape(RoundedRectangle(cornerRadius: 18))
+                                ForEach(meals, id: \.element) { idx, meal in
+                                    if let mealType = MealType(rawValue: idx),
+                                       let meal {
+                                        MealCell(type: mealType, meal: meal)
                                     }
                                 }
                             }
