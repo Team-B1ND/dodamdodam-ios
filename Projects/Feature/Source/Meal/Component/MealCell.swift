@@ -20,8 +20,8 @@ struct MealCell: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-            HStack(spacing: 12) {
+        VStack(spacing: 12) {
+            HStack {
                 DodamTag(type.label, type: .primary)
                 Spacer()
                 Text("\(Int(meal.calorie))Kcal")
