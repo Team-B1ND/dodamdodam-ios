@@ -131,9 +131,8 @@ struct MealView: View {
                 .padding(.top, 12)
                 DodamDivider()
                 if let meals = viewModel.selectedMeal {
-                    let meals = Array([meals.breakfast, meals.lunch, meals.dinner].compactMap { $0 }.enumerated())
                     VStack(spacing: 12) {
-                        ForEach(meals, id: \.offset) { idx, meal in
+                        ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
                             if let mealType = MealType(rawValue: idx) {
                                 MealCell(type: mealType, meal: meal)
                             }

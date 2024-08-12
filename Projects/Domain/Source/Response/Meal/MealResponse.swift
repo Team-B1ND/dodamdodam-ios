@@ -17,4 +17,8 @@ public struct MealResponse: ResponseProtocol {
     public let breakfast: Meal?
     public let lunch: Meal?
     public let dinner: Meal?
+    
+    public var meals: [Meal] {
+        [self.breakfast, self.lunch, self.dinner].compactMap { $0 }
+    }
 }
