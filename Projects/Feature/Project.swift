@@ -7,7 +7,7 @@ let project = Project(
         .target(
             name: "Feature",
             destinations: [.iPhone],
-            product: .framework,
+            product: .staticFramework,
             bundleId: "com.b1nd.dodam.studentFeature",
             deploymentTargets: .iOS("15.0"),
             sources: ["Source/**"],
@@ -15,9 +15,8 @@ let project = Project(
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
-                .external(name: "FlowKit"),
                 .external(name: "CachedAsyncImage"),
-                .external(name: "DDS")
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared"))
             ]
         )
     ]

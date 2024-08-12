@@ -47,6 +47,11 @@ class RemoteInterceptor: RequestInterceptor {
             return
         }
         
+        guard request.retryCount <= 3 else {
+            print("❌ RemoteInterceptor - RetryCount가 3보다 큽니다")
+            return
+        }
+        
         if response.statusCode == 200 {
             completion(.doNotRetry)
             return

@@ -43,6 +43,7 @@ struct SmallDodamMealWidget: View {
     
     init(entry: MealProvider.Entry) {
         self.entry = entry
+        Pretendard.register()
     }
     
     var body: some View {
@@ -61,7 +62,7 @@ struct SmallDodamMealWidget: View {
     
     @ViewBuilder
     private func label(meal: MealResponse) -> some View {
-        let idx = switch (getDate(.hour, date: meal.date), getDate(.minute, date: meal.date)) {
+        let idx = switch (getDate(.hour, date: .now), getDate(.minute, date: .now)) {
             // 아침: ~ 8:20
         case (0...8, _), (8, ..<20): 0
             // 점심: 8:21 ~ 13:30
@@ -77,7 +78,6 @@ struct SmallDodamMealWidget: View {
         default: ("", nil)
         }
         content(tag: tag, meal: meal)
-        
     }
     
     @ViewBuilder
@@ -90,12 +90,12 @@ struct SmallDodamMealWidget: View {
                     .padding(.vertical, 4)
                     .background(DodamColor.Primary.normal)
                     .clipShape(.large)
-                    .label(.medium)
+                    .font(.footnote)
                 Spacer()
                 if let meal {
                     Text("\(Int(meal.calorie.rounded()))Kcal")
-                        .label(.medium)
-                        .caption1(.medium)
+                        .font(.caption)
+                        .foreground(DodamColor.Label.alternative)
                 }
             }
             VStack(alignment: .leading, spacing: 0) {
@@ -104,7 +104,7 @@ struct SmallDodamMealWidget: View {
                         Text($0.name)
                             .lineLimit(1)
                             .truncationMode(.tail)
-                            .caption1(.medium)
+                            .font(.caption)
                             .foreground(DodamColor.Label.normal)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }

@@ -7,6 +7,7 @@
 
 import Swinject
 import FlowKit
+import Feature
 
 struct FlowAssembly: Assembly {
     

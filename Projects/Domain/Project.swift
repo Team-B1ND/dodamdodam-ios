@@ -13,7 +13,6 @@ let project = Project(
             sources: ["Source/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
                 .external(name: "SwiftBok")
             ]
         )

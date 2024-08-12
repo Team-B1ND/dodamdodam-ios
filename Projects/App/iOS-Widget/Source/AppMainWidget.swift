@@ -15,7 +15,7 @@ import DIContainer
 struct AppMainWidget: WidgetBundle {
     
     init() {
-//        SUIT.register()
+        Pretendard.register()
         DependencyProvider.shared.register()
     }
     

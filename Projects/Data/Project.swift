@@ -8,7 +8,7 @@ let project = Project(
             name: "Repository",
             destinations: [.iPhone],
             product: .staticLibrary,
-            bundleId: "com.b1nd.dodam.studentDataSource",
+            bundleId: "com.b1nd.dodam.studentRepository",
             deploymentTargets: .iOS("15.0"),
             sources: ["Repository/Source/**"],
             scripts: [.swiftLint],
@@ -40,7 +40,8 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .external(name: "Moya")
+                .external(name: "Moya"),
+                .external(name: "SignKit")
             ]
         )
     ]

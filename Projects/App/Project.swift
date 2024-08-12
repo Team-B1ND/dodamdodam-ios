@@ -37,12 +37,8 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Feature", path: .relativeToRoot("Projects/Feature")),
-                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
-                .project(target: "DataSource", path: .relativeToRoot("Projects/Data")),
-                .project(target: "Network", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
-                .external(name: "DDS"),
                 .target(name: "DodamDodamWidget")
             ]
         ),
@@ -55,18 +51,17 @@ let project = Project(
             infoPlist: .extendingDefault(with: [
                 "CFBundleDisplayName": "$(PRODUCT_NAME)",
                 "NSExtension": [
-                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
+                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension",
                 ]
             ]),
             sources: ["iOS-Widget/Source/**"],
             resources: ["iOS-Widget/Resource/**"],
             scripts: [.swiftLint],
             dependencies: [
-                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
+                .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
-                .project(target: "DataSource", path: .relativeToRoot("Projects/Data")),
-                .project(target: "Network", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
                 .external(name: "DDS")
             ]
         )
