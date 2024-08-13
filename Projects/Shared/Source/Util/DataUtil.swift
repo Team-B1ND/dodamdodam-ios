@@ -11,22 +11,27 @@ public enum DateType: Int {
     case year = 0
     case month = 1
     case day = 2
+    case hour = 3
+    case minute = 4
+    case second = 5
 }
 
 public func getDate(_ type: DateType, date: Date = .now) -> Int {
-    let calendar = Calendar.current
-    
-    let year = calendar.component(.year, from: date)
-    let month = calendar.component(.month, from: date)
-    let day = calendar.component(.day, from: date)
-    
-    switch type {
+    var calendar = Calendar.current
+
+    return switch type {
     case .year:
-        return year
+        calendar.component(.year, from: date)
     case .month:
-        return month
+        calendar.component(.month, from: date)
     case .day:
-        return day
+        calendar.component(.day, from: date)
+    case .hour:
+        calendar.component(.hour, from: date)
+    case .minute:
+        calendar.component(.minute, from: date)
+    case .second:
+        calendar.component(.second, from: date)
     }
 }
 

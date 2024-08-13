@@ -14,7 +14,7 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .project(target: "DataSource", path: "")
+                .target(name: "DataSource")
             ]
         ),
         .target(
@@ -27,7 +27,7 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .project(target: "Network", path: "")
+                .target(name: "Network")
             ]
         ),
         .target(
@@ -37,6 +37,7 @@ let project = Project(
             bundleId: "com.b1nd.dodam.studentNetwork",
             deploymentTargets: .iOS("15.0"),
             sources: ["Network/Source/**"],
+            scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .external(name: "Moya"),

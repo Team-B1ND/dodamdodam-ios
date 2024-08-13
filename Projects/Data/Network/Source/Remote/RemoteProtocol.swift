@@ -20,12 +20,12 @@ protocol RemoteProtocol {
     var decoder: JSONDecoder { get }
     
     func request<D: ResponseProtocol>(
-        target:  MoyaProvider<Target>.Target,
+        target: MoyaProvider<Target>.Target,
         res: D.Type
     ) async throws -> Domain.Response<D>
     
     func request(
-        target:  MoyaProvider<Target>.Target
+        target: MoyaProvider<Target>.Target
     ) async throws -> DefaultResponse
 }
 
@@ -48,6 +48,12 @@ extension RemoteProtocol {
         let localDateTimeMSFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
         let localDateTimeFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss")
         let localDateFormatter = DateFormatter("yyyy-MM-dd")
+        
+        let koreanLocale = Locale(identifier: "ko_KR")
+        
+        localDateTimeMSFormatter.locale = koreanLocale
+        localDateTimeFormatter.locale = koreanLocale
+        localDateFormatter.locale = koreanLocale
         
         decoder.dateDecodingStrategy = .custom { decoder in
             let container = try decoder.singleValueContainer()
