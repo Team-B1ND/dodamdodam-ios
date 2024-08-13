@@ -48,7 +48,7 @@ struct MealContainer: View {
                         .page()
                     }
                 }
-                .frame(height: pageSize?.height ?? 999)
+                .frame(height: pageSize?.height ?? 56)
                 .onAppear {
                     let currentTime = Date()
                     let calendar = Calendar.current
