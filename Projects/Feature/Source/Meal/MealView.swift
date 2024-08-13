@@ -56,35 +56,50 @@ struct MealView: View {
     }
     
     var body: some View {
-        VStack(spacing: 16) {
-            let title = viewModel.selectedCalendar.parseString(format: "M월 급식")
-            DodamTopAppBar.default(title: title)
-            makeCalendar()
-            DodamDivider()
-            if let meals = viewModel.selectedMeal {
-                LazyVStack(spacing: 16) {
-                    VStack(spacing: 12) {
-                        ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
-                            if let mealType = MealType(rawValue: idx) {
-                                MealCell(type: mealType, meal: meal)
+        GeometryReader { reader in
+            VStack(spacing: 16) {
+                let title = viewModel.selectedCalendar.parseString(format: "M월 급식")
+                DodamTopAppBar.default(title: title)
+                makeCalendar()
+                DodamDivider()
+                if let meals = viewModel.selectedMeal {
+                    LazyVStack(spacing: 16) {
+                        VStack(spacing: 12) {
+                            ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
+                                if let mealType = MealType(rawValue: idx) {
+                                    MealCell(type: mealType, meal: meal)
+                                }
                             }
                         }
+                        .padding(.horizontal, 16)
                     }
-                    .padding(.horizontal, 16)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                } else {
+                    VStack(spacing: 12) {
+                        Image(icon: .cookedRice)
+                            .resizable()
+                            .frame(width: 36, height: 36)
+                        Text("급식이 없어요")
+                            .label(.medium)
+                            .foreground(DodamColor.Label.alternative)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    .drawingGroup()
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            } else {
-                VStack(spacing: 12) {
-                    Image(icon: .cookedRice)
-                        .resizable()
-                        .frame(width: 36, height: 36)
-                    Text("급식이 없어요")
-                        .label(.medium)
-                        .foreground(DodamColor.Label.alternative)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                .drawingGroup()
             }
+        }
+        // TODO: ScrollView에 있던 거 그대로 갖고 왔습니다. 나중에 Extension으로 분리할 것.
+        .mask(alignment: .bottom) {
+            VStack(spacing: 0) {
+                Color.black
+                LinearGradient(
+                    colors: [.black, .clear],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: 150)
+            }
+            .ignoresSafeArea()
         }
         .background(DodamColor.Background.neutral)
         .frame(maxHeight: .infinity)
@@ -144,6 +159,10 @@ struct MealView: View {
                                 CalendarDateCell(date: date, selected: selected)
                             }
                             .scaledButtonStyle()
+                            .disabled(
+                                !openCalendar &&
+                                (date == nil || !viewModel.selectedDate.equals(date!, components: [.weekOfYear]))
+                            )
                         }
                     }
                     .onReadSize { size in
