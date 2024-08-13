@@ -36,6 +36,10 @@ struct AppMain: App {
                 FlowPresenter(flow: flow)
             }
             .ignoresSafeArea()
+            .onAppear {
+                let color = Dodam.color(DodamColor.Primary.normal)
+                UIRefreshControl.appearance().tintColor = UIColor(color)
+            }
         }
     }
 }
