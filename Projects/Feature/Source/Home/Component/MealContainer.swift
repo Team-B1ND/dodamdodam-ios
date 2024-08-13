@@ -8,72 +8,47 @@
 import SwiftUI
 import DDS
 import Domain
+import Shared
 
 struct MealContainer: View {
     
+    @State private var pageSize: CGSize?
     private let mealData: MealResponse?
     @Binding var mealIdx: Int
-    
+
     public init(
         data mealData: MealResponse?,
         mealIdx: Binding<Int>
     ) {
         self.mealData = mealData
         self._mealIdx = mealIdx
-        self.animatedIdx = mealIdx.wrappedValue
     }
-    
-    @State private var animatedIdx: Int
-    @State private var heights: [Int: CGFloat] = [:]
-    
+
     var body: some View {
         if let data = mealData {
             if data.exists {
-                let meals = [
-                    data.breakfast,
-                    data.lunch,
-                    data.dinner
-                ]
                 DodamPageView(selection: $mealIdx) {
-                    ForEach(meals.indices, id: \.self) { idx in
-                        GeometryReader { geometryProxy in
-                            let text = meals[idx]?.details.map {
-                                $0.name
-                            }.joined(separator: ", ") ?? "급식이 없어요."
-                            Text(text)
-                                .body1(.medium)
-                                .foreground(DodamColor.Label.normal)
-                                .multilineTextAlignment(.leading)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .onAppear {
-                                    withAnimation(.spring) {
-                                        heights[idx] = text.boundingRect(
-                                            with: CGSize(
-                                                width: geometryProxy.size.width,
-                                                height: .greatestFiniteMagnitude
-                                            ),
-                                            options: .usesLineFragmentOrigin,
-                                            attributes: [
-                                                .font: UIFont(
-                                                    name: Pretendard.Weight.semibold.rawValue,
-                                                    size: 18
-                                                )!
-                                            ],
-                                            context: nil
-                                        ).height
+                    ForEach(data.meals, id: \.self) { meal in
+                        let splitedArray = splitArray(array: meal.details)
+                        HStack(alignment: .top) {
+                            ForEach(splitedArray, id: \.self) { meals in
+                                VStack(alignment: .leading, spacing: 0) {
+                                    ForEach(meals, id: \.self) { meal in
+                                        Text(meal.name)
+                                            .body1(.medium)
+                                            .foreground(DodamColor.Label.normal)
                                     }
                                 }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            }
                         }
-                        .padding(.horizontal, 6)
+                        .onReadSize { size in
+                            self.pageSize = size
+                        }
                         .page()
                     }
                 }
-                .frame(height: heights[animatedIdx] ?? 44.928)
-                .onChange(of: mealIdx) { newValue in
-                    withAnimation(.spring(duration: 0.2)) {
-                        animatedIdx = newValue
-                    }
-                }
+                .frame(height: pageSize?.height ?? 999)
                 .onAppear {
                     let currentTime = Date()
                     let calendar = Calendar.current

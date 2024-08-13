@@ -9,11 +9,19 @@ import Combine
 import Domain
 import DIContainer
 import Shared
+import Foundation
 
 class MealViewModel: ObservableObject {
     
     // MARK: - State
     @Published var mealData: [MealResponse]?
+    @Published var selectedDate: Date = .now
+    var selectedMeal: MealResponse? {
+        mealData?.first {
+            $0.date.equals(selectedDate, components: [.year, .month, .day])
+        }
+    }
+    @Published var selectedCalendar: Date = .now
     
     // MARK: - Repository
     @Inject var mealRepository: any MealRepository
