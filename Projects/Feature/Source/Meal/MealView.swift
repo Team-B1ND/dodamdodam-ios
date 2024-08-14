@@ -11,15 +11,26 @@ import Domain
 import FlowKit
 import Shared
 
+struct ScrollOffsetPreferenceKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value += nextValue()
+    }
+}
+
 struct MealView: View {
     
     @StateObject private var viewModel = MealViewModel()
     @Flow private var flow
     
+    @Namespace private var mealAnimation
+    
     @State private var dragPosY: CGFloat = .zero
     @State private var calendarRowSize: CGSize?
     @State private var calendarSize: CGSize = .zero
     @State private var openCalendar: Bool = false
+    
+    @State private var closeCalendar: Bool = false
     
     private let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
     private let calendar = Calendar.current
@@ -61,30 +72,42 @@ struct MealView: View {
                 let title = viewModel.selectedCalendar.parseString(format: "M월 급식")
                 DodamTopAppBar.default(title: title)
                 makeCalendar()
-                DodamDivider()
-                if let meals = viewModel.selectedMeal {
-                    LazyVStack(spacing: 16) {
-                        VStack(spacing: 12) {
+                VStack(spacing: 0) {
+                    DodamDivider()
+                    if let meals = viewModel.selectedMeal {
+                        LazyVStack(spacing: 12) {
                             ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
                                 if let mealType = MealType(rawValue: idx) {
                                     MealCell(type: mealType, meal: meal)
                                 }
                             }
                         }
+                        .padding(.top, 16)
                         .padding(.horizontal, 16)
+                        .padding(.bottom, 54)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                        .if(closeCalendar) { view in
+                            ScrollView(showsIndicators: false) {
+                                view.background {
+                                    GeometryReader { inner in
+                                        Color.clear.preference(key: ScrollOffsetPreferenceKey.self, value: inner.frame(in: .named("scrollview")).origin.y)
+                                    }
+                                }
+                            }
+                            .coordinateSpace(name: "scrollview")
+                        }
+                    } else {
+                        VStack(spacing: 12) {
+                            Image(icon: .cookedRice)
+                                .resizable()
+                                .frame(width: 36, height: 36)
+                            Text("급식이 없어요")
+                                .label(.medium)
+                                .foreground(DodamColor.Label.alternative)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        .drawingGroup()
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                } else {
-                    VStack(spacing: 12) {
-                        Image(icon: .cookedRice)
-                            .resizable()
-                            .frame(width: 36, height: 36)
-                        Text("급식이 없어요")
-                            .label(.medium)
-                            .foreground(DodamColor.Label.alternative)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-                    .drawingGroup()
                 }
             }
         }
@@ -106,15 +129,27 @@ struct MealView: View {
         .task {
             await viewModel.onAppear()
         }
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+            if value > 0 {
+                closeCalendar = false
+            }
+        }
         .gesture(
             DragGesture()
                 .onChanged { value in
+                    if closeCalendar {
+                        return
+                    }
                     let rangeHeight = if openCalendar {
                         calendarSize.height + value.translation.height
                     } else {
                         value.translation.height
                     }
                     dragPosY = rangeHeight.clamped(to: 0...calendarSize.height)
+                    
+                    if rangeHeight < 0 {
+                        closeCalendar = true
+                    }
                 }
                 .onEnded { value in
                     withAnimation(.easeOut(duration: 0.2)) {
