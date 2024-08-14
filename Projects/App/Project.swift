@@ -46,7 +46,7 @@ let project = Project(
             name: "DodamDodamWidget",
             destinations: [.iPhone],
             product: .appExtension,
-            bundleId: "com.b1nd.dodam.student.WidgetExtension",
+            bundleId: "com.b1nd.dodam.student.widget",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .extendingDefault(with: [
                 "CFBundleDisplayName": "$(PRODUCT_NAME)",
