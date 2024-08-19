@@ -17,7 +17,7 @@ class NightStudyApplyViewModel: ObservableObject {
     @Published var reasonText: String = ""
     @Published var reasonForPhoneText: String = ""
     @Published var startAt: Date = Date()
-    @Published var endAt: Date = Date()
+    @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 13, to: .now) ?? Date()
     
     @Published var doNeedPhone: Bool = false
 //    @Published var isStartAtModalPresented: Bool = false
