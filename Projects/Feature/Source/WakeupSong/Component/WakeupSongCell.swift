@@ -20,6 +20,13 @@ struct WakeupSongCell: View {
         self.data = data
     }
     
+    func dateString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd"
+        let dateString = dateFormatter.string(from: date)
+        return dateString
+    }
+    
     var body: some View {
         HStack(spacing: 16) {
             Link(
@@ -54,7 +61,7 @@ struct WakeupSongCell: View {
                     .caption1(.medium)
                     .foreground(DodamColor.Label.alternative)
                     .lineLimit(1)
-                Text("\(data.createdAt)")
+                Text("\(dateString(date: data.createdAt))")
                     .caption2(.regular)
                     .foreground(DodamColor.Label.alternative)
             }
