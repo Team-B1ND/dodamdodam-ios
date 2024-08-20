@@ -147,7 +147,7 @@ struct MealView: View {
                     }
                     dragPosY = rangeHeight.clamped(to: 0...calendarSize.height)
                     
-                    if rangeHeight < 0 {
+                    if rangeHeight < 0 && viewModel.selectedMeal != nil {
                         closeCalendar = true
                     }
                 }

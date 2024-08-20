@@ -75,7 +75,7 @@ struct NightStudyApplyView: View {
                         let datePicker = DatePicker(
                             title: "시작 날짜",
                             startDate: .now,
-                            endDate: Calendar.current.date(byAdding: .day, value: 6, to: .now) ?? .now
+                            endDate: Calendar.current.date(byAdding: .day, value: 0, to: self.datePicker.date.addingTimeInterval(.infinity)) ?? .now
                         ) {
                             viewModel.startAt = self.datePicker.date
                         }
@@ -108,8 +108,8 @@ struct NightStudyApplyView: View {
                     Button {
                         let datePicker = DatePicker(
                             title: "종료 날짜",
-                            startDate: .now,
-                            endDate: Calendar.current.date(byAdding: .day, value: 6, to: .now) ?? .now
+                            startDate: viewModel.startAt,
+                            endDate: Calendar.current.date(byAdding: .day, value: 13, to: viewModel.startAt) ?? .now
                         ) {
                             viewModel.endAt = self.datePicker.date
                         }
