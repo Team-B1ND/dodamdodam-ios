@@ -75,7 +75,9 @@ struct HomeView: View {
                         ) {
                             if Sign.isLoggedIn {
                                 Button {
-                                    selection = 2
+                                    flow.push(OutApplyView(
+                                        selected: $selection
+                                    ))
                                 } label: {
                                     OutStatusContainer(
                                         data: viewModel.outGoingData
@@ -102,7 +104,7 @@ struct HomeView: View {
                         ) {
                             if Sign.isLoggedIn {
                                 Button {
-                                    selection = 3
+                                    flow.push(NightStudyApplyView())
                                 } label: {
                                     NightStudyStatusContainer(
                                         data: viewModel.nightStudyData
