@@ -26,7 +26,7 @@ struct DodamMealWidget: Widget {
             kind: "DodamMealWidget",
             provider: MealProvider()
         ) { entry in
-            SmallDodamMealWidget(entry: entry)
+            MealWidgetContent(entry: entry)
         }
         .configurationDisplayName("급식")
         .description("아침, 점심, 저녁 위젯으로 빠르고 쉽게 확인해요")
@@ -35,7 +35,7 @@ struct DodamMealWidget: Widget {
     }
 }
 
-struct SmallDodamMealWidget: View {
+struct MealWidgetContent: View {
     
     @State private var selection = 0
     
@@ -43,7 +43,6 @@ struct SmallDodamMealWidget: View {
     
     init(entry: MealProvider.Entry) {
         self.entry = entry
-        Pretendard.register()
     }
     
     var body: some View {
@@ -61,7 +60,7 @@ struct SmallDodamMealWidget: View {
     }
     
     @ViewBuilder
-    private func label(meal: MealResponse) -> some View {
+    private func label(meal: MealResponse?) -> some View {
         let idx = switch (getDate(.hour, date: .now), getDate(.minute, date: .now)) {
             // 아침: ~ 8:20
         case (0...8, _), (8, ..<20): 0
@@ -72,9 +71,9 @@ struct SmallDodamMealWidget: View {
         default: -1
         }
         let (tag, meal): (String, Meal?) = switch idx {
-        case 0: ("아침", meal.breakfast)
-        case 1: ("점심", meal.lunch)
-        case 2: ("저녁", meal.dinner)
+        case 0: ("아침", meal?.breakfast)
+        case 1: ("점심", meal?.lunch)
+        case 2: ("저녁", meal?.dinner)
         default: ("", nil)
         }
         content(tag: tag, meal: meal)
@@ -125,5 +124,5 @@ struct SmallDodamMealWidget: View {
 }
 
 #Preview {
-    SmallDodamMealWidget(entry: .empty)
+    MealWidgetContent(entry: .empty)
 }

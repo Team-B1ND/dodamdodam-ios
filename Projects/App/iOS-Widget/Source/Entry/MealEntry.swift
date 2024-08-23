@@ -10,18 +10,29 @@ import Domain
 
 struct MealEntry: TimelineEntry {
     let date: Date
-    let meal: MealResponse
+    let meal: MealResponse?
 }
 
 extension MealEntry {
     static let empty = MealEntry(
         date: .now,
-        meal: MealResponse(
-            exists: true,
-            date: .now,
-            breakfast: nil,
-            lunch: nil,
-            dinner: nil
+        meal: .empty
+    )
+    
+    static func of(_ date: Date) -> MealEntry {
+        MealEntry(
+            date: date,
+            meal: nil
         )
+    }
+}
+
+extension MealResponse {
+    static let empty = MealResponse(
+        exists: true,
+        date: .now,
+        breakfast: nil,
+        lunch: nil,
+        dinner: nil
     )
 }
