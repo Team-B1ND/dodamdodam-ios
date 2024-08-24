@@ -68,7 +68,7 @@ struct MealWidgetContent: View {
         case (8, 21...60), (8...13, _), (13, 0..<30): 1
             // 저녁: 13:31 ~ 19:10
         case (13, 0...30), (13...19, _), (19, 0..<10): 2
-        default: -1
+        default: 0
         }
         let (tag, meal): (String, Meal?) = switch idx {
         case 0: ("아침", meal?.breakfast)
@@ -108,8 +108,9 @@ struct MealWidgetContent: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 } else {
-                    Text("급식이 없어요")
-                        .caption1(.medium)
+                    Text("급식을\n불러올 수 없어요")
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
                         .foreground(DodamColor.Label.normal)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
