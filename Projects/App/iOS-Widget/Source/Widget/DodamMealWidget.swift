@@ -26,7 +26,7 @@ struct DodamMealWidget: Widget {
             kind: "DodamMealWidget",
             provider: MealProvider()
         ) { entry in
-            SmallDodamMealWidget(entry: entry)
+            MealWidgetContent(entry: entry)
         }
         .configurationDisplayName("급식")
         .description("아침, 점심, 저녁 위젯으로 빠르고 쉽게 확인해요")
@@ -35,7 +35,7 @@ struct DodamMealWidget: Widget {
     }
 }
 
-struct SmallDodamMealWidget: View {
+struct MealWidgetContent: View {
     
     @State private var selection = 0
     
@@ -43,7 +43,6 @@ struct SmallDodamMealWidget: View {
     
     init(entry: MealProvider.Entry) {
         self.entry = entry
-        Pretendard.register()
     }
     
     var body: some View {
@@ -61,7 +60,7 @@ struct SmallDodamMealWidget: View {
     }
     
     @ViewBuilder
-    private func label(meal: MealResponse) -> some View {
+    private func label(meal: MealResponse?) -> some View {
         let idx = switch (getDate(.hour, date: .now), getDate(.minute, date: .now)) {
             // 아침: ~ 8:20
         case (0...8, _), (8, ..<20): 0
@@ -69,12 +68,12 @@ struct SmallDodamMealWidget: View {
         case (8, 21...60), (8...13, _), (13, 0..<30): 1
             // 저녁: 13:31 ~ 19:10
         case (13, 0...30), (13...19, _), (19, 0..<10): 2
-        default: -1
+        default: 0
         }
         let (tag, meal): (String, Meal?) = switch idx {
-        case 0: ("아침", meal.breakfast)
-        case 1: ("점심", meal.lunch)
-        case 2: ("저녁", meal.dinner)
+        case 0: ("아침", meal?.breakfast)
+        case 1: ("점심", meal?.lunch)
+        case 2: ("저녁", meal?.dinner)
         default: ("", nil)
         }
         content(tag: tag, meal: meal)
@@ -109,8 +108,9 @@ struct SmallDodamMealWidget: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 } else {
-                    Text("급식이 없어요")
-                        .caption1(.medium)
+                    Text("급식을\n불러올 수 없어요")
+                        .font(.footnote)
+                        .multilineTextAlignment(.center)
                         .foreground(DodamColor.Label.normal)
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
@@ -125,5 +125,5 @@ struct SmallDodamMealWidget: View {
 }
 
 #Preview {
-    SmallDodamMealWidget(entry: .empty)
+    MealWidgetContent(entry: .empty)
 }

@@ -57,7 +57,7 @@ struct MealProvider: TimelineProvider {
                 )
                 completion(entry)
             } catch {
-                let entry = MealEntry.empty
+                let entry = MealEntry.of(currentDate)
                 completion(entry)
             }
         }
