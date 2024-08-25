@@ -31,7 +31,7 @@ struct NightStudyStatusContainer: View {
                 } else if data.status == .allowed ||
                             data.status == .pending {
                     HStack(alignment: .bottom, spacing: 4) {
-                        Text(data.endAt.remainingTimeText)
+                        Text(data.endAt.nightStudyRemainingTimeText)
                             .heading2(.bold)
                             .foreground(DodamColor.Label.normal)
                         Text("남음")

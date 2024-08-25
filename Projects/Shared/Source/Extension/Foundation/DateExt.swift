@@ -29,6 +29,16 @@ public extension Date {
         }
     }
     
+    var nightStudyRemainingTimeText: String {
+        let now = Date()
+        let components = Calendar.current.dateComponents([.day], from: now, to: self)
+        
+        guard let days = components.day else {
+            return "-"
+        }
+        return "\(days + 1)일"
+    }
+    
     subscript(components: Calendar.Component) -> Int? {
         var calendar = Calendar.current
         calendar.locale = .init(identifier: "ko_KR")
