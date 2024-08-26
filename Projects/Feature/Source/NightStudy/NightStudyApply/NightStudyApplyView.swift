@@ -167,8 +167,6 @@ struct NightStudyApplyView: View {
                 flow.pop()
             }
             .disabled(
-                viewModel.startAt > viewModel.endAt ||
-                viewModel.endAt.timeIntervalSinceReferenceDate - viewModel.startAt.timeIntervalSinceReferenceDate > 86400 * 13 ||
                 viewModel.reasonText.count < 10
             )
             .onChange(of: viewModel.nightStudyApplyFailed) { _ in
