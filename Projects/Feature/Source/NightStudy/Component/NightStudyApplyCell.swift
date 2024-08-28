@@ -58,7 +58,7 @@ struct NightStudyApplyCell: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             DodamDivider()
             HStack(alignment: .bottom, spacing: 4) {
-                Text(nightStudyData.endAt.nightStudyRemainingTimeText)
+                Text(nightStudyData.endAt.remainingTimeText)
                     .heading2(.bold)
                     .foreground(DodamColor.Label.normal)
                 Text("남음")
