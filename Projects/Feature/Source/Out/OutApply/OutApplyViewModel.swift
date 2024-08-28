@@ -26,7 +26,7 @@ class OutApplyViewModel: ObservableObject {
     @MainActor
     func onAppear() async {
         startAt = Date()
-        endAt = Date()
+        endAt = startAt
     }
     
     @MainActor
