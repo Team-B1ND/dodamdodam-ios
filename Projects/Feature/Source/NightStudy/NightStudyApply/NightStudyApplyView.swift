@@ -22,14 +22,26 @@ struct NightStudyApplyView: View {
     var body: some View {
         DodamScrollView.medium(title: "심야 자습 신청하기") {
             VStack(alignment: .leading, spacing: 24) {
-                DodamTextField.default(
-                    title: "심야 자습 사유",
-                    text: $viewModel.reasonText
-                )
-                .makeFirstResponder()
-                .padding(.top, 16)
-                .padding(.horizontal, 8)
-                .focused($focused)
+                
+                VStack(alignment: .leading) {
+                    DodamTextField.default(
+                        title: "심야 자습 사유",
+                        text: $viewModel.reasonText
+                    )
+                    .makeFirstResponder()
+                    .padding(.top, 16)
+                    .padding(.bottom, 22)
+                    .padding(.horizontal, 8)
+                    .focused($focused)
+                    .overlay(alignment: .bottomLeading) {
+                        if(viewModel.reasonText.count < 10) {
+                            Text("10글자 이상 입력하세요")
+                                .font(.system(size: 14, weight: .regular))
+                                .foreground(DodamColor.Status.negative)
+                                .padding(.horizontal, 8)
+                        }
+                    }
+                }
                 
                 VStack(spacing: 16) {
                     HStack(spacing: 16) {
