@@ -8,7 +8,6 @@
 import Foundation
 
 public extension Date {
-    
     func parseString(format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
@@ -23,7 +22,7 @@ public extension Date {
         return if let days = components.day, days > 0 {
             "\(days)일"
         } else if let hours = components.hour, let minutes = components.minute {
-            "\(hours)시간 \(minutes)분"
+            minutes < 0 ? "0일" : "\(hours)시간 \(minutes)분"
         } else {
             "-"
         }
