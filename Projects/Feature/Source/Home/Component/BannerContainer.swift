@@ -23,20 +23,26 @@ struct BannerContainer: View {
     var body: some View {
         Group {
             if let data = bannerData {
-                TabView {
-                    ForEach(data, id: \.self) { data in
-                        Link(destination: URL(string: data.redirectUrl) ?? URL(string: "about:blank")!) {
-                            CachedAsyncImage(url: URL(string: data.imageUrl)) {
-                                $0
-                                    .resizable()
-                            } placeholder: {
-                                Rectangle()
-                                    .shimmer()
+                if data.isEmpty {
+                    Text("배너가 없어요")
+                        .body1(.regular)
+                        .foreground(DodamColor.Label.assistive)
+                } else {
+                    TabView {
+                        ForEach(data, id: \.self) { data in
+                            Link(destination: URL(string: data.redirectUrl) ?? URL(string: "about:blank")!) {
+                                CachedAsyncImage(url: URL(string: data.imageUrl)) {
+                                    $0
+                                        .resizable()
+                                } placeholder: {
+                                    Rectangle()
+                                        .shimmer()
+                                }
                             }
                         }
                     }
+                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
-                .tabViewStyle(.page(indexDisplayMode: .never))
             } else {
                 DodamLoadingView.conditional(true) {
                     Rectangle()
@@ -44,9 +50,9 @@ struct BannerContainer: View {
                 }
             }
         }
-        .background(DodamColor.Background.normal)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .aspectRatio(80 / 12, contentMode: .fit)
-        .frame(maxWidth: .infinity)
+        .background(DodamColor.Background.normal)
         .clipShape(.large)
     }
 }
