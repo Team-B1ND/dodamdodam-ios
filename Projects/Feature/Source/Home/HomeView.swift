@@ -46,7 +46,9 @@ struct HomeView: View {
                                 data: viewModel.mealData,
                                 mealIdx: $viewModel.mealIdx
                             )
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(6)
+                            
                         }
                         .scaledButtonStyle()
                     }
