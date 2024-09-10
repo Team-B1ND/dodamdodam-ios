@@ -16,6 +16,7 @@ struct OutApplyView: View {
     @DodamDatePicker private var datePicker
     @StateObject var viewModel = OutApplyViewModel()
     @Flow var flow
+    @DodamDialog private var dialog
     
     // 0: 외출
     // 1: 외박
@@ -140,11 +141,27 @@ struct OutApplyView: View {
                 title: "확인"
             ) {
                 if selected == 0 {
-                    await viewModel.postOutGoing()
+                    let day = Calendar(identifier: .gregorian).dateComponents([.weekday], from: Date())
+                    let dialog = Dialog(title: "오늘 저녁 급식을 드시나요? 🥺")
+                        .message("급식 수요조사를 위해\n알려주시면 감사드리겠습니다")
+                        .primaryButton("네, 먹습니다") {
+                            print("네, 먹습니다 clicked")
+                        }
+                        .secondaryButton("아니요") {
+                            print("아니요 clicked")
+                        }
+                    if (day == DateComponents(weekday: 4)) {
+                        self.dialog.present(dialog)
+                        await viewModel.postOutGoing()
+                        flow.pop()
+                    } else {
+                        await viewModel.postOutGoing()
+                        flow.pop()
+                    }
                 } else {
                     await viewModel.postOutSleeping()
+                    flow.pop()
                 }
-                flow.pop()
             }
             .disabled(
                 viewModel.reasonText.isEmpty ||
