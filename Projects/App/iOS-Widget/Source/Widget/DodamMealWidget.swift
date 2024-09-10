@@ -38,6 +38,7 @@ struct DodamMealWidget: Widget {
 struct MealWidgetContent: View {
     
     @State private var selection = 0
+    @Environment(\.widgetFamily) private var widgetFamily
     
     private let entry: MealProvider.Entry
     
@@ -97,28 +98,51 @@ struct MealWidgetContent: View {
                         .foreground(DodamColor.Label.alternative)
                 }
             }
-            VStack(alignment: .leading, spacing: 0) {
-                if let meal {
-                    ForEach(meal.details, id: \.self) {
-                        Text($0.name)
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .font(.caption)
-                            .foreground(DodamColor.Label.normal)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+            if let meal {
+                if (widgetFamily == .systemSmall) {
+                    VStack(alignment: .leading, spacing: 0) {
+                        ForEach(0..<(meal.details.count > 6 ? 6 : meal.details.count), id: \.self) { idx in
+                            Text((meal.details.count > 6 && idx == 6) ? "..." : meal.details[idx].name)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .font(.caption)
+                                .foreground(DodamColor.Label.normal)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
+                    .padding(8)
+                    .frame(maxHeight: .infinity)
+                    .background(DodamColor.Background.normal)
+                    .clipShape(.large)
                 } else {
-                    Text("급식을\n불러올 수 없어요")
-                        .font(.footnote)
-                        .multilineTextAlignment(.center)
-                        .foreground(DodamColor.Label.normal)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    HStack {
+                        let cutArray = cutArray(array: meal.details)
+                        ForEach(cutArray, id: \.self) { meals in
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(meals, id: \.self) { meal in
+                                    Text(meal.name)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                        .font(.caption)
+                                        .foreground(DodamColor.Label.normal)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                        }
+                    }
+                    .padding(8)
+                    .frame(maxHeight: .infinity)
+                    .background(DodamColor.Background.normal)
+                    .clipShape(.large)
                 }
             }
-            .padding(8)
-            .frame(maxHeight: .infinity)
-            .background(DodamColor.Background.normal)
-            .clipShape(.large)
+            else {
+                Text("급식을\n불러올 수 없어요")
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+                    .foreground(DodamColor.Label.normal)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            }
         }
         .background(DodamColor.Background.neutral)
     }
