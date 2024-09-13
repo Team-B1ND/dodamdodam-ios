@@ -22,7 +22,7 @@ public extension Date {
         return if let days = components.day, days > 0 {
             "\(days)일"
         } else if let hours = components.hour, let minutes = components.minute {
-            minutes < 0 ? "0일" : "\(hours)시간 \(minutes)분"
+            minutes < 0 ? "하루" : "\(hours)시간 \(minutes)분"
         } else {
             "-"
         }
