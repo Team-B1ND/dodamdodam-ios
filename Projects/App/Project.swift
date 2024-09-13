@@ -6,7 +6,7 @@ let project = Project(
     options: .options(
         defaultKnownRegions: ["en", "ko"],
         developmentRegion: "ko"
-    ), 
+    ),
     settings: .settings(
         base: .init(),
         configurations: [
@@ -39,7 +39,9 @@ let project = Project(
                 .project(target: "Feature", path: .relativeToRoot("Projects/Feature")),
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
-                .target(name: "DodamDodamWidget")
+                .target(name: "DodamDodamWidget"),
+                .external(name: "FirebaseAnalytics"),
+                .external(name: "FirebaseMessaging")
             ]
         ),
         .target(
