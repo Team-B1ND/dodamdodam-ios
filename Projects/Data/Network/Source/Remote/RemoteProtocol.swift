@@ -44,33 +44,17 @@ extension RemoteProtocol {
     
     var decoder: JSONDecoder {
         let decoder = JSONDecoder()
-        
-        let localDateTimeMSFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-        let localDateTimeFormatter = DateFormatter("yyyy-MM-dd'T'HH:mm:ss")
-        let localDateFormatter = DateFormatter("yyyy-MM-dd")
-        
-        let koreanLocale = Locale(identifier: "ko_KR")
-        
-        localDateTimeMSFormatter.locale = koreanLocale
-        localDateTimeFormatter.locale = koreanLocale
-        localDateFormatter.locale = koreanLocale
-        
         decoder.dateDecodingStrategy = .custom { decoder in
             let container = try decoder.singleValueContainer()
             let dateStr = try container.decode(String.self)
-            
-            return if let date = localDateTimeMSFormatter.date(from: dateStr) {
-                date
-            } else if let date = localDateTimeFormatter.date(from: dateStr) {
-                date
-            } else if let date = localDateFormatter.date(from: dateStr) {
-                date
+            let dateFormatters = DateFormatterType.allCases
+            if let date = dateFormatters.compactMap { DateFormatter(type: $0).date(from: dateStr) }.first {
+                return date
             } else {
                 let context = DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Invalid date format")
                 throw DecodingError.dataCorrupted(context)
             }
         }
-        
         return decoder
     }
     
@@ -90,7 +74,7 @@ extension RemoteProtocol {
     }
     
     func request<D: ResponseProtocol>(
-        target:  MoyaProvider<Target>.Target,
+        target: MoyaProvider<Target>.Target,
         res: D.Type
     ) async throws -> Domain.Response<D> {
         try await self.request(target: target)
@@ -98,7 +82,7 @@ extension RemoteProtocol {
     }
     
     func request(
-        target:  MoyaProvider<Target>.Target
+        target: MoyaProvider<Target>.Target
     ) async throws -> DefaultResponse {
         try await self.request(target: target)
             .map(DefaultResponse.self, using: decoder)
