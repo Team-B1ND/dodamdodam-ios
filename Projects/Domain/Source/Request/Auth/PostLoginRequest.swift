@@ -5,7 +5,6 @@
 //  Created by Mercen on 3/14/24.
 //
 
-
 public struct PostLoginRequest: RequestProtocol {
     
     public let id: String
