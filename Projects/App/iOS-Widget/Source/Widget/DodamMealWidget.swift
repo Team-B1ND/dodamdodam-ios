@@ -37,8 +37,6 @@ struct DodamMealWidget: Widget {
 
 struct MealWidgetContent: View {
     
-    @State private var selection = 0
-    
     private let entry: MealProvider.Entry
     
     init(entry: MealProvider.Entry) {
