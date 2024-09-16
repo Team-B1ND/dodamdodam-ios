@@ -25,4 +25,15 @@ public struct MealResponse: ResponseProtocol {
         self.lunch = lunch
         self.dinner = dinner
     }
+    
+    public func getMeal(type: MealType) -> Meal? {
+        switch type {
+        case .breakfast:
+            breakfast
+        case .lunch:
+            lunch
+        case .dinner:
+            dinner
+        }
+    }
 }

@@ -79,9 +79,9 @@ struct LoginView: View {
     }
     
     private var modalSheetView: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 0) {
             Button {
-                if viewModel.isChecked == true {
+                if viewModel.isChecked {
                     (viewModel.isChecked1, viewModel.isChecked2) = (false, false)
                 } else {
                     (viewModel.isChecked1, viewModel.isChecked2) = (true, true)

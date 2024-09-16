@@ -9,8 +9,7 @@ import Foundation
 
 public func calculatingDateProgress(
     startAt: Date,
-    endAt: Date,
-    dateFormat: String
+    endAt: Date
 ) -> Double {
     let currentDate = Date()
     

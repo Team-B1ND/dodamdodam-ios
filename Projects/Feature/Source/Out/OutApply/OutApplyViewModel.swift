@@ -32,7 +32,7 @@ class OutApplyViewModel: ObservableObject {
     @MainActor
     func postOutGoing() async {
         do {
-            let dateAtString = dateAt.parseString(format: "yyyy-MM-dd")
+            let dateAtString = dateAt.parse(from: .isoDate)
             let startAtTimeString = startAt.parseString(format: "HH:mm:ss")
             let entAtTimeString = endAt.parseString(format: "HH:mm:ss")
             
@@ -54,12 +54,8 @@ class OutApplyViewModel: ObservableObject {
             try await outSleepingRepository.postOutSleeping(
                 .init(
                     reason: reasonText,
-                    startAt: startAt.parseString(
-                        format: "yyyy-MM-dd"
-                    ),
-                    endAt: endAt.parseString(
-                        format: "yyyy-MM-dd"
-                    )
+                    startAt: startAt.parse(from: .isoDate),
+                    endAt: endAt.parse(from: .isoDate)
                 )
             )
         } catch let error {

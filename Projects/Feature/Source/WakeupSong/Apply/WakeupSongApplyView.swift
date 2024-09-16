@@ -59,13 +59,10 @@ struct WakeupSongApplyView: View {
                         }
                     }
                     .padding(.bottom, 40)
-                } else {
-                    if !viewModel.keywordText.isEmpty,
-                       viewModel.isSearchLoading {
-                        DodamLoadingView()
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 40)
-                    }
+                } else if !viewModel.keywordText.isEmpty, viewModel.isSearchLoading {
+                    DodamLoadingView()
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 40)
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text("이런 노래는 어떤가요?")

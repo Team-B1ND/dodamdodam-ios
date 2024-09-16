@@ -54,7 +54,7 @@ struct WakeupSongCell: View {
                     .caption1(.medium)
                     .foreground(DodamColor.Label.alternative)
                     .lineLimit(1)
-                Text("\(data.createdAt.parseString(format: "yyyy.MM.dd"))")
+                Text("\(data.createdAt.parse(from: .isoDate))")
                     .caption2(.regular)
                     .foreground(DodamColor.Label.alternative)
             }

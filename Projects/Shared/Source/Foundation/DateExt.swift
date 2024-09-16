@@ -15,6 +15,13 @@ public extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func parse(from: DateFormatterType) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = from.rawValue
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter.string(from: self)
+    }
+    
     var remainingTimeText: String {
         let now = Date()
         let components = Calendar.current.dateComponents([.day, .hour, .minute], from: now, to: self)
