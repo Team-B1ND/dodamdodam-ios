@@ -35,7 +35,7 @@ struct WakeupSongCell: View {
                         .frame(width: 120, height: 67)
                         .shimmer()
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(.small)
                 .padding(.vertical, 8)
             }
             VStack(alignment: .leading, spacing: 2) {

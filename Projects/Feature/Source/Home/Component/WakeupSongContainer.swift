@@ -33,11 +33,11 @@ struct WakeupSongContainer: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: 120, height: 67)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .clipShape(.medium)
                                 } placeholder: {
                                     Rectangle()
                                         .frame(width: 120, height: 67)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .clipShape(.medium)
                                         .shimmer()
                                 }
                             }
