@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftBok
 
 public enum MealType: Int, RawRepresentable {
     case breakfast

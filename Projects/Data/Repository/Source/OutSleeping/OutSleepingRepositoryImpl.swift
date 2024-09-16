@@ -7,12 +7,14 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct OutSleepingRepositoryImpl: OutSleepingRepository {
     
     let dataSource: OutSleepingDataSource
+    
+    public init(dataSource: OutSleepingDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func postOutSleeping(_ request: PostOutSleepingRequest) async throws {
         try await dataSource.postOutSleeping(request)

@@ -6,12 +6,13 @@
 //
 import Domain
 import Network
-import SwiftBok
 
-@Init()
 public struct PointDataSource: DataSourceProtocol {
-    
     let remote: PointRemote
+    
+    public init(remote: PointRemote) {
+        self.remote = remote
+    }
     
     public func fetchPoint(_ request: FetchPointRequest) async throws -> [PointResponse] {
         let response = try await remote.fetchPoint(request)

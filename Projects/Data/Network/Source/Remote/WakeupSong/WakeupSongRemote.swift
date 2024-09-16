@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct WakeupSongRemote: RemoteProtocol {
     
     typealias Target = WakeupSongService
+    
+    public init() {}
     
     public func fetchWakeupSong() async throws -> Response<[WakeupSongResponse]> {
         try await self.request(target: .fetchWakeupSong, res: [WakeupSongResponse].self)

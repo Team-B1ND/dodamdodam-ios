@@ -7,12 +7,14 @@
 
 import DataSource
 import Domain
-import SwiftBok
 
-@Init()
 public struct MealRepositoryImpl: MealRepository {
     
     let dataSource: MealDataSource
+    
+    public init(dataSource: MealDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func fetchMeal(_ request: FetchMealRequest) async throws -> MealResponse {
         try await dataSource.fetchMeal(request)

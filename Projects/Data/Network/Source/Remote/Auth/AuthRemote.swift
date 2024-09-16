@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct AuthRemote: RemoteProtocol {
     
     typealias Target = AuthService
+    
+    public init() {}
     
     public func postLogin(_ request: PostLoginRequest) async throws -> Response<LoginResponse> {
         try await self.request(target: .postLogin(request), res: LoginResponse.self)

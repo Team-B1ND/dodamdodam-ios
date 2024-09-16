@@ -8,12 +8,14 @@
 import SignKit
 import DataSource
 import Domain
-import SwiftBok
 
-@Init()
 public struct AuthRepositoryImpl: AuthRepository {
     
     let dataSource: AuthDataSource
+    
+    public init(dataSource: AuthDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func postLogin(_ request: PostLoginRequest) async throws -> Member {
         let data = try await dataSource.postLogin(request)

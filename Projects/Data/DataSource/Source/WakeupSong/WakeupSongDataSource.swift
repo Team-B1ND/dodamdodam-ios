@@ -7,12 +7,13 @@
 
 import Domain
 import Network
-import SwiftBok
 
-@Init()
 public struct WakeupSongDataSource: DataSourceProtocol {
-    
     let remote: WakeupSongRemote
+    
+    public init(remote: WakeupSongRemote) {
+        self.remote = remote
+    }
     
     public func fetchWakeupSong() async throws -> [WakeupSongResponse] {
         let response = try await remote.fetchWakeupSong()
