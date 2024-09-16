@@ -67,7 +67,7 @@ struct MealView: View {
     }
     
     var body: some View {
-        GeometryReader { reader in
+        GeometryReader { _ in // 화면 크기를 제한하기 위해 GeometryReader를 놓음
             VStack(spacing: 16) {
                 let title = viewModel.selectedCalendar.parseString(format: "M월 급식")
                 DodamTopAppBar.default(title: title)
@@ -75,27 +75,26 @@ struct MealView: View {
                 VStack(spacing: 0) {
                     DodamDivider()
                     if let meals = viewModel.selectedMeal {
-                        LazyVStack(spacing: 12) {
-                            ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
-                                if let mealType = MealType(rawValue: idx) {
-                                    MealCell(type: mealType, meal: meal)
-                                }
-                            }
-                        }
-                        .padding(.top, 16)
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 54)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .if(closeCalendar) { view in
-                            ScrollView(showsIndicators: false) {
-                                view.background {
-                                    GeometryReader { inner in
-                                        Color.clear.preference(key: ScrollOffsetPreferenceKey.self, value: inner.frame(in: .named("scrollview")).origin.y)
+                        ScrollView(showsIndicators: false) {
+                            LazyVStack(spacing: 12) {
+                                ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
+                                    if let mealType = MealType(rawValue: idx) {
+                                        MealCell(type: mealType, meal: meal)
                                     }
                                 }
                             }
-                            .coordinateSpace(name: "scrollview")
+                            .padding(.top, 16)
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 54)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                            .background(
+                                GeometryReader { inner in
+                                    Color.clear.preference(key: ScrollOffsetPreferenceKey.self, value: inner.frame(in: .named("scrollview")).origin.y)
+                                }
+                            )
                         }
+                        .disabled(!closeCalendar)
+                        .coordinateSpace(name: "scrollview")
                     } else {
                         VStack(spacing: 12) {
                             Image(icon: .cookedRice)
