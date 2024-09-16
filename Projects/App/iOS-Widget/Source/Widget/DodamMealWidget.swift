@@ -61,7 +61,8 @@ struct MealWidgetContent: View {
     
     @ViewBuilder
     private func label(meal: MealResponse?) -> some View {
-        let idx = switch (getDate(.hour, date: .now), getDate(.minute, date: .now)) {
+        let currentTime = Date.now
+        let idx = switch (currentTime[.hour], currentTime[.minute]) {
             // 아침: ~ 8:20
         case (0...8, _), (8, ..<20): 0
             // 점심: 8:21 ~ 13:30

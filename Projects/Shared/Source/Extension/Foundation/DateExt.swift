@@ -28,10 +28,10 @@ public extension Date {
         }
     }
     
-    subscript(components: Calendar.Component) -> Int? {
+    subscript(components: Calendar.Component) -> Int {
         var calendar = Calendar.current
         calendar.locale = .init(identifier: "ko_KR")
-        return calendar.dateComponents([components], from: self).value(for: components)
+        return calendar.dateComponents([components], from: self).value(for: components)!
     }
     
     func equals(_ other: Date, components: Set<Calendar.Component>) -> Bool {

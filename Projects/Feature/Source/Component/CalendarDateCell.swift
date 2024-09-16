@@ -23,9 +23,7 @@ struct CalendarDateCell: View {
         guard let date else {
             return ""
         }
-        guard let day = date[.day] else {
-            return ""
-        }
+        let day = date[.day]
         return "\(day)"
     }
     
