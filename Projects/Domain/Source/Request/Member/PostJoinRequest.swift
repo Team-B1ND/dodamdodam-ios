@@ -5,10 +5,6 @@
 //  Created by Mercen on 3/27/24.
 //
 
-import SwiftBok
-
-@Init()
-@Members()
 public struct PostJoinRequest: RequestProtocol {
     
     public let id: String?
@@ -19,4 +15,14 @@ public struct PostJoinRequest: RequestProtocol {
     public let grade: Int?
     public let room: Int?
     public let number: Int?
+    public init(id: String?, email: String?, name: String?, phone: String?, pw: String?, grade: Int?, room: Int?, number: Int?) {
+        self.id = id
+        self.email = email
+        self.name = name
+        self.phone = phone
+        self.pw = pw
+        self.grade = grade
+        self.room = room
+        self.number = number
+    }
 }

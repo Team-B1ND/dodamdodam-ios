@@ -7,12 +7,13 @@
 
 import Network
 import Domain
-import SwiftBok
 
-@Init()
 public struct BusDataSource: DataSourceProtocol {
-    
     let remote: BusRemote
+    
+    public init(remote: BusRemote) {
+        self.remote = remote
+    }
     
     public func fetchAllBus() async throws -> [BusResponse] {
         let response = try await remote.fetchAllBus()

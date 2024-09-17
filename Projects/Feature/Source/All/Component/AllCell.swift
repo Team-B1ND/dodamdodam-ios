@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import Shared
 
 public struct AllCell: View {
     

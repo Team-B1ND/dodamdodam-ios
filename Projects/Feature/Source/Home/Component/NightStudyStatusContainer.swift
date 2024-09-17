@@ -28,8 +28,7 @@ struct NightStudyStatusContainer: View {
                         subTitle: "심야 자습이 거절되었어요",
                         title: "다시 신청하기"
                     )
-                } else if data.status == .allowed ||
-                            data.status == .pending {
+                } else if data.status == .allowed || data.status == .pending {
                     HStack(alignment: .bottom, spacing: 4) {
                         Text(data.endAt.remainingTimeText)
                             .heading2(.bold)
@@ -42,8 +41,7 @@ struct NightStudyStatusContainer: View {
                         DodamLinearProgressView(
                             progress: calculatingDateProgress(
                                 startAt: data.startAt,
-                                endAt: data.endAt,
-                                dateFormat: "yyyy-MM-dd"
+                                endAt: data.endAt
                             ),
                             isDisabled: data.status == .pending
                         )

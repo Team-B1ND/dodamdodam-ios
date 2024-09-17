@@ -37,8 +37,6 @@ struct DodamMealWidget: Widget {
 
 struct MealWidgetContent: View {
     
-    @State private var selection = 0
-    
     private let entry: MealProvider.Entry
     
     init(entry: MealProvider.Entry) {
@@ -48,42 +46,24 @@ struct MealWidgetContent: View {
     var body: some View {
         Group {
             if #available(iOSApplicationExtension 17.0, *) {
-                label(meal: entry.meal)
+                content(meal: entry.meal)
                     .containerBackground(for: .widget) {
                         Dodam.color(DodamColor.Background.neutral)
                     }
             } else {
-                label(meal: entry.meal)
+                content(meal: entry.meal)
             }
         }
         .padding(8)
     }
     
     @ViewBuilder
-    private func label(meal: MealResponse?) -> some View {
-        let idx = switch (getDate(.hour, date: .now), getDate(.minute, date: .now)) {
-            // 아침: ~ 8:20
-        case (0...8, _), (8, ..<20): 0
-            // 점심: 8:21 ~ 13:30
-        case (8, 21...60), (8...13, _), (13, 0..<30): 1
-            // 저녁: 13:31 ~ 19:10
-        case (13, 0...30), (13...19, _), (19, 0..<10): 2
-        default: 0
-        }
-        let (tag, meal): (String, Meal?) = switch idx {
-        case 0: ("아침", meal?.breakfast)
-        case 1: ("점심", meal?.lunch)
-        case 2: ("저녁", meal?.dinner)
-        default: ("", nil)
-        }
-        content(tag: tag, meal: meal)
-    }
-    
-    @ViewBuilder
-    private func content(tag: String, meal: Meal?) -> some View {
+    private func content(meal: MealResponse?) -> some View {
+        let mealType = MealType.from(.now) ?? .breakfast
+        let meal = meal?.getMeal(type: mealType)
         VStack(spacing: 4) {
             HStack {
-                Text(tag)
+                Text(mealType.label)
                     .foreground(DodamColor.Static.white)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 4)

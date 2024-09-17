@@ -7,12 +7,14 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct ScheduleRepositoryImpl: ScheduleRepository {
     
     let dataSource: ScheduleDataSource
+    
+    public init(dataSource: ScheduleDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func fetchScheduleByPage(_ request: FetchScheduleByPageRequest) async throws -> [ScheduleResponse] {
         try await dataSource.fetchScheduleByPage(request)

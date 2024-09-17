@@ -7,7 +7,7 @@ disabled_rules: # rule identifiers to exclude from running
 #  - force_try
 #  - function_body_length
   - leading_whitespace
-#  - line_length
+  - line_length
 #  - nesting
 #  - large_tuple
 #  - unused_closure_parameter

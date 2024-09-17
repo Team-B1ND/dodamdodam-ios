@@ -27,13 +27,7 @@ struct NightStudyApplyCell: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                DodamTag({
-                    switch nightStudyData.status {
-                    case .allowed: "승인됨"
-                    case .pending: "대기중"
-                    case .rejected: "거절됨"
-                    }
-                }(), type: {
+                DodamTag(nightStudyData.status.text, type: {
                     switch nightStudyData.status {
                     case .allowed: .primary
                     case .pending: .secondary
@@ -81,8 +75,7 @@ struct NightStudyApplyCell: View {
                     DodamLinearProgressView(
                         progress: calculatingDateProgress(
                             startAt: nightStudyData.startAt,
-                            endAt: nightStudyData.endAt,
-                            dateFormat: "yyyy-MM-dd"
+                            endAt: nightStudyData.endAt
                         ),
                         isDisabled: nightStudyData.status == .pending
                     )

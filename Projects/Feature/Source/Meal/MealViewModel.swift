@@ -44,11 +44,12 @@ class MealViewModel: ObservableObject {
     
     @MainActor
     func fetchMealData() async {
+        let currentTime = Date.now
         do {
             mealData = try await mealRepository.fetchMonthlyMeal(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month)
+                    year: currentTime[.year],
+                    month: currentTime[.month]
                 )
             )
         } catch let error {

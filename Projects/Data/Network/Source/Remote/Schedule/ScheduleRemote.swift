@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct ScheduleRemote: RemoteProtocol {
     
     typealias Target = ScheduleService
+    
+    public init() {}
     
     public func fetchScheduleByPage(_ request: FetchScheduleByPageRequest) async throws -> Response<[ScheduleResponse]> {
         try await self.request(target: .fetchScheduleByPage(request), res: [ScheduleResponse].self)

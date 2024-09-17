@@ -42,7 +42,7 @@ struct TomorrowWakeupSongCell: View {
                         .frame(width: 120, height: 67)
                         .shimmer()
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(.small)
             }
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(data.videoTitle)")

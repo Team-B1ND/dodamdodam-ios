@@ -50,19 +50,7 @@ struct MealContainer: View {
                 }
                 .frame(height: pageSize?.height ?? 0 > 86 ? pageSize?.height ?? 0 : 86)
                 .onAppear {
-                    let currentTime = Date()
-                    let calendar = Calendar.current
-                    let components = calendar.dateComponents([.hour, .minute], from: currentTime)
-                    
-                    if let hour = components.hour, let minute = components.minute {
-                        if hour < 8 || (hour == 8 && minute < 30) {
-                            mealIdx = 0
-                        } else if hour < 13 || (hour == 13 && minute < 30) {
-                            mealIdx = 1
-                        } else {
-                            mealIdx = 2
-                        }
-                    }
+                    mealIdx = MealType.from(.now)?.rawValue ?? -1
                 }
             } else {
                 SupportingContainer(

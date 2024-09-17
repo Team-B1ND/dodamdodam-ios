@@ -7,12 +7,14 @@
 
 import DataSource
 import Domain
-import SwiftBok
 
-@Init()
 public struct BusRepositoryImpl: BusRepository {
     
     let dataSource: BusDataSource
+    
+    public init(dataSource: BusDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func fetchAllBus() async throws -> [BusResponse] {
         try await dataSource.fetchAllBus()
