@@ -15,7 +15,7 @@ struct MealProvider: TimelineProvider {
     @Inject var mealRepository: any MealRepository
     func placeholder(in context: Context) -> MealEntry {
         
-        let meal = Meal(
+        let meal = MealDetail(
             details: [
                 .init(name: "퀴노아녹두죽", allergies: []),
                 .init(name: "채소샐러드", allergies: []),
