@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct MealRemote: RemoteProtocol {
     
     typealias Target = MealService
+    
+    public init() {}
     
     public func fetchMeal(_ request: FetchMealRequest) async throws -> Response<MealResponse> {
         try await self.request(target: .fetchMeal(request), res: MealResponse.self)

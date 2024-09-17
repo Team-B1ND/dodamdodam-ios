@@ -7,12 +7,14 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct WakeupSongRepositoryImpl: WakeupSongRepository {
     
     let dataSource: WakeupSongDataSource
+    
+    public init(dataSource: WakeupSongDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func fetchWakeupSong() async throws -> [WakeupSongResponse] {
         try await dataSource.fetchWakeupSong()

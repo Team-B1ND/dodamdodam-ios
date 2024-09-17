@@ -46,12 +46,13 @@ class WakeupSongViewModel: ObservableObject {
     
     @MainActor
     func fetchAllowedWakeupSong() async {
+        let currentTime = Date.now
         do {
             allowedWakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month),
-                    day: getDate(.day)
+                    year: currentTime[.year],
+                    month: currentTime[.month],
+                    day: currentTime[.day]
                 )
             )
         } catch let error {

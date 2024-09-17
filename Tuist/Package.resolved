@@ -64,24 +64,6 @@
       }
     },
     {
-      "identity" : "swift-syntax",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-syntax.git",
-      "state" : {
-        "revision" : "64889f0c732f210a935a0ad7cda38f77f876262d",
-        "version" : "509.1.1"
-      }
-    },
-    {
-      "identity" : "swiftbok",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/bestswlkh0310/SwiftBok",
-      "state" : {
-        "revision" : "266261801504e6f915e860de42166915460ca604",
-        "version" : "1.2.0"
-      }
-    },
-    {
       "identity" : "swiftui-cached-async-image",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/lorenzofiamingo/swiftui-cached-async-image",

@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct PointRemote: RemoteProtocol {
     
     typealias Target = PointService
+    
+    public init() {}
     
     public func fetchPoint(_ request: FetchPointRequest) async throws -> Response<[PointResponse]> {
         try await self.request(target: .fetchPoint(request), res: [PointResponse].self)

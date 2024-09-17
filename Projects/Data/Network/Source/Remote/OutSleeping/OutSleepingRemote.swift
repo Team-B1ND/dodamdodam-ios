@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct OutSleepingRemote: RemoteProtocol {
     
     typealias Target = OutSleepingService
+    
+    public init() {}
     
     public func postOutSleeping(_ request: PostOutSleepingRequest) async throws -> DefaultResponse {
         try await self.request(target: .postOutSleeping(request))

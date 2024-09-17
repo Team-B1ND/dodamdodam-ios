@@ -7,12 +7,13 @@
 
 import Domain
 import Network
-import SwiftBok
 
-@Init()
 public struct OutGoingDataSource: DataSourceProtocol {
-    
     let remote: OutGoingRemote
+    
+    public init(remote: OutGoingRemote) {
+        self.remote = remote
+    }
     
     public func postOutGoing(_ request: PostOutGoingRequest) async throws {
         _ = try await remote.postOutGoing(request)

@@ -8,12 +8,14 @@
 import Foundation
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct UploadRepositoryImpl: UploadRepository {
     
     let dataSource: UploadDataSource
+    
+    public init(dataSource: UploadDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func postUpload(data: Data) async throws -> UploadResponse {
         try await dataSource.postUpload(data: data)

@@ -56,7 +56,7 @@ struct SettingView: View {
                             Rectangle()
                                 .frame(width: 48, height: 48)
                                 .shimmer()
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(.extraSmall)
                             VStack(alignment: .leading) {
                                 Rectangle()
                                     .frame(width: 80, height: 24)

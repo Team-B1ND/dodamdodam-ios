@@ -80,16 +80,6 @@ struct LoginView: View {
     
     private var modalSheetView: some View {
         VStack(spacing: 0) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("회원가입을 하기 위해 동의가 필요해요")
-                    .heading2(.bold)
-                    .foreground(DodamColor.Label.normal)
-                Text("도담도담에 가입하기 위해 서비스 이용약관과 개인정보처리방침 동의가 필요해요")
-                    .body1(.medium)
-                    .foreground(DodamColor.Label.alternative)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            Spacer().frame(height: 24)
             Button {
                 if viewModel.isChecked {
                     (viewModel.isChecked1, viewModel.isChecked2) = (false, false)

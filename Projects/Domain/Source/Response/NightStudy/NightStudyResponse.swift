@@ -6,10 +6,7 @@
 //
 
 import Foundation
-import SwiftBok
 
-@Init()
-@Members()
 public struct NightStudyResponse: ResponseProtocol {
     
     public let id: Int
@@ -24,4 +21,32 @@ public struct NightStudyResponse: ResponseProtocol {
     public let endAt: Date
     public let createdAt: Date
     public let modifiedAt: Date?
+    
+    public init(
+        id: Int,
+        content: String,
+        status: AllowStatus,
+        doNeedPhone: Bool,
+        reasonForPhone: String?,
+        student: Student,
+        rejectReason: String?,
+        place: Place,
+        startAt: Date,
+        endAt: Date,
+        createdAt: Date,
+        modifiedAt: Date?
+    ) {
+        self.id = id
+        self.content = content
+        self.status = status
+        self.doNeedPhone = doNeedPhone
+        self.reasonForPhone = reasonForPhone
+        self.student = student
+        self.rejectReason = rejectReason
+        self.place = place
+        self.startAt = startAt
+        self.endAt = endAt
+        self.createdAt = createdAt
+        self.modifiedAt = modifiedAt
+    }
 }

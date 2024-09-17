@@ -7,12 +7,14 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct MemberRepositoryImpl: MemberRepository {
     
     let dataSource: MemberDataSource
+    
+    public init(dataSource: MemberDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func postJoin(_ request: PostJoinRequest) async throws {
         try await dataSource.postJoin(request)

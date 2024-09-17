@@ -7,12 +7,13 @@
 
 import Domain
 import Network
-import SwiftBok
 
-@Init()
 public struct NightStudyDataSource: DataSourceProtocol {
-    
     let remote: NightStudyRemote
+    
+    public init(remote: NightStudyRemote) {
+        self.remote = remote
+    }
     
     public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
         try await remote.postNightStudy(request)

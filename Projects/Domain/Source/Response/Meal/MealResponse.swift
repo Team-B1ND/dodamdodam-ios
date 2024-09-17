@@ -6,10 +6,6 @@
 //
 
 import Foundation
-import SwiftBok
-
-@Init()
-@Members()
 public struct MealResponse: ResponseProtocol {
     
     public let exists: Bool
@@ -20,5 +16,24 @@ public struct MealResponse: ResponseProtocol {
     
     public var meals: [Meal] {
         [self.breakfast, self.lunch, self.dinner].compactMap { $0 }
+    }
+    
+    public init(exists: Bool, date: Date, breakfast: Meal?, lunch: Meal?, dinner: Meal?) {
+        self.exists = exists
+        self.date = date
+        self.breakfast = breakfast
+        self.lunch = lunch
+        self.dinner = dinner
+    }
+    
+    public func getMeal(type: MealType) -> Meal? {
+        switch type {
+        case .breakfast:
+            breakfast
+        case .lunch:
+            lunch
+        case .dinner:
+            dinner
+        }
     }
 }

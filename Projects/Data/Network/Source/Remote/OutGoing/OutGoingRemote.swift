@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct OutGoingRemote: RemoteProtocol {
     
     typealias Target = OutGoingService
+    
+    public init() {}
     
     public func postOutGoing(_ request: PostOutGoingRequest) async throws -> DefaultResponse {
         try await self.request(target: .postOutGoing(request))

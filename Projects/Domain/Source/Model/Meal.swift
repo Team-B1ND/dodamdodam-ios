@@ -6,12 +6,14 @@
 //
 
 import Foundation
-import SwiftBok
 
-@Init()
-@Members()
 public struct Meal: Codable, Hashable {
     
     public let details: [MealMenu]
     public let calorie: Double
+    
+    public init(details: [MealMenu], calorie: Double) {
+        self.details = details
+        self.calorie = calorie
+    }
 }

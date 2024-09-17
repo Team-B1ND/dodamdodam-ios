@@ -6,10 +6,7 @@
 //
 
 import Foundation
-import SwiftBok
 
-@Init()
-@Members()
 public struct Student: Codable, Hashable {
     
     public let id: Int
@@ -17,4 +14,11 @@ public struct Student: Codable, Hashable {
     public let grade: Int
     public let room: Int
     public let number: Int
+    public init(id: Int, name: String, grade: Int, room: Int, number: Int) {
+        self.id = id
+        self.name = name
+        self.grade = grade
+        self.room = room
+        self.number = number
+    }
 }

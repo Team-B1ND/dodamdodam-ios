@@ -11,13 +11,6 @@ import Domain
 import Shared
 import SwiftUIIntrospect
 
-struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value += nextValue()
-    }
-}
-
 struct MealView: View {
     @StateObject private var viewModel = MealViewModel()
     @State private var posY: CGFloat = .zero {
