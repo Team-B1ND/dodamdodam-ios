@@ -6,12 +6,12 @@
 //
 
 import SwiftUI
-import SignKit
 import DIContainer
 import Feature
 import Shared
 import DDS
 import FlowKit
+import Realm
 
 @main
 struct AppMain: App {
@@ -36,6 +36,11 @@ struct AppMain: App {
                 FlowPresenter(flow: flow)
             }
             .ignoresSafeArea()
+            .onAppear {
+#if DEBUG
+                print("Realm DB location: \(RLMRealmConfiguration.default().fileURL!)")
+#endif
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ class HomeViewModel: ObservableObject {
     @Published var ringCount: Int = 0
     
     @Published var bannerData: [BannerResponse]?
-    @Published var mealData: MealResponse?
+    @Published var mealData: MealModel?
     @Published var wakeupSongData: [WakeupSongResponse]?
     @Published var nightStudyData: NightStudyResponse?
     @Published var outGoingData: OutGoingResponse?

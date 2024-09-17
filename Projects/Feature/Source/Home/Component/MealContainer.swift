@@ -13,11 +13,11 @@ import Shared
 struct MealContainer: View {
     
     @State private var pageSize: CGSize?
-    private let mealData: MealResponse?
+    private let mealData: MealModel?
     @Binding var mealIdx: Int
 
     public init(
-        data mealData: MealResponse?,
+        data mealData: MealModel?,
         mealIdx: Binding<Int>
     ) {
         self.mealData = mealData

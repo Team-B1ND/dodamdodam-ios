@@ -62,9 +62,9 @@ public extension Date {
         }
     }
     
-    var range: Int? {
+    var range: Range<Int>? {
         let calendar = Calendar.current
-        return calendar.range(of: .day, in: .month, for: self)?.count
+        return calendar.range(of: .day, in: .month, for: self)
     }
     
     // self의 month를 기준으로 calendar 생성
@@ -81,7 +81,7 @@ public extension Date {
         
         // 날짜 배열 생성
         var days: [Date?] = Array(repeating: nil, count: firstWeekday - 1)
-        days += Array(1...(range ?? 0)).compactMap {
+        days += Array(1...(range?.count ?? 0)).compactMap {
             components.day = $0
             return calendar.date(from: components)
         }

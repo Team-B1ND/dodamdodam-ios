@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Shared
 
 public enum MealType: Int, RawRepresentable {
     case breakfast
@@ -34,5 +33,12 @@ public enum MealType: Int, RawRepresentable {
                 .dinner // 저녁: 13:31 ~ 19:10
         default: nil
         }
+    }
+}
+extension Date {
+    subscript(components: Calendar.Component) -> Int {
+        var calendar = Calendar.current
+        calendar.locale = .init(identifier: "ko_KR")
+        return calendar.dateComponents([components], from: self).value(for: components)!
     }
 }
