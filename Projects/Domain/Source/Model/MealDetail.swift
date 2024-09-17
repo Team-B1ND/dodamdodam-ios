@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Meal: Codable, Hashable {
+public struct MealDetail: Codable, Hashable {
     
     public let details: [MealMenu]
     public let calorie: Double

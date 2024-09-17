@@ -10,11 +10,11 @@ public struct MealResponse: ResponseProtocol {
     
     public let exists: Bool
     public let date: Date
-    public let breakfast: Meal?
-    public let lunch: Meal?
-    public let dinner: Meal?
+    public let breakfast: MealDetail?
+    public let lunch: MealDetail?
+    public let dinner: MealDetail?
     
-    public init(exists: Bool, date: Date, breakfast: Meal?, lunch: Meal?, dinner: Meal?) {
+    public init(exists: Bool, date: Date, breakfast: MealDetail?, lunch: MealDetail?, dinner: MealDetail?) {
         self.exists = exists
         self.date = date
         self.breakfast = breakfast
