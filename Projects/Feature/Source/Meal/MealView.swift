@@ -8,45 +8,41 @@
 import SwiftUI
 import DDS
 import Domain
-import FlowKit
 import Shared
+import SwiftUIIntrospect
 
 struct MealView: View {
-    
     @StateObject private var viewModel = MealViewModel()
-    @Flow private var flow
-    
-    @Namespace private var mealAnimation
-    
-    @State private var dragPosY: CGFloat = .zero
+    @State private var posY: CGFloat = .zero {
+        didSet {
+            if posY > 0 {
+                posY = 0
+            } else if posY < -calendarSize.height {
+                posY = -calendarSize.height
+            }
+        }
+    }
+    private var adjustedPosY: CGFloat {
+        posY + calendarSize.height
+    }
     @State private var calendarRowSize: CGSize?
     @State private var calendarSize: CGSize = .zero
-    @State private var openCalendar: Bool = false
-    
-    @State private var closeCalendar: Bool = false
-    
-    private let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
-    private let calendar = Calendar.current
+    @State private var headerSize: CGSize = .zero
+    @State private var openCalendar = false
     
     private var adjustedCalendarHeight: CGFloat? {
-        guard let minHeight = calendarRowSize?.height else {
-            return nil
-        }
+        guard let minHeight = calendarRowSize?.height else { return nil }
         let maxHeight = max(minHeight, calendarSize.height)
-        return (dragPosY + minHeight * scrollRate).clamped(to: minHeight...maxHeight)
+        return (adjustedPosY - minHeight * scrollRate + minHeight).clamped(to: minHeight...maxHeight)
     }
-    
     private var weeks: [[Date?]] {
         viewModel.selectedCalendar.weeks
     }
-    
     // 선택된 날짜가 몇 주 인지
     private var selectedDateWeekCount: Int {
         for (idx, week) in Array(weeks.enumerated()) {
             for date in week {
-                guard let date else {
-                    continue
-                }
+                guard let date else { continue }
                 if date.equals(viewModel.selectedDate, components: [.year, .month, .day]) {
                     return idx
                 }
@@ -54,42 +50,52 @@ struct MealView: View {
         }
         return 0
     }
-    
     private var scrollRate: CGFloat {
-        1 - dragPosY / calendarSize.height
+        adjustedPosY / calendarSize.height
     }
     
     var body: some View {
-        GeometryReader { reader in
-            VStack(spacing: 16) {
-                let title = viewModel.selectedCalendar.parseString(format: "M월 급식")
-                DodamTopAppBar.default(title: title)
-                makeCalendar()
-                VStack(spacing: 0) {
-                    DodamDivider()
-                    if let meals = viewModel.selectedMeal {
-                        LazyVStack(spacing: 12) {
-                            ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
-                                if let mealType = MealType(rawValue: idx) {
-                                    MealCell(type: mealType, meal: meal)
-                                }
-                            }
-                        }
-                        .padding(.top, 16)
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 54)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                        .if(closeCalendar) { view in
-                            ScrollView(showsIndicators: false) {
-                                view.background {
-                                    GeometryReader { inner in
-                                        Color.clear.preference(key: ScrollOffsetPreferenceKey.self, value: inner.frame(in: .named("scrollview")).origin.y)
+        VStack(spacing: 0) {
+            let title = viewModel.selectedCalendar.parseString(format: "M월 급식")
+            DodamTopAppBar.default(title: title)
+            ZStack(alignment: .top) {
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 0) {
+                        Spacer().frame(height: headerSize.height + abs(posY))
+                        if let meals = viewModel.selectedMeal {
+                            LazyVStack(spacing: 12) {
+                                ForEach(Array(meals.meals.enumerated()), id: \.offset) { idx, meal in
+                                    if let mealType = MealType(rawValue: idx) {
+                                        MealCell(type: mealType, meal: meal)
                                     }
                                 }
                             }
-                            .coordinateSpace(name: "scrollview")
+                            .padding(.top, 16)
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 54)
+                        } else {
+                            Color.clear.frame(height: UIScreen.main.bounds.height)
                         }
-                    } else {
+                    }
+                    .background(
+                        GeometryReader { inner in
+                            Color.clear.preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: inner.frame(in: .named("scrollView")).origin.y
+                            )
+                        }
+                    )
+                }
+                .introspect(.scrollView, on: .iOS(.v13, .v14, .v15, .v16, .v17, .v18)) { view in
+                    view.bounces = false
+                }
+                .coordinateSpace(name: "scrollView")
+                .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+                    self.posY = value
+                    openCalendar = value > -calendarSize.height / 2
+                }
+                .overlay {
+                    if viewModel.selectedMeal == nil {
                         VStack(spacing: 12) {
                             Image(icon: .cookedRice)
                                 .resizable()
@@ -98,71 +104,38 @@ struct MealView: View {
                                 .label(.medium)
                                 .foreground(DodamColor.Label.alternative)
                         }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                         .drawingGroup()
+                        .padding(.top, headerSize.height)
                     }
                 }
+                makeCalendar()
             }
-        }
-        // TODO: ScrollView에 있던 거 그대로 갖고 왔습니다. 나중에 Extension으로 분리할 것.
-        .mask(alignment: .bottom) {
-            VStack(spacing: 0) {
-                Color.black
-                LinearGradient(
-                    colors: [.black, .clear],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
-                .frame(height: 150)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            // TODO: ScrollView에 있던 거 그대로 갖고 왔습니다. 나중에 Extension으로 분리할 것.
+            .mask(alignment: .bottom) {
+                VStack(spacing: 0) {
+                    Color.black
+                    LinearGradient(
+                        colors: [.black, .clear],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .frame(height: 150)
+                }
+                .ignoresSafeArea()
             }
-            .ignoresSafeArea()
         }
         .background(DodamColor.Background.neutral)
-        .frame(maxHeight: .infinity)
         .task {
             await viewModel.onAppear()
         }
-        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-            if value > 0 {
-                closeCalendar = false
-            }
-        }
-        .gesture(
-            DragGesture()
-                .onChanged { value in
-                    if closeCalendar {
-                        return
-                    }
-                    let rangeHeight = if openCalendar {
-                        calendarSize.height + value.translation.height
-                    } else {
-                        value.translation.height
-                    }
-                    dragPosY = rangeHeight.clamped(to: 0...calendarSize.height)
-                    
-                    if rangeHeight < 0 && viewModel.selectedMeal != nil {
-                        closeCalendar = true
-                    }
-                }
-                .onEnded { value in
-                    withAnimation(.easeOut(duration: 0.2)) {
-                        if dragPosY > calendarSize.height / 2 {
-                            openCalendar = true
-                            dragPosY = calendarSize.height
-                        } else {
-                            openCalendar = false
-                            dragPosY = 0
-                        }
-                    }
-                }
-        )
     }
     
     @ViewBuilder
     private func makeCalendar() -> some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
-                ForEach(weekdays, id: \.self) { date in
+                ForEach(["일", "월", "화", "수", "목", "금", "토"], id: \.self) { date in
                     Text(date)
                         .label(.regular)
                         .foreground(DodamColor.Label.alternative)
@@ -198,15 +171,25 @@ struct MealView: View {
                     }
                 }
             }
-            .offset(y: -scrollRate * (calendarRowSize?.height ?? 36) * CGFloat(selectedDateWeekCount))
+            .offset(
+                y: (scrollRate - 1)
+                * (calendarRowSize?.height ?? 36)
+                * CGFloat(selectedDateWeekCount)
+            )
             .onReadSize {
                 self.calendarSize = $0
             }
             .frame(height: adjustedCalendarHeight, alignment: .top)
+            .padding(.bottom, 8)
             .clipped()
+            DodamDivider()
+                .padding(.top, 8)
         }
         .padding(.horizontal, 16)
         .background(DodamColor.Background.neutral)
+        .onReadSize { size in
+            self.headerSize = size
+        }
     }
 }
 

@@ -87,100 +87,46 @@ struct LoginView: View {
                     (viewModel.isChecked1, viewModel.isChecked2) = (true, true)
                 }
             } label: {
-                HStack(spacing: 14) {
-                    Dodam.icon(.checkmarkCircle)
+                HStack(spacing: 6) {
+                    Image(icon: .checkmark)
                         .resizable()
-                        .frame(width: 24, height: 24)
+                        .renderingMode(.template)
+                        .frame(width: 20, height: 20)
                         .foreground(
                             viewModel.isChecked
                             ? DodamColor.Primary.normal
                             : DodamColor.Label.alternative
                         )
-                        .opacity(
-                            viewModel.isChecked
-                            ? 1
-                            : 0.5
-                        )
-                        .padding(.leading, 18)
-                        .padding(.vertical, 12)
-                    Text("모두 동의합니다")
-                        .font(.body1(.medium))
-                        .foreground(DodamColor.Label.normal)
-                    Spacer()
+                    Text("필수 항목 모두 체크하기")
+                        .body1(.bold)
+                        .foreground(DodamColor.Label.neutral)
                 }
-                .frame(maxWidth: .infinity)
-                .background(DodamColor.Fill.normal)
-                .clipShape(.small)
+                .frame(height: 48)
+                .padding(.horizontal, 28)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .opacity(viewModel.isChecked ? 1 : 0.5)
+                .foreground(DodamColor.Label.neutral)
             }
-            VStack(spacing: 4) {
-                HStack(spacing: 4) {
-                    Button {
-                        viewModel.isChecked1.toggle()
-                    } label: {
-                        Dodam.icon(.checkmark)
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foreground(
-                                viewModel.isChecked
-                                ? DodamColor.Primary.normal
-                                : DodamColor.Label.alternative
-                            )
-                            .opacity(
-                                viewModel.isChecked
-                                ? 1
-                                : 0.5
-                            )
-                    }
-                    Link(
-                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/personal-information")!
-                    ) {
-                        Text("(필수) 서비스 이용약관")
-                            .body1(.regular)
-                            .foreground(DodamColor.Label.alternative)
-                            .opacity(0.5)
-                        Spacer()
-                        Dodam.icon(.chevronRight)
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foreground(DodamColor.Label.alternative)
-                    }
+            .background(DodamColor.Fill.normal)
+            .clipShape(.medium)
+            Spacer().frame(height: 12)
+            VStack(spacing: 0) {
+                AgreeCell(
+                    isChecked: viewModel.isChecked1,
+                    description: "(필수) 서비스 이용약관",
+                    url: "https://dodam.b1nd.com/detailed-information/personal-information"
+                ) {
+                    viewModel.isChecked1.toggle()
                 }
-                .frame(height: 32)
-                
-                HStack(spacing: 4) {
-                    Button {
-                        viewModel.isChecked2.toggle()
-                    } label: {
-                        Dodam.icon(.checkmark)
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foreground(
-                                viewModel.isChecked
-                                ? DodamColor.Primary.normal
-                                : DodamColor.Label.alternative
-                            )
-                            .opacity(
-                                viewModel.isChecked
-                                ? 1
-                                : 0.5
-                            )
-                    }
-                    Link(
-                        destination: URL(string: "https://dodam.b1nd.com/detailed-information/service-policy")!
-                    ) {
-                        Text("(필수) 개인정보 수집 및 이용에 대한 안내")
-                            .body1(.regular)
-                            .foreground(DodamColor.Label.alternative)
-                            .opacity(0.5)
-                        Spacer()
-                        Dodam.icon(.chevronRight)
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foreground(DodamColor.Label.alternative)
-                    }
+                AgreeCell(
+                    isChecked: viewModel.isChecked2,
+                    description: "(필수) 개인정보 수집 및 이용에 대한 안내",
+                    url: "https://dodam.b1nd.com/detailed-information/service-policy"
+                ) {
+                    viewModel.isChecked2.toggle()
                 }
-                .frame(height: 32)
             }
+            Spacer().frame(height: 24)
             DodamButton.fullWidth(
                 title: "다음"
             ) {
