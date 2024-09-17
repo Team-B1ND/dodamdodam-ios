@@ -7,7 +7,7 @@
 
 public protocol MealRepository: RepositoryProtocol {
     
-    func fetchMeal(_ request: FetchMealRequest) async throws -> MealResponse
+    func fetchMeal(_ request: FetchMealRequest) async throws -> MealModel
     
-    func fetchMonthlyMeal(_ request: FetchMonthlyMealRequest) async throws -> [MealResponse]
+    func fetchMonthlyMeal(_ request: FetchMonthlyMealRequest) async throws -> [MealModel]
 }

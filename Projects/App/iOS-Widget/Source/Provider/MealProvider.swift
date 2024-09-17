@@ -28,7 +28,7 @@ struct MealProvider: TimelineProvider {
         )
         let entry = MealEntry(
             date: .now,
-            meal: MealResponse(
+            meal: MealModel(
                 exists: true,
                 date: .now,
                 breakfast: meal,

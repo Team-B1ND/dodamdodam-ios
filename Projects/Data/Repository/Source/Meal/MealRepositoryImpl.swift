@@ -16,11 +16,11 @@ public struct MealRepositoryImpl: MealRepository {
         self.dataSource = dataSource
     }
     
-    public func fetchMeal(_ request: FetchMealRequest) async throws -> MealResponse {
-        try await dataSource.fetchMeal(request)
+    public func fetchMeal(_ request: FetchMealRequest) async throws -> MealModel {
+        try await dataSource.fetchMeal(request).toModel()
     }
     
-    public func fetchMonthlyMeal(_ request: FetchMonthlyMealRequest) async throws -> [MealResponse] {
-        try await dataSource.fetchMonthlyMeal(request)
+    public func fetchMonthlyMeal(_ request: FetchMonthlyMealRequest) async throws -> [MealModel] {
+        try await dataSource.fetchMonthlyMeal(request).map { $0.toModel() }
     }
 }

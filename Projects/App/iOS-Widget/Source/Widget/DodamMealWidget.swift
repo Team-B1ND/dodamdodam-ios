@@ -58,7 +58,7 @@ struct MealWidgetContent: View {
     }
     
     @ViewBuilder
-    private func content(meal: MealResponse?) -> some View {
+    private func content(meal: MealModel?) -> some View {
         let mealType = MealType.from(.now) ?? .breakfast
         let meal = meal?.getMeal(type: mealType)
         VStack(spacing: 4) {
