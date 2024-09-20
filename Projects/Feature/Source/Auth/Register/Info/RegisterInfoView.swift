@@ -104,56 +104,22 @@ struct RegisterInfoView: View {
                     if info {
                         viewModel.infoStep = 2
                     } else {
-                        flow.push(RegisterAuthView())
+                        flow.push(
+                            RegisterAuthView().environmentObject(viewModel)
+                        )
                     }
                 }
                 .padding(.bottom, 24)
             }
         }
         .onChange(of: viewModel.infoText) {
-            switch $0.count {
-            case 1: // 학년을 입력한 경우: "" (0글자)
-                viewModel.infoText = "\($0[0])학년"
-            case 2: // 학년을 삭제한 경우: "1학년"
-                viewModel.infoText = ""
-            case 4: // 반을 입력한 경우: "1학년2"
-                viewModel.infoText = "\($0[0])학년 \($0[3])반"
-            case 5: // 반을 삭제한 경우: "1학년 2
-                viewModel.infoText = "\($0[0])학년"
-            case 7: // 번호를 입력한 경우: "1학년 2반3"
-                viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[6])번"
-            case 8: // 번호를 삭제한 경우: "1학년 2반 3"
-                viewModel.infoText = "\($0[0])학년 \($0[4])반"
-            case 9: // 번호가 두 글자일 때 번호를 삭제한 경우: "1학년 2반 34"
-                if viewModel.infoText[8] != "번" {
-                    viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[7])번"
-                }
-            case 10: // 번호를 한 글자 더 추가한 경우: "1학년 2반 3번4"
-                if $0[9] != "번" {
-                    viewModel.infoText = "\($0[0])학년 \($0[4])반 \($0[7])\($0[9])번"
-                }
-            case 11...: // "1학년 2반 34번1"
-                viewModel.infoText = viewModel.infoText[0..<10]
-            default:
-                break
+            if let infoText = FormatUtil.formatMemberInfo($0) {
+                viewModel.infoText = infoText
             }
         }
         .onChange(of: viewModel.phoneText) {
-            switch $0.count {
-            case 4:
-                if viewModel.phoneText[3] == "-" { // 010-
-                    viewModel.phoneText = viewModel.phoneText[0..<3]
-                } else { // 0108
-                    viewModel.phoneText = "\(viewModel.phoneText[0..<3])-\(viewModel.phoneText[3])"
-                }
-            case 9:
-                if viewModel.phoneText[8] == "-" { // 010-8778-
-                    viewModel.phoneText = viewModel.phoneText[0..<8]
-                } else { // 010-87780
-                    viewModel.phoneText = "\(viewModel.phoneText[0..<8])-\(viewModel.phoneText[8])"
-                }
-            default:
-                break
+            if let phoneText = FormatUtil.formatPhone($0) {
+                viewModel.phoneText = phoneText
             }
         }
         .padding(.horizontal, 16)

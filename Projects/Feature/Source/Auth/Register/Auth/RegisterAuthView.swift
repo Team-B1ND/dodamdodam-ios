@@ -12,7 +12,7 @@ import Shared
 
 struct RegisterAuthView: View {
     
-    @StateObject var viewModel = RegisterViewModel()
+    @EnvironmentObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {
