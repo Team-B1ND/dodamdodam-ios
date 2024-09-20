@@ -30,7 +30,7 @@ class OutApplyViewModel: ObservableObject {
     }
     
     @MainActor
-    func postOutGoing() async {
+    func postOutGoing(dinnerOrNot: Bool) async {
         do {
             let dateAtString = dateAt.parseString(format: "yyyy-MM-dd")
             let startAtTimeString = startAt.parseString(format: "HH:mm:ss")
@@ -40,7 +40,8 @@ class OutApplyViewModel: ObservableObject {
                 .init(
                     reason: reasonText,
                     startAt: "\(dateAtString)T\(startAtTimeString)",
-                    endAt: "\(dateAtString)T\(entAtTimeString)"
+                    endAt: "\(dateAtString)T\(entAtTimeString)",
+                    dinnerOrNot: dinnerOrNot
                 )
             )
         } catch let error {

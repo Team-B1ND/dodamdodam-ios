@@ -14,4 +14,5 @@ public struct PostOutGoingRequest: RequestProtocol {
     public let reason: String
     public let startAt: String
     public let endAt: String
+    public let dinnerOrNot: Bool
 }

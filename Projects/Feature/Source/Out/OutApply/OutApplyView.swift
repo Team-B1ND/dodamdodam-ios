@@ -145,17 +145,21 @@ struct OutApplyView: View {
                     let dialog = Dialog(title: "오늘 저녁 급식을 드시나요? 🥺")
                         .message("급식 수요조사를 위해\n알려주시면 감사드리겠습니다")
                         .primaryButton("네, 먹습니다") {
-                            print("네, 먹습니다 clicked")
+                            Task {
+                                await viewModel.postOutGoing(dinnerOrNot: true)
+                            }
+                            flow.pop()
                         }
                         .secondaryButton("아니요") {
-                            print("아니요 clicked")
+                            Task {
+                                await viewModel.postOutGoing(dinnerOrNot: false)
+                            }
+                            flow.pop()
                         }
-                    if (day == DateComponents(weekday: 4)) {
+                    if day == DateComponents(weekday: 4) {
                         self.dialog.present(dialog)
-                        await viewModel.postOutGoing()
-                        flow.pop()
                     } else {
-                        await viewModel.postOutGoing()
+                        await viewModel.postOutGoing(dinnerOrNot: true)
                         flow.pop()
                     }
                 } else {
