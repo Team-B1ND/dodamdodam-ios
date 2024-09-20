@@ -8,12 +8,13 @@
 import Network
 import Domain
 import Foundation
-import SwiftBok
 
-@Init()
 public struct UploadDataSource: DataSourceProtocol {
-    
     let remote: UploadRemote
+    
+    public init(remote: UploadRemote) {
+        self.remote = remote
+    }
     
     public func postUpload(data: Data) async throws -> UploadResponse {
         let response = try await remote.postUpload(data: data)

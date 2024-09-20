@@ -27,7 +27,8 @@ let project = Project(
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
-                .target(name: "Network")
+                .target(name: "Network"),
+                .target(name: "Local")
             ]
         ),
         .target(
@@ -42,6 +43,20 @@ let project = Project(
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .external(name: "Moya"),
                 .external(name: "SignKit")
+            ]
+        ),
+        .target(
+            name: "Local",
+            destinations: [.iPhone],
+            product: .staticLibrary,
+            bundleId: "com.b1nd.dodam.studentLocal",
+            deploymentTargets: .iOS("15.0"),
+            sources: ["Local/Source/**"],
+            scripts: [.swiftLint],
+            dependencies: [
+                .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
+                .external(name: "RealmSwift"),
+                .external(name: "Realm")
             ]
         )
     ]

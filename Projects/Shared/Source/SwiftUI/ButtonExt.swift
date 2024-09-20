@@ -22,7 +22,7 @@ public extension Button {
                 .contentShape(Rectangle())
                 .scaleEffect(configuration.isPressed ? 0.96 : 1)
                 .background(Color.black.opacity(configuration.isPressed ? 0.05 : 0))
-                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .clipShape(.small)
                 .animation(.easeIn(duration: 0.15), value: configuration.isPressed)
         }
     }

@@ -7,14 +7,16 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct NightStudyRepositoryImpl: NightStudyRepository {
     
     let dataSource: NightStudyDataSource
     
-    public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse{
+    public init(dataSource: NightStudyDataSource) {
+        self.dataSource = dataSource
+    }
+    
+    public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
         try await dataSource.postNightStudy(request)
     }
     

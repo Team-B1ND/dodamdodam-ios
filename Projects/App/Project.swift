@@ -51,7 +51,7 @@ let project = Project(
             infoPlist: .extendingDefault(with: [
                 "CFBundleDisplayName": "$(PRODUCT_NAME)",
                 "NSExtension": [
-                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension",
+                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
                 ]
             ]),
             sources: ["iOS-Widget/Source/**"],

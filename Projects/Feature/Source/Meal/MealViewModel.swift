@@ -14,9 +14,9 @@ import Foundation
 class MealViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var mealData: [MealResponse]?
+    @Published var mealData: [MealModel]?
     @Published var selectedDate: Date = .now
-    var selectedMeal: MealResponse? {
+    var selectedMeal: MealModel? {
         mealData?.first {
             $0.date.equals(selectedDate, components: [.year, .month, .day])
         }
@@ -44,11 +44,12 @@ class MealViewModel: ObservableObject {
     
     @MainActor
     func fetchMealData() async {
+        let currentTime = Date.now
         do {
             mealData = try await mealRepository.fetchMonthlyMeal(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month)
+                    year: currentTime[.year],
+                    month: currentTime[.month]
                 )
             )
         } catch let error {

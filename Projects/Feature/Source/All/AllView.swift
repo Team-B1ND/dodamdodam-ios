@@ -44,12 +44,12 @@ struct AllView: View {
                                         .frame(width: 70, height: 70)
                                         .shimmer()
                                 }
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipShape(.medium)
                             } else {
                                 Image("Profile")
                                     .resizable()
                                     .frame(width: 70, height: 70)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    .clipShape(.medium)
                             }
                             if let student = data.student {
                                 VStack(alignment: .leading) {
@@ -64,7 +64,7 @@ struct AllView: View {
                         } else {
                             Rectangle()
                                 .frame(width: 70, height: 70)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipShape(.medium)
                                 .shimmer()
                             VStack(alignment: .leading) {
                                 Rectangle()
@@ -86,7 +86,7 @@ struct AllView: View {
                             Image("Profile")
                                 .resizable()
                                 .frame(width: 70, height: 70)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipShape(.medium)
                             Text("로그인하세요.")
                                 .headline(.bold)
                                 .foreground(DodamColor.Label.normal)
@@ -113,15 +113,12 @@ struct AllView: View {
                             presentLoginDialog()
                         }
                     }
-                    
                     AllCell("외출/외박 확인하기", icon: .tent) {
                         selection = 2
                     }
-                    
                     AllCell("기상송 확인하기", icon: .wakeupMegaphone) {
                         flow.push(WakeupSongView())
                     }
-                    
                     AllCell("기상송 신청하기", icon: .wakeupNote) {
                         if Sign.isLoggedIn {
                             flow.push(WakeupSongView(), animated: false)

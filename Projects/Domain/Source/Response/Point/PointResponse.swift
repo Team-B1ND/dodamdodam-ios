@@ -4,10 +4,7 @@
 //
 //  Created by Mercen on 3/28/24.
 //
-import SwiftBok
 
-@Init()
-@Members()
 public struct PointResponse: ResponseProtocol {
     
     public let id: Int
@@ -15,4 +12,12 @@ public struct PointResponse: ResponseProtocol {
     public let teacher: Teacher
     public let reason: PointReason
     public let issueAt: String
+    
+    public init(id: Int, student: Student, teacher: Teacher, reason: PointReason, issueAt: String) {
+        self.id = id
+        self.student = student
+        self.teacher = teacher
+        self.reason = reason
+        self.issueAt = issueAt
+    }
 }

@@ -26,13 +26,7 @@ struct OutSleepingCell: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                DodamTag({
-                    switch outSleepingData.status {
-                    case .allowed: "승인됨"
-                    case .pending: "대기중"
-                    case .rejected: "거절됨"
-                    }
-                }(), type: {
+                DodamTag(outSleepingData.status.text, type: {
                     switch outSleepingData.status {
                     case .allowed: .primary
                     case .pending: .secondary
@@ -81,8 +75,7 @@ struct OutSleepingCell: View {
                         DodamLinearProgressView(
                             progress: calculatingDateProgress(
                                 startAt: outSleepingData.startAt,
-                                endAt: outSleepingData.endAt,
-                                dateFormat: "yyyy-MM-dd"
+                                endAt: outSleepingData.endAt
                             ),
                             isDisabled: outSleepingData.status == .pending
                         )

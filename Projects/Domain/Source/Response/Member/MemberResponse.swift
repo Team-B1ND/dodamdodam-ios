@@ -5,10 +5,6 @@
 //  Created by Mercen on 3/28/24.
 //
 import Foundation
-import SwiftBok
-
-@Init()
-@Members()
 public struct MemberResponse: ResponseProtocol {
     
     public let id: String
@@ -22,4 +18,30 @@ public struct MemberResponse: ResponseProtocol {
     public let teacher: Teacher?
     public let createdAt: Date
     public let modifiedAt: Date?
+    
+    public init(
+        id: String,
+        name: String,
+        email: String,
+        role: Role,
+        status: ActiveStatus,
+        profileImage: String?,
+        phone: String,
+        student: Student?,
+        teacher: Teacher?,
+        createdAt: Date,
+        modifiedAt: Date?
+    ) {
+        self.id = id
+        self.name = name
+        self.email = email
+        self.role = role
+        self.status = status
+        self.profileImage = profileImage
+        self.phone = phone
+        self.student = student
+        self.teacher = teacher
+        self.createdAt = createdAt
+        self.modifiedAt = modifiedAt
+    }
 }

@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct BannerRemote: RemoteProtocol {
     
     typealias Target = BannerService
+    
+    public init() {}
     
     public func fetchActiveBanner() async throws -> Response<[BannerResponse]> {
         try await self.request(target: .fetchActiveBanner, res: [BannerResponse].self)

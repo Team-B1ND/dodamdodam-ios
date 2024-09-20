@@ -7,12 +7,14 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct PointRepositoryImpl: PointRepository {
     
     let dataSource: PointDataSource
+    
+    public init(dataSource: PointDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func fetchPoint(_ request: FetchPointRequest) async throws -> [PointResponse] {
         try await dataSource.fetchPoint(request)

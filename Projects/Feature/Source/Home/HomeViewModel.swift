@@ -19,7 +19,7 @@ class HomeViewModel: ObservableObject {
     @Published var ringCount: Int = 0
     
     @Published var bannerData: [BannerResponse]?
-    @Published var mealData: MealResponse?
+    @Published var mealData: MealModel?
     @Published var wakeupSongData: [WakeupSongResponse]?
     @Published var nightStudyData: NightStudyResponse?
     @Published var outGoingData: OutGoingResponse?
@@ -76,12 +76,13 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchMealData() async {
+        let currentTime = Date.now
         do {
             mealData = try await mealRepository.fetchMeal(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month),
-                    day: getDate(.day)
+                    year: currentTime[.year],
+                    month: currentTime[.month],
+                    day: currentTime[.day]
                 )
             )
         } catch let error {
@@ -91,12 +92,13 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchWakeupSongData() async {
+        let currentTime = Date.now
         do {
             wakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month),
-                    day: getDate(.day)
+                    year: currentTime[.year],
+                    month: currentTime[.month],
+                    day: currentTime[.day]
                 )
             )
         } catch let error {

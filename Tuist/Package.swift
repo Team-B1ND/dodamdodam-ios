@@ -30,6 +30,7 @@ let package = Package(
         .package(url: "https://github.com/Mercen-Lee/FlowKit", branch: "main"),
         .package(url: "https://github.com/Mercen-Lee/SignKit", exact: "0.0.2"),
         .package(url: "https://github.com/lorenzofiamingo/swiftui-cached-async-image", exact: "2.1.1"),
-        .package(url: "https://github.com/bestswlkh0310/SwiftBok", exact: "1.2.0")
+        .package(url: "https://github.com/realm/realm-swift", exact: "20.0.0"),
+        .package(url: "https://github.com/siteline/SwiftUI-Introspect", exact: "1.3.0")
     ]
 )

@@ -16,7 +16,8 @@ public extension DependencyProvider {
             [
                 DataSourceAssembly(),
                 RemoteAssembly(),
-                RepositoryAssembly()
+                RepositoryAssembly(),
+                LocalAssembly()
             ],
             container: self.container
         )

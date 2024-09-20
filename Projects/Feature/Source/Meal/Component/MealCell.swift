@@ -12,9 +12,9 @@ import Domain
 struct MealCell: View {
     
     private let type: MealType
-    private let meal: Meal
+    private let meal: MealDetail
     
-    init(type: MealType, meal: Meal) {
+    init(type: MealType, meal: MealDetail) {
         self.type = type
         self.meal = meal
     }

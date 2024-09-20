@@ -26,7 +26,10 @@ struct RepositoryAssembly: Assembly {
         }.inObjectScope(.container)
         
         container.register((any MealRepository).self) {
-            MealRepositoryImpl(dataSource: $0.resolve(MealDataSource.self)!)
+            MealRepositoryImpl(
+                dataSource: $0.resolve(MealDataSource.self)!,
+                localDataSource: $0.resolve(LocalMealDataSource.self)!
+            )
         }.inObjectScope(.container)
         
         container.register((any MemberRepository).self) {

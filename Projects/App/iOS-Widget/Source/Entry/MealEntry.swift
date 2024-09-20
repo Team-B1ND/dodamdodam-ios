@@ -10,7 +10,7 @@ import Domain
 
 struct MealEntry: TimelineEntry {
     let date: Date
-    let meal: MealResponse?
+    let meal: MealModel?
 }
 
 extension MealEntry {
@@ -27,8 +27,8 @@ extension MealEntry {
     }
 }
 
-extension MealResponse {
-    static let empty = MealResponse(
+extension MealModel {
+    static let empty = MealModel(
         exists: true,
         date: .now,
         breakfast: nil,

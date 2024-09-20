@@ -61,7 +61,6 @@ struct OutApplyView: View {
                         .scaledButtonStyle()
                     }
                     Button {
-                        // TODO: Improve code
                         if selected == 0 {
                             let timePicker = TimePicker(title: "외출 일시") {
                                 viewModel.startAt = self.timePicker.date

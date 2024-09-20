@@ -23,9 +23,7 @@ struct CalendarDateCell: View {
         guard let date else {
             return ""
         }
-        guard let day = date[.day] else {
-            return ""
-        }
+        let day = date[.day]
         return "\(day)"
     }
     
@@ -38,8 +36,8 @@ struct CalendarDateCell: View {
                 : DodamColor.Label.alternative
             )
             .padding(.vertical, 8)
-            .if(selected) { view in
-                view.background {
+            .background {
+                if selected {
                     Rectangle()
                         .dodamFill(DodamColor.Primary.normal)
                         .clipShape(.medium)
