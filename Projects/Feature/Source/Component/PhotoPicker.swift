@@ -24,7 +24,7 @@ struct PhotoPicker: UIViewControllerRepresentable {
                     return
                 }
                 let image = image as? UIImage
-                self.parent.image = image?.pngData()
+                self.parent.image = image?.jpegData(compressionQuality: 0.01)
             }
         }
     }

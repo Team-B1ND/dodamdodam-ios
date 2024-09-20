@@ -17,9 +17,10 @@ final class EditMemberInfoViewModel: ObservableObject {
     @Published var profileImage: String?
     @Published var phone: String
     @Published var editFailure = false
+    @Published var isUploading = false
     
     var validInput: Bool {
-        !name.isEmpty && !email.isEmpty && phone.count == 13
+        !name.isEmpty && !email.isEmpty && phone.count == 13 && !isUploading
     }
     
     init(name: String, email: String, profileImage: String?, phone: String) {
@@ -52,6 +53,8 @@ final class EditMemberInfoViewModel: ObservableObject {
     
     @MainActor
     func uploadProfileImage(data: Data) async {
+        isUploading = true
+        defer { isUploading = false }
         do {
             let url = try await uploadRepository.postUpload(data: data)
             self.profileImage = url
