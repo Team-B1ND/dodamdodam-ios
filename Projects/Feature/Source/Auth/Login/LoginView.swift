@@ -113,14 +113,14 @@ struct LoginView: View {
             VStack(spacing: 0) {
                 AgreeCell(
                     isChecked: viewModel.isChecked1,
-                    description: "(필수) 서비스 이용약관",
+                    description: "(필수) 개인정보 수집 및 이용에 대한 안내",
                     url: "https://dodam.b1nd.com/detailed-information/personal-information"
                 ) {
                     viewModel.isChecked1.toggle()
                 }
                 AgreeCell(
                     isChecked: viewModel.isChecked2,
-                    description: "(필수) 개인정보 수집 및 이용에 대한 안내",
+                    description: "(필수) 서비스 이용약관",
                     url: "https://dodam.b1nd.com/detailed-information/service-policy"
                 ) {
                     viewModel.isChecked2.toggle()
