@@ -14,20 +14,26 @@ struct MealContainer: View {
     
     @State private var pageSize: CGSize?
     private let mealData: MealModel?
-    @Binding var mealIdx: Int
+    @Binding var mealType: MealType?
 
     public init(
         data mealData: MealModel?,
-        mealIdx: Binding<Int>
+        mealType: Binding<MealType?>
     ) {
         self.mealData = mealData
-        self._mealIdx = mealIdx
+        self._mealType = mealType
     }
 
     var body: some View {
         if let data = mealData {
             if data.exists {
-                DodamPageView(selection: $mealIdx) {
+                DodamPageView(
+                    selection: .init {
+                        mealType?.rawValue ?? -1
+                    } set: {
+                        mealType = MealType(rawValue: $0)
+                    }
+                ) {
                     ForEach(data.meals, id: \.self) { meal in
                         let splitedArray = splitArray(array: meal.details)
                         HStack(alignment: .top) {
@@ -50,7 +56,7 @@ struct MealContainer: View {
                 }
                 .frame(height: pageSize?.height ?? 0 > 86 ? pageSize?.height ?? 0 : 86)
                 .onAppear {
-                    mealIdx = MealType.from(.now)?.rawValue ?? -1
+                    self.mealType = MealType.from(.now) ?? .breakfast
                 }
             } else {
                 SupportingContainer(

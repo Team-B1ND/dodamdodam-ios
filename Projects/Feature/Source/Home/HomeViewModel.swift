@@ -14,7 +14,7 @@ import Shared
 class HomeViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var mealIdx: Int = -1
+    @Published var mealType: MealType?
     @Published var isShowingAlert: Bool = false
     @Published var ringCount: Int = 0
     
