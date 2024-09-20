@@ -42,7 +42,7 @@ final class EditMemberInfoViewModel: ObservableObject {
     ) async {
         do {
             try await memberRepository.patchMemberInfo(
-                .init(email: email, name: name, profileImage: profileImage, phone: phone)
+                .init(email: email, name: name, profileImage: profileImage, phone: phone.replacingOccurrences(of: "-", with: ""))
             )
             completion()
         } catch {
