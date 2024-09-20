@@ -34,23 +34,7 @@ struct AllView: View {
                 if Sign.isLoggedIn {
                     HStack(spacing: 16) {
                         if let data = viewModel.memberData {
-                            if let profileImage = data.profileImage {
-                                CachedAsyncImage(url: URL(string: profileImage)) {
-                                    $0
-                                        .resizable()
-                                        .frame(width: 70, height: 70)
-                                } placeholder: {
-                                    Rectangle()
-                                        .frame(width: 70, height: 70)
-                                        .shimmer()
-                                }
-                                .clipShape(.medium)
-                            } else {
-                                Image("Profile")
-                                    .resizable()
-                                    .frame(width: 70, height: 70)
-                                    .clipShape(.medium)
-                            }
+                            DodamAvatar.extraLarge(url: data.profileImage)
                             if let student = data.student {
                                 VStack(alignment: .leading) {
                                     Text("환영합니다, \(student.name)님")
@@ -77,6 +61,7 @@ struct AllView: View {
                         }
                         Spacer()
                     }
+                    .padding(.bottom, 8)
                 } else {
                     Button {
                         dump(flow)
