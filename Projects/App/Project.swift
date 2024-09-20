@@ -8,7 +8,8 @@ let project = Project(
         developmentRegion: "ko"
     ), 
     settings: .settings(
-        base: .init(),
+        base: .init()
+            .otherLinkerFlags(["$(inherited) -ObjC"]),
         configurations: [
             .debug(name: .debug),
             .release(name: .release)
