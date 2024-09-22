@@ -30,7 +30,9 @@ struct HomeView: View {
                         data: viewModel.bannerData
                     )
                     DodamContainer.default(
-                        title: "오늘의 \(MealType(rawValue: viewModel.mealIdx)?.label ?? "급식")",
+                        title: (MealType.from(.now) == nil ? "내일" : "오늘")
+                        + "의 "
+                        + (viewModel.mealType?.label ?? "급식"),
                         icon: Dodam.icon(.forkAndKnife)
                     ) {
                         Button {
@@ -38,7 +40,7 @@ struct HomeView: View {
                         } label: {
                             MealContainer(
                                 data: viewModel.mealData,
-                                mealIdx: $viewModel.mealIdx
+                                mealType: $viewModel.mealType
                             )
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(6)
