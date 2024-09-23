@@ -79,13 +79,21 @@ struct MealWidgetContent: View {
             }
             VStack(alignment: .leading, spacing: 0) {
                 if let meal {
-                    ForEach(meal.details, id: \.self) {
-                        Text($0.name)
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                            .font(.caption)
+                    if meal.details.isEmpty {
+                        Text("오늘은\n급식이 없어요")
+                            .font(.footnote)
+                            .multilineTextAlignment(.center)
                             .foreground(DodamColor.Label.normal)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    } else {
+                        ForEach(meal.details, id: \.self) {
+                            Text($0.name)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                                .font(.caption)
+                                .foreground(DodamColor.Label.normal)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
                 } else {
                     Text("급식을\n불러올 수 없어요")
