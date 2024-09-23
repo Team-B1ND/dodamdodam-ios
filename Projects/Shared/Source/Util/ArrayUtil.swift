@@ -13,3 +13,10 @@ public func splitArray<T>(array: [T]) -> [[T]] {
     let secondHalf = Array(array[middleIndex..<array.count])
     return [firstHalf, secondHalf]
 }
+
+public func splitArray<T>(array: [T], position: Int) -> [[T]] {
+    
+    let firstHalf = Array(array[0..<position])
+    let secondHalf = Array(array[position..<array.count])
+    return [firstHalf, secondHalf]
+}
