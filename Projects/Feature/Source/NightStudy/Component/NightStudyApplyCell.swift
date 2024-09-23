@@ -16,7 +16,7 @@ struct NightStudyApplyCell: View {
     private let nightStudyData: NightStudyResponse
     private let removeAction: () -> Void
     
-    public init(
+    init(
         data nightStudyData: NightStudyResponse,
         removeAction: @escaping () -> Void
     ) {

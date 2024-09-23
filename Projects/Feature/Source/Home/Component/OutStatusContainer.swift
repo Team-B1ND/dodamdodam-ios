@@ -14,7 +14,7 @@ struct OutStatusContainer: View {
     
     private let outData: OutGoingResponse?
     
-    public init(
+    init(
         data outData: OutGoingResponse?
     ) {
         self.outData = outData

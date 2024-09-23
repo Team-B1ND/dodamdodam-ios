@@ -65,6 +65,13 @@ let project = Project(
                 .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
                 .external(name: "DDS")
             ]
+        ),
+        .target(
+            name: "Aggregate",
+            destinations: [.iPhone],
+            product: .bundle,
+            bundleId: "com.b1nd.dodam.aggregate",
+            scripts: [.periphery]
         )
     ]
 )

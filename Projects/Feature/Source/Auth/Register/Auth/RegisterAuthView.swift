@@ -8,7 +8,6 @@
 import SwiftUI
 import DDS
 import FlowKit
-import Shared
 
 struct RegisterAuthView: View {
     

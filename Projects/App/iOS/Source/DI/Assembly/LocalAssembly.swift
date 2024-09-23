@@ -6,7 +6,6 @@
 //
 
 import Swinject
-import DataSource
 import Local
 
 struct LocalAssembly: Assembly {

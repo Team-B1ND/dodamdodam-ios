@@ -14,7 +14,7 @@ struct BannerContainer: View {
     
     private let bannerData: [BannerResponse]?
     
-    public init(
+    init(
         data bannerData: [BannerResponse]?
     ) {
         self.bannerData = bannerData

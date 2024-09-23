@@ -16,7 +16,7 @@ struct MealContainer: View {
     private let mealData: MealModel?
     @Binding var mealType: MealType?
 
-    public init(
+    init(
         data mealData: MealModel?,
         mealType: Binding<MealType?>
     ) {
