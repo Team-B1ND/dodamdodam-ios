@@ -14,8 +14,9 @@ public func splitArray<T>(array: [T]) -> [[T]] {
     return [firstHalf, secondHalf]
 }
 
-public func cutArray<T>(array: [T]) -> [[T]] { // 배열을 6개씩 반 자르기
-    let firstHalf = Array(array[0..<6])
-    let secondHalf = Array(array[6..<array.count])
+public func splitArray<T>(array: [T], position: Int) -> [[T]] {
+    
+    let firstHalf = Array(array[0..<position])
+    let secondHalf = Array(array[position..<array.count])
     return [firstHalf, secondHalf]
 }
