@@ -42,7 +42,8 @@ let project = Project(
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .external(name: "Moya"),
-                .external(name: "SignKit")
+                .external(name: "SignKit"),
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared"))
             ]
         ),
         .target(
@@ -56,7 +57,8 @@ let project = Project(
             dependencies: [
                 .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .external(name: "RealmSwift"),
-                .external(name: "Realm")
+                .external(name: "Realm"),
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared"))
             ]
         )
     ]

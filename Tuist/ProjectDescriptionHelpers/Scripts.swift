@@ -7,4 +7,8 @@ public extension TargetScript {
         name: "SwiftLintShell",
         basedOnDependencyAnalysis: false
     )
+    static let periphery = TargetScript.pre(
+        path: .relativeToRoot("Scripts/PeripheryRunScript.sh"),
+        name: "Periphery"
+    )
 }
