@@ -14,7 +14,7 @@ struct NightStudyStatusContainer: View {
     
     private let nightStudyData: NightStudyResponse?
     
-    public init(
+    init(
         data nightStudyData: NightStudyResponse?
     ) {
         self.nightStudyData = nightStudyData

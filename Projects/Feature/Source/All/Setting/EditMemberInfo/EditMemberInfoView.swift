@@ -22,10 +22,7 @@ struct EditMemberInfoView: View {
     @State private var isDialogPresented = false
     @State private var isPhotoPickerPresented = false
     
-    private let memberData: MemberResponse
-    
     init(memberData: MemberResponse) {
-        self.memberData = memberData
         self._viewModel = .init(
             wrappedValue: .init(
                 name: memberData.name,

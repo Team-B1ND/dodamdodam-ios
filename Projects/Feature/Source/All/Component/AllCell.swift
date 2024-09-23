@@ -9,13 +9,13 @@ import SwiftUI
 import DDS
 import Shared
 
-public struct AllCell: View {
+struct AllCell: View {
     
     private let title: String
     private let icon: DodamIconography
     private let action: () -> Void
     
-    public init(
+    init(
         _ title: String,
         icon: DodamIconography,
         action: @escaping () -> Void

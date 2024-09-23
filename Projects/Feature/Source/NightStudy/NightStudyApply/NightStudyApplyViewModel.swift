@@ -20,7 +20,6 @@ class NightStudyApplyViewModel: ObservableObject {
     @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 13, to: .now) ?? Date()
     
     @Published var doNeedPhone: Bool = false
-    @Published var isModalPresented: Bool = false
     
     @Published var nightStudyApplyFailed: Bool = false
     @Published var nightStudyApplyAlertMessage: String = "심야 자습 신청에 실패했습니다."
@@ -29,11 +28,6 @@ class NightStudyApplyViewModel: ObservableObject {
     @Inject var nightStudyRepository: any NightStudyRepository
     
     // MARK: - Method
-    @MainActor
-    func onAppear() async {
-        startAt = Date()
-        endAt = Date()
-    }
     
     @MainActor
     func postNightStudy() async {

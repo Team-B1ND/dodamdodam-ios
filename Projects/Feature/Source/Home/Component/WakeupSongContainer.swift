@@ -15,7 +15,7 @@ struct WakeupSongContainer: View {
     
     private let wakeupSongData: [WakeupSongResponse]?
     
-    public init(
+    init(
         data wakeupSongData: [WakeupSongResponse]?
     ) {
         self.wakeupSongData = wakeupSongData

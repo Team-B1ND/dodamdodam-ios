@@ -16,7 +16,6 @@ final class EditMemberInfoViewModel: ObservableObject {
     @Published var email: String
     @Published var profileImage: String?
     @Published var phone: String
-    @Published var editFailure = false
     @Published var isUploading = false
     
     var validInput: Bool {

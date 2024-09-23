@@ -9,7 +9,6 @@ import Foundation
 import Alamofire
 import SignKit
 import Domain
-import Shared
 import DIContainer
 
 class RemoteInterceptor: RequestInterceptor {

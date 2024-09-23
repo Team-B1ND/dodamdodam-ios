@@ -14,7 +14,6 @@ class NightStudyViewModel: ObservableObject {
     
     // MARK: - State
     @Published var nightStudyData: [NightStudyResponse]?
-    @Published var isShowingDeleteAlert: Bool = false
     
     // MARK: - Repository
     @Inject var nightStudyRepository: any NightStudyRepository
