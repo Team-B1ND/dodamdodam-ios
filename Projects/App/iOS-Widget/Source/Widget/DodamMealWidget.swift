@@ -82,55 +82,29 @@ struct MealWidgetContent: View {
             VStack(alignment: .leading, spacing: 0) {
                 if let meal {
                     if meal.details.isEmpty {
-                        Text("오늘은\n급식이 없어요")
-                            .font(.footnote)
-                            .multilineTextAlignment(.center)
-                            .foreground(DodamColor.Label.normal)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                        MealMenuText(text: "오늘은\n급식이 없어요", isMealEmpty: false)
                     } else {
-                        if (widgetFamily == .systemSmall) {
-                            VStack(alignment: .leading, spacing: 0) {
-                                ForEach(0..<(meal.details.count > 6 ? 6 : meal.details.count), id: \.self) { idx in
-                                    Text((meal.details.count > 6 && idx == 6) ? "..." : meal.details[idx].name)
-                                        .lineLimit(1)
-                                        .truncationMode(.tail)
-                                        .font(.caption)
-                                        .foreground(DodamColor.Label.normal)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                        HStack {
+                            if widgetFamily == .systemSmall {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    ForEach(0..<min(meal.details.count, 6), id: \.self) { idx in
+                                        MealMenuText(text: meal.details.count > 6 && idx == 6 ? "..." : meal.details[idx].name)
+                                    }
                                 }
-                            }
-                            .padding(8)
-                            .frame(maxHeight: .infinity)
-                            .background(DodamColor.Background.normal)
-                            .clipShape(.large)
-                        } else {
-                            HStack {
-                                let cutArray = cutArray(array: meal.details)
-                                ForEach(cutArray, id: \.self) { meals in
+                            } else {
+                                let splitArray = splitArray(array: meal.details, position: 6)
+                                ForEach(splitArray, id: \.self) { meals in
                                     VStack(alignment: .leading, spacing: 0) {
                                         ForEach(meals, id: \.self) { meal in
-                                            Text(meal.name)
-                                                .lineLimit(1)
-                                                .truncationMode(.tail)
-                                                .font(.caption)
-                                                .foreground(DodamColor.Label.normal)
-                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            MealMenuText(text: meal.name)
                                         }
                                     }
                                 }
                             }
-                            .padding(8)
-                            .frame(maxHeight: .infinity)
-                            .background(DodamColor.Background.normal)
-                            .clipShape(.large)
                         }
                     }
                 } else {
-                    Text("급식을\n불러올 수 없어요")
-                        .font(.footnote)
-                        .multilineTextAlignment(.center)
-                        .foreground(DodamColor.Label.normal)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                    MealMenuText(text: "급식을\n불러올 수 없어요", isMealEmpty: false)
                 }
             }
             .padding(8)
