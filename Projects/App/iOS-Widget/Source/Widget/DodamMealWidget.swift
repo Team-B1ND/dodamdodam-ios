@@ -37,6 +37,8 @@ struct DodamMealWidget: Widget {
 
 struct MealWidgetContent: View {
     
+    @Environment(\.widgetFamily) private var widgetFamily
+    
     private let entry: MealProvider.Entry
     
     init(entry: MealProvider.Entry) {
@@ -86,13 +88,41 @@ struct MealWidgetContent: View {
                             .foreground(DodamColor.Label.normal)
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                     } else {
-                        ForEach(meal.details, id: \.self) {
-                            Text($0.name)
-                                .lineLimit(1)
-                                .truncationMode(.tail)
-                                .font(.caption)
-                                .foreground(DodamColor.Label.normal)
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                        if (widgetFamily == .systemSmall) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                ForEach(0..<(meal.details.count > 6 ? 6 : meal.details.count), id: \.self) { idx in
+                                    Text((meal.details.count > 6 && idx == 6) ? "..." : meal.details[idx].name)
+                                        .lineLimit(1)
+                                        .truncationMode(.tail)
+                                        .font(.caption)
+                                        .foreground(DodamColor.Label.normal)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
+                            .padding(8)
+                            .frame(maxHeight: .infinity)
+                            .background(DodamColor.Background.normal)
+                            .clipShape(.large)
+                        } else {
+                            HStack {
+                                let cutArray = cutArray(array: meal.details)
+                                ForEach(cutArray, id: \.self) { meals in
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        ForEach(meals, id: \.self) { meal in
+                                            Text(meal.name)
+                                                .lineLimit(1)
+                                                .truncationMode(.tail)
+                                                .font(.caption)
+                                                .foreground(DodamColor.Label.normal)
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                    }
+                                }
+                            }
+                            .padding(8)
+                            .frame(maxHeight: .infinity)
+                            .background(DodamColor.Background.normal)
+                            .clipShape(.large)
                         }
                     }
                 } else {
