@@ -33,6 +33,7 @@ class HomeViewModel: ObservableObject {
     @Inject var outGoingRepository: any OutGoingRepository
     @Inject var outSleepingRepository: any OutSleepingRepository
     @Inject var nightStudyRepository: any NightStudyRepository
+    @Inject var scheduleRepository: any ScheduleRepository
     
     // MARK: - Method
     @MainActor
@@ -40,13 +41,14 @@ class HomeViewModel: ObservableObject {
         async let fetchBannerData: () = await fetchBannerData()
         async let fetchMealData: () = await fetchMealData()
         async let fetchWakeupSongData: () = await fetchWakeupSongData()
+        async let fetchScheduleData: () = await fetchSchedule()
         
         if Sign.isLoggedIn {
             async let fetchOutData: () = await fetchOutData()
             async let fetchNightStudy: () = await fetchNightStudy()
-            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData, fetchOutData, fetchNightStudy]
+            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData, fetchOutData, fetchNightStudy, fetchScheduleData]
         } else {
-            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData]
+            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData, fetchScheduleData]
         }
     }
     
@@ -63,6 +65,7 @@ class HomeViewModel: ObservableObject {
         outGoingData = nil
         outSleepingData = nil
         nightStudyData = nil
+        scheduleData = nil
     }
     
     @MainActor
@@ -156,6 +159,21 @@ class HomeViewModel: ObservableObject {
                 return
             }
             nightStudyData = earliestResponse
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func fetchSchedule() async {
+        let currentTime = Date.now
+        do {
+            scheduleData = try await scheduleRepository.fetchScheduleBetween(
+                .init(
+                    startAt: "\(currentTime[.year])-\(String(format: "%.2d", currentTime[.month]))-\(String(format: "%.2d", currentTime[.day]))",
+                    endAt: "\(currentTime[.year])-\(String(format: "%.2d", currentTime[.month]+1%12))-\(String(format: "%.2d", currentTime[.day]))"
+                )
+            )
         } catch let error {
             print(error)
         }
