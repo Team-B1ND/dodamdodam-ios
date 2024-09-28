@@ -10,11 +10,12 @@ import SignKit
 import Domain
 import DIContainer
 
-class OutViewModel: ObservableObject {
+class OutViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var outGoingData: [OutGoingResponse]?
     @Published var outSleepingData: [OutSleepingResponse]?
+    var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository
@@ -22,7 +23,7 @@ class OutViewModel: ObservableObject {
 
     // MARK: - Method
     @MainActor
-    func onAppear() async {
+    func fetchAllData() async {
         if Sign.isLoggedIn {
             await fetchOutData()
         }
@@ -31,7 +32,7 @@ class OutViewModel: ObservableObject {
     @MainActor
     func onRefresh() async {
         clearData()
-        await fetchOutData()
+        await fetchAllData()
     }
     
     @MainActor
