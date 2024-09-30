@@ -40,7 +40,6 @@ let project = Project(
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
                 .target(name: "DodamDodamWidget"),
-                .external(name: "FirebaseAnalytics"),
                 .external(name: "FirebaseMessaging")
             ]
         ),
