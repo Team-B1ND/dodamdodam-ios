@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension UINavigationController: UIGestureRecognizerDelegate {
+extension UINavigationController: UIKit.UIGestureRecognizerDelegate {
     
     override open func viewDidLoad() {
         super.viewDidLoad()

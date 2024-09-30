@@ -34,23 +34,7 @@ struct AllView: View {
                 if Sign.isLoggedIn {
                     HStack(spacing: 16) {
                         if let data = viewModel.memberData {
-                            if let profileImage = data.profileImage {
-                                CachedAsyncImage(url: URL(string: profileImage)) {
-                                    $0
-                                        .resizable()
-                                        .frame(width: 70, height: 70)
-                                } placeholder: {
-                                    Rectangle()
-                                        .frame(width: 70, height: 70)
-                                        .shimmer()
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
-                            } else {
-                                Image("Profile")
-                                    .resizable()
-                                    .frame(width: 70, height: 70)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                            }
+                            DodamAvatar.extraLarge(url: data.profileImage)
                             if let student = data.student {
                                 VStack(alignment: .leading) {
                                     Text("환영합니다, \(student.name)님")
@@ -64,7 +48,7 @@ struct AllView: View {
                         } else {
                             Rectangle()
                                 .frame(width: 70, height: 70)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipShape(.medium)
                                 .shimmer()
                             VStack(alignment: .leading) {
                                 Rectangle()
@@ -77,6 +61,7 @@ struct AllView: View {
                         }
                         Spacer()
                     }
+                    .padding(.bottom, 8)
                 } else {
                     Button {
                         dump(flow)
@@ -86,7 +71,7 @@ struct AllView: View {
                             Image("Profile")
                                 .resizable()
                                 .frame(width: 70, height: 70)
-                                .clipShape(RoundedRectangle(cornerRadius: 12))
+                                .clipShape(.medium)
                             Text("로그인하세요.")
                                 .headline(.bold)
                                 .foreground(DodamColor.Label.normal)
@@ -113,15 +98,12 @@ struct AllView: View {
                             presentLoginDialog()
                         }
                     }
-                    
                     AllCell("외출/외박 확인하기", icon: .tent) {
                         selection = 2
                     }
-                    
                     AllCell("기상송 확인하기", icon: .wakeupMegaphone) {
                         flow.push(WakeupSongView())
                     }
-                    
                     AllCell("기상송 신청하기", icon: .wakeupNote) {
                         if Sign.isLoggedIn {
                             flow.push(WakeupSongView(), animated: false)

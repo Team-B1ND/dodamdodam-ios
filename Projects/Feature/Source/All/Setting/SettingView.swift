@@ -7,7 +7,6 @@
 
 import SwiftUI
 import DDS
-import CachedAsyncImage
 import SignKit
 import FlowKit
 import Shared
@@ -24,31 +23,21 @@ struct SettingView: View {
                 if Sign.isLoggedIn {
                     HStack(spacing: 12) {
                         if let data = viewModel.memberData {
-                            if let profileImage = data.profileImage {
-                                CachedAsyncImage(url: URL(string: profileImage)) {
-                                    $0
-                                        .resizable()
-                                        .frame(width: 48, height: 48)
-                                } placeholder: {
-                                    Rectangle()
-                                        .frame(width: 48, height: 48)
-                                        .shimmer()
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 48))
-                            } else {
-                                Image("Profile")
-                                    .resizable()
-                                    .frame(width: 48, height: 48)
-                                    .clipShape(RoundedRectangle(cornerRadius: 48))
-                            }
+                            DodamAvatar.extraLarge(url: data.profileImage)
                             if let student = data.student {
                                 VStack(alignment: .leading) {
                                     Text("\(student.name)")
                                         .headline(.bold)
                                         .foreground(DodamColor.Label.normal)
-                                    Text("정보 수정은 곧 추가됩니다")
-                                        .label(.medium)
-                                        .foreground(DodamColor.Label.alternative)
+                                    Button {
+                                        flow.push(EditMemberInfoView(memberData: data))
+                                    } label: {
+                                        Text("정보 수정")
+                                            .underline()
+                                            .label(.medium)
+                                            .foreground(DodamColor.Label.alternative)
+                                    }
+                                    .scaledButtonStyle()
                                 }
                             }
                             Spacer()
@@ -56,7 +45,7 @@ struct SettingView: View {
                             Rectangle()
                                 .frame(width: 48, height: 48)
                                 .shimmer()
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(.extraSmall)
                             VStack(alignment: .leading) {
                                 Rectangle()
                                     .frame(width: 80, height: 24)
@@ -67,7 +56,7 @@ struct SettingView: View {
                             }
                         }
                     }
-                    .padding([.leading, .vertical], 8)
+                    .padding(.bottom, 8)
                     DodamDivider()
                         .padding(.horizontal, 8)
                 }

@@ -6,10 +6,7 @@
 //
 
 import Foundation
-import SwiftBok
 
-@Init()
-@Members()
 public struct Member: Codable, Hashable {
     
     public let createdAt: Date
@@ -20,4 +17,15 @@ public struct Member: Codable, Hashable {
     public let status: ActiveStatus
     public let profileImage: URL?
     public let phone: String
+    
+    public init(createdAt: Date, modifiedAt: Date?, id: String, name: String, role: Role, status: ActiveStatus, profileImage: URL?, phone: String) {
+        self.createdAt = createdAt
+        self.modifiedAt = modifiedAt
+        self.id = id
+        self.name = name
+        self.role = role
+        self.status = status
+        self.profileImage = profileImage
+        self.phone = phone
+    }
 }

@@ -33,7 +33,7 @@ struct NightStudyApplyView: View {
                 .padding(.horizontal, 8)
                 .focused($focused)
                 .overlay(alignment: .bottomLeading) {
-                    if(viewModel.reasonText.count < 10) {
+                    if viewModel.reasonText.count < 10 {
                         Text("10글자 이상 입력하세요")
                             .font(.system(size: 14, weight: .regular))
                             .foreground(DodamColor.Status.negative)

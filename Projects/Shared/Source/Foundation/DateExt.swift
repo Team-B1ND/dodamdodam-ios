@@ -15,6 +15,13 @@ public extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func parse(from: DateFormatterType) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = from.rawValue
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter.string(from: self)
+    }
+    
     var remainingTimeText: String {
         let now = Date()
         let components = Calendar.current.dateComponents([.day, .hour, .minute], from: now, to: self)
@@ -22,16 +29,16 @@ public extension Date {
         return if let days = components.day, days > 0 {
             "\(days)일"
         } else if let hours = components.hour, let minutes = components.minute {
-            minutes < 0 ? "0일" : "\(hours)시간 \(minutes)분"
+            minutes < 0 ? "하루" : "\(hours)시간 \(minutes)분"
         } else {
             "-"
         }
     }
     
-    subscript(components: Calendar.Component) -> Int? {
+    subscript(components: Calendar.Component) -> Int {
         var calendar = Calendar.current
         calendar.locale = .init(identifier: "ko_KR")
-        return calendar.dateComponents([components], from: self).value(for: components)
+        return calendar.dateComponents([components], from: self).value(for: components)!
     }
     
     func equals(_ other: Date, components: Set<Calendar.Component>) -> Bool {
@@ -55,9 +62,9 @@ public extension Date {
         }
     }
     
-    var range: Int? {
+    var range: Range<Int>? {
         let calendar = Calendar.current
-        return calendar.range(of: .day, in: .month, for: self)?.count
+        return calendar.range(of: .day, in: .month, for: self)
     }
     
     // self의 month를 기준으로 calendar 생성
@@ -74,7 +81,7 @@ public extension Date {
         
         // 날짜 배열 생성
         var days: [Date?] = Array(repeating: nil, count: firstWeekday - 1)
-        days += Array(1...(range ?? 0)).compactMap {
+        days += Array(1...(range?.count ?? 0)).compactMap {
             components.day = $0
             return calendar.date(from: components)
         }

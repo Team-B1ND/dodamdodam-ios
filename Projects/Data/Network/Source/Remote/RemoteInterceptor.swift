@@ -9,7 +9,6 @@ import Foundation
 import Alamofire
 import SignKit
 import Domain
-import Shared
 import DIContainer
 
 class RemoteInterceptor: RequestInterceptor {
@@ -25,11 +24,9 @@ class RemoteInterceptor: RequestInterceptor {
             return
         }
         
-        for path in notReissuePaths {
-            if urlRequest.url?.absoluteString.contains(path) ?? true {
-                completion(.success(urlRequest))
-                return
-            }
+        for path in notReissuePaths where urlRequest.url?.absoluteString.contains(path) ?? true {
+            completion(.success(urlRequest))
+            return
         }
         var modifiedRequest = urlRequest
         modifiedRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")

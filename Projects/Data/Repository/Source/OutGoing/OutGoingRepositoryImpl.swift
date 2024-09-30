@@ -7,12 +7,14 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct OutGoingRepositoryImpl: OutGoingRepository {
     
     let dataSource: OutGoingDataSource
+    
+    public init(dataSource: OutGoingDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func postOutGoing(_ request: PostOutGoingRequest) async throws {
         try await dataSource.postOutGoing(request)

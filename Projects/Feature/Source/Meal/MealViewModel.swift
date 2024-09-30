@@ -11,44 +11,36 @@ import DIContainer
 import Shared
 import Foundation
 
-class MealViewModel: ObservableObject {
+class MealViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
-    @Published var mealData: [MealResponse]?
+    @Published var mealData: [MealModel]?
     @Published var selectedDate: Date = .now
-    var selectedMeal: MealResponse? {
+    var selectedMeal: MealModel? {
         mealData?.first {
             $0.date.equals(selectedDate, components: [.year, .month, .day])
         }
     }
     @Published var selectedCalendar: Date = .now
+    var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
     @Inject var mealRepository: any MealRepository
     
     // MARK: - Method
     @MainActor
-    func onAppear() async {
+    func fetchAllData() async {
         await fetchMealData()
     }
     
     @MainActor
-    func onRefresh() async {
-        clearData()
-        await onAppear()
-    }
-    
-    func clearData() {
-        mealData = nil
-    }
-    
-    @MainActor
     func fetchMealData() async {
+        let currentTime = Date.now
         do {
             mealData = try await mealRepository.fetchMonthlyMeal(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month)
+                    year: currentTime[.year],
+                    month: currentTime[.month]
                 )
             )
         } catch let error {

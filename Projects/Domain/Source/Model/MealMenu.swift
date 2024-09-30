@@ -6,12 +6,14 @@
 //
 
 import Foundation
-import SwiftBok
 
-@Init()
-@Members()
 public struct MealMenu: Codable, Hashable {
     
     public let name: String
     public let allergies: [Int]
+    
+    public init(name: String, allergies: [Int]) {
+        self.name = name
+        self.allergies = allergies
+    }
 }

@@ -17,7 +17,8 @@ public extension DependencyProvider {
                 FlowAssembly(),
                 DataSourceAssembly(),
                 RemoteAssembly(),
-                RepositoryAssembly()
+                RepositoryAssembly(),
+                LocalAssembly()
             ],
             container: self.container
         )

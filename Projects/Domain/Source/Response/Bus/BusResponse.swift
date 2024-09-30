@@ -5,10 +5,6 @@
 //  Created by Mercen on 3/27/24.
 //
 
-import SwiftBok
-
-@Init()
-@Members()
 public struct BusResponse: ResponseProtocol {
     
     public let id: Int
@@ -18,4 +14,14 @@ public struct BusResponse: ResponseProtocol {
     public let applyCount: Int
     public let leaveTime: String
     public let timeRequired: String
+    
+    public init(id: Int, busName: String, description: String, peopleLimit: Int, applyCount: Int, leaveTime: String, timeRequired: String) {
+        self.id = id
+        self.busName = busName
+        self.description = description
+        self.peopleLimit = peopleLimit
+        self.applyCount = applyCount
+        self.leaveTime = leaveTime
+        self.timeRequired = timeRequired
+    }
 }

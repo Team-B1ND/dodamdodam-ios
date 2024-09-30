@@ -7,12 +7,14 @@
 
 import Domain
 import DataSource
-import SwiftBok
 
-@Init()
 public struct BannerRepositoryImpl: BannerRepository {
     
     let dataSource: BannerDataSource
+    
+    public init(dataSource: BannerDataSource) {
+        self.dataSource = dataSource
+    }
     
     public func fetchActiveBanner() async throws -> [BannerResponse] {
         try await dataSource.fetchActiveBanner()

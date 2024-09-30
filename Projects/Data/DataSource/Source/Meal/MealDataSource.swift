@@ -7,12 +7,13 @@
 
 import Network
 import Domain
-import SwiftBok
 
-@Init()
 public struct MealDataSource: DataSourceProtocol {
-    
     let remote: MealRemote
+    
+    public init(remote: MealRemote) {
+        self.remote = remote
+    }
     
     public func fetchMeal(_ request: FetchMealRequest) async throws -> MealResponse {
         let response = try await remote.fetchMeal(request)

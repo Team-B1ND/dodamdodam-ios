@@ -10,6 +10,7 @@ import DDS
 import SignKit
 import Shared
 import FlowKit
+import Domain
 
 struct HomeView: View {
     
@@ -29,14 +30,9 @@ struct HomeView: View {
                         data: viewModel.bannerData
                     )
                     DodamContainer.default(
-                        title: "오늘의 " + { () -> String in
-                            switch viewModel.mealIdx {
-                            case 0: return "아침"
-                            case 1: return "점심"
-                            case 2: return "저녁"
-                            default: return "급식"
-                            }
-                        }(),
+                        title: (MealType.from(.now) == nil ? "내일" : "오늘")
+                        + "의 "
+                        + (viewModel.mealType?.label ?? "급식"),
                         icon: Dodam.icon(.forkAndKnife)
                     ) {
                         Button {
@@ -44,9 +40,11 @@ struct HomeView: View {
                         } label: {
                             MealContainer(
                                 data: viewModel.mealData,
-                                mealIdx: $viewModel.mealIdx
+                                mealType: $viewModel.mealType
                             )
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(6)
+                            
                         }
                         .scaledButtonStyle()
                     }

@@ -8,7 +8,8 @@ let project = Project(
         developmentRegion: "ko"
     ),
     settings: .settings(
-        base: .init(),
+        base: .init()
+            .otherLinkerFlags(["$(inherited) -ObjC"]),
         configurations: [
             .debug(name: .debug),
             .release(name: .release)
@@ -52,7 +53,7 @@ let project = Project(
             infoPlist: .extendingDefault(with: [
                 "CFBundleDisplayName": "$(PRODUCT_NAME)",
                 "NSExtension": [
-                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension",
+                    "NSExtensionPointIdentifier": "com.apple.widgetkit-extension"
                 ]
             ]),
             sources: ["iOS-Widget/Source/**"],
@@ -65,6 +66,13 @@ let project = Project(
                 .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
                 .external(name: "DDS")
             ]
+        ),
+        .target(
+            name: "Aggregate",
+            destinations: [.iPhone],
+            product: .bundle,
+            bundleId: "com.b1nd.dodam.aggregate",
+            scripts: [.periphery]
         )
     ]
 )

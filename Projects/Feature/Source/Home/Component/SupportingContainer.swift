@@ -13,7 +13,7 @@ struct SupportingContainer: View {
     private let subTitle: String
     private let title: String
     
-    public init(
+    init(
         subTitle: String,
         title: String
     ) {

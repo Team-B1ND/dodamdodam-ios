@@ -8,7 +8,7 @@
 import Swinject
 import DataSource
 import Network
-import Repository
+import Local
 
 struct DataSourceAssembly: Assembly {
     
@@ -27,6 +27,10 @@ struct DataSourceAssembly: Assembly {
         
         container.register(MealDataSource.self) {
             .init(remote: $0.resolve(MealRemote.self)!)
+        }.inObjectScope(.container)
+        
+        container.register(LocalMealDataSource.self) {
+            .init(mealCache: $0.resolve(MealCache.self)!)
         }.inObjectScope(.container)
         
         container.register(MemberDataSource.self) {

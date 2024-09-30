@@ -14,7 +14,7 @@ struct OutStatusContainer: View {
     
     private let outData: OutGoingResponse?
     
-    public init(
+    init(
         data outData: OutGoingResponse?
     ) {
         self.outData = outData
@@ -42,8 +42,7 @@ struct OutStatusContainer: View {
                         DodamLinearProgressView(
                             progress: calculatingDateProgress(
                                 startAt: data.startAt,
-                                endAt: data.endAt,
-                                dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
+                                endAt: data.endAt
                             ),
                             isDisabled: data.status == .pending
                         )

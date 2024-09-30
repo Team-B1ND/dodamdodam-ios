@@ -8,11 +8,10 @@
 import SwiftUI
 import DDS
 import FlowKit
-import Shared
 
 struct RegisterAuthView: View {
     
-    @StateObject var viewModel = RegisterViewModel()
+    @EnvironmentObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {

@@ -13,21 +13,27 @@ import Shared
 struct MealContainer: View {
     
     @State private var pageSize: CGSize?
-    private let mealData: MealResponse?
-    @Binding var mealIdx: Int
+    private let mealData: MealModel?
+    @Binding var mealType: MealType?
 
-    public init(
-        data mealData: MealResponse?,
-        mealIdx: Binding<Int>
+    init(
+        data mealData: MealModel?,
+        mealType: Binding<MealType?>
     ) {
         self.mealData = mealData
-        self._mealIdx = mealIdx
+        self._mealType = mealType
     }
 
     var body: some View {
         if let data = mealData {
             if data.exists {
-                DodamPageView(selection: $mealIdx) {
+                DodamPageView(
+                    selection: .init {
+                        mealType?.rawValue ?? -1
+                    } set: {
+                        mealType = MealType(rawValue: $0)
+                    }
+                ) {
                     ForEach(data.meals, id: \.self) { meal in
                         let splitedArray = splitArray(array: meal.details)
                         HStack(alignment: .top) {
@@ -48,21 +54,9 @@ struct MealContainer: View {
                         .page()
                     }
                 }
-                .frame(height: pageSize?.height ?? 56)
+                .frame(height: pageSize?.height ?? 0 > 86 ? pageSize?.height ?? 0 : 86)
                 .onAppear {
-                    let currentTime = Date()
-                    let calendar = Calendar.current
-                    let components = calendar.dateComponents([.hour, .minute], from: currentTime)
-                    
-                    if let hour = components.hour, let minute = components.minute {
-                        if hour < 8 || (hour == 8 && minute < 30) {
-                            mealIdx = 0
-                        } else if hour < 13 || (hour == 13 && minute < 30) {
-                            mealIdx = 1
-                        } else {
-                            mealIdx = 2
-                        }
-                    }
+                    self.mealType = MealType.from(.now) ?? .breakfast
                 }
             } else {
                 SupportingContainer(

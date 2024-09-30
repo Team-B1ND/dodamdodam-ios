@@ -11,20 +11,22 @@ import DIContainer
 import Domain
 import Shared
 
-class HomeViewModel: ObservableObject {
+class HomeViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
-    @Published var mealIdx: Int = -1
+    @Published var mealType: MealType?
     @Published var isShowingAlert: Bool = false
     @Published var ringCount: Int = 0
     
     @Published var bannerData: [BannerResponse]?
-    @Published var mealData: MealResponse?
+    @Published var mealData: MealModel?
     @Published var wakeupSongData: [WakeupSongResponse]?
     @Published var nightStudyData: NightStudyResponse?
     @Published var outGoingData: OutGoingResponse?
     @Published var outSleepingData: OutSleepingResponse?
     @Published var scheduleData: [ScheduleResponse]?
+    
+    var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
     @Inject var bannerRepository: any BannerRepository
@@ -36,7 +38,7 @@ class HomeViewModel: ObservableObject {
     
     // MARK: - Method
     @MainActor
-    func onAppear() async {
+    func fetchAllData() async {
         async let fetchBannerData: () = await fetchBannerData()
         async let fetchMealData: () = await fetchMealData()
         async let fetchWakeupSongData: () = await fetchWakeupSongData()
@@ -53,7 +55,7 @@ class HomeViewModel: ObservableObject {
     @MainActor
     func onRefresh() async {
         clearData()
-        await onAppear()
+        await fetchAllData()
     }
     
     func clearData() {
@@ -76,12 +78,13 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchMealData() async {
+        let currentTime = Date.now
         do {
             mealData = try await mealRepository.fetchMeal(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month),
-                    day: getDate(.day)
+                    year: currentTime[.year],
+                    month: currentTime[.month],
+                    day: currentTime[.day]
                 )
             )
         } catch let error {
@@ -91,12 +94,13 @@ class HomeViewModel: ObservableObject {
     
     @MainActor
     func fetchWakeupSongData() async {
+        let currentTime = Date.now
         do {
             wakeupSongData = try await wakeupSongRepository.fetchAllowedWakeupSong(
                 .init(
-                    year: getDate(.year),
-                    month: getDate(.month),
-                    day: getDate(.day)
+                    year: currentTime[.year],
+                    month: currentTime[.month],
+                    day: currentTime[.day]
                 )
             )
         } catch let error {

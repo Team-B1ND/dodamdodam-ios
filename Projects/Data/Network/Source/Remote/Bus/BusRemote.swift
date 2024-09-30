@@ -7,12 +7,11 @@
 
 import Foundation
 import Domain
-import SwiftBok
 
-@Init()
 public struct BusRemote: RemoteProtocol {
-    
     typealias Target = BusService
+    
+    public init() {}
     
     public func fetchAllBus() async throws -> Response<[BusResponse]> {
         try await self.request(target: .fetchAllBus, res: [BusResponse].self)

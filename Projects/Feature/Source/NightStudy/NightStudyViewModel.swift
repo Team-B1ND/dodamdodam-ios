@@ -10,18 +10,18 @@ import SignKit
 import Domain
 import DIContainer
 
-class NightStudyViewModel: ObservableObject {
+class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var nightStudyData: [NightStudyResponse]?
-    @Published var isShowingDeleteAlert: Bool = false
+    var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
     @Inject var nightStudyRepository: any NightStudyRepository
 
     // MARK: - Method
     @MainActor
-    func onAppear() async {
+    func fetchAllData() async {
         if Sign.isLoggedIn {
             await fetchNightStudy()
         }
@@ -30,7 +30,7 @@ class NightStudyViewModel: ObservableObject {
     @MainActor
     func onRefresh() async {
         clearData()
-        await fetchNightStudy()
+        await fetchAllData()
     }
     
     func clearData() {

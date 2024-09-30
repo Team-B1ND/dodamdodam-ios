@@ -7,12 +7,13 @@
 
 import Network
 import Domain
-import SwiftBok
 
-@Init()
 public struct ScheduleDataSource: DataSourceProtocol {
-    
     let remote: ScheduleRemote
+    
+    public init(remote: ScheduleRemote) {
+        self.remote = remote
+    }
     
     public func fetchScheduleByPage(_ request: FetchScheduleByPageRequest) async throws -> [ScheduleResponse] {
         let response = try await remote.fetchScheduleByPage(request)

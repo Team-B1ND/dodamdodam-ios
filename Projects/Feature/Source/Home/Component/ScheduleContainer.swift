@@ -13,7 +13,7 @@ struct ScheduleContainer: View {
     
     private let scheduleData: [ScheduleResponse]?
     
-    public init(
+    init(
         data scheduleData: [ScheduleResponse]?
     ) {
         self.scheduleData = scheduleData

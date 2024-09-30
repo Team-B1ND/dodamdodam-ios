@@ -15,7 +15,7 @@ struct MealProvider: TimelineProvider {
     @Inject var mealRepository: any MealRepository
     func placeholder(in context: Context) -> MealEntry {
         
-        let meal = Meal(
+        let meal = MealDetail(
             details: [
                 .init(name: "퀴노아녹두죽", allergies: []),
                 .init(name: "채소샐러드", allergies: []),
@@ -28,7 +28,7 @@ struct MealProvider: TimelineProvider {
         )
         let entry = MealEntry(
             date: .now,
-            meal: MealResponse(
+            meal: MealModel(
                 exists: true,
                 date: .now,
                 breakfast: meal,
@@ -42,13 +42,13 @@ struct MealProvider: TimelineProvider {
     func getSnapshot(in context: Context, completion: @escaping (MealEntry) -> Void) {
         Task {
             var currentDate = Date.now
-            if getDate(.hour, date: currentDate) >= 20 {
+            if currentDate[.hour] >= 20 {
                 currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
             }
             do {
-                let year = getDate(.year, date: currentDate)
-                let month = getDate(.month, date: currentDate)
-                let day = getDate(.day, date: currentDate)
+                let year = currentDate[.year]
+                let month = currentDate[.month]
+                let day = currentDate[.day]
                 let request = FetchMealRequest(year: year, month: month, day: day)
                 let meal = try await mealRepository.fetchMeal(request)
                 let entry = MealEntry(
@@ -68,12 +68,18 @@ struct MealProvider: TimelineProvider {
         Task {
             var currentDate = Date()
             // 오후 8시가 지나면 다음날로
-            if getDate(.hour, date: currentDate) >= 20 {
+            if currentDate[.hour] >= 20 {
                 currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
             }
             
             do {
-                let meal = try await mealRepository.fetchMeal(.init(year: getDate(.year, date: currentDate), month: getDate(.month, date: currentDate), day: getDate(.day, date: currentDate)))
+                let meal = try await mealRepository.fetchMeal(
+                    .init(
+                        year: currentDate[.year],
+                        month: currentDate[.month],
+                        day: currentDate[.day]
+                    )
+                )
                 let entry = MealEntry(
                     date: currentDate,
                     meal: meal

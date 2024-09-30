@@ -5,12 +5,13 @@
 //  Created by Mercen on 3/27/24.
 //
 
-import SwiftBok
-
-@Init()
-@Members()
 public struct FetchScheduleBetweenRequest: RequestProtocol {
     
     public let startDate: String
     public let endDate: String
+    
+    public init(startDate: String, endDate: String) {
+        self.startDate = startDate
+        self.endDate = endDate
+    }
 }

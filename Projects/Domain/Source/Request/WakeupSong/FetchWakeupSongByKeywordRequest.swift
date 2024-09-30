@@ -5,11 +5,11 @@
 //  Created by Mercen on 4/1/24.
 //
 
-import SwiftBok
-
-@Init()
-@Members()
 public struct FetchWakeupSongByKeywordRequest: RequestProtocol {
     
     public let keyword: String
+    
+    public init(keyword: String) {
+        self.keyword = keyword
+    }
 }
