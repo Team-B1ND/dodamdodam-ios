@@ -11,7 +11,7 @@ import DIContainer
 import Shared
 import Foundation
 
-class MealViewModel: ObservableObject {
+class MealViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var mealData: [MealModel]?
@@ -22,13 +22,14 @@ class MealViewModel: ObservableObject {
         }
     }
     @Published var selectedCalendar: Date = .now
+    var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
     @Inject var mealRepository: any MealRepository
     
     // MARK: - Method
     @MainActor
-    func onAppear() async {
+    func fetchAllData() async {
         await fetchMealData()
     }
     

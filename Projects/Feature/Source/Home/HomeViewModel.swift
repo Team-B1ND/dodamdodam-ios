@@ -11,7 +11,7 @@ import DIContainer
 import Domain
 import Shared
 
-class HomeViewModel: ObservableObject {
+class HomeViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var mealType: MealType?
@@ -26,6 +26,8 @@ class HomeViewModel: ObservableObject {
     @Published var outSleepingData: OutSleepingResponse?
     @Published var scheduleData: [ScheduleResponse]?
     
+    var isFirstOnAppear: Bool = true
+    
     // MARK: - Repository
     @Inject var bannerRepository: any BannerRepository
     @Inject var mealRepository: any MealRepository
@@ -36,7 +38,7 @@ class HomeViewModel: ObservableObject {
     
     // MARK: - Method
     @MainActor
-    func onAppear() async {
+    func fetchAllData() async {
         async let fetchBannerData: () = await fetchBannerData()
         async let fetchMealData: () = await fetchMealData()
         async let fetchWakeupSongData: () = await fetchWakeupSongData()
@@ -53,7 +55,7 @@ class HomeViewModel: ObservableObject {
     @MainActor
     func onRefresh() async {
         clearData()
-        await onAppear()
+        await fetchAllData()
     }
     
     func clearData() {

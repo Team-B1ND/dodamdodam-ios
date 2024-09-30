@@ -10,17 +10,18 @@ import SignKit
 import Domain
 import DIContainer
 
-class AllViewModel: ObservableObject {
+class AllViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var memberData: MemberResponse?
+    var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
     @Inject var memberRepository: any MemberRepository
     
     // MARK: - Method
     @MainActor
-    func onAppear() async {
+    func fetchAllData() async {
         if Sign.isLoggedIn {
             await fetchMemberData()
         }
@@ -29,7 +30,7 @@ class AllViewModel: ObservableObject {
     @MainActor
     func onRefresh() async {
         clearData()
-        await onAppear()
+        await fetchAllData()
     }
     
     func clearData() {
