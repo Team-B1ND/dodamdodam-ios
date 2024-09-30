@@ -30,18 +30,19 @@ let project = Project(
                     "CFBundleVersion": "1",
                     "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
                     "UIMainStoryboardFile": "",
-                    "UILaunchStoryboardName": "LaunchScreen"
+                    "UILaunchStoryboardName": "LaunchScreen",
+                    "FirebaseAppDelegateProxyEnabled": .boolean(false)
                 ]
             ),
             sources: ["iOS/Source/**"],
             resources: ["iOS/Resource/**"],
+//            entitlements: .file(path: "iOS/Resource/DodamDodam.entitlements"),
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Feature", path: .relativeToRoot("Projects/Feature")),
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
-                .target(name: "DodamDodamWidget"),
-                .external(name: "FirebaseMessaging")
+                .target(name: "DodamDodamWidget")
             ]
         ),
         .target(

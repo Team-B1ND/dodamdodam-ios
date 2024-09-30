@@ -44,6 +44,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     
     // fcm 토큰이 등록 되었을 때
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        print("✅ AppDelegate.application.didRegisterForRemoteNotificationsWithDeviceToken - apnsToken \(deviceToken)")
         Messaging.messaging().apnsToken = deviceToken
     }
 }
@@ -51,13 +52,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 // Cloud Messaging...
 extension AppDelegate: MessagingDelegate {
     
-    // fcm 등록 토큰을 받았을 때
+    // fcm 등록 토큰이 갱신되었을 때
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         guard let fcmToken else {
             print("❌ AppDelegate.messaging.didReceiveRegistrationToken - FCM token is nil")
             return
         }
-        
+        print("✅ AppDelegate.Fmessaging.didReceiveRegistrationToken - fcmToken \(fcmToken)")
     }
 }
 

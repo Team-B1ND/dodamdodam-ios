@@ -9,6 +9,7 @@ import Combine
 import SignKit
 import DIContainer
 import Domain
+import FirebaseMessaging
 
 class LoginViewModel: ObservableObject {
     
@@ -28,8 +29,9 @@ class LoginViewModel: ObservableObject {
     func postLogin(_ completion: @escaping () -> Void) async {
         isShowingAlert = false
         do {
+            let pushToken = try await Messaging.messaging().token()
             _ = try await authRepository.postLogin(
-                .init(id: idText, pw: pwText)
+                .init(id: idText, pw: pwText, pushToken: pushToken)
             )
             completion()
         } catch let error {

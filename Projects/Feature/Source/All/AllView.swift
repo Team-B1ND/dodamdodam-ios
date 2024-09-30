@@ -64,7 +64,6 @@ struct AllView: View {
                     .padding(.bottom, 8)
                 } else {
                     Button {
-                        dump(flow)
                         flow.push(LoginView())
                     } label: {
                         HStack(spacing: 16) {
