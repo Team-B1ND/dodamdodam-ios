@@ -8,12 +8,10 @@
 import SwiftUI
 import DDS
 import FlowKit
-import Shared
 
 public struct MainView: View {
     
     @State var selection: Int = 0
-    @DodamDialog private var dialog
     
     public init() {}
     

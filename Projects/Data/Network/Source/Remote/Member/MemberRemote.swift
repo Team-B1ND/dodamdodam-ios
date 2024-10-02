@@ -6,12 +6,12 @@
 //
 
 import Domain
-import SwiftBok
 
-@Init()
 public struct MemberRemote: RemoteProtocol {
     
     typealias Target = MemberService
+    
+    public init() {}
     
     public func postJoin(_ request: PostJoinRequest) async throws -> DefaultResponse {
         try await self.request(target: .postJoin(request))

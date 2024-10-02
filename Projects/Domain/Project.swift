@@ -12,9 +12,7 @@ let project = Project(
             deploymentTargets: .iOS("15.0"),
             sources: ["Source/**"],
             scripts: [.swiftLint],
-            dependencies: [
-                .external(name: "SwiftBok")
-            ]
+            dependencies: []
         )
     ]
 )

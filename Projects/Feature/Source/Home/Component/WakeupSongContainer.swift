@@ -15,7 +15,7 @@ struct WakeupSongContainer: View {
     
     private let wakeupSongData: [WakeupSongResponse]?
     
-    public init(
+    init(
         data wakeupSongData: [WakeupSongResponse]?
     ) {
         self.wakeupSongData = wakeupSongData
@@ -33,11 +33,11 @@ struct WakeupSongContainer: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: 120, height: 67)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .clipShape(.medium)
                                 } placeholder: {
                                     Rectangle()
                                         .frame(width: 120, height: 67)
-                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                        .clipShape(.medium)
                                         .shimmer()
                                 }
                             }
@@ -60,17 +60,10 @@ struct WakeupSongContainer: View {
                 .frame(height: 80)
 
             } else {
-                if Sign.isLoggedIn {
-                    SupportingContainer(
-                        subTitle: "승인된 기상송이 없어요",
-                        title: "기상송 신청하기"
-                    )
-                } else {
-                    SupportingContainer(
-                        subTitle: "승인된 기상송이 없어요",
-                        title: "신청하려면 로그인하세요"
-                    )
-                }
+                SupportingContainer(
+                    subTitle: "승인된 기상송이 없어요",
+                    title: Sign.isLoggedIn ? "기상송 신청하기" : "신청하려면 로그인하세요"
+                )
             }
         } else {
             DodamLoadingView()

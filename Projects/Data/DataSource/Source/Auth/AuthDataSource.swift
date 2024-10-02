@@ -7,12 +7,13 @@
 
 import Domain
 import Network
-import SwiftBok
 
-@Init()
 public struct AuthDataSource: DataSourceProtocol {
-    
     let remote: AuthRemote
+    
+    public init(remote: AuthRemote) {
+        self.remote = remote
+    }
     
     public func postLogin(_ request: PostLoginRequest) async throws -> LoginResponse {
         let response = try await remote.postLogin(request)

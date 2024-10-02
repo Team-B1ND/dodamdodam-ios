@@ -8,7 +8,6 @@
 import SwiftUI
 import DDS
 import Domain
-import DIContainer
 import Shared
 
 struct OutGoingCell: View {
@@ -27,13 +26,7 @@ struct OutGoingCell: View {
     var body: some View {
         VStack(spacing: 12) {
             HStack {
-                DodamTag({
-                    switch outGoingData.status {
-                    case .allowed: "승인됨"
-                    case .pending: "대기중"
-                    case .rejected: "거절됨"
-                    }
-                }(), type: {
+                DodamTag(outGoingData.status.text, type: {
                     switch outGoingData.status {
                     case .allowed: .primary
                     case .pending: .secondary
@@ -82,8 +75,7 @@ struct OutGoingCell: View {
                     DodamLinearProgressView(
                         progress: calculatingDateProgress(
                             startAt: outGoingData.startAt,
-                            endAt: outGoingData.endAt,
-                            dateFormat: "yyyy-MM-dd'T'HH:mm:ss"
+                            endAt: outGoingData.endAt
                         ),
                         isDisabled: outGoingData.status == .pending
                     )

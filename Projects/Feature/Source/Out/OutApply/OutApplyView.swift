@@ -16,6 +16,7 @@ struct OutApplyView: View {
     @DodamDatePicker private var datePicker
     @StateObject var viewModel = OutApplyViewModel()
     @Flow var flow
+    @DodamDialog private var dialog
     
     // 0: 외출
     // 1: 외박
@@ -60,7 +61,6 @@ struct OutApplyView: View {
                         .scaledButtonStyle()
                     }
                     Button {
-                        // TODO: Improve code
                         if selected == 0 {
                             let timePicker = TimePicker(title: "외출 일시") {
                                 viewModel.startAt = self.timePicker.date
@@ -140,11 +140,31 @@ struct OutApplyView: View {
                 title: "확인"
             ) {
                 if selected == 0 {
-                    await viewModel.postOutGoing()
+                    let day = Calendar(identifier: .gregorian).dateComponents([.weekday], from: Date())
+                    let dialog = Dialog(title: "오늘 저녁 급식을 드시나요? 🥺")
+                        .message("급식 수요조사를 위해\n알려주시면 감사드리겠습니다")
+                        .primaryButton("네, 먹습니다") {
+                            Task {
+                                await viewModel.postOutGoing(dinnerOrNot: true)
+                            }
+                            flow.pop()
+                        }
+                        .secondaryButton("아니요") {
+                            Task {
+                                await viewModel.postOutGoing(dinnerOrNot: false)
+                            }
+                            flow.pop()
+                        }
+                    if day == DateComponents(weekday: 4) {
+                        self.dialog.present(dialog)
+                    } else {
+                        await viewModel.postOutGoing(dinnerOrNot: true)
+                        flow.pop()
+                    }
                 } else {
                     await viewModel.postOutSleeping()
+                    flow.pop()
                 }
-                flow.pop()
             }
             .disabled(
                 viewModel.reasonText.isEmpty ||

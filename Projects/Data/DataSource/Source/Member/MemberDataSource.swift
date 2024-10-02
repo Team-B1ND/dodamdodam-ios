@@ -7,12 +7,13 @@
 
 import Domain
 import Network
-import SwiftBok
 
-@Init()
 public struct MemberDataSource: DataSourceProtocol {
-    
     let remote: MemberRemote
+    
+    public init(remote: MemberRemote) {
+        self.remote = remote
+    }
     
     public func postJoin(_ request: PostJoinRequest) async throws {
         _ = try await remote.postJoin(request)

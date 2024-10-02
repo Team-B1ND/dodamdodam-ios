@@ -36,7 +36,8 @@ extension UploadService {
         case let .postUpload(data):
             let formData = MultipartFormData(
                 provider: .data(data),
-                name: UUID().uuidString
+                name: "file",
+                fileName: UUID().uuidString
             )
             return .uploadMultipart([formData])
         }

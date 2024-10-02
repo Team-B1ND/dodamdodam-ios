@@ -9,11 +9,11 @@ import SwiftUI
 import DDS
 import Domain
 
-public struct PointCell: View {
+struct PointCell: View {
     
     private let point: PointResponse
     
-    public init(point: PointResponse) {
+    init(point: PointResponse) {
         self.point = point
     }
     
