@@ -140,7 +140,7 @@ struct OutApplyView: View {
                 title: "확인"
             ) {
                 if selected == 0 {
-                    let day = Calendar(identifier: .gregorian).dateComponents([.weekday], from: Date())
+                    let day = Calendar(identifier: .gregorian).dateComponents([.weekday], from: viewModel.dateAt)
                     let dialog = Dialog(title: "오늘 저녁 급식을 드시나요? 🥺")
                         .message("급식 수요조사를 위해\n알려주시면 감사드리겠습니다")
                         .primaryButton("네, 먹습니다") {
