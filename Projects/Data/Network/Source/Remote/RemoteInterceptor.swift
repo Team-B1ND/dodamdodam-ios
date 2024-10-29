@@ -10,7 +10,6 @@ import Alamofire
 import SignKit
 import Domain
 import DIContainer
-import FirebaseMessaging
 
 class RemoteInterceptor: RequestInterceptor {
     
@@ -74,7 +73,10 @@ class RemoteInterceptor: RequestInterceptor {
                 if let id = Sign.id,
                    let pw = Sign.password {
                     do {
-                        let pushToken = try await Messaging.messaging().token()
+                        guard let pushToken = UserDefaults.standard.string(forKey: "pushToken") else {
+                            completion(.doNotRetryWithError(error))
+                            return
+                        }
                         _ = try await authRepository.postLogin(
                             .init(id: id, pw: pw, pushToken: pushToken)
                         )

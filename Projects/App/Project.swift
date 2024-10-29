@@ -31,17 +31,22 @@ let project = Project(
                     "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
                     "UIMainStoryboardFile": "",
                     "UILaunchStoryboardName": "LaunchScreen",
-                    "FirebaseAppDelegateProxyEnabled": .boolean(false)
+                    "FirebaseAppDelegateProxyEnabled": .boolean(false),
+                    "UIBackgroundModes": [
+                        "remote-notification",
+                        "fetch"
+                    ]
                 ]
             ),
             sources: ["iOS/Source/**"],
             resources: ["iOS/Resource/**"],
-//            entitlements: .file(path: "iOS/Resource/DodamDodam.entitlements"),
+            entitlements: .file(path: "iOS/Resource/DodamDodam.entitlements"),
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Feature", path: .relativeToRoot("Projects/Feature")),
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
+                .external(name: "FirebaseMessaging"),
                 .target(name: "DodamDodamWidget")
             ]
         ),

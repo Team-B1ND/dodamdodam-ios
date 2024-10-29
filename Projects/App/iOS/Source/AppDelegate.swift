@@ -58,7 +58,9 @@ extension AppDelegate: MessagingDelegate {
             print("❌ AppDelegate.messaging.didReceiveRegistrationToken - FCM token is nil")
             return
         }
-        print("✅ AppDelegate.Fmessaging.didReceiveRegistrationToken - fcmToken \(fcmToken)")
+        
+        print("✅ AppDelegate.messaging.didReceiveRegistrationToken - fcmToken \(fcmToken)")
+        UserDefaults.standard.setValue(fcmToken, forKey: "pushToken")
     }
 }
 
