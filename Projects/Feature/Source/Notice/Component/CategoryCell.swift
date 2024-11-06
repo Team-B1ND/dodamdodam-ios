@@ -10,18 +10,31 @@ import DDS
 import Shared
 
 struct CategoryCell: View {
+    @State private var selectedCategory: Int? = 0
+    
+    let categories: [String]
+    
     var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack (spacing: 8) {
-                CategoryButton("전체", type: .all)
-                ForEach(0..<3, id: \.self) { index in
-                    CategoryButton("테스트")
+        VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(0..<categories.count, id: \.self) { index in
+                        CategoryButton(
+                            categories[index],
+                            isSelected: selectedCategory == index
+                        ) {
+                            selectedCategory = index
+                        }
+                    }
                 }
             }
+            .padding(.leading, 16)
+            Divider()
         }
         .frame(maxWidth: .infinity)
         .frame(maxHeight: 58)
-        .padding(.leading, 16)
-        .padding(.vertical,12)
+        .padding(.vertical, 12)
+        .background(DodamColor.Background.neutral)
+        .padding(.top, -8)
     }
 }

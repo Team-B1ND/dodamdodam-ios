@@ -15,33 +15,38 @@ enum CategoryType {
 }
 
 struct CategoryButton: View {
-    
     private let title: String
-    private let type: CategoryType
+    private let isSelected: Bool
+    private let action: () -> Void
     
     init(
        _ title: String,
-        type: CategoryType = .normal
+       isSelected: Bool,
+       action: @escaping () -> Void
     ) {
         self.title = title
-        self.type = type
+        self.isSelected = isSelected
+        self.action = action
     }
     
-    public var body: some View {
-            Text(title)
-                .font(.label(.medium))
-                .padding(.vertical, 8)
-                .padding(.horizontal, 18)
-                .foreground(type == .normal ? DodamColor.Label.alternative : DodamColor.Static.white)
-                .background(type == .normal ? DodamColor.Background.normal : DodamColor.Primary.normal)
-                .cornerRadius(30)
-                .overlay(
-                    Group{
-                        if type == .normal {
-                            RoundedRectangle(cornerRadius: 30)
-                                .dodamStroke(DodamColor.Line.alternative, lineWidth: 1)
-                        }
+    var body: some View {
+        Text(title)
+            .font(.label(.medium))
+            .padding(.vertical, 8)
+            .padding(.horizontal, 18)
+            .foreground(isSelected ? DodamColor.Static.white :  DodamColor.Label.alternative)
+            .background(isSelected ? DodamColor.Primary.normal : DodamColor.Background.normal)
+            .cornerRadius(30)
+            .overlay(
+                Group {
+                    if !isSelected {
+                        RoundedRectangle(cornerRadius: 30)
+                            .dodamStroke(DodamColor.Line.alternative, lineWidth: 1)
                     }
-                 )
+                }
+            )
+            .onTapGesture {
+                action()
+            }
     }
 }
