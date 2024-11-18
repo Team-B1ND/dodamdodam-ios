@@ -11,16 +11,6 @@ import Domain
 
 extension RequestProtocol {
     
-    var host: URL {
-        .init(string: Constants.API)!
-    }
-    
-    var headers: [String: String]? {
-        var headers = ["Content-Type": "application/json"]
-        headers["Authorization"] = "" // TOKEN
-        return headers
-    }
-    
     func toRequestParameters(encoding: ParameterEncoding) -> Moya.Task {
         if let data = try? JSONEncoder().encode(self),
            let object = (try? JSONSerialization.jsonObject(

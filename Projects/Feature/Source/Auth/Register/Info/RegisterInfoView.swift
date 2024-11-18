@@ -16,7 +16,7 @@ struct RegisterInfoView: View {
     @Flow var flow
     
     var body: some View {
-        DodamTopAppBar.medium(
+        DodamScrollView.medium(
             title: { () -> String in
                 switch viewModel.infoStep {
                 case 0: "이름을\n입력해주세요"
@@ -25,76 +25,78 @@ struct RegisterInfoView: View {
                 default: "전화번호를\n입력해주세요"
                 }
             }()
-        )
-        VStack(alignment: .leading, spacing: 24) {
-            if viewModel.infoStep >= 3 {
-                DodamTextField.default(
-                    title: "전화번호",
-                    text: $viewModel.phoneText
-                )
-                .makeFirstResponder()
-                .keyboardType(.numberPad)
-                .onSubmit {
-                    viewModel.infoStep = 4
+        ) {
+            VStack(alignment: .leading, spacing: 24) {
+                if viewModel.infoStep >= 3 {
+                    DodamTextField.default(
+                        title: "전화번호",
+                        text: $viewModel.phoneText
+                    )
+                    .makeFirstResponder()
+                    .keyboardType(.numberPad)
+                    .onSubmit {
+                        viewModel.infoStep = 4
+                    }
+                    .transition(.slide)
+                    .animation(
+                        Animation.easeIn(duration: 0.2),
+                        value: viewModel.infoStep
+                    )
                 }
-                .transition(.slide)
-                .animation(
-                    Animation.easeIn(duration: 0.2),
-                    value: viewModel.infoStep
-                )
-            }
-            
-            if viewModel.infoStep >= 2 {
-                DodamTextField.default(
-                    title: "이메일",
-                    text: $viewModel.emailText
-                )
-                .makeFirstResponder()
-                .keyboardType(.emailAddress)
-                .onSubmit {
-                    viewModel.infoStep = 3
+                
+                if viewModel.infoStep >= 2 {
+                    DodamTextField.default(
+                        title: "이메일",
+                        text: $viewModel.emailText
+                    )
+                    .makeFirstResponder()
+                    .keyboardType(.emailAddress)
+                    .onSubmit {
+                        viewModel.infoStep = 3
+                    }
+                    .transition(.slide)
+                    .animation(
+                        Animation.easeIn(duration: 0.2),
+                        value: viewModel.infoStep
+                    )
                 }
-                .transition(.slide)
-                .animation(
-                    Animation.easeIn(duration: 0.2),
-                    value: viewModel.infoStep
-                )
-            }
-            
-            if viewModel.infoStep >= 1 {
-                DodamTextField.default(
-                    title: "학생정보",
-                    text: $viewModel.infoText
-                )
-                .makeFirstResponder()
-                .keyboardType(.numberPad)
-                .onSubmit {
-                    viewModel.infoStep = 2
+                
+                if viewModel.infoStep >= 1 {
+                    DodamTextField.default(
+                        title: "학생정보",
+                        text: $viewModel.infoText
+                    )
+                    .makeFirstResponder()
+                    .keyboardType(.numberPad)
+                    .onSubmit {
+                        viewModel.infoStep = 2
+                    }
+                    .transition(.slide)
+                    .animation(
+                        Animation.easeIn(duration: 0.2),
+                        value: viewModel.infoStep
+                    )
                 }
-                .transition(.slide)
-                .animation(
-                    Animation.easeIn(duration: 0.2),
-                    value: viewModel.infoStep
-                )
-            }
-            
-            if viewModel.infoStep >= 0 {
-                DodamTextField.default(
-                    title: "이름",
-                    text: $viewModel.nameText
-                )
-                .makeFirstResponder()
-                .onSubmit {
-                    viewModel.infoStep = 1
+                
+                if viewModel.infoStep >= 0 {
+                    DodamTextField.default(
+                        title: "이름",
+                        text: $viewModel.nameText
+                    )
+                    .makeFirstResponder()
+                    .onSubmit {
+                        viewModel.infoStep = 1
+                    }
+                    .transition(.slide)
+                    .animation(
+                        Animation.easeIn(duration: 0.2),
+                        value: viewModel.infoStep
+                    )
                 }
-                .transition(.slide)
-                .animation(
-                    Animation.easeIn(duration: 0.2),
-                    value: viewModel.infoStep
-                )
+                Spacer()
             }
-            Spacer()
-            
+        }
+        .safeAreaInset(edge: .bottom) {
             let info = viewModel.infoStep == 1 && viewModel.infoText.count >= 9
             let call = viewModel.infoStep == 3 && viewModel.phoneText.count == 13
             if info || call {
