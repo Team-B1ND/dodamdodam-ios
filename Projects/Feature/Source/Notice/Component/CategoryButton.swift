@@ -20,9 +20,9 @@ struct CategoryButton: View {
     private let action: () -> Void
     
     init(
-       _ title: String,
-       isSelected: Bool,
-       action: @escaping () -> Void
+        _ title: String,
+        isSelected: Bool,
+        action: @escaping () -> Void
     ) {
         self.title = title
         self.isSelected = isSelected
@@ -37,14 +37,12 @@ struct CategoryButton: View {
             .foreground(isSelected ? DodamColor.Static.white :  DodamColor.Label.alternative)
             .background(isSelected ? DodamColor.Primary.normal : DodamColor.Background.normal)
             .cornerRadius(30)
-            .overlay(
-                Group {
-                    if !isSelected {
-                        RoundedRectangle(cornerRadius: 30)
-                            .dodamStroke(DodamColor.Line.alternative, lineWidth: 1)
-                    }
+            .overlay{
+                if !isSelected {
+                    RoundedRectangle(cornerRadius: 30)
+                        .dodamStroke(DodamColor.Line.alternative, lineWidth: 1)
                 }
-            )
+            }
             .onTapGesture {
                 action()
             }
