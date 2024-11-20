@@ -66,6 +66,8 @@ public struct MealCache {
     public func deleteAll() throws {
         let realm = try Realm()
         let meals = realm.objects(MealEntity.self)
-        realm.delete(meals)
+        try realm.safeWrite {
+            realm.delete(meals)
+        }
     }
 }
