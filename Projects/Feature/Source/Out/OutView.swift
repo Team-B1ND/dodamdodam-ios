@@ -125,6 +125,11 @@ struct OutView: View {
             ))
         }
         .background(DodamColor.Background.neutral)
+        .onAppear {
+            Task {
+                await viewModel.onRefresh()
+            }
+        }
         .task {
             await viewModel.onAppear()
         }

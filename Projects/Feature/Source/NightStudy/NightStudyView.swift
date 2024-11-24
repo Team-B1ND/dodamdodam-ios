@@ -68,6 +68,11 @@ struct NightStudyView: View {
         }
         .borderSize(16)
         .background(DodamColor.Background.neutral)
+        .onAppear {
+            Task {
+                await viewModel.onRefresh()
+            }
+        }
         .task {
             await viewModel.onAppear()
         }
