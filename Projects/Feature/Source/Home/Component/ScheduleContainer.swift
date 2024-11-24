@@ -71,7 +71,7 @@ struct ScheduleContainer: View {
                         HStack {
                             Circle()
                                 .frame(width: 6, height: 6)
-                                .foregroundStyle(Color.init(0xffFFB5B5))
+                                .foregroundStyle(Color(0xffFFB5B5))
                             Text("\(data[idx].name)")
                             Spacer()
                         }
