@@ -172,8 +172,8 @@ class HomeViewModel: ObservableObject, OnAppearProtocol {
         do {
             scheduleData = try await scheduleRepository.fetchScheduleBetween(
                 .init(
-                    startAt: "\(currentTime[.year])-\(String(format: "%.2d", currentTime[.month]))-\(String(format: "%.2d", currentTime[.day]))",
-                    endAt: "\(currentTime[.year])-\(String(format: "%.2d", currentTime[.month]+1%12))-\(String(format: "%.2d", currentTime[.day]))"
+                    startAt: currentTime.parseString(format: "yyyy-MM-dd"),
+                    endAt: Calendar.current.date(byAdding: .month, value: 1, to: currentTime)?.parseString(format: "yyyy-MM-dd") ?? ""
                 )
             )
         } catch let error {
