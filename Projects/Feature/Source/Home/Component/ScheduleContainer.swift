@@ -50,16 +50,11 @@ struct ScheduleContainer: View {
                                 .foreground(DodamColor.Label.normal)
                             
                             let weekdayName = { (dateString: String) -> String in
-                                let dateFormatter = DateFormatter()
-                                dateFormatter.dateFormat = "yyyy-MM-dd"
-                                
-                                guard let date = dateFormatter.date(from: dateString) else {
+                                let dateHelper = Date()
+                                guard let date = dateHelper.from(string: dateString, format: "yyyy-MM-dd") else {
                                     return "알 수 없음"
                                 }
-                                
-                                let calendar = Calendar.current
-                                let weekdayIndex = calendar.component(.weekday, from: date)
-                                return calendar.weekdaySymbols[weekdayIndex - 1]
+                                return date.parseString(format: "EEEE")
                             }
                             
                             Text("\(weekdayName(data[idx].date[0]))")
