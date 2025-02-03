@@ -29,11 +29,12 @@ struct BusApplyCell: View {
             if bus.id == selectedBus?.id ?? 0 {
                 Image(icon: .checkmark)
                     .resizable()
-                    .frame(width: 32, height: 32)
+                    .frame(width: 20, height: 20)
                     .foreground(DodamColor.Primary.normal)
             }
         }
         .frame(height: 40)
         .padding(.horizontal, 8)
+        .animation(.spring(duration: 0.2), value: selectedBus)
     }
 }

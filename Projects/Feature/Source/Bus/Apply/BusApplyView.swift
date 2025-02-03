@@ -24,11 +24,9 @@ struct BusApplyView: View {
                     id: \.self
                 ) { bus in
                     Button {
-                        guard viewModel.selectedBus?.id ?? 0 != bus.id else {
+                        if viewModel.selectedBus?.id == bus.id {
                             viewModel.selectedBus = nil
-                            return
-                        }
-                        withAnimation(.spring(duration: 0.25)) {
+                        } else {
                             viewModel.selectedBus = bus
                         }
                     } label: {
@@ -52,8 +50,9 @@ struct BusApplyView: View {
             .padding([.bottom, .horizontal], 16)
         }
         .task {
-            await viewModel.fetchBuses()
-            await viewModel.fetchAppledBus()
+            async let fetchBuses: () = viewModel.fetchBuses()
+            async let fetchAppledBus: () = viewModel.fetchAppledBus()
+            _ = await [fetchBuses, fetchAppledBus]
         }
         .onChange(of: viewModel.showNotFoundBus) {
             if $0 {
@@ -66,7 +65,9 @@ struct BusApplyView: View {
         }
         .onChange(of: viewModel.dialogMessage) {
             let dialog = Dialog(title: $0)
-                .primaryButton("확인")
+                .primaryButton("확인") {
+                    flow.pop()
+                }
             self.dialog.present(dialog)
         }
     }

@@ -173,8 +173,5 @@ struct OutApplyView: View {
             .padding(.bottom, 8)
             .padding(.horizontal, 16)
         }
-        .task {
-            await viewModel.onAppear()
-        }
     }
 }
