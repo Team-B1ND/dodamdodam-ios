@@ -35,6 +35,7 @@ class HomeViewModel: ObservableObject, OnAppearProtocol {
     @Inject var outGoingRepository: any OutGoingRepository
     @Inject var outSleepingRepository: any OutSleepingRepository
     @Inject var nightStudyRepository: any NightStudyRepository
+    @Inject var scheduleRepository: any ScheduleRepository
     
     // MARK: - Method
     @MainActor
@@ -42,13 +43,14 @@ class HomeViewModel: ObservableObject, OnAppearProtocol {
         async let fetchBannerData: () = await fetchBannerData()
         async let fetchMealData: () = await fetchMealData()
         async let fetchWakeupSongData: () = await fetchWakeupSongData()
+        async let fetchScheduleData: () = await fetchSchedule()
         
         if Sign.isLoggedIn {
             async let fetchOutData: () = await fetchOutData()
             async let fetchNightStudy: () = await fetchNightStudy()
-            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData, fetchOutData, fetchNightStudy]
+            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData, fetchOutData, fetchNightStudy, fetchScheduleData]
         } else {
-            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData]
+            _ = await [fetchBannerData, fetchMealData, fetchWakeupSongData, fetchScheduleData]
         }
     }
     
@@ -65,6 +67,7 @@ class HomeViewModel: ObservableObject, OnAppearProtocol {
         outGoingData = nil
         outSleepingData = nil
         nightStudyData = nil
+        scheduleData = nil
     }
     
     @MainActor
@@ -158,6 +161,21 @@ class HomeViewModel: ObservableObject, OnAppearProtocol {
                 return
             }
             nightStudyData = earliestResponse
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func fetchSchedule() async {
+        let currentTime = Date.now
+        do {
+            scheduleData = try await scheduleRepository.fetchScheduleBetween(
+                .init(
+                    startAt: currentTime.parseString(format: "yyyy-MM-dd"),
+                    endAt: Calendar.current.date(byAdding: .month, value: 1, to: currentTime)?.parseString(format: "yyyy-MM-dd") ?? ""
+                )
+            )
         } catch let error {
             print(error)
         }

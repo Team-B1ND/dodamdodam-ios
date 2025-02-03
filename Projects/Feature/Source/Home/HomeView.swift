@@ -124,6 +124,9 @@ struct HomeView: View {
                             }
                         }
                     }
+                    DodamContainer.default(title: "가까운 일정", icon: Dodam.icon(.calendar)) {
+                        ScheduleContainer(data: viewModel.scheduleData)
+                    }
                 }
                 .padding(.horizontal, 16)
             }

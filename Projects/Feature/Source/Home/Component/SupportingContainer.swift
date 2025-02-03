@@ -34,6 +34,8 @@ struct SupportingContainer: View {
                 .minimumScaleFactor(0.7)
                 .foreground(DodamColor.Primary.normal)
         }
+        .padding(.top, 10)
+        .padding(.horizontal, 10)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
