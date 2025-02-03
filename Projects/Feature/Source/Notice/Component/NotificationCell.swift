@@ -74,8 +74,9 @@ struct NotificationCell: View {
                             ForEach(images, id: \.self) { imageName in
                                 Image(imageName)
                                     .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 170, height: 172)
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 348, height: 225)
+                                    .background(DodamColor.Fill.neutral)
                                     .cornerRadius(12)
                             }
                         }
