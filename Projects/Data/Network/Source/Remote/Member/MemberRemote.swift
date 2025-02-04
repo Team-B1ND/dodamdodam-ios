@@ -13,8 +13,12 @@ public struct MemberRemote: RemoteProtocol {
     
     public init() {}
     
-    public func postJoin(_ request: PostJoinRequest) async throws -> DefaultResponse {
-        try await self.request(target: .postJoin(request))
+    public func postStudentJoin(_ request: PostJoinStudentRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postJoinStudent(request))
+    }
+    
+    public func postParentJoin(_ request: PostJoinParentRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postJoinParent(request))
     }
     
     public func patchDeactivate() async throws -> DefaultResponse {

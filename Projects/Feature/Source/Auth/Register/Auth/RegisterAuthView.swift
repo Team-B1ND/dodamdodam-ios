@@ -89,7 +89,8 @@ struct RegisterAuthView: View {
                             [MainView()
                                 .toast(timeout: 3) {
                                     Text("회원가입에 성공했어요!")
-                                }]
+                                }
+                            ]
                         )
                     }
                 }

@@ -12,6 +12,7 @@ import DIContainer
 class RegisterViewModel: ObservableObject {
     
     // MARK: - State
+    @Published var selectedRole: Role?
     // - info
     @Published var infoStep: Int = 0
     @Published var nameText: String = ""
@@ -22,6 +23,7 @@ class RegisterViewModel: ObservableObject {
     @Published var phoneText: String = ""
     @Published var phoneCodeText: String = ""
     @Published var isSendPhoneCode: Bool = false
+    @Published var connectStudents: [ConnectStudent] = []
     
     // - auth
     @Published var authStep: Int = 0
@@ -35,19 +37,37 @@ class RegisterViewModel: ObservableObject {
     // MARK: - Method
     @MainActor
     func postJoin(_ completion: @escaping () -> Void) async {
+        guard let selectedRole else { return }
+        
         do {
-            _ = try await memberRepository.postJoin(
-                .init(
-                    id: idText,
-                    email: emailText,
-                    name: nameText,
-                    phone: phoneText,
-                    pw: pwText,
-                    grade: getNumbersFromString(studentInfoText)[0],
-                    room: getNumbersFromString(studentInfoText)[1],
-                    number: getNumbersFromString(studentInfoText)[2]
+            switch selectedRole {
+            case .student:
+                _ = try await memberRepository.postStudentJoin(
+                    .init(
+                        id: idText,
+                        pw: pwText,
+                        name: nameText,
+                        email: emailText,
+                        phone: phoneText,
+                        grade: getNumbersFromString(studentInfoText)[0],
+                        room: getNumbersFromString(studentInfoText)[1],
+                        number: getNumbersFromString(studentInfoText)[2]
+                    )
                 )
-            )
+            case .parent:
+                _ = try await memberRepository.postParentJoin(
+                    .init(
+                        id: idText,
+                        pw: pwText,
+                        name: nameText,
+                        relationInfo: connectStudents.map { $0.toRequest() },
+                        phone: phoneText,
+                        authCode: phoneCodeText
+                    )
+                )
+            default:
+                break
+            }
             completion()
         } catch let error {
             print(error)

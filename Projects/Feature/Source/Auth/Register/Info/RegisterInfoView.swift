@@ -12,7 +12,7 @@ import FlowKit
 
 struct RegisterInfoView: View {
     
-    @StateObject var viewModel = RegisterViewModel()
+    @EnvironmentObject var viewModel: RegisterViewModel
     @Flow var flow
     
     var body: some View {

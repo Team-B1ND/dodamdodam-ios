@@ -16,8 +16,12 @@ public struct MemberRepositoryImpl: MemberRepository {
         self.dataSource = dataSource
     }
     
-    public func postJoin(_ request: PostJoinRequest) async throws {
-        try await dataSource.postJoin(request)
+    public func postStudentJoin(_ request: PostJoinStudentRequest) async throws {
+        try await dataSource.postStudentJoin(request)
+    }
+    
+    public func postParentJoin(_ request: PostJoinParentRequest) async throws {
+        try await dataSource.postParentJoin(request)
     }
     
     public func patchDeactivate() async throws {

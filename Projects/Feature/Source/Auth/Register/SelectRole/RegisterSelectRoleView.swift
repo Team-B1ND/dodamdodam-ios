@@ -1,10 +1,21 @@
 import SwiftUI
 import DDS
 import FlowKit
+import Domain
+
+private extension Role {
+    var image: String? {
+        switch self {
+        case .student: "Student"
+        case .parent: "Parent"
+        default: nil
+        }
+    }
+}
 
 struct RegisterSelectRoleView: View {
     @Flow var flow
-    @State private var selectedIndex = 0
+    @StateObject var viewModel = RegisterViewModel()
     
     var body: some View {
         VStack(spacing: 0) {
@@ -14,25 +25,24 @@ struct RegisterSelectRoleView: View {
             VStack(alignment: .leading, spacing: 24) {
                 Spacer()
                 HStack(spacing: 8) {
-                    SelectRoleCell(selectedIndex: selectedIndex, index: 0) {
-                        selectedIndex = 0
-                    }
-                    SelectRoleCell(selectedIndex: selectedIndex, index: 1) {
-                        selectedIndex = 1
-                    }
+                    SelectRoleCell(selectedRole: $viewModel.selectedRole, role: .student)
+                    SelectRoleCell(selectedRole: $viewModel.selectedRole, role: .parent)
                 }
                 Spacer()
                 Spacer()
                 DodamButton.fullWidth(
                     title: "다음"
                 ) {
-                    if selectedIndex == 0 {
-                        flow.push(RegisterInfoView())
-                    } else {
-                        // TODO: 이후 학부모 선택 시 ChildrenManage 뷰로 이동
+                    switch viewModel.selectedRole {
+                    case .student:
+                        flow.push(RegisterInfoView().environmentObject(viewModel))
+                    case .parent:
+                        flow.push(ChildrenManageViewForRegister().environmentObject(viewModel))
+                    default:
+                        break
                     }
-                    
                 }
+                .disabled(viewModel.selectedRole == nil)
                 .padding(.bottom, 24)
             }
             .padding(.horizontal, 16)
@@ -44,29 +54,28 @@ struct RegisterSelectRoleView: View {
 private struct SelectRoleCell: View {
     @Namespace private var animation
     
-    private let selectedIndex: Int
-    private let index: Int
-    private let action: () -> Void
+    @Binding private var selectedRole: Role?
+    private let role: Role
     
     private var selected: Bool {
-        selectedIndex == index
+        selectedRole == role
     }
     
     init(
-        selectedIndex: Int,
-        index: Int,
-        action: @escaping () -> Void
+        selectedRole: Binding<Role?>,
+        role: Role
     ) {
-        self.selectedIndex = selectedIndex
-        self.index = index
-        self.action = action
+        self._selectedRole = selectedRole
+        self.role = role
     }
     
     var body: some View {
-        Button(action: action) {
+        Button {
+            selectedRole = role
+        } label: {
             VStack(spacing: 16) {
                 HStack(spacing: 4) {
-                    Text(index == 0 ? "학생" : "학부모")
+                    Text(role.korean)
                         .foreground(DodamColor.Label.normal)
                         .opacity(selected ? 1 : 0.5)
                         .font(selected ? .body1(.bold) : .body1(.medium))
@@ -79,7 +88,7 @@ private struct SelectRoleCell: View {
                             .foreground(DodamColor.Primary.normal)
                     }
                 }
-                Image(index == 0 ? "Student" : "Parent")
+                Image(role.image!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 128, height: 128)
@@ -98,7 +107,7 @@ private struct SelectRoleCell: View {
                     )
             }
         }
-        .animation(.spring(duration: 0.4), value: selectedIndex)
+        .animation(.spring(duration: 0.4), value: selectedRole)
     }
 }
 

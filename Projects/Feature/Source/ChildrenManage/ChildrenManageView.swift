@@ -9,11 +9,28 @@ import SwiftUI
 import DDS
 import FlowKit
 import Shared
+import Domain
 
-struct ChildrenManageView: View {
-    @State private var children = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+private let relations = ["부", "모", "조부", "조모"]
+
+struct ChildrenManageViewForRegister: View {
+    @EnvironmentObject private var viewModel: RegisterViewModel
+    @Flow private var flow
+    
+    var body: some View {
+        ContentView(children: $viewModel.connectStudents) {
+            flow.replace([
+                RegisterInfoView().environmentObject(viewModel)
+            ])
+        }
+    }
+}
+
+private struct ContentView: View {
+    @StateObject private var viewModel = ChildrenManageViewModel()
+    @Binding var children: [ConnectStudent]
+    let completion: () -> Void
     @State private var isSheetPresented = false
-    @State private var studentCode = ""
     
     var body: some View {
         DodamScrollView.medium(
@@ -21,7 +38,7 @@ struct ChildrenManageView: View {
         ) {
             LazyVGrid(columns: [GridItem(), GridItem()], spacing: 12) {
                 ForEach(children, id: \.self) { child in
-                    ChildCell()
+                    ChildCell(child: child)
                 }
                 Button {
                     isSheetPresented = true
@@ -50,14 +67,13 @@ struct ChildrenManageView: View {
             DodamButton.fullWidth(
                 title: "다음"
             ) {
-                // 1. request
-                // 2. dismiss
+                completion()
             }
             .padding(.bottom, 24)
             .padding(.horizontal, 16)
         }
-        .dodamSheet(isPresented: $isSheetPresented) {
-            GeometryReader { proxy in
+        .sheet(isPresented: $isSheetPresented) {
+            ScrollView {
                 VStack(spacing: 16) {
                     VStack(spacing: 8) {
                         HStack {
@@ -65,28 +81,69 @@ struct ChildrenManageView: View {
                                 .font(.heading2(.bold))
                                 .foreground(DodamColor.Label.normal)
                             Spacer()
-                            DodamTextButton.large(title: "등록") {
-                                // TODO: handle
+                            DodamTextButton.large(
+                                title: "등록",
+                                color: DodamColor.Primary.normal
+                            ) {
+                                guard let child = await viewModel.getChild() else { return }
+                                children.append(child)
                             }
                         }
-                        Text("자녀의 앱에서 ‘전체 > 내 학생 코드 보기’ 탭에서 확인할 수 있어요")
+                        Text("자녀의 앱에서 '전체 > 내 학생 코드 보기' 탭에서 확인할 수 있어요")
                             .font(.body1(.bold))
                             .foreground(DodamColor.Label.alternative)
                     }
                     DodamTextField.default(
                         title: "학생 코드",
-                        text: $studentCode
+                        text: $viewModel.studentCode
                     )
+                    VStack(spacing: 4) {
+                        Text("학생과의 관계")
+                            .font(.label(.medium))
+                            .foreground(DodamColor.Label.assistive)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        ForEach(relations, id: \.self) {
+                            RelationCell(
+                                selectedRelation: viewModel.relation,
+                                relation: $0,
+                                isETCMode: viewModel.isETCMode
+                            ) { relation in
+                                self.viewModel.relation = relation
+                                self.viewModel.isETCMode = false
+                            }
+                        }
+                        VStack(spacing: 0) {
+                            RelationCell(
+                                selectedRelation: viewModel.relation,
+                                relation: "기타",
+                                isETCMode: viewModel.isETCMode
+                            ) { _ in
+                                self.viewModel.relation = nil
+                                self.viewModel.isETCMode = true
+                            }
+                            if viewModel.isETCMode {
+                                DodamTextField.default(
+                                    text: .init {
+                                        self.viewModel.relation ?? ""
+                                    } set: {
+                                        self.viewModel.relation = $0
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
-                .frame(height: proxy.size.height * 0.8)
+                .padding(24)
             }
         }
     }
 }
 
 private struct ChildCell: View {
+    let child: ConnectStudent
+    
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 6) {
             Spacer()
             DodamAvatar.extraLarge(url: "")
             Text("Name")
@@ -97,5 +154,28 @@ private struct ChildCell: View {
         .frame(maxWidth: .infinity)
         .background(DodamColor.Background.normal)
         .clipShape(.medium)
+    }
+}
+
+private struct RelationCell: View {
+    let selectedRelation: String?
+    let relation: String
+    let isETCMode: Bool
+    let action: (_ relation: String) -> Void
+    
+    var body: some View {
+        HStack {
+            Text(relation)
+                .font(.headline(.medium))
+                .foreground(DodamColor.Label.alternative)
+            Spacer()
+            DodamCheckbox(
+                isChecked: .init {
+                    (isETCMode && relation == "기타") || relation == selectedRelation
+                } set: { _ in
+                    action(relation)
+                }
+            )
+        }
     }
 }

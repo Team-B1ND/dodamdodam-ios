@@ -7,7 +7,9 @@
 
 public protocol MemberRepository: RepositoryProtocol {
     
-    func postJoin(_ request: PostJoinRequest) async throws
+    func postStudentJoin(_ request: PostJoinStudentRequest) async throws
+    
+    func postParentJoin(_ request: PostJoinParentRequest) async throws
     
     func patchDeactivate() async throws
     

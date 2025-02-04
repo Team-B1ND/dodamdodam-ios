@@ -15,8 +15,12 @@ public struct MemberDataSource: DataSourceProtocol {
         self.remote = remote
     }
     
-    public func postJoin(_ request: PostJoinRequest) async throws {
-        _ = try await remote.postJoin(request)
+    public func postStudentJoin(_ request: PostJoinStudentRequest) async throws {
+        _ = try await remote.postStudentJoin(request)
+    }
+    
+    public func postParentJoin(_ request: PostJoinParentRequest) async throws {
+        _ = try await remote.postParentJoin(request)
     }
     
     public func patchDeactivate() async throws {
