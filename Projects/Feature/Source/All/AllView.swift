@@ -81,6 +81,7 @@ struct AllView: View {
                     .scaledButtonStyle()
                 }
                 VStack(spacing: 12) {
+                    //student
                     AllCell("내 상벌점 보기", icon: .barChart) {
                         if Sign.isLoggedIn {
                             flow.push(PointView())
@@ -112,6 +113,14 @@ struct AllView: View {
                             presentLoginDialog()
                         }
                     }
+                    
+                    //parent
+//                    AllCell("내 자녀 관리", icon: .smilingFace) {
+//                        //
+//                    }
+//                    AllCell("그룹", icon: .handshake) {
+//                        //
+//                    }
                 }
             }
             .padding([.top, .horizontal], 16)
