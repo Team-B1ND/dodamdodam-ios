@@ -11,6 +11,7 @@ import FlowKit
 
 struct DivisionView: View {
     @Flow private var flow
+    @StateObject private var viewModel = DivisionViewModel()
     
     var body: some View {
         DodamScrollView.small(
@@ -20,19 +21,29 @@ struct DivisionView: View {
                 Section {
                     DodamTopTabView {
                         LazyVStack(spacing: 12) {
-                            ForEach(["B1ND", "B2ND", "B3ND"], id: \.self) {
-                                DivisionCell(name: $0) {
-                                    // TODO: navigate to detail
+                            if let divisions = viewModel.searchedMyDivisions {
+                                ForEach(divisions, id: \.self) {
+                                    DivisionCell(for: $0) {
+                                        // TODO: navigate to detail
+                                    }
                                 }
+                            } else {
+                                DodamLoadingView()
+                                    .padding(.vertical, 40)
                             }
                         }
                         .padding(8)
                         .page(.text("내 그룹"))
                         LazyVStack(spacing: 12) {
-                            ForEach(["B1ND", "B2ND", "B3ND"], id: \.self) {
-                                DivisionCell(name: $0) {
-                                    // TODO: navigate to detail view
+                            if let divisions = viewModel.searchedDivisions {
+                                ForEach(divisions, id: \.self) {
+                                    DivisionCell(for: $0) {
+                                        // TODO: navigate to detail
+                                    }
                                 }
+                            } else {
+                                DodamLoadingView()
+                                    .padding(.vertical, 40)
                             }
                         }
                         .padding(8)
@@ -42,7 +53,7 @@ struct DivisionView: View {
                 } header: {
                     DodamTextField.default(
                         title: "그룹 검색",
-                        text: .constant("")
+                        text: $viewModel.searchText
                     )
                     .padding(.vertical, 8)
                     .padding(.horizontal, 16)
@@ -55,5 +66,8 @@ struct DivisionView: View {
             flow.push(CreateDivisionView())
         }
         .background(DodamColor.Background.normal)
+        .task {
+            await viewModel.onAppear()
+        }
     }
 }

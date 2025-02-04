@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Shared
 
 public struct DivisionOverviewResponse: ResponseProtocol {
     public let id: Int

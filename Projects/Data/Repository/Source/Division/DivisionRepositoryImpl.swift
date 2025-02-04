@@ -11,6 +11,10 @@ import DataSource
 public struct DivisionRepositoryImpl: DivisionRepository {
     let dataSource: DivisionDataSource
     
+    public init(dataSource: DivisionDataSource) {
+        self.dataSource = dataSource
+    }
+    
     public func createDivision(_ request: PostDivisionRequest) async throws {
         try await dataSource.createDivision(request)
     }
