@@ -37,7 +37,7 @@ struct CategoryButton: View {
             .foreground(isSelected ? DodamColor.Static.white :  DodamColor.Label.alternative)
             .background(isSelected ? DodamColor.Primary.normal : DodamColor.Background.normal)
             .cornerRadius(30)
-            .overlay{
+            .overlay {
                 if !isSelected {
                     RoundedRectangle(cornerRadius: 30)
                         .dodamStroke(DodamColor.Line.alternative, lineWidth: 1)
