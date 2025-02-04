@@ -22,17 +22,55 @@ struct RegisterInfoView: View {
                 case 0: "이름을\n입력해주세요"
                 case 1: "학생정보를\n입력해주세요"
                 case 2: "이메일을\n입력해주세요"
-                default: "전화번호를\n입력해주세요"
+                case 3: "이메일을\n인증해주세요"
+                case 4: "전화번호를\n입력해주세요"
+                default: "전화번호를\n인증해주세요"
                 }
             }()
         ) {
             VStack(alignment: .leading, spacing: 24) {
-                if viewModel.infoStep >= 3 {
+                if viewModel.infoStep >= 5 {
+                    DodamTextField.default(
+                        title: "전화번호 인증코드",
+                        text: $viewModel.phoneCodeText
+                    )
+                    .makeFirstResponder()
+                    .maxLength($viewModel.phoneCodeText, length: 6)
+                    .keyboardType(.numberPad)
+                    .onSubmit {
+                        viewModel.infoStep = 6
+                    }
+                    .transition(.slide)
+                    .animation(
+                        Animation.easeIn(duration: 0.2),
+                        value: viewModel.infoStep
+                    )
+                }
+                
+                if viewModel.infoStep >= 4 {
                     DodamTextField.default(
                         title: "전화번호",
                         text: $viewModel.phoneText
                     )
                     .makeFirstResponder()
+                    .keyboardType(.numberPad)
+                    .onSubmit {
+                        viewModel.infoStep = 5
+                    }
+                    .transition(.slide)
+                    .animation(
+                        Animation.easeIn(duration: 0.2),
+                        value: viewModel.infoStep
+                    )
+                }
+                
+                if viewModel.infoStep >= 3 {
+                    DodamTextField.default(
+                        title: "이메일 인증코드",
+                        text: $viewModel.emailCodeText
+                    )
+                    .makeFirstResponder()
+                    .maxLength($viewModel.emailCodeText, length: 6)
                     .keyboardType(.numberPad)
                     .onSubmit {
                         viewModel.infoStep = 4
@@ -64,7 +102,7 @@ struct RegisterInfoView: View {
                 if viewModel.infoStep >= 1 {
                     DodamTextField.default(
                         title: "학생정보",
-                        text: $viewModel.infoText
+                        text: $viewModel.studentInfoText
                     )
                     .makeFirstResponder()
                     .keyboardType(.numberPad)
@@ -95,28 +133,71 @@ struct RegisterInfoView: View {
                 }
                 Spacer()
             }
+            .padding(.horizontal, 16)
         }
         .safeAreaInset(edge: .bottom) {
-            let info = viewModel.infoStep == 1 && viewModel.infoText.count >= 9
-            let call = viewModel.infoStep == 3 && viewModel.phoneText.count == 13
-            if info || call {
-                DodamButton.fullWidth(
-                    title: "다음"
-                ) {
-                    if info {
-                        viewModel.infoStep = 2
-                    } else {
-                        flow.push(
-                            RegisterAuthView().environmentObject(viewModel)
-                        )
+            Group {
+                let isNotEmptyStudentInfo = viewModel.infoStep == 1 && viewModel.studentInfoText.count >= 9
+                let isNotEmptyPhoneCode = viewModel.infoStep == 4 && viewModel.phoneText.count == 13
+                if isNotEmptyStudentInfo || isNotEmptyPhoneCode {
+                    DodamButton.fullWidth(
+                        title: "다음"
+                    ) {
+                        if isNotEmptyStudentInfo {
+                            viewModel.infoStep = 2
+                        } else if isNotEmptyPhoneCode {
+                            viewModel.infoStep = 5
+                        }
                     }
                 }
-                .padding(.bottom, 24)
+                
+                if viewModel.infoStep == 3 {
+                    if viewModel.isSendEmailCode {
+                        DodamButton.fullWidth(
+                            title: "인증"
+                        ) {
+                            viewModel.verifyEmailCode {
+                                viewModel.infoStep = 4
+                            }
+                        }
+                        .disabled(viewModel.emailCodeText.count < 6)
+                    } else {
+                        DodamButton.fullWidth(
+                            title: "이메일 인증코드 전송"
+                        ) {
+                            viewModel.sendEmailCode()
+                        }
+                    }
+                }
+                
+                if viewModel.infoStep == 5 {
+                    if viewModel.isSendPhoneCode {
+                        DodamButton.fullWidth(
+                            title: "인증"
+                        ) {
+                            viewModel.verifyPhoneCode {
+                                flow.push(
+                                    RegisterAuthView()
+                                        .environmentObject(viewModel)
+                                )
+                            }
+                        }
+                        .disabled(viewModel.phoneCodeText.count < 6)
+                    } else {
+                        DodamButton.fullWidth(
+                            title: "전화번호 인증코드 전송"
+                        ) {
+                            viewModel.sendPhoneCode()
+                        }
+                    }
+                }
             }
+            .padding(.bottom, 24)
+            .padding(.horizontal, 16)
         }
-        .onChange(of: viewModel.infoText) {
+        .onChange(of: viewModel.studentInfoText) {
             if let infoText = FormatUtil.formatMemberInfo($0) {
-                viewModel.infoText = infoText
+                viewModel.studentInfoText = infoText
             }
         }
         .onChange(of: viewModel.phoneText) {
@@ -124,7 +205,6 @@ struct RegisterInfoView: View {
                 viewModel.phoneText = phoneText
             }
         }
-        .padding(.horizontal, 16)
     }
 }
 

@@ -12,12 +12,19 @@ import DIContainer
 class RegisterViewModel: ObservableObject {
     
     // MARK: - State
+    // - info
     @Published var infoStep: Int = 0
-    @Published var authStep: Int = 0
-    @Published var phoneText: String = ""
-    @Published var infoText: String = ""
-    @Published var emailText: String = ""
     @Published var nameText: String = ""
+    @Published var studentInfoText: String = ""
+    @Published var emailText: String = ""
+    @Published var emailCodeText: String = ""
+    @Published var isSendEmailCode: Bool = false
+    @Published var phoneText: String = ""
+    @Published var phoneCodeText: String = ""
+    @Published var isSendPhoneCode: Bool = false
+    
+    // - auth
+    @Published var authStep: Int = 0
     @Published var idText: String = ""
     @Published var pwText: String = ""
     @Published var checkPwText: String = ""
@@ -36,15 +43,39 @@ class RegisterViewModel: ObservableObject {
                     name: nameText,
                     phone: phoneText,
                     pw: pwText,
-                    grade: getNumbersFromString(infoText)[0],
-                    room: getNumbersFromString(infoText)[1],
-                    number: getNumbersFromString(infoText)[2]
+                    grade: getNumbersFromString(studentInfoText)[0],
+                    room: getNumbersFromString(studentInfoText)[1],
+                    number: getNumbersFromString(studentInfoText)[2]
                 )
             )
             completion()
         } catch let error {
             print(error)
         }
+    }
+    
+    @MainActor
+    func sendEmailCode() {
+        self.isSendEmailCode = true
+        // TODO: Handle
+    }
+    
+    @MainActor
+    func verifyEmailCode(completion: @escaping () -> Void) {
+        // TODO: Handle
+        completion()
+    }
+    
+    @MainActor
+    func sendPhoneCode() {
+        self.isSendPhoneCode = true
+        // TODO: Handle
+    }
+    
+    @MainActor
+    func verifyPhoneCode(completion: @escaping () -> Void) {
+        // TODO: Handle
+        completion()
     }
     
     private func getNumbersFromString(_ infoText: String) -> [Int] {
