@@ -10,11 +10,34 @@ import Domain
 import DIContainer
 
 class RegisterViewModel: ObservableObject {
+    enum InfoStep: Int, Comparable {
+        case name = 0
+        case studentInfo
+        case phone
+        case phoneCode
+        case email
+        case emailCode
+        
+        static func < (lhs: Self, rhs: Self) -> Bool {
+            return lhs.rawValue < rhs.rawValue
+        }
+    }
+    
+    enum AuthStep: Int, Comparable {
+        case id = 0
+        case pw
+        case checkPw
+        case finished
+        
+        static func < (lhs: Self, rhs: Self) -> Bool {
+            return lhs.rawValue < rhs.rawValue
+        }
+    }
     
     // MARK: - State
     @Published var selectedRole: Role?
     // - info
-    @Published var infoStep: Int = 0
+    @Published var infoStep: InfoStep = .name
     @Published var nameText: String = ""
     @Published var studentInfoText: String = ""
     @Published var emailText: String = ""
@@ -26,7 +49,7 @@ class RegisterViewModel: ObservableObject {
     @Published var connectStudents: [ConnectStudent] = []
     
     // - auth
-    @Published var authStep: Int = 0
+    @Published var authStep: AuthStep = .id
     @Published var idText: String = ""
     @Published var pwText: String = ""
     @Published var checkPwText: String = ""

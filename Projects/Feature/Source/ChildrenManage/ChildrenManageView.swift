@@ -19,9 +19,9 @@ struct ChildrenManageViewForRegister: View {
     
     var body: some View {
         ContentView(children: $viewModel.connectStudents) {
-            flow.replace([
+            flow.push(
                 RegisterInfoView().environmentObject(viewModel)
-            ])
+            )
         }
     }
 }
@@ -71,6 +71,9 @@ private struct ContentView: View {
             }
             .padding(.bottom, 24)
             .padding(.horizontal, 16)
+        }
+        .onAppear {
+            self.isSheetPresented = true
         }
         .sheet(isPresented: $isSheetPresented) {
             ScrollView {
