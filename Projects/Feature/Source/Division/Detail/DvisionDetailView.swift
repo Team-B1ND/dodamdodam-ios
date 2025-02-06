@@ -66,9 +66,14 @@ struct DvisionDetailView: View {
                         .frame(width: 1, height: 20)
                         .foreground(DodamColor.Line.alternative)
                     Spacer()
-                    Text("멤버 추가")
-                        .headline(.bold)
-                        .foreground(DodamColor.Label.strong)
+                    Button {
+                        flow.push(DivisionAddMember())
+                    } label: {
+                        Text("멤버 추가")
+                            .headline(.bold)
+                            .foreground(DodamColor.Label.strong)
+                    }
+                    
                     Spacer()
                 }
                 .padding(16)

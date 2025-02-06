@@ -27,15 +27,28 @@ struct MemberDetailSheetView: View {
                     .heading1(.bold)
                     .foreground(DodamColor.Label.normal)
                 Spacer()
-                Image(icon: .menu)
-                    .resizable()
-                    .frame(width: 18, height: 18)
-                    .foreground(DodamColor.Label.assistive)
+                
+                Menu(content: {
+                    Button(action: {
+                    }, label: {
+                        Text("승격하기")
+                    })
+                    
+                    Button(action: {
+                    }, label: {
+                        Text("강등하기")
+                    })
+                }, label: {
+                    Image(icon: .menu)
+                        .resizable()
+                        .frame(width: 18, height: 18)
+                        .foreground(DodamColor.Label.assistive)
+                })
             }
             .padding(.top, 24)
             
             if let role = member.role {
-                Text(member.role!)
+                Text(role)
                     .headline(.medium)
                     .foreground(DodamColor.Label.assistive)
                     .padding(.top, 8)

@@ -27,7 +27,7 @@ struct WaitingMemberSheetView: View {
                 .foreground(DodamColor.Label.assistive)
                 .padding(.top, 8)
             
-            HStack {
+            HStack(alignment: .center) {
                 Button {
                     //
                 } label: {
@@ -55,6 +55,6 @@ struct WaitingMemberSheetView: View {
             Spacer()
         }
         .padding(.top, 21)
-        .padding(16)
+        .padding(.horizontal, 16)
     }
 }

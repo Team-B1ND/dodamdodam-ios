@@ -59,7 +59,7 @@ struct DivisionAddMember: View {
                 }
                 .frame(maxHeight: .infinity)
                 
-                HStack {
+                HStack(alignment: .center) {
                     Button {
                         for key in selectedMembers.keys {
                             selectedMembers[key]?.0 = false
