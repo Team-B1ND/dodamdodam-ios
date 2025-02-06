@@ -25,6 +25,10 @@ struct RepositoryAssembly: Assembly {
             BusRepositoryImpl(dataSource: $0.resolve(BusDataSource.self)!)
         }.inObjectScope(.container)
         
+        container.register((any DivisionRepository).self) {
+            DivisionRepositoryImpl(dataSource: $0.resolve(DivisionDataSource.self)!)
+        }.inObjectScope(.container)
+        
         container.register((any MealRepository).self) {
             MealRepositoryImpl(
                 dataSource: $0.resolve(MealDataSource.self)!,
