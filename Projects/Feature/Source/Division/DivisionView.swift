@@ -59,6 +59,7 @@ struct DivisionView: View {
                     .padding(.horizontal, 16)
                     .background(DodamColor.Background.normal)
                     .padding(.top, -8)
+                    .padding(.bottom, 8)
                 }
             }
         }

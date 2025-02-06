@@ -15,7 +15,7 @@ final class CreateDivisionViewModel: ObservableObject {
     @Published var description: String = ""
     
     var isValidInput: Bool {
-        !divisionName.isEmpty && !description.isEmpty
+        !divisionName.isEmpty && !description.isEmpty && description.count <= 300
     }
     
     // MARK: - Repository
