@@ -20,56 +20,61 @@ struct CreateDivisionView: View {
     }
     
     var body: some View {
-        DodamScrollView.small(
-            title: "새 그룹 만들기"
-        ) {
-            LazyVStack(spacing: 8) {
-                DodamTextField.default(
-                    title: "그룹 이름",
-                    text: $viewModel.divisionName
-                )
-                // TODO: to Textarea
-                DodamTextField.default(
-                    title: "그룹 설명",
-                    text: $viewModel.description
-                )
-                // TODO: Add Max length
-                HStack(spacing: 0) {
-                    Spacer()
-                    Text("\(viewModel.description.count)")
-                        .font(.body1(.medium))
-                        .foreground(
-                            isValidDivisionDescription
-                            ? DodamColor.Primary.normal
-                            : DodamColor.Status.negative
-                        )
-                    Text("/300")
-                        .font(.body1(.medium))
-                        .foreground(
-                            isValidDivisionDescription
-                            ? DodamColor.Label.assistive
-                            : DodamColor.Status.negative
-                        )
-                }
-            }
-            .padding(.top, 8)
-            .padding(.horizontal, 16)
-        }
-        .safeAreaInset(edge: .bottom) {
-            DodamButton.fullWidth(
-                title: "만들기"
-            ) {
-                await viewModel.createDivision {
-                    dialog.present(
-                        .init(title: "그룹 만들기 성공")
-                        .primaryButton("닫기") {
-                            flow.pop()
-                        }
+        VStack(spacing: 0) {
+            DodamTopAppBar.small(
+                title: "새 그룹 만들기"
+            )
+            VStack(spacing: 0) {
+                VStack(spacing: 8) {
+                    DodamTextField.default(
+                        title: "그룹 이름",
+                        text: $viewModel.divisionName
                     )
+                    DodamTextField.editor(
+                        title: "그룹 설명",
+                        text: $viewModel.description
+                    )
+                    .frame(height: 300)
+                    // TODO: Add Max length
+                    HStack(spacing: 0) {
+                        Spacer()
+                        Text("\(viewModel.description.count)")
+                            .font(.body1(.medium))
+                            .foreground(
+                                isValidDivisionDescription
+                                ? DodamColor.Primary.normal
+                                : DodamColor.Status.negative
+                            )
+                        Text("/300")
+                            .font(.body1(.medium))
+                            .foreground(
+                                isValidDivisionDescription
+                                ? DodamColor.Label.assistive
+                                : DodamColor.Status.negative
+                            )
+                    }
                 }
+                .padding(.top, 8)
+                Spacer()
+                DodamButton.fullWidth(
+                    title: "만들기"
+                ) {
+                    await viewModel.createDivision {
+                        dialog.present(
+                            .init(title: "그룹 만들기 성공")
+                            .primaryButton("닫기") {
+                                flow.pop()
+                            }
+                        )
+                    }
+                }
+                .disabled(!viewModel.isValidInput)
+                .padding(.bottom, 12)
             }
             .padding(.horizontal, 16)
-            .padding(.bottom, 12)
         }
+        .background(DodamColor.Background.normal)
+        .hideKeyboardWhenTap()
+        .ignoresSafeArea(.keyboard)
     }
 }

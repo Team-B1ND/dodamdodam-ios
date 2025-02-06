@@ -14,6 +14,10 @@ final class CreateDivisionViewModel: ObservableObject {
     @Published var divisionName: String = ""
     @Published var description: String = ""
     
+    var isValidInput: Bool {
+        !divisionName.isEmpty && !description.isEmpty
+    }
+    
     // MARK: - Repository
     @Inject private var divisionRepository: DivisionRepository
     
