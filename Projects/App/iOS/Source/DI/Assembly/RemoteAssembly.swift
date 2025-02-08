@@ -35,6 +35,10 @@ struct RemoteAssembly: Assembly {
                 .init()
         }.inObjectScope(.container)
         
+        container.register(NoticeRemote.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(OutGoingRemote.self) { _ in
                 .init()
         }.inObjectScope(.container)

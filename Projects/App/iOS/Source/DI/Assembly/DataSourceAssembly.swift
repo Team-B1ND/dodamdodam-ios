@@ -41,6 +41,10 @@ struct DataSourceAssembly: Assembly {
             .init(remote: $0.resolve(NightStudyRemote.self)!)
         }.inObjectScope(.container)
         
+        container.register(NoticeDataSource.self) {
+            .init(remote: $0.resolve(NoticeRemote.self)!)
+        }.inObjectScope(.container)
+        
         container.register(OutGoingDataSource.self) {
             .init(remote: $0.resolve(OutGoingRemote.self)!)
         }.inObjectScope(.container)
