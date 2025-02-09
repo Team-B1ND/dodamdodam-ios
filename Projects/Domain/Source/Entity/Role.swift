@@ -12,4 +12,5 @@ public enum Role: String, Codable, Hashable {
     case student = "STUDENT"
     case teacher = "TEACHER"
     case admin = "ADMIN"
+    case parent = "PARENT"
 }

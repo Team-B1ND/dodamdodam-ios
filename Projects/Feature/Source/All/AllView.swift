@@ -81,46 +81,48 @@ struct AllView: View {
                     .scaledButtonStyle()
                 }
                 VStack(spacing: 12) {
-                    //student
-                    AllCell("내 상벌점 보기", icon: .barChart) {
-                        if Sign.isLoggedIn {
-                            flow.push(PointView())
+                    if let role = viewModel.memberData?.role {
+                        if role == .parent {
+                            AllCell("내 자녀 관리", icon: .smilingFace) {
+                                //
+                            }
+                            AllCell("그룹", icon: .handshake) {
+                                //
+                            }
                         } else {
-                            presentLoginDialog()
+                            AllCell("내 상벌점 보기", icon: .barChart) {
+                                if Sign.isLoggedIn {
+                                    flow.push(PointView())
+                                } else {
+                                    presentLoginDialog()
+                                }
+                            }
+                            DodamDivider()
+                                .padding(.horizontal, 8)
+
+                            AllCell("귀가 버스 신청하기", icon: .colorfulBus) {
+                                if Sign.isLoggedIn {
+                                    flow.push(BusApplyView())
+                                } else {
+                                    presentLoginDialog()
+                                }
+                            }
+                            AllCell("외출/외박 확인하기", icon: .tent) {
+                                selection = 2
+                            }
+                            AllCell("기상송 확인하기", icon: .wakeupMegaphone) {
+                                flow.push(WakeupSongView())
+                            }
+                            AllCell("기상송 신청하기", icon: .wakeupNote) {
+                                if Sign.isLoggedIn {
+                                    flow.push(WakeupSongView(), animated: false)
+                                    flow.push(WakeupSongApplyView())
+                                } else {
+                                    presentLoginDialog()
+                                }
+                            }
                         }
                     }
-                    DodamDivider()
-                        .padding(.horizontal, 8)
-                    
-                    AllCell("귀가 버스 신청하기", icon: .colorfulBus) {
-                        if Sign.isLoggedIn {
-                            flow.push(BusApplyView())
-                        } else {
-                            presentLoginDialog()
-                        }
-                    }
-                    AllCell("외출/외박 확인하기", icon: .tent) {
-                        selection = 2
-                    }
-                    AllCell("기상송 확인하기", icon: .wakeupMegaphone) {
-                        flow.push(WakeupSongView())
-                    }
-                    AllCell("기상송 신청하기", icon: .wakeupNote) {
-                        if Sign.isLoggedIn {
-                            flow.push(WakeupSongView(), animated: false)
-                            flow.push(WakeupSongApplyView())
-                        } else {
-                            presentLoginDialog()
-                        }
-                    }
-                    
-                    //parent
-//                    AllCell("내 자녀 관리", icon: .smilingFace) {
-//                        //
-//                    }
-//                    AllCell("그룹", icon: .handshake) {
-//                        //
-//                    }
                 }
             }
             .padding([.top, .horizontal], 16)
