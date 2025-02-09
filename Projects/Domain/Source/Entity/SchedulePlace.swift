@@ -16,7 +16,7 @@ public enum SchedulePlace: String, Codable, CaseIterable, Hashable {
     case math = "MATH"
     case society = "SOCIETY"
     case hall = "HALL"
-    case audiovisual_room = "AUDIOVISUAL_ROOM"
+    case audiovisualRoom = "AUDIOVISUAL_ROOM"
     case none = "NONE"
     case etc = "ETC"
 }

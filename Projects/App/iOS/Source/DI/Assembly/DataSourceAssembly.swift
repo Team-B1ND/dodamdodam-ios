@@ -25,6 +25,10 @@ struct DataSourceAssembly: Assembly {
             .init(remote: $0.resolve(BusRemote.self)!)
         }.inObjectScope(.container)
         
+        container.register(DivisionDataSource.self) {
+            .init(remote: $0.resolve(DivisionRemote.self)!)
+        }.inObjectScope(.container)
+        
         container.register(MealDataSource.self) {
             .init(remote: $0.resolve(MealRemote.self)!)
         }.inObjectScope(.container)
