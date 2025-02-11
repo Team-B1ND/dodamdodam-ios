@@ -38,7 +38,7 @@ extension DivisionService {
         case .patchDivision(let id): "/\(id)"
         case .patchMemberStatus(let id, _): "/\(id)/members"
         case .deleteDivision(let id): "/\(id)"
-        case .deleteMembers(let id, _): "/\(id)"
+        case .deleteMembers(let id, _): "/\(id)/members"
         case .fetchDivisions: ""
         case .fetchDivision(let id): "/\(id)"
         case .fetchMyDivision: "/my"

@@ -23,7 +23,8 @@ struct MemberListView: View {
                     for key in selectedMembers.keys {
                         selectedMembers[key]?.0 = newValue
                     }
-                }) {
+                })
+                {
                     Image(icon: allSelected ? .checkCircle : .checkmarkCircle)
                         .resizable()
                         .frame(width: 24, height: 24)
@@ -50,7 +51,8 @@ struct MemberListView: View {
                     Spacer()
                     Button(action: {
                         selectedMembers[name]?.0.toggle()
-                    }) {
+                    })
+                    {
                         Image(icon: selectedMembers[name]?.0 == true ? .checkCircle : .checkmarkCircle)
                             .resizable()
                             .foreground(selectedMembers[name]?.0 == true ? DodamColor.Primary.normal : DodamColor.Label.assistive)

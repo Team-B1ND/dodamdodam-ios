@@ -8,17 +8,36 @@
 import SwiftUI
 import DDS
 
-struct Member {
+struct Member: Equatable {
+    let id: Int?
     let name: String
     let role: String?
     let imageUrl: String?
+    let grade: Int
+    let room: Int
+    let number: Int
 
-    init(name: String, role: String? = nil, imageUrl: String?) {
+    init(id: Int? = nil, name: String, role: String? = nil, imageUrl: String?, grade: Int = 0, room: Int = 0, number: Int = 0) {
+        self.id = id
         self.name = name
         self.role = role
         self.imageUrl = imageUrl
+        self.grade = grade
+        self.room = room
+        self.number = number
+    }
+
+    static func == (lhs: Member, rhs: Member) -> Bool {
+        return lhs.id == rhs.id &&
+               lhs.name == rhs.name &&
+               lhs.role == rhs.role &&
+               lhs.imageUrl == rhs.imageUrl &&
+               lhs.grade == rhs.grade &&
+               lhs.room == rhs.room &&
+               lhs.number == rhs.number
     }
 }
+
 
 struct MemberSection: View {
     let title: String
@@ -46,7 +65,7 @@ struct MemberSection: View {
                 ForEach(members.indices, id: \.self) { index in
                     Button(action: { onSelect(members[index]) }) {
                         HStack {
-                            DodamAvatar.small(url: members[index].imageUrl)
+                            DodamAvatar.small(url: members[index].imageUrl ?? nil)
                             Text(members[index].name)
                                 .body1(.medium)
                                 .foreground(DodamColor.Label.normal)

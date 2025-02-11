@@ -10,14 +10,16 @@ import DDS
 
 struct MemberDetailSheetView: View {
     let member: Member
-    
+    let id: Int
+    @StateObject private var viewModel = DivisionDetailViewModel()
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("\(member.name)님 정보")
                 .heading1(.bold)
                 .foreground(DodamColor.Label.normal)
             
-            Text("1학년 2반 13번")
+            Text("\(member.grade)학년 \(member.room)반 \(member.number)번")
                 .headline(.medium)
                 .foreground(DodamColor.Label.assistive)
                 .padding(.top, 8)
@@ -55,7 +57,13 @@ struct MemberDetailSheetView: View {
             }
             
             Button {
-                //
+                if let memberId = member.id {
+                    Task {
+                        await viewModel.deleteMembers(id: id, idList: [member.id!])
+                    }
+                } else {
+                    print("삭제할 멤버의 ID가 없음")
+                }
             } label: {
                 Text("내보내기")
                     .body2(.bold)

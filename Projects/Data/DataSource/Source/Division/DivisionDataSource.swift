@@ -40,7 +40,7 @@ public struct DivisionDataSource: DataSourceProtocol {
     }
     
     public func deleteMembers(id: Int, _ request: DeleteDivisionMembersRequest) async throws {
-        _ = try await self.remote.deleteDivision(id: id)
+        _ = try await self.remote.deleteMembers(id: id, request)
     }
     
     public func fetchDivisions(_ request: FetchDivisionRequest) async throws -> [DivisionOverviewResponse] {
