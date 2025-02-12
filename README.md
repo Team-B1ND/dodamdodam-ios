@@ -11,3 +11,19 @@
 <img width="18.9%" src = "https://github.com/Team-B1ND/dodamdodam-ios/assets/104059751/38392348-0a1f-48c6-b851-3714df827d71">
 <img width="18.9%" src = "https://github.com/Team-B1ND/dodamdodam-ios/assets/104059751/f6d39ab4-9cda-4956-b9ef-c8a2bab9bc5a">
 </p>
+
+## 프로젝트 실행 및 배포
+### 프로젝트 설정
+1. [mise](https://mise.jdx.dev/getting-started.html)를 설치 (Tuist 설치 및 실행에 사용됩니다.)
+2. 최상위 폴더에서 `make generate` 명령어를 실행 ([Makefile](https://github.com/Team-B1ND/dodamdodam-ios/blob/develop/Makefile)에서 명령어를 확인할 수 있습니다.)
+
+### 프로젝트 실행
+1. `DodamDodam` 및 `DodamDodamWidget`타겟의 `Provisioning Profile`을 디버그용 파일로 설정
+    - 설정 위치: `TargetName > Signing & Capabilities > Signing > Provisioning Profile`
+    - 파일 이름: `Dodam_debug.mobileprovision`, `Dodam_widget_debug.mobileprovision`
+### 프로젝트 배포
+1. `DodamDodam` 및 `DodamDodamWidget`타겟의 `Provisioning Profile`을 릴리즈용 파일로 설정
+    - 설정 위치: `TargetName > Signing & Capabilities > Signing > Provisioning Profile`
+    - 파일 이름: `Dodam_release.mobileprovision`, `Dodam_widget_release.mobileprovision`
+2. `Product > Archive`를 클릭하여 프로젝트를 빌드
+3. `Distribute App > App Store Connect`를 클릭하여 업로드
