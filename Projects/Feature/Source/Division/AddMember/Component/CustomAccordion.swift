@@ -10,12 +10,14 @@ import SwiftUI
 
 struct CustomAccordion<Content: View>: View {
     let title: String
+    let isExpanded: Bool
+    let onToggle: () -> Void
     let content: Content
     
-    @State private var isExpanded: Bool = false
-    
-    init(title: String, @ViewBuilder content: () -> Content) {
+    init(title: String, isExpanded: Bool, onToggle: @escaping () -> Void, @ViewBuilder content: () -> Content) {
         self.title = title
+        self.isExpanded = isExpanded
+        self.onToggle = onToggle
         self.content = content()
     }
 
@@ -23,10 +25,9 @@ struct CustomAccordion<Content: View>: View {
         VStack {
             Button(action: {
                 withAnimation {
-                    isExpanded.toggle()
+                    onToggle()
                 }
-            })
-            {
+            }) {
                 HStack {
                     Text(title)
                         .headline(.bold)

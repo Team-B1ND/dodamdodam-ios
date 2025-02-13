@@ -7,12 +7,14 @@
 
 import DDS
 import SwiftUI
+import Domain
 
 struct MemberListView: View {
-    @Binding var selectedMembers: [String: (Bool, String?)]
+    @Binding var selectedMembers: [Int: Bool]
+    var members: [DivisionMemberResponse]
 
     var allSelected: Bool {
-        selectedMembers.values.allSatisfy { $0.0 }
+        members.allSatisfy { selectedMembers[$0.id, default: false] }
     }
 
     var body: some View {
@@ -20,11 +22,10 @@ struct MemberListView: View {
             HStack {
                 Button(action: {
                     let newValue = !allSelected
-                    for key in selectedMembers.keys {
-                        selectedMembers[key]?.0 = newValue
+                    for member in members {
+                        selectedMembers[member.id] = newValue
                     }
-                })
-                {
+                }) {
                     Image(icon: allSelected ? .checkCircle : .checkmarkCircle)
                         .resizable()
                         .frame(width: 24, height: 24)
@@ -40,22 +41,21 @@ struct MemberListView: View {
                 Spacer()
             }
             .padding(.bottom, 8)
-            
-            ForEach(selectedMembers.keys.sorted(), id: \.self) { name in
+
+            ForEach(members, id: \.id) { member in
                 HStack {
-                    DodamAvatar.small(url: selectedMembers[name]?.1)
-                    Text(name)
+                    DodamAvatar.small(url: member.profileImage)
+                    Text(member.memberName)
                         .body1(.medium)
                         .foreground(DodamColor.Label.normal)
                         .padding(.leading, 8)
                     Spacer()
                     Button(action: {
-                        selectedMembers[name]?.0.toggle()
-                    })
-                    {
-                        Image(icon: selectedMembers[name]?.0 == true ? .checkCircle : .checkmarkCircle)
+                        selectedMembers[member.id] = !(selectedMembers[member.id] ?? false)
+                    }) {
+                        Image(icon: selectedMembers[member.id, default: false] ? .checkCircle : .noneCheckCircle)
                             .resizable()
-                            .foreground(selectedMembers[name]?.0 == true ? DodamColor.Primary.normal : DodamColor.Label.assistive)
+                            .foreground(selectedMembers[member.id, default: false] ? DodamColor.Primary.normal : DodamColor.Label.assistive)
                             .frame(width: 24, height: 24)
                     }
                     .buttonStyle(PlainButtonStyle())

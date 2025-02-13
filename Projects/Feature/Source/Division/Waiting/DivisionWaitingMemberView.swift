@@ -44,10 +44,11 @@ struct DivisionWaitingMemberView: View {
         }
         .sheet(isPresented: $isSheetPresented) {
             if let member = selectedMember {
-                if #available(iOS 16.0, *) {
+                if #available(iOS 16.4, *) {
                     WaitingMemberSheetView(member: member, id: divisionId)
                         .presentationDragIndicator(.visible)
                         .presentationDetents([.height(dynamicHeight(for: member))])
+              
                 } else {
                     WaitingMemberSheetView(member: member, id: divisionId)
                 }

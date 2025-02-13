@@ -27,7 +27,7 @@ final class DivisionWaitingViewModel: ObservableObject {
     @MainActor
     func fetchDivisionMembers(id: Int) async {
         do {
-            divisionMember = try await divisionRepository.fetchDivisionMembers(id: id, .init(status: .allowed))
+            divisionMember = try await divisionRepository.fetchDivisionMembers(id: id, .init(status: .pending))
         } catch {
             print(error)
         }

@@ -104,15 +104,17 @@ struct DivisionDetailView: View {
                 Text("가입 신청")
                     .headline(.bold)
                     .foreground(DodamColor.Label.strong)
-
-                Text("12")
-                    .font(.system(size: 16, weight: .bold))
-                    .foreground(DodamColor.Static.white)
-                    .padding(.vertical, 2)
-                    .padding(.horizontal, 8)
-                    .background(DodamColor.Primary.normal)
-                    .cornerRadius(30)
-                    .padding(.leading, 8)
+                
+                if let members = viewModel.waitingMemberCount {
+                    Text("\(members)")
+                        .font(.system(size: 16, weight: .bold))
+                        .foreground(DodamColor.Static.white)
+                        .padding(.vertical, 2)
+                        .padding(.horizontal, 8)
+                        .background(DodamColor.Primary.normal)
+                        .cornerRadius(30)
+                        .padding(.leading, 8)
+                }
             }
 
             Spacer()

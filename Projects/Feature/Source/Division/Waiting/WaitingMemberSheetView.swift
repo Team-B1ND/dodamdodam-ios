@@ -62,10 +62,9 @@ struct WaitingMemberSheetView: View {
                 }
             }
             .padding(.top, 24)
-        
             Spacer()
         }
-        .padding(.top, 21)
+        .padding(.top, 37)
         .padding(.horizontal, 16)
     }
 }

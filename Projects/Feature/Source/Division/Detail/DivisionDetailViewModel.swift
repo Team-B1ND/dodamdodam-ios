@@ -14,6 +14,8 @@ final class DivisionDetailViewModel: ObservableObject {
     // MARK: - State
     @Published var division: DivisionDetailResponse?
     @Published var divisionMember: [DivisionMemberResponse]?
+    @Published var divisionWaitingMember: [DivisionMemberResponse]?
+    @Published var waitingMemberCount: Int? = nil
         
     // MARK: - Repository
     @Inject private var divisionRepository: DivisionRepository
@@ -23,7 +25,8 @@ final class DivisionDetailViewModel: ObservableObject {
     func fetchAllData(id: Int) async {
         async let fetchDivision: () = fetchDivision(id: id)
         async let fetchDivisionMembers: () = fetchDivisionMembers(id: id)
-        _ = await [fetchDivision, fetchDivisionMembers]
+        async let fetchDivisionWaitingMembers: () = fetchDivisionWaitingMembers(id: id)
+        _ = await [fetchDivision, fetchDivisionMembers, fetchDivisionWaitingMembers]
     }
     
     @MainActor
@@ -63,6 +66,17 @@ final class DivisionDetailViewModel: ObservableObject {
         do {
             try await divisionRepository.applyMemberDivision(id: id)
             
+        } catch {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func fetchDivisionWaitingMembers(id: Int) async {
+        do {
+            let waitingMembers = try await divisionRepository.fetchDivisionMembers(id: id, .init(status: .pending))
+            divisionWaitingMember = waitingMembers
+            waitingMemberCount = waitingMembers.count
         } catch {
             print(error)
         }
