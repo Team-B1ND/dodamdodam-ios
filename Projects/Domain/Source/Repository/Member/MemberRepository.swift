@@ -11,6 +11,10 @@ public protocol MemberRepository: RepositoryProtocol {
     
     func postParentJoin(_ request: PostJoinParentRequest) async throws
     
+    func postAuthCode(type: AuthType, _ request: PostAuthCodeRequest) async throws
+    
+    func postVerifyAuthCode(type: AuthType, _ request: PostVerifyAuthCodeRequest) async throws
+    
     func patchDeactivate() async throws
     
     func patchPassword(_ request: PatchPasswordRequest) async throws

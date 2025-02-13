@@ -12,6 +12,8 @@ enum MemberService: ServiceProtocol {
     
     case postJoinStudent(_ request: PostJoinStudentRequest)
     case postJoinParent(_ request: PostJoinParentRequest)
+    case postAuthCode(type: AuthType, _ request: PostAuthCodeRequest)
+    case postVerifyAuthCode(type: AuthType, _ request: PostVerifyAuthCodeRequest)
     case patchDeactivate
     case patchPassword(_ request: PatchPasswordRequest)
     case patchMemberInfo(_ request: PatchMemberInfoRequest)
@@ -29,6 +31,8 @@ extension MemberService {
         switch self {
         case .postJoinStudent: "/join-student"
         case .postJoinParent: "/join-parent"
+        case let .postAuthCode(type, _): "/auth-code/\(type.rawValue)"
+        case let .postVerifyAuthCode(type, _): "/auth-code/\(type.rawValue)/verify"
         case .patchDeactivate: "/deactivate"
         case .patchPassword: "/password"
         case .patchMemberInfo: "/info"
@@ -41,6 +45,8 @@ extension MemberService {
         switch self {
         case .postJoinStudent: .post
         case .postJoinParent: .post
+        case .postAuthCode: .post
+        case .postVerifyAuthCode: .post
         case .patchDeactivate: .patch
         case .patchPassword: .patch
         case .patchMemberInfo: .patch
@@ -54,6 +60,10 @@ extension MemberService {
         case let .postJoinStudent(request):
             request.toJSONParameters()
         case let .postJoinParent(request):
+            request.toJSONParameters()
+        case let .postAuthCode(_, request):
+            request.toJSONParameters()
+        case let .postVerifyAuthCode(_, request):
             request.toJSONParameters()
         case .patchDeactivate:
                 .requestPlain

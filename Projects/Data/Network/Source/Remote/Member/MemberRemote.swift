@@ -21,6 +21,14 @@ public struct MemberRemote: RemoteProtocol {
         try await self.request(target: .postJoinParent(request))
     }
     
+    public func postAuthCode(type: AuthType, request: PostAuthCodeRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postAuthCode(type: type, request))
+    }
+    
+    public func postVerifyAuthCode(type: AuthType, request: PostVerifyAuthCodeRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postVerifyAuthCode(type: type, request))
+    }
+    
     public func patchDeactivate() async throws -> DefaultResponse {
         try await self.request(target: .patchDeactivate)
     }

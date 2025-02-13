@@ -24,6 +24,14 @@ public struct MemberRepositoryImpl: MemberRepository {
         try await dataSource.postParentJoin(request)
     }
     
+    public func postAuthCode(type: AuthType, _ request: PostAuthCodeRequest) async throws {
+        try await dataSource.postAuthCode(type: type, request)
+    }
+    
+    public func postVerifyAuthCode(type: AuthType, _ request: PostVerifyAuthCodeRequest) async throws {
+        try await dataSource.postVerifyAuthCode(type: type, request)
+    }
+    
     public func patchDeactivate() async throws {
         try await dataSource.patchDeactivate()
     }

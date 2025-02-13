@@ -23,6 +23,14 @@ public struct MemberDataSource: DataSourceProtocol {
         _ = try await remote.postParentJoin(request)
     }
     
+    public func postAuthCode(type: AuthType, _ request: PostAuthCodeRequest) async throws {
+        _ = try await remote.postAuthCode(type: type, request: request)
+    }
+    
+    public func postVerifyAuthCode(type: AuthType, _ request: PostVerifyAuthCodeRequest) async throws {
+        _ = try await remote.postVerifyAuthCode(type: type, request: request)
+    }
+    
     public func patchDeactivate() async throws {
         _ = try await remote.patchDeactivate()
     }
