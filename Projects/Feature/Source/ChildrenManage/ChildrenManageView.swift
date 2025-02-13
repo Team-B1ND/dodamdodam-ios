@@ -27,6 +27,7 @@ struct ChildrenManageViewForRegister: View {
 }
 
 private struct ContentView: View {
+    @EnvironmentObject private var dialog: DialogProvider
     @StateObject private var viewModel = ChildrenManageViewModel()
     @Binding var children: [ConnectStudent]
     let completion: () -> Void
@@ -60,7 +61,6 @@ private struct ContentView: View {
                 }
             }
             .padding(.horizontal, 16)
-            
         }
         .background(DodamColor.Background.neutral)
         .safeAreaInset(edge: .bottom) {
@@ -75,6 +75,9 @@ private struct ContentView: View {
         .onAppear {
             self.isSheetPresented = true
         }
+        .onChange(of: viewModel.studentCode) { _ in
+            viewModel.isNotFoundMember = false
+        }
         .sheet(isPresented: $isSheetPresented) {
             ScrollView {
                 VStack(spacing: 16) {
@@ -88,18 +91,30 @@ private struct ContentView: View {
                                 title: "등록",
                                 color: DodamColor.Primary.normal
                             ) {
-                                guard let child = await viewModel.getChild() else { return }
-                                children.append(child)
+                                if let child = await viewModel.getChild() {
+                                    children.append(child)
+                                    isSheetPresented = false
+                                }
                             }
+                            .disabled(!viewModel.isValidInput)
                         }
                         Text("자녀의 앱에서 '전체 > 내 학생 코드 보기' 탭에서 확인할 수 있어요")
                             .font(.body1(.bold))
                             .foreground(DodamColor.Label.alternative)
                     }
-                    DodamTextField.default(
-                        title: "학생 코드",
-                        text: $viewModel.studentCode
-                    )
+                    VStack(spacing: 4) {
+                        DodamTextField.default(
+                            title: "학생 코드",
+                            text: $viewModel.studentCode
+                        )
+                        .maxLength($viewModel.studentCode, length: 8)
+                        if viewModel.isNotFoundMember {
+                            Text("학생을 찾을 수 없습니다.")
+                                .font(.label(.medium))
+                                .foreground(DodamColor.Status.negative)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
                     VStack(spacing: 4) {
                         Text("학생과의 관계")
                             .font(.label(.medium))
@@ -121,15 +136,15 @@ private struct ContentView: View {
                                 relation: "기타",
                                 isETCMode: viewModel.isETCMode
                             ) { _ in
-                                self.viewModel.relation = nil
+                                self.viewModel.relation = ""
                                 self.viewModel.isETCMode = true
                             }
                             if viewModel.isETCMode {
                                 DodamTextField.default(
                                     text: .init {
-                                        self.viewModel.relation ?? ""
+                                        self.viewModel.etcRelation
                                     } set: {
-                                        self.viewModel.relation = $0
+                                        self.viewModel.etcRelation = $0
                                     }
                                 )
                             }
@@ -148,9 +163,17 @@ private struct ChildCell: View {
     var body: some View {
         VStack(spacing: 6) {
             Spacer()
-            DodamAvatar.extraLarge(url: "")
-            Text("Name")
-                .font(.headline(.bold))
+            DodamAvatar.extraLarge(url: child.member.profileImage)
+            VStack(spacing: 2) {
+                Text(child.member.name)
+                    .foreground(DodamColor.Label.strong)
+                    .font(.headline(.bold))
+                Text("학생과의 관계: \(child.relation)")
+                    .foreground(DodamColor.Label.assistive)
+                    .font(.label(.regular))
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+            }
             Spacer()
         }
         .frame(height: 144)
@@ -161,7 +184,7 @@ private struct ChildCell: View {
 }
 
 private struct RelationCell: View {
-    let selectedRelation: String?
+    let selectedRelation: String
     let relation: String
     let isETCMode: Bool
     let action: (_ relation: String) -> Void

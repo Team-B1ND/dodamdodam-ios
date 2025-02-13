@@ -48,4 +48,8 @@ public struct MemberRemote: RemoteProtocol {
     public func fetchInfo() async throws -> Response<MemberResponse> {
         try await self.request(target: .fetchInfo, res: MemberResponse.self)
     }
+    
+    public func fetchMemberByCode(code: String) async throws -> Response<MemberResponse> {
+        try await self.request(target: .fetchMemberByCode(code: code), res: MemberResponse.self)
+    }
 }

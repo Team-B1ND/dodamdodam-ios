@@ -24,4 +24,6 @@ public protocol MemberRepository: RepositoryProtocol {
     func patchStudentInfo(_ request: PatchStudentInfoRequest) async throws
     
     func fetchInfo() async throws -> MemberResponse
+    
+    func fetchMemberByCode(code: String) async throws -> MemberResponse
 }

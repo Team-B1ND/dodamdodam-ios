@@ -51,4 +51,9 @@ public struct MemberDataSource: DataSourceProtocol {
         let response = try await remote.fetchInfo()
         return response.data
     }
+    
+    public func fetchMemberByCode(code: String) async throws -> MemberResponse {
+        let response = try await remote.fetchMemberByCode(code: code)
+        return response.data
+    }
 }

@@ -12,8 +12,9 @@ import FlowKit
 
 struct RegisterInfoView: View {
     
-    @EnvironmentObject var viewModel: RegisterViewModel
-    @Flow var flow
+    @EnvironmentObject private var viewModel: RegisterViewModel
+    @EnvironmentObject private var dialog: DialogProvider
+    @Flow private var flow
     
     var body: some View {
         DodamScrollView.medium(
@@ -157,14 +158,21 @@ struct RegisterInfoView: View {
                         DodamButton.fullWidth(
                             title: "인증"
                         ) {
-                            viewModel.verifyPhoneCode {
-                                if viewModel.selectedRole == .parent {
-                                    flow.push(
-                                        RegisterAuthView()
-                                            .environmentObject(viewModel)
+                            await viewModel.verifyPhoneCode { result in
+                                switch result {
+                                case .success:
+                                    if viewModel.selectedRole == .parent {
+                                        flow.push(
+                                            RegisterAuthView()
+                                                .environmentObject(viewModel)
+                                        )
+                                    } else {
+                                        viewModel.infoStep = .email
+                                    }
+                                case .failure:
+                                    dialog.present(
+                                        .init(title: "인증 코드가 올바르지 않습니다")
                                     )
-                                } else {
-                                    viewModel.infoStep = .email
                                 }
                             }
                         }
@@ -173,7 +181,7 @@ struct RegisterInfoView: View {
                         DodamButton.fullWidth(
                             title: "전화번호 인증코드 전송"
                         ) {
-                            viewModel.sendPhoneCode()
+                            await viewModel.sendPhoneCode()
                         }
                     }
                 }
@@ -183,11 +191,18 @@ struct RegisterInfoView: View {
                         DodamButton.fullWidth(
                             title: "인증"
                         ) {
-                            viewModel.verifyEmailCode {
-                                flow.push(
-                                    RegisterAuthView()
-                                        .environmentObject(viewModel)
-                                )
+                            await viewModel.verifyEmailCode { result in
+                                switch result {
+                                case .success:
+                                    flow.push(
+                                        RegisterAuthView()
+                                            .environmentObject(viewModel)
+                                    )
+                                case .failure:
+                                    dialog.present(
+                                        .init(title: "인증 코드가 올바르지 않습니다")
+                                    )
+                                }
                             }
                         }
                         .disabled(viewModel.emailCodeText.count < 6)
@@ -195,7 +210,7 @@ struct RegisterInfoView: View {
                         DodamButton.fullWidth(
                             title: "이메일 인증코드 전송"
                         ) {
-                            viewModel.sendEmailCode()
+                            await viewModel.sendEmailCode()
                         }
                     }
                 }
@@ -204,14 +219,20 @@ struct RegisterInfoView: View {
             .padding(.horizontal, 16)
         }
         .onChange(of: viewModel.studentInfoText) {
-            if let infoText = FormatUtil.formatMemberInfo($0) {
-                viewModel.studentInfoText = infoText
-            }
+            guard let infoText = FormatUtil.formatMemberInfo($0) else { return }
+            
+            viewModel.studentInfoText = infoText
         }
         .onChange(of: viewModel.phoneText) {
-            if let phoneText = FormatUtil.formatPhone($0) {
-                viewModel.phoneText = phoneText
-            }
+            guard let phoneText = FormatUtil.formatPhone($0) else { return }
+            
+            viewModel.phoneText = phoneText
+            viewModel.infoStep = .phone
+            viewModel.isSendPhoneCode = false
+        }
+        .onChange(of: viewModel.emailText) { _ in
+            viewModel.infoStep = .email
+            viewModel.isSendEmailCode = false
         }
     }
 }

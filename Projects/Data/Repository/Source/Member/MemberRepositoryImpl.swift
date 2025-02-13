@@ -51,4 +51,8 @@ public struct MemberRepositoryImpl: MemberRepository {
     public func fetchInfo() async throws -> MemberResponse {
         try await dataSource.fetchInfo()
     }
+    
+    public func fetchMemberByCode(code: String) async throws -> MemberResponse {
+        try await dataSource.fetchMemberByCode(code: code)
+    }
 }

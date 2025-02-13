@@ -48,6 +48,10 @@ class RegisterViewModel: ObservableObject {
     @Published var isSendPhoneCode: Bool = false
     @Published var connectStudents: [ConnectStudent] = []
     
+    var clearedPhoneText: String {
+        phoneText.split(separator: "-").joined()
+    }
+    
     // - auth
     @Published var authStep: AuthStep = .id
     @Published var idText: String = ""
@@ -71,7 +75,7 @@ class RegisterViewModel: ObservableObject {
                         pw: pwText,
                         name: nameText,
                         email: emailText,
-                        phone: phoneText,
+                        phone: clearedPhoneText,
                         grade: getNumbersFromString(studentInfoText)[0],
                         room: getNumbersFromString(studentInfoText)[1],
                         number: getNumbersFromString(studentInfoText)[2]
@@ -84,7 +88,7 @@ class RegisterViewModel: ObservableObject {
                         pw: pwText,
                         name: nameText,
                         relationInfo: connectStudents.map { $0.toRequest() },
-                        phone: phoneText,
+                        phone: clearedPhoneText,
                         authCode: phoneCodeText
                     )
                 )
@@ -98,27 +102,69 @@ class RegisterViewModel: ObservableObject {
     }
     
     @MainActor
-    func sendEmailCode() {
-        self.isSendEmailCode = true
-        // TODO: Handle
+    func sendEmailCode() async {
+        do {
+            try await memberRepository.postAuthCode(
+                type: .email,
+                .init(
+                    identifier: emailText
+                )
+            )
+            self.isSendEmailCode = true
+        } catch {
+            print(error)
+        }
     }
     
     @MainActor
-    func verifyEmailCode(completion: @escaping () -> Void) {
-        // TODO: Handle
-        completion()
+    func verifyEmailCode(
+        completion: @escaping (Result<Void, Error>) -> Void
+    ) async {
+        do {
+            try await memberRepository.postVerifyAuthCode(
+                type: .email,
+                .init(
+                    identifier: emailText,
+                    authCode: emailCodeText
+                )
+            )
+            completion(.success(()))
+        } catch {
+            completion(.failure(error))
+            print(error)
+        }
     }
     
     @MainActor
-    func sendPhoneCode() {
-        self.isSendPhoneCode = true
-        // TODO: Handle
+    func sendPhoneCode() async {
+        do {
+            try await memberRepository.postAuthCode(
+                type: .phone,
+                .init(
+                    identifier: clearedPhoneText
+                )
+            )
+            self.isSendPhoneCode = true
+        } catch {
+            print(error)
+        }
     }
     
     @MainActor
-    func verifyPhoneCode(completion: @escaping () -> Void) {
-        // TODO: Handle
-        completion()
+    func verifyPhoneCode(completion: @escaping (Result<Void, Error>) -> Void) async {
+        do {
+            try await memberRepository.postVerifyAuthCode(
+                type: .phone,
+                .init(
+                    identifier: clearedPhoneText,
+                    authCode: phoneCodeText
+                )
+            )
+            completion(.success(()))
+        } catch {
+            completion(.failure(error))
+            print(error)
+        }
     }
     
     private func getNumbersFromString(_ infoText: String) -> [Int] {

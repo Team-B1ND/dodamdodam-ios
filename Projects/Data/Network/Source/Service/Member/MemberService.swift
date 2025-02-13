@@ -19,6 +19,7 @@ enum MemberService: ServiceProtocol {
     case patchMemberInfo(_ request: PatchMemberInfoRequest)
     case patchStudentInfo(_ request: PatchStudentInfoRequest)
     case fetchInfo
+    case fetchMemberByCode(code: String)
 }
 
 extension MemberService {
@@ -38,6 +39,7 @@ extension MemberService {
         case .patchMemberInfo: "/info"
         case .patchStudentInfo: "/student/info"
         case .fetchInfo: "/my"
+        case let .fetchMemberByCode(code): "/code/\(code)"
         }
     }
     
@@ -52,6 +54,7 @@ extension MemberService {
         case .patchMemberInfo: .patch
         case .patchStudentInfo: .patch
         case .fetchInfo: .get
+        case .fetchMemberByCode: .get
         }
     }
     
@@ -74,6 +77,8 @@ extension MemberService {
         case let .patchStudentInfo(request):
             request.toJSONParameters()
         case .fetchInfo:
+                .requestPlain
+        case .fetchMemberByCode:
                 .requestPlain
         }
     }
