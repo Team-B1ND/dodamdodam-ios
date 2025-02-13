@@ -16,7 +16,6 @@ public struct MainView: View {
     public init() {}
     
     public var body: some View {
-        return RegisterSelectRoleView()
         DodamTabView(selection: $selection) {
             HomeView(selection: $selection)
                 .page(.icon(.home))
