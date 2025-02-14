@@ -8,7 +8,7 @@
 import Foundation
 import Shared
 
-public struct DivisionOverviewResponse: ResponseProtocol {
+public struct DivisionOverviewResponse: ResponseProtocol, Identifiable {
     public let id: Int
     public let name: String
     

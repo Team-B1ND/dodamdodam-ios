@@ -8,8 +8,11 @@
 import SwiftUI
 import DDS
 import FlowKit
+import Shared
 
 struct DivisionView: View {
+    static let pagingInterval = 10
+    
     @Flow private var flow
     @StateObject private var viewModel = DivisionViewModel()
     
@@ -21,10 +24,19 @@ struct DivisionView: View {
                 Section {
                     DodamTopTabView {
                         LazyVStack(spacing: 12) {
-                            if let divisions = viewModel.searchedMyDivisions {
-                                ForEach(divisions, id: \.self) {
-                                    DivisionCell(for: $0) {
+                            if let divisions = viewModel.currentMyDivisions {
+                                ForEach(divisions, id: \.self) { division in
+                                    DivisionCell(for: division) {
                                         // TODO: navigate to detail
+                                    }
+                                    .task {
+                                        guard let index = divisions.findIndex(id: division.id) else {
+                                            return
+                                        }
+                                        
+                                        if PagingUtil.isLastPage(index: index, pagingInterval: Self.pagingInterval, count: divisions.count) {
+                                            await viewModel.fetchMyDivisions(lastId: division.id)
+                                        }
                                     }
                                 }
                             } else {
@@ -35,10 +47,19 @@ struct DivisionView: View {
                         .padding(8)
                         .page(.text("내 그룹"))
                         LazyVStack(spacing: 12) {
-                            if let divisions = viewModel.searchedDivisions {
-                                ForEach(divisions, id: \.self) {
-                                    DivisionCell(for: $0) {
+                            if let divisions = viewModel.currentDivisions {
+                                ForEach(divisions, id: \.self) { division in
+                                    DivisionCell(for: division) {
                                         // TODO: navigate to detail
+                                    }
+                                    .task {
+                                        guard let index = divisions.findIndex(id: division.id) else {
+                                            return
+                                        }
+                                        
+                                        if PagingUtil.isLastPage(index: index, pagingInterval: Self.pagingInterval, count: divisions.count) {
+                                            await viewModel.fetchDivisions(lastId: division.id)
+                                        }
                                     }
                                 }
                             } else {
@@ -67,8 +88,15 @@ struct DivisionView: View {
             flow.push(CreateDivisionView())
         }
         .background(DodamColor.Background.normal)
+        .hideKeyboardWhenTap()
+        .simultaneousGesture(DragGesture().onChanged({ _ in
+            hideKeyboard()
+        }))
         .task {
             await viewModel.onAppear()
+        }
+        .refreshable {
+            await viewModel.onRefresh()
         }
     }
 }
