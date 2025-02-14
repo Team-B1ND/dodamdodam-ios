@@ -17,8 +17,19 @@ extension RequestProtocol {
             with: data,
             options: .allowFragments
            )).flatMap({ $0 as? [String: Any] }) {
+            var modifiedObject = object
+            
+            if encoding is URLEncoding {
+                modifiedObject = object.mapValues { value in
+                    if let array = value as? [CustomStringConvertible] {
+                        return array.map { "\($0)" }.joined(separator: ",")
+                    }
+                    return value
+                }
+            }
+            
             return .requestParameters(
-                parameters: object,
+                parameters: modifiedObject,
                 encoding: encoding
             )
         }
@@ -31,5 +42,17 @@ extension RequestProtocol {
     
     func toURLParameters() -> Moya.Task {
         toRequestParameters(encoding: URLEncoding.default)
+    }
+}
+
+extension [Int] {
+    func toURLParameterValue() -> String {
+        return self.map { "\($0)" }.toURLParameterValue()
+    }
+}
+
+extension [String] {
+    func toURLParameterValue() -> String {
+        return self.joined(separator: ",")
     }
 }

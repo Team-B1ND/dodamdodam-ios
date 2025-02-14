@@ -37,7 +37,7 @@ extension UploadService {
             let formData = MultipartFormData(
                 provider: .data(data),
                 name: "file",
-                fileName: UUID().uuidString
+                fileName: UUID().uuidString + ".jpg"
             )
             return .uploadMultipart([formData])
         }

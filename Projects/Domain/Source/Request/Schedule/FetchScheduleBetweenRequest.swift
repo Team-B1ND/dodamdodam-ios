@@ -7,11 +7,11 @@
 
 public struct FetchScheduleBetweenRequest: RequestProtocol {
     
-    public let startDate: String
-    public let endDate: String
+    public let startAt: String
+    public let endAt: String
     
-    public init(startDate: String, endDate: String) {
-        self.startDate = startDate
-        self.endDate = endDate
+    public init(startAt: String, endAt: String) {
+        self.startAt = startAt
+        self.endAt = endAt
     }
 }

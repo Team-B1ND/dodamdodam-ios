@@ -23,6 +23,10 @@ struct RemoteAssembly: Assembly {
                 .init()
         }.inObjectScope(.container)
         
+        container.register(DivisionRemote.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(MealRemote.self) { _ in
                 .init()
         }.inObjectScope(.container)
