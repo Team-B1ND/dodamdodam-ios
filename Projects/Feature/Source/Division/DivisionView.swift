@@ -84,9 +84,10 @@ struct DivisionView: View {
                 }
             }
         }
-        .button(icon: .plus) {
-            flow.push(CreateDivisionView())
-        }
+        // TODO: 마감 후 구현
+//        .button(icon: .plus) {
+//            flow.push(CreateDivisionView())
+//        }
         .background(DodamColor.Background.normal)
         .hideKeyboardWhenTap()
         .simultaneousGesture(DragGesture().onChanged({ _ in
