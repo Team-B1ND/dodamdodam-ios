@@ -10,6 +10,8 @@ import DDS
 import Shared
 
 struct NoticeView: View {
+    @StateObject private var viewModel = NoticeViewModel()
+
     var body: some View {
         ZStack(alignment: .top) {
             ScrollView {
@@ -38,15 +40,20 @@ struct NoticeView: View {
                     
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
                         Section(header: CategoryCell(categories: ["전체"])) {
-                            ForEach(0..<5, id: \.self) { _ in
-                                NotificationCell(
-                                    title: "hi",
-                                    content: "안녕",
-                                    user: "이윤채",
-                                    date: "2월 10일 수요일"
-                                )
-                                .padding(.horizontal, 16)
-                                .padding(.top, 12)
+                            if let notices = viewModel.notices {
+                                ForEach(notices, id: \.id) { notice in
+                                    let imageArray = notice.fileUrl != nil ? [notice.fileUrl!] : nil
+                                    
+                                    NotificationCell(
+                                        title: notice.title,
+                                        content: notice.content,
+                                        user: notice.memberInfoRes.name,
+                                        date: formatDate(notice.createdAt),
+                                        images: imageArray 
+                                    )
+                                    .padding(.horizontal, 16)
+                                    .padding(.top, 12)
+                                }
                             }
                         }
                     }
@@ -55,5 +62,23 @@ struct NoticeView: View {
             .clipped()
             .background(DodamColor.Background.neutral)
         }
+        .task {
+            await viewModel.fetchAllData()
+        }
+    }
+    
+    private func formatDate(_ isoDate: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone.current
+
+        if let date = formatter.date(from: isoDate) {
+            let displayFormatter = DateFormatter()
+            displayFormatter.dateFormat = "yyyy년 MM월 dd일"
+            displayFormatter.locale = Locale(identifier: "ko_KR")
+            return displayFormatter.string(from: date)
+        }
+        return "날짜 오류"
     }
 }

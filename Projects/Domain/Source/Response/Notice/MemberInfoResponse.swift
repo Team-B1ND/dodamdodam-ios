@@ -14,7 +14,7 @@ public struct MemberInfoResponse: ResponseProtocol {
     public let email: String
     public let role: String 
     public let status: String
-    public let profileImage: String
+    public let profileImage: String?
     public let phone: String
     public let student: String?
     public let teacher: String?
@@ -27,7 +27,7 @@ public struct MemberInfoResponse: ResponseProtocol {
         email: String,
         role: String,
         status: String,
-        profileImage: String,
+        profileImage: String?,
         phone: String,
         student: String?,
         teacher: String?,

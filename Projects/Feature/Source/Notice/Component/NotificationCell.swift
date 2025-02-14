@@ -50,34 +50,43 @@ struct NotificationCell: View {
                 if let images = images, !images.isEmpty {
                     HStack(spacing: 8) {
                         if images.count > 2 {
-                            Image(images[0])
-                                .resizable()
+                            AsyncImage(url: URL(string: images[0])) { image in
+                                image.resizable()
+                            } placeholder: {
+                                Color.gray.opacity(0.3)
+                            }
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 170, height: 172)
+                            .cornerRadius(12)
+                            
+                            ZStack {
+                                AsyncImage(url: URL(string: images[1])) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Color.gray.opacity(0.3)
+                                }
                                 .aspectRatio(contentMode: .fill)
                                 .frame(width: 170, height: 172)
                                 .cornerRadius(12)
-                            
-                            ZStack {
-                                Image(images[1])
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 170, height: 172)
-                                    .cornerRadius(12)
-                                    .overlay(
-                                        Color.black.opacity(0.5)
-                                            .cornerRadius(12)
-                                    )
+                                .overlay(
+                                    Color.black.opacity(0.5)
+                                        .cornerRadius(12)
+                                )
                                 Text("\(images.count - 1)+")
                                     .font(.title1(.regular))
                                     .foregroundColor(.white)
                             }
                         } else {
-                            ForEach(images, id: \.self) { imageName in
-                                Image(imageName)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 348, height: 225)
-                                    .background(DodamColor.Fill.neutral)
-                                    .cornerRadius(12)
+                            ForEach(images, id: \.self) { imageUrl in
+                                AsyncImage(url: URL(string: imageUrl)) { image in
+                                    image.resizable()
+                                } placeholder: {
+                                    Color.gray.opacity(0.3)
+                                }
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 348, height: 225)
+                                .background(DodamColor.Fill.neutral)
+                                .cornerRadius(12)
                             }
                         }
                     }
