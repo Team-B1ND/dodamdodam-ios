@@ -9,6 +9,7 @@ import Foundation
 
 public struct DivisionMemberResponse: ResponseProtocol {
     public let id: Int
+    public let memberId: String
     public let memberName: String
     public let profileImage: String?
     public let permission: DivisionPermission
@@ -16,8 +17,9 @@ public struct DivisionMemberResponse: ResponseProtocol {
     public let room: Int?
     public let number: Int?
     
-    public init(id: Int, memberName: String, profileImage: String?, permission: DivisionPermission, grade: Int?, room: Int?, number: Int?) {
+    public init(id: Int, memberId: String, memberName: String, profileImage: String?, permission: DivisionPermission, grade: Int?, room: Int?, number: Int?) {
         self.id = id
+        self.memberId = memberId
         self.memberName = memberName
         self.profileImage = profileImage
         self.permission = permission

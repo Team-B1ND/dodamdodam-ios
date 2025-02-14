@@ -15,6 +15,7 @@ enum DivisionService: ServiceProtocol {
     case addMembers(id: Int, request: AddMembersRequest)
     case patchDivision(_ request: PostDivisionRequest)
     case patchMemberStatus(id: Int, request: PatchMembersStatusRequest)
+    case patchMemberPermission(id: Int, divisionMemberId: Int, request: PatchMemberPermissionRequest)
     case deleteDivision(id: Int)
     case deleteMembers(id: Int, request: DeleteDivisionMembersRequest)
     case fetchDivisions(request: FetchDivisionRequest)
@@ -37,6 +38,8 @@ extension DivisionService {
         case .addMembers(let id, _): "/\(id)/members"
         case .patchDivision(let id): "/\(id)"
         case .patchMemberStatus(let id, _): "/\(id)/members"
+        case .patchMemberPermission(id: let id, divisionMemberId: let divisionMemberId, _):
+            "/\(id)/members/\(divisionMemberId)/permission"
         case .deleteDivision(let id): "/\(id)"
         case .deleteMembers(let id, _): "/\(id)/members"
         case .fetchDivisions: ""
@@ -54,6 +57,8 @@ extension DivisionService {
         case .addMembers: .post
         case .patchDivision: .patch
         case .patchMemberStatus: .patch
+        case .patchMemberPermission(id: let id, divisionMemberId: let divisionMemberId, request: let request):
+                .patch
         case .deleteDivision: .delete
         case .deleteMembers: .delete
         case .fetchDivisions: .get
@@ -75,6 +80,8 @@ extension DivisionService {
         case .patchDivision(let request):
             request.toJSONParameters()
         case .patchMemberStatus(let id, let request):
+            request.toURLParameters()
+        case .patchMemberPermission(id: let id, divisionMemberId: let divisionMemberId, let request):
             request.toURLParameters()
         case .deleteDivision:
                 .requestPlain

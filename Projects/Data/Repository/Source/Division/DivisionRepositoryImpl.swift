@@ -35,6 +35,10 @@ public struct DivisionRepositoryImpl: DivisionRepository {
         try await dataSource.patchMemberStatus(id: id, request)
     }
     
+    public func patchMemberPermission(id: Int, divisionMemberId: Int, _ request: PatchMemberPermissionRequest) async throws {
+        try await dataSource.patchMemberPermission(id: id, divisionMemberId: divisionMemberId, request)
+    }
+    
     public func deleteDivision(id: Int) async throws {
         try await dataSource.deleteDivision(id: id)
     }

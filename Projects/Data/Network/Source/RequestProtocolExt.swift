@@ -20,12 +20,22 @@ extension RequestProtocol {
             var modifiedObject = object
             
             if encoding is URLEncoding {
-                modifiedObject = object.mapValues { value in
-                    if let array = value as? [CustomStringConvertible] {
-                        return array.map { "\($0)" }.joined(separator: ",")
+                var queryItems: [String: Any] = [:]
+                
+                for (key, value) in modifiedObject {
+                    if let array = value as? [String] {
+                        queryItems[key] = array.joined(separator: ",")
+                    } else if let array = value as? [Int] {
+                        queryItems[key] = array.map { "\($0)" }.joined(separator: ",")
+                    } else {
+                        queryItems[key] = value
                     }
-                    return value
                 }
+                
+                return .requestParameters(
+                    parameters: queryItems,
+                    encoding: URLEncoding.queryString
+                )
             }
             
             return .requestParameters(
@@ -41,13 +51,13 @@ extension RequestProtocol {
     }
     
     func toURLParameters() -> Moya.Task {
-        toRequestParameters(encoding: URLEncoding.default)
+        toRequestParameters(encoding: URLEncoding.queryString)
     }
 }
 
 extension [Int] {
     func toURLParameterValue() -> String {
-        return self.map { "\($0)" }.toURLParameterValue()
+        return self.map { "\($0)" }.joined(separator: ",")
     }
 }
 

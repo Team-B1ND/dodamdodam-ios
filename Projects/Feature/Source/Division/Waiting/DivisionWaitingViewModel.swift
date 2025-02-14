@@ -48,9 +48,9 @@ final class DivisionWaitingViewModel: ObservableObject {
     }
     
     @MainActor
-    func addMembers(id: Int, memberId: String) async {
+    func addMembers(id: Int, memberId: [String]) async {
         do {
-            try await divisionRepository.addMembers(id: id,request: .init (memberIdList: [memberId]))
+            try await divisionRepository.addMembers(id: id,request: .init (memberIdList: memberId))
             
         } catch {
             print(error)

@@ -81,4 +81,13 @@ final class DivisionDetailViewModel: ObservableObject {
             print(error)
         }
     }
+    
+    @MainActor
+    func patchMemberPermission(id: Int, divisionMemberId: Int, permission: DivisionPermission) async {
+        do {
+            try await divisionRepository.patchMemberPermission(id: id, divisionMemberId: divisionMemberId, .init(permission: permission))
+        } catch {
+            print(error)
+        }
+    }
 }

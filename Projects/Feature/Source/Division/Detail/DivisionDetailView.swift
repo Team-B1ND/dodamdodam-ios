@@ -8,10 +8,11 @@
 import SwiftUI
 import DDS
 import FlowKit
+import Domain
 
 struct DivisionDetailView: View {
     @StateObject private var viewModel = DivisionDetailViewModel()
-    @State private var selectedMember: Member?
+    @State private var selectedMember: DivisionMemberResponse?
     @State private var isSheetPresented = false
     @Flow var flow
 
@@ -20,12 +21,17 @@ struct DivisionDetailView: View {
     var body: some View {
         ZStack {
             DodamScrollView.small(title: "") {
-                VStack {
-                    headerSection
-                    if viewModel.division?.myPermission == .admin {
-                        actionButtons
+                VStack(spacing: 12) {
+                    if viewModel.division == nil {
+                        DodamLoadingView()
+                            .padding(.vertical, 40)
+                    } else {
+                        headerSection
+                        if viewModel.division?.myPermission == .admin {
+                            actionButtons
+                        }
+                        memberListSection
                     }
-                    memberListSection
                 }
             }
             if viewModel.division?.myPermission == nil {
@@ -92,28 +98,20 @@ struct DivisionDetailView: View {
         .background(DodamColor.Background.normal)
         .cornerRadius(12)
         .padding(.horizontal, 16)
-        .padding(.top, 8)
     }
 
     private var actionButtons: some View {
         HStack {
             Spacer()
             Button {
-                flow.push(DivisionWaitingMemberView(divisionId: divisionId))
+                flow.push(DivisionWaitingMemberView(divisionId: divisionId, group: viewModel.division!.divisionName))
             } label: {
                 Text("가입 신청")
                     .headline(.bold)
                     .foreground(DodamColor.Label.strong)
                 
-                if let members = viewModel.waitingMemberCount {
-                    Text("\(members)")
-                        .font(.system(size: 16, weight: .bold))
-                        .foreground(DodamColor.Static.white)
-                        .padding(.vertical, 2)
-                        .padding(.horizontal, 8)
-                        .background(DodamColor.Primary.normal)
-                        .cornerRadius(30)
-                        .padding(.leading, 8)
+                if let members = viewModel.waitingMemberCount, members > 0 {
+                    DodamTag(String(members), type: .primary)
                 }
             }
 
@@ -124,7 +122,7 @@ struct DivisionDetailView: View {
                 .foreground(DodamColor.Line.alternative)
             Spacer()
             Button {
-                flow.push(DivisionAddMember())
+                flow.push(DivisionAddMember(id: divisionId))
             } label: {
                 Text("멤버 추가")
                     .headline(.bold)
@@ -138,11 +136,10 @@ struct DivisionDetailView: View {
         .frame(maxWidth: .infinity)
         .cornerRadius(12)
         .padding(.horizontal, 16)
-        .padding(.top, 8)
     }
 
     private var memberListSection: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("멤버")
                     .heading1(.bold)
@@ -152,7 +149,7 @@ struct DivisionDetailView: View {
             .padding(.bottom, 4)
 
             if !admins.isEmpty {
-                MemberSection(title: "관리자", members: admins, onSelect: { showMemberSheet(member: $0) }, showDivider: !writers.isEmpty)
+                MemberSection(title: "관리자", members: admins, onSelect: { showMemberSheet(member: $0) }, showDivider: !writers.isEmpty || !readers.isEmpty)
             }
 
             if !writers.isEmpty {
@@ -160,52 +157,38 @@ struct DivisionDetailView: View {
             }
 
             if !readers.isEmpty {
-                MemberSection(title: "멤버", members: readers, onSelect: { showMemberSheet(member: $0) }, showDivider: !writers.isEmpty)
+                MemberSection(title: "멤버", members: readers, onSelect: { showMemberSheet(member: $0) }, showDivider: false)
             }
         }
         .padding(16)
         .background(DodamColor.Background.normal)
         .cornerRadius(12)
         .padding(.horizontal, 16)
-        .padding(.top, 8)
     }
 
-    private var members: [Member] {
-        viewModel.divisionMember?.map {
-            Member(
-                id: $0.id,
-                name: $0.memberName,
-                role: $0.permission.rawValue,
-                imageUrl: $0.profileImage,
-                grade: $0.grade,
-                room: $0.room,
-                number: $0.number
-            )
-        } ?? []
-    }
 
-    private var admins: [Member] {
-        members.filter { $0.role == "ADMIN" }
-    }
-
-    private var writers: [Member] {
-        members.filter { $0.role == "WRITER" }
-    }
-
-    private var readers: [Member] {
-        members.filter { $0.role == "READER" }
-    }
-
-    private func showMemberSheet(member: Member) {
+    private func showMemberSheet(member: DivisionMemberResponse) {
         if viewModel.division?.myPermission == .admin {
             selectedMember = member
             isSheetPresented = true
         }
     }
+    
+    private var admins: [DivisionMemberResponse] {
+        viewModel.divisionMember?.filter { $0.permission == .admin } ?? []
+    }
 
-    private func dynamicHeight(for member: Member) -> CGFloat {
+    private var writers: [DivisionMemberResponse] {
+        viewModel.divisionMember?.filter { $0.permission == .writer } ?? []
+    }
+
+    private var readers: [DivisionMemberResponse] {
+        viewModel.divisionMember?.filter { $0.permission == .reader } ?? []
+    }
+
+    private func dynamicHeight(for member: DivisionMemberResponse) -> CGFloat {
         let baseHeight: CGFloat = 300
-        let additionalHeight: CGFloat = CGFloat(member.role?.count ?? 0) * 5
+        let additionalHeight: CGFloat = CGFloat(member.permission.rawValue.count) * 5
         return min(baseHeight + additionalHeight, 600)
     }
 }

@@ -31,7 +31,7 @@ struct MemberListView: View {
                         .frame(width: 24, height: 24)
                         .foreground(allSelected ? DodamColor.Primary.normal : DodamColor.Label.assistive)
                 }
-                .buttonStyle(PlainButtonStyle())
+                .buttonStyle(.plain)
                 .padding(.trailing, 8)
                 
                 Text("전체")
@@ -58,7 +58,7 @@ struct MemberListView: View {
                             .foreground(selectedMembers[member.id, default: false] ? DodamColor.Primary.normal : DodamColor.Label.assistive)
                             .frame(width: 24, height: 24)
                     }
-                    .buttonStyle(PlainButtonStyle())
+                    .buttonStyle(.plain)
                 }
                 .padding(.vertical, 8)
             }

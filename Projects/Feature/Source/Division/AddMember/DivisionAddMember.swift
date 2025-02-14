@@ -9,6 +9,7 @@ import DDS
 import SwiftUI
 import FlowKit
 import Domain
+import Shared
 
 struct DivisionAddMember: View {
     @Flow var flow
@@ -17,7 +18,8 @@ struct DivisionAddMember: View {
     
     @State private var selectedMembers: [Int: [Int: Bool]] = [:]
     @State private var expandedDivisionId: Set<Int> = []
-
+    let id: Int
+    
     var filteredDivisions: [DivisionOverviewResponse] {
         if memberSearchText.isEmpty {
             return viewModel.divisions ?? []
@@ -28,7 +30,7 @@ struct DivisionAddMember: View {
             } ?? []
         }
     }
-
+    
     var body: some View {
         VStack {
             DodamScrollView.small(title: "멤버 추가") {
@@ -48,16 +50,16 @@ struct DivisionAddMember: View {
                 .padding(.horizontal, 16)
             }
             .frame(maxHeight: .infinity)
-
+            
             controlButtons
         }
         .background(DodamColor.Background.neutral)
         .padding(.horizontal, 16)
         .task {
-            await viewModel.fetchAllData()
+            await viewModel.fetchDivisions()
         }
     }
-
+    
     @ViewBuilder
     private func divisionListView(_ divisions: [DivisionOverviewResponse]) -> some View {
         ForEach(divisions, id: \.id) { division in
@@ -67,20 +69,30 @@ struct DivisionAddMember: View {
             CustomAccordion(
                 title: division.name,
                 isExpanded: isExpanded,
-                onToggle: { toggleAccordion(for: divisionId) },
-                content: {
-                    let members = viewModel.divisionMembers[divisionId] ?? [] 
-                    MemberListView(
-                        selectedMembers: Binding(
-                            get: { selectedMembers[divisionId, default: [:]] },
-                            set: { selectedMembers[divisionId] = $0 }
-                        ),
-                        members: members.filter { member in
-                            memberSearchText.isEmpty || member.memberName.localizedCaseInsensitiveContains(memberSearchText)
-                        }
-                    )
+                onToggle: {
+                    toggleAccordion(for: divisionId)
+                    Task {
+                        await viewModel.fetchDivisionMembers(divisionId: divisionId)
+                    }
                 }
-            )
+            ) {
+                let members = viewModel.divisionMembers[divisionId] ?? []
+                MemberListView(
+                    selectedMembers: Binding(
+                        get: { selectedMembers[divisionId, default: [:]] },
+                        set: { selectedMembers[divisionId] = $0 }
+                    ),
+                    members: members.filter { member in
+                        memberSearchText.isEmpty || member.memberName.localizedCaseInsensitiveContains(memberSearchText)
+                    }
+                )
+            }
+            .task {
+                if let index = divisions.firstIndex(where: { $0.id == division.id }),
+                   PagingUtil.isLastPage(index: index, pagingInterval: 10, count: divisions.count) {
+                    await viewModel.fetchDivisions(lastId: division.id)
+                }
+            }
         }
     }
 
@@ -91,36 +103,36 @@ struct DivisionAddMember: View {
             expandedDivisionId.insert(divisionId)
         }
     }
-
+    
     private var controlButtons: some View {
         HStack(alignment: .center) {
-            Button {
+            DodamButton.fullWidth(
+                title: "전체 취소"
+            ) {
                 resetSelectedMembers()
-            } label: {
-                Text("전체 취소")
-                    .body2(.bold)
-                    .foreground(DodamColor.Label.neutral)
-                    .frame(width: 124, height: 48)
-                    .background(DodamColor.Fill.normal)
-                    .cornerRadius(12)
             }
+            .role(.assistive)
             .padding(.trailing, 8)
-
-            Button {
-                //
-            } label: {
-                Text("추가")
-                    .body2(.bold)
-                    .foreground(DodamColor.Static.white)
-                    .frame(width: 248, height: 48)
-                    .background(DodamColor.Primary.normal)
-                    .cornerRadius(12)
+            
+            DodamButton.fullWidth(
+                title: "추가"
+            ) {
+                Task {
+                    let selectedMemberIds: [String] = selectedMembers.flatMap { division in
+                        division.value.filter { $0.value }.map { String($0.key) }
+                    }
+                    
+                    if !selectedMemberIds.isEmpty {
+                        await viewModel.addMembers(id: id, memberId: selectedMemberIds)
+                    }
+                }
             }
+            .role(.primary)
         }
         .padding(.top, 55)
         .padding(.bottom, 12)
     }
-
+    
     private func resetSelectedMembers() {
         for key in selectedMembers.keys {
             selectedMembers[key]?.keys.forEach { selectedMembers[key]?[$0] = false }

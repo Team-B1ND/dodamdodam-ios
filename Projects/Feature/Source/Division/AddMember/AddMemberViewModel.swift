@@ -14,37 +14,54 @@ final class AddMemberViewModel: ObservableObject {
     // MARK: - State
     @Published var divisions: [DivisionOverviewResponse]?
     @Published var divisionMembers: [Int: [DivisionMemberResponse]] = [:]
+    
+    private var lastDivisionId: Int = 0
+    private var isFetching = false
 
     // MARK: - Repository
     @Inject private var divisionRepository: DivisionRepository
     
     // MARK: - Method
     @MainActor
-    func fetchAllData() async {
+    func fetchDivisions(lastId: Int = 0) async {
+        guard !isFetching else { return }
+        isFetching = true
+
         do {
-            divisions = try await divisionRepository.fetchDivisions(
-                .init(lastId: 0, limit: 100, keyword: "")
+            let response = try await divisionRepository.fetchDivisions(
+                .init(lastId: lastId, limit: 10, keyword: "")
             )
-            
-            await fetchAllDivisionMembers()
+            if lastId == 0 {
+                divisions = response
+            } else {
+                divisions?.append(contentsOf: response)
+            }
+            lastDivisionId = response.last?.id ?? lastDivisionId
+        } catch {
+            print(error)
+        }
+
+        isFetching = false
+    }
+    
+    @MainActor
+    func fetchDivisionMembers(divisionId: Int) async {
+        guard divisionMembers[divisionId] == nil else { return }
+        
+        do {
+            let members = try await divisionRepository.fetchDivisionMembers(id: divisionId, .init(status: .allowed))
+            divisionMembers[divisionId] = members
         } catch {
             print(error)
         }
     }
     
     @MainActor
-    private func fetchAllDivisionMembers() async {
-        guard let divisions = divisions else { return }
-        
-        for division in divisions {
-            if divisionMembers[division.id] == nil {
-                do {
-                    let members = try await divisionRepository.fetchDivisionMembers(id: division.id, .init(status: .allowed))
-                    divisionMembers[division.id] = members
-                } catch {
-                    print(error)
-                }
-            }
+    func addMembers(id: Int, memberId: [String]) async {
+        do {
+            try await divisionRepository.addMembers(id: id, request: .init(memberIdList: memberId))
+        } catch {
+            print(error)
         }
     }
 }

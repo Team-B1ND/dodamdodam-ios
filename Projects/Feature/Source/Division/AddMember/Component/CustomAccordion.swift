@@ -34,7 +34,7 @@ struct CustomAccordion<Content: View>: View {
                         .foreground(DodamColor.Label.normal)
                     
                     Spacer()
-                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                    Image(icon: isExpanded ? .chevronUp : .chevronDown)
                         .frame(width: 18, height: 18)
                         .foreground(DodamColor.Label.normal)
                 }

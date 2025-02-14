@@ -35,6 +35,10 @@ public struct DivisionDataSource: DataSourceProtocol {
         _ = try await self.remote.patchMemberStatus(id: id, request)
     }
     
+    public func patchMemberPermission(id: Int, divisionMemberId: Int, _ request: PatchMemberPermissionRequest) async throws {
+        _ = try await self.remote.patchMemberPermission(id: id, divisionMemberId: divisionMemberId, request)
+    }
+
     public func deleteDivision(id: Int) async throws {
         _ = try await self.remote.deleteDivision(id: id)
     }

@@ -7,15 +7,17 @@
 
 import DDS
 import SwiftUI
+import Domain
 
 struct DivisionWaitingMemberView: View {
-    @State private var selectedMember: Member?
+    @State private var selectedMember: DivisionMemberResponse?
     @State private var isSheetPresented = false
     @StateObject private var viewModel = DivisionWaitingViewModel()
     let divisionId: Int
+    let group: String
     
     var body: some View {
-        DodamScrollView.medium(title: "‘B1ND’ 그룹\n가입 신청 대기 중인 멤버") {
+        DodamScrollView.medium(title: "\(group) 그룹\n가입 신청 대기 중인 멤버") {
             VStack(alignment: .leading, spacing: 0) {
                 if viewModel.divisionMember?.isEmpty ?? true {
                     Text("대기 중인 멤버가 없습니다.")
@@ -25,7 +27,7 @@ struct DivisionWaitingMemberView: View {
                 } else {
                     MemberSection(
                         title: "가입 신청 멤버",
-                        members: members,
+                        members: viewModel.divisionMember ?? [],
                         onSelect: showMemberSheet,
                         showDivider: false
                     )
@@ -48,7 +50,6 @@ struct DivisionWaitingMemberView: View {
                     WaitingMemberSheetView(member: member, id: divisionId)
                         .presentationDragIndicator(.visible)
                         .presentationDetents([.height(dynamicHeight(for: member))])
-              
                 } else {
                     WaitingMemberSheetView(member: member, id: divisionId)
                 }
@@ -56,32 +57,17 @@ struct DivisionWaitingMemberView: View {
                 Text("멤버 정보를 불러올 수 없습니다.")
             }
         }
-
         .background(DodamColor.Background.normal)
     }
-    
-    private var members: [Member] {
-        viewModel.divisionMember?.map {
-            Member(
-                id: $0.id,
-                name: $0.memberName,
-                role: $0.permission.rawValue,
-                imageUrl: $0.profileImage,
-                grade: $0.grade ?? 0,
-                room: $0.room ?? 0,
-                number: $0.number ?? 0
-            )
-        } ?? []
-    }
 
-    private func showMemberSheet(member: Member) {
+    private func showMemberSheet(member: DivisionMemberResponse) {
         selectedMember = member
         isSheetPresented = true
     }
 
-    private func dynamicHeight(for member: Member) -> CGFloat {
+    private func dynamicHeight(for member: DivisionMemberResponse) -> CGFloat {
         let baseHeight: CGFloat = 210
-        let additionalHeight: CGFloat = CGFloat(member.role?.count ?? 0) * 5
+        let additionalHeight: CGFloat = CGFloat(member.permission.rawValue.count) * 5
         return min(baseHeight + additionalHeight, 600)
     }
 }
