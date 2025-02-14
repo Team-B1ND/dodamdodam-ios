@@ -8,8 +8,11 @@
 import SwiftUI
 import DDS
 import FlowKit
+import Shared
 
 struct DivisionView: View {
+    static let pagingInterval = 10
+    
     @Flow private var flow
     @StateObject private var viewModel = DivisionViewModel()
     
@@ -21,10 +24,20 @@ struct DivisionView: View {
                 Section {
                     DodamTopTabView {
                         LazyVStack(spacing: 12) {
+
                             if let divisions = viewModel.searchedMyDivisions {
                                 ForEach(divisions, id: \.self) { division in
                                     DivisionCell(for: division) {
                                         flow.push(DivisionDetailView(divisionId: division.id))
+                                    }
+                                    .task {
+                                        guard let index = divisions.findIndex(id: division.id) else {
+                                            return
+                                        }
+                                        
+                                        if PagingUtil.isLastPage(index: index, pagingInterval: Self.pagingInterval, count: divisions.count) {
+                                            await viewModel.fetchMyDivisions(lastId: division.id)
+                                        }
                                     }
                                 }
                             } else {
@@ -35,10 +48,20 @@ struct DivisionView: View {
                         .padding(8)
                         .page(.text("내 그룹"))
                         LazyVStack(spacing: 12) {
+
                             if let divisions = viewModel.searchedDivisions {
                                 ForEach(divisions, id: \.self) { division in
                                     DivisionCell(for: division) {
                                         flow.push(DivisionDetailView(divisionId: division.id))
+                                    }
+                                    .task {
+                                        guard let index = divisions.findIndex(id: division.id) else {
+                                            return
+                                        }
+                                        
+                                        if PagingUtil.isLastPage(index: index, pagingInterval: Self.pagingInterval, count: divisions.count) {
+                                            await viewModel.fetchDivisions(lastId: division.id)
+                                        }
                                     }
                                 }
                             } else {
@@ -63,12 +86,20 @@ struct DivisionView: View {
                 }
             }
         }
-        .button(icon: .plus) {
-            flow.push(CreateDivisionView())
-        }
+        // TODO: 마감 후 구현
+//        .button(icon: .plus) {
+//            flow.push(CreateDivisionView())
+//        }
         .background(DodamColor.Background.normal)
+        .hideKeyboardWhenTap()
+        .simultaneousGesture(DragGesture().onChanged({ _ in
+            hideKeyboard()
+        }))
         .task {
             await viewModel.onAppear()
+        }
+        .refreshable {
+            await viewModel.onRefresh()
         }
     }
 }
