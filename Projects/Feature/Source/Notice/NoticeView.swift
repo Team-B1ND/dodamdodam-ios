@@ -39,7 +39,13 @@ struct NoticeView: View {
                     .ignoresSafeArea(edges: .top)
                     
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
-                        Section(header: CategoryCell(categories: ["전체"])) {
+                        Section(header: CategoryCell(
+                            selectedCategory: $viewModel.selectedCategoryId,
+                            categories: categoryList(),
+                            onSelectCategory: { id in
+                                viewModel.selectCategory(id)
+                            }
+                        )) {
                             if let notices = viewModel.notices {
                                 ForEach(notices, id: \.id) { notice in
                                     let imageArray = notice.fileUrl != nil ? [notice.fileUrl!] : nil
@@ -49,10 +55,16 @@ struct NoticeView: View {
                                         content: notice.content,
                                         user: notice.memberInfoRes.name,
                                         date: formatDate(notice.createdAt),
-                                        images: imageArray 
+                                        images: imageArray
                                     )
                                     .padding(.horizontal, 16)
                                     .padding(.top, 12)
+                                    .task {
+                                        guard let index = notices.firstIndex(where: { $0.id == notice.id }) else { return }
+                                        if PagingUtil.isLastPage(index: index, pagingInterval: 10, count: notices.count) {
+                                            await viewModel.fetchNotices(lastId: notice.id)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -67,6 +79,16 @@ struct NoticeView: View {
         }
     }
     
+    private func categoryList() -> [(id: Int?, name: String)] {
+        var categories: [(id: Int?, name: String)] = [ (nil, "전체") ]
+        if let myDivisions = viewModel.myDivisions {
+            for division in myDivisions where !division.name.isEmpty {
+                categories.append((id: division.id, name: division.name))
+            }
+        }
+        return categories
+    }
+
     private func formatDate(_ isoDate: String) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"

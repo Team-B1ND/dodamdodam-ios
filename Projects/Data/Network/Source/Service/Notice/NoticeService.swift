@@ -23,7 +23,7 @@ extension NoticeService {
     var path: String {
         switch self {
         case .fetchNotice: ""
-        case .fetchCategoryNotice(let id, _): "/\(id)"
+        case .fetchCategoryNotice(let id, _): "/\(id)/division"
         }
     }
     
@@ -43,4 +43,3 @@ extension NoticeService {
         }
     }
 }
-
