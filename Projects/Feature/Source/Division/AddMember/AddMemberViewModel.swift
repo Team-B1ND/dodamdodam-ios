@@ -23,7 +23,7 @@ final class AddMemberViewModel: ObservableObject {
     func fetchAllData() async {
         do {
             divisions = try await divisionRepository.fetchDivisions(
-                .init(lastId: 0, limit: 100)
+                .init(lastId: 0, limit: 100, keyword: "")
             )
             
             await fetchAllDivisionMembers()

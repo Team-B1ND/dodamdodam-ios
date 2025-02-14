@@ -67,9 +67,9 @@ struct DivisionWaitingMemberView: View {
                 name: $0.memberName,
                 role: $0.permission.rawValue,
                 imageUrl: $0.profileImage,
-                grade: $0.grade,
-                room: $0.room,
-                number: $0.number
+                grade: $0.grade ?? 0,
+                room: $0.room ?? 0,
+                number: $0.number ?? 0
             )
         } ?? []
     }

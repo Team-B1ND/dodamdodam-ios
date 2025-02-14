@@ -25,7 +25,7 @@ struct DivisionView: View {
                     DodamTopTabView {
                         LazyVStack(spacing: 12) {
 
-                            if let divisions = viewModel.searchedMyDivisions {
+                            if let divisions = viewModel.currentMyDivisions {
                                 ForEach(divisions, id: \.self) { division in
                                     DivisionCell(for: division) {
                                         flow.push(DivisionDetailView(divisionId: division.id))
@@ -49,7 +49,7 @@ struct DivisionView: View {
                         .page(.text("내 그룹"))
                         LazyVStack(spacing: 12) {
 
-                            if let divisions = viewModel.searchedDivisions {
+                            if let divisions = viewModel.currentDivisions {
                                 ForEach(divisions, id: \.self) { division in
                                     DivisionCell(for: division) {
                                         flow.push(DivisionDetailView(divisionId: division.id))

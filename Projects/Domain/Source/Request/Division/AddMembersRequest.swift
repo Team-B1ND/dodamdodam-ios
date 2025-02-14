@@ -10,4 +10,7 @@ import Moya
 
 public struct AddMembersRequest: RequestProtocol {
     public let memberIdList: [String]
+    public init(memberIdList: [String]) {
+        self.memberIdList = memberIdList
+    }
 }
