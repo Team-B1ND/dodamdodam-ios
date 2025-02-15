@@ -15,7 +15,7 @@ public struct NoticeResponse: ResponseProtocol {
     public let fileUrl: String?
     public let fileType: String?
     public let noticeStatus: NoticeStatus
-    public let memberInfoRes: MemberInfoResponse
+    public let memberInfoRes: MemberResponse
     public let createdAt: String
     public let modifiedAt: String
     
@@ -26,7 +26,7 @@ public struct NoticeResponse: ResponseProtocol {
         fileUrl: String?,
         fileType: String?,
         noticeStatus: NoticeStatus,
-        memberInfoRes: MemberInfoResponse,
+        memberInfoRes: MemberResponse,
         createdAt: String,
         modifiedAt: String
     ) {

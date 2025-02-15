@@ -24,14 +24,14 @@ struct NoticeView: View {
                         
                         Spacer()
                         
-                        Button {
-                            //
-                        } label: {
-                            Image(icon: .magnifyingGlass)
-                                .resizable()
-                                .frame(width: 28, height: 28)
-                        }
-                        .padding(.trailing, 16)
+//                        Button {
+//                            //
+//                        } label: {
+//                            Image(icon: .magnifyingGlass)
+//                                .resizable()
+//                                .frame(width: 28, height: 28)
+//                        }
+//                        .padding(.trailing, 16)
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 60)

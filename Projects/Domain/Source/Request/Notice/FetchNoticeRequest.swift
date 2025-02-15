@@ -13,7 +13,7 @@ public struct FetchNoticeRequest: RequestProtocol {
     public let status: NoticeStatus
     
     public init(keyword: String? = "", lastId: Int, limit: Int, status: NoticeStatus) {
-        self.keyword = keyword ?? ""
+        self.keyword = keyword 
         self.lastId = lastId
         self.limit = limit
         self.status = status
