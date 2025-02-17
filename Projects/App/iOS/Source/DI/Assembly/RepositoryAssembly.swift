@@ -44,6 +44,10 @@ struct RepositoryAssembly: Assembly {
             NightStudyRepositoryImpl(dataSource: $0.resolve(NightStudyDataSource.self)!)
         }.inObjectScope(.container)
         
+        container.register((any NoticeRepository).self) {
+            NoticeRepositoryImpl(dataSource: $0.resolve(NoticeDataSource.self)!)
+        }.inObjectScope(.container)
+        
         container.register((any OutGoingRepository).self) {
             OutGoingRepositoryImpl(dataSource: $0.resolve(OutGoingDataSource.self)!)
         }.inObjectScope(.container)

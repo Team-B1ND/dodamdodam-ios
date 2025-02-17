@@ -10,20 +10,21 @@ import DDS
 import Shared
 
 struct CategoryCell: View {
-    @State private var selectedCategory: Int? = 0
-    
-    let categories: [String]
-    
+    @Binding var selectedCategory: Int?
+    let categories: [(id: Int?, name: String)]
+    let onSelectCategory: (Int?) -> Void
+
     var body: some View {
         VStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 8) {
-                    ForEach(0..<categories.count, id: \.self) { index in
+                    ForEach(categories, id: \.id) { category in
                         CategoryButton(
-                            categories[index],
-                            isSelected: selectedCategory == index
+                            category.name,
+                            isSelected: selectedCategory == category.id
                         ) {
-                            selectedCategory = index
+                            selectedCategory = category.id
+                            onSelectCategory(category.id)
                         }
                     }
                 }
