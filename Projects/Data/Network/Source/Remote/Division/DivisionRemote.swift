@@ -32,6 +32,10 @@ public struct DivisionRemote: RemoteProtocol {
         try await self.request(target: .patchMemberStatus(id: id, request: request))
     }
     
+    public func patchMemberPermission(id: Int, divisionMemberId: Int, _ request: PatchMemberPermissionRequest) async throws -> DefaultResponse {
+        try await self.request(target: .patchMemberPermission(id: id, divisionMemberId: divisionMemberId, request: request))
+    }
+    
     public func deleteDivision(id: Int) async throws -> DefaultResponse {
         try await self.request(target: .deleteDivision(id: id))
     }

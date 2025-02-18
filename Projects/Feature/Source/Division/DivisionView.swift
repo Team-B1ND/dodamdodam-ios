@@ -24,10 +24,11 @@ struct DivisionView: View {
                 Section {
                     DodamTopTabView {
                         LazyVStack(spacing: 12) {
+
                             if let divisions = viewModel.currentMyDivisions {
                                 ForEach(divisions, id: \.self) { division in
                                     DivisionCell(for: division) {
-                                        // TODO: navigate to detail
+                                        flow.push(DivisionDetailView(divisionId: division.id))
                                     }
                                     .task {
                                         guard let index = divisions.findIndex(id: division.id) else {
@@ -47,10 +48,11 @@ struct DivisionView: View {
                         .padding(8)
                         .page(.text("내 그룹"))
                         LazyVStack(spacing: 12) {
+
                             if let divisions = viewModel.currentDivisions {
                                 ForEach(divisions, id: \.self) { division in
                                     DivisionCell(for: division) {
-                                        // TODO: navigate to detail
+                                        flow.push(DivisionDetailView(divisionId: division.id))
                                     }
                                     .task {
                                         guard let index = divisions.findIndex(id: division.id) else {

@@ -19,6 +19,8 @@ public protocol DivisionRepository: RepositoryProtocol {
     
     func patchMemberStatus(id: Int, _ request: PatchMembersStatusRequest) async throws
     
+    func patchMemberPermission(id: Int, divisionMemberId: Int, _ request: PatchMemberPermissionRequest) async throws
+    
     func deleteDivision(id: Int) async throws
     
     func deleteMembers(id: Int, _ request: DeleteDivisionMembersRequest) async throws

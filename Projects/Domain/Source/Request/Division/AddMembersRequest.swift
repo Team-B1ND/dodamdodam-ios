@@ -9,5 +9,8 @@ import Foundation
 import Moya
 
 public struct AddMembersRequest: RequestProtocol {
-    public let memberIdList: [String]
+    public let memberIdList: [Int]
+    public init(memberIdList: [Int]) {
+        self.memberIdList = memberIdList
+    }
 }
