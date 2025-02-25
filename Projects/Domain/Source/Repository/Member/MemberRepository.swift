@@ -15,6 +15,8 @@ public protocol MemberRepository: RepositoryProtocol {
     
     func postVerifyAuthCode(type: AuthType, _ request: PostVerifyAuthCodeRequest) async throws
     
+    func postRelation(_ request: PostRelationRequest) async throws
+    
     func patchDeactivate() async throws
     
     func patchPassword(_ request: PatchPasswordRequest) async throws
@@ -26,4 +28,6 @@ public protocol MemberRepository: RepositoryProtocol {
     func fetchInfo() async throws -> MemberResponse
     
     func fetchMemberByCode(code: String) async throws -> MemberResponse
+    
+    func fetchRelation() async throws -> [ConnectStudentResponse]
 }

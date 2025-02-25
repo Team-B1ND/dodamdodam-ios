@@ -87,9 +87,8 @@ class RegisterViewModel: ObservableObject {
                         id: idText,
                         pw: pwText,
                         name: nameText,
-                        relationInfo: connectStudents.map { $0.toRequest() },
-                        phone: clearedPhoneText,
-                        authCode: phoneCodeText
+                        relationInfo: connectStudents.map { ConnectStudentRequest.of($0) },
+                        phone: clearedPhoneText
                     )
                 )
             default:

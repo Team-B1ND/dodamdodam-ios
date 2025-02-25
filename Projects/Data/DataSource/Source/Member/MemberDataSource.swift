@@ -31,6 +31,10 @@ public struct MemberDataSource: DataSourceProtocol {
         _ = try await remote.postVerifyAuthCode(type: type, request: request)
     }
     
+    public func postRelation(_ request: PostRelationRequest) async throws {
+        _ = try await remote.postRelation(request)
+    }
+    
     public func patchDeactivate() async throws {
         _ = try await remote.patchDeactivate()
     }
@@ -54,6 +58,11 @@ public struct MemberDataSource: DataSourceProtocol {
     
     public func fetchMemberByCode(code: String) async throws -> MemberResponse {
         let response = try await remote.fetchMemberByCode(code: code)
+        return response.data
+    }
+    
+    public func fetchRelation() async throws -> [ConnectStudentResponse] {
+        let response = try await remote.fetchRelation()
         return response.data
     }
 }

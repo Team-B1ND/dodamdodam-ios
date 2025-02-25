@@ -8,17 +8,15 @@
 import Foundation
 
 public struct ConnectStudent: ModelProtocol {
-    public let member: MemberResponse
+    public let profileImage: String?
+    public let name: String
     public let code: String
     public let relation: String
     
-    public init(member: MemberResponse, code: String, relation: String) {
-        self.member = member
+    public init(profileImage: String?, name: String, code: String, relation: String) {
+        self.profileImage = profileImage
+        self.name = name
         self.code = code
         self.relation = relation
-    }
-    
-    public func toRequest() -> ConnectStudentRequest {
-        .init(code: code, relation: relation)
     }
 }

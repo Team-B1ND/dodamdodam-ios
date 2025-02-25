@@ -32,6 +32,10 @@ public struct MemberRepositoryImpl: MemberRepository {
         try await dataSource.postVerifyAuthCode(type: type, request)
     }
     
+    public func postRelation(_ request: PostRelationRequest) async throws {
+        try await dataSource.postRelation(request)
+    }
+    
     public func patchDeactivate() async throws {
         try await dataSource.patchDeactivate()
     }
@@ -54,5 +58,9 @@ public struct MemberRepositoryImpl: MemberRepository {
     
     public func fetchMemberByCode(code: String) async throws -> MemberResponse {
         try await dataSource.fetchMemberByCode(code: code)
+    }
+    
+    public func fetchRelation() async throws -> [ConnectStudentResponse] {
+        try await dataSource.fetchRelation()
     }
 }

@@ -29,6 +29,10 @@ public struct MemberRemote: RemoteProtocol {
         try await self.request(target: .postVerifyAuthCode(type: type, request))
     }
     
+    public func postRelation(_ request: PostRelationRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postRelation(request))
+    }
+    
     public func patchDeactivate() async throws -> DefaultResponse {
         try await self.request(target: .patchDeactivate)
     }
@@ -51,5 +55,9 @@ public struct MemberRemote: RemoteProtocol {
     
     public func fetchMemberByCode(code: String) async throws -> Response<MemberResponse> {
         try await self.request(target: .fetchMemberByCode(code: code), res: MemberResponse.self)
+    }
+    
+    public func fetchRelation() async throws -> Response<[ConnectStudentResponse]> {
+        try await self.request(target: .fetchRelation, res: [ConnectStudentResponse].self)
     }
 }

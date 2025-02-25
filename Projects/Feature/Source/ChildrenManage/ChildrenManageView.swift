@@ -13,22 +13,39 @@ import Domain
 
 private let relations = ["부", "모", "조부", "조모"]
 
-struct ChildrenManageViewForRegister: View {
-    @EnvironmentObject private var viewModel: RegisterViewModel
+struct ChildrenManageView: View {
     @Flow private var flow
+    @State private var viewModel = ChildrenManageViewModelImpl()
     
     var body: some View {
-        ContentView(children: $viewModel.connectStudents) {
-            flow.push(
-                RegisterInfoView().environmentObject(viewModel)
-            )
+        ContentView<ChildrenManageViewModelImpl>(children: $viewModel.connectStudents) {
+            flow.pop()
+        }
+        .environmentObject(viewModel)
+        .task {
+            await viewModel.onAppear()
         }
     }
 }
 
-private struct ContentView: View {
+struct ChildrenManageViewForRegister: View {
+    @Flow private var flow
+    @EnvironmentObject private var parentViewModel: RegisterViewModel
+    @StateObject private var viewModel = ChildrenManageViewModelForRegister()
+    
+    var body: some View {
+        ContentView<ChildrenManageViewModelForRegister>(children: $parentViewModel.connectStudents) {
+            flow.push(
+                RegisterInfoView().environmentObject(parentViewModel)
+            )
+        }
+        .environmentObject(viewModel)
+    }
+}
+
+private struct ContentView<ViewModel>: View where ViewModel: ChildrenManageViewModel {
     @EnvironmentObject private var dialog: DialogProvider
-    @StateObject private var viewModel = ChildrenManageViewModel()
+    @EnvironmentObject private var viewModel: ViewModel
     @Binding var children: [ConnectStudent]
     let completion: () -> Void
     @State private var isSheetPresented = false
@@ -72,9 +89,6 @@ private struct ContentView: View {
             .padding(.bottom, 24)
             .padding(.horizontal, 16)
         }
-        .onAppear {
-            self.isSheetPresented = true
-        }
         .onChange(of: viewModel.studentCode) { _ in
             viewModel.isNotFoundMember = false
         }
@@ -91,7 +105,7 @@ private struct ContentView: View {
                                 title: "등록",
                                 color: DodamColor.Primary.normal
                             ) {
-                                if let child = await viewModel.getChild() {
+                                if let child = await viewModel.makeRelation() {
                                     children.append(child)
                                     isSheetPresented = false
                                 }
@@ -107,6 +121,7 @@ private struct ContentView: View {
                             title: "학생 코드",
                             text: $viewModel.studentCode
                         )
+                        .keyboardType(.asciiCapable)
                         .maxLength($viewModel.studentCode, length: 8)
                         if viewModel.isNotFoundMember {
                             Text("학생을 찾을 수 없습니다.")
@@ -163,9 +178,9 @@ private struct ChildCell: View {
     var body: some View {
         VStack(spacing: 6) {
             Spacer()
-            DodamAvatar.extraLarge(url: child.member.profileImage)
+            DodamAvatar.extraLarge(url: child.profileImage)
             VStack(spacing: 2) {
-                Text(child.member.name)
+                Text(child.name)
                     .foreground(DodamColor.Label.strong)
                     .font(.headline(.bold))
                 Text("학생과의 관계: \(child.relation)")
