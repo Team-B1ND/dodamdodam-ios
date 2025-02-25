@@ -41,15 +41,16 @@ struct WaitingMemberSheetView: View {
                 .role(.assistive)
                 .frame(maxWidth: UIScreen.main.bounds.width * 0.3)
                 
-                DodamButton.fullWidth(
-                    title: "승인하기"
-                ) {
-                    Task {
-                        await viewModel.addMembers(id: id, memberId: [member.memberId])
-                    }
-                }
-                .role(.primary)
-                .frame(maxWidth: UIScreen.main.bounds.width * 0.6)
+//                DodamButton.fullWidth(
+//                    title: "승인하기"
+//                ) {
+//                    Task {
+//                        await viewModel.addMembers(id: id, memberId: [member.memberId])
+//                    }
+//                }
+//                .role(.primary)
+//                .frame(maxWidth: UIScreen.main.bounds.width * 0.6)
+                //TODO: 이거 커밋할때 [String]으로 
             }
             .padding(.top, 24)
             .frame(maxWidth: .infinity)

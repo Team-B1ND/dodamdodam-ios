@@ -114,20 +114,21 @@ struct DivisionAddMember: View {
             .role(.assistive)
             .padding(.trailing, 8)
             
-            DodamButton.fullWidth(
-                title: "추가"
-            ) {
-                Task {
-                    let selectedMemberIds: [String] = selectedMembers.flatMap { division in
-                        division.value.filter { $0.value }.map { String($0.key) }
-                    }
-                    
-                    if !selectedMemberIds.isEmpty {
-                        await viewModel.addMembers(id: id, memberId: selectedMemberIds)
-                    }
-                }
-            }
-            .role(.primary)
+//            DodamButton.fullWidth(
+//                title: "추가"
+//            ) {
+//                Task {
+//                    let selectedMemberIds: [String] = selectedMembers.flatMap { division in
+//                        division.value.filter { $0.value }.map { String($0.key) }
+//                    }
+//                    
+//                    if !selectedMemberIds.isEmpty {
+//                        await viewModel.addMembers(id: id, memberId: selectedMemberIds)
+//                    }
+//                }
+//            }
+//            .role(.primary)
+            //TODO: 이거 커밋할때 [String]으로
         }
         .padding(.top, 55)
         .padding(.bottom, 12)
