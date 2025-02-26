@@ -8,6 +8,22 @@
 import SwiftUI
 import DDS
 import Domain
+import CachedAsyncImage
+
+extension StateType {
+    var mark: StateTypeTag? {
+        switch self {
+        case .allowed:
+            return StateTypeTag(title: "승인됨", type: .primary)
+        case .waiting:
+            return StateTypeTag(title: "대기중", type: .secondary)
+        case .deleted:
+            return StateTypeTag(title: "거절됨", type: .negative)
+        case .pending, .rejected:
+            return nil
+        }
+    }
+}
 
 struct LeaderCell: View {
     private let data: ClubAllMembersResponse
@@ -18,18 +34,22 @@ struct LeaderCell: View {
     
     var body: some View {
         HStack {
-            Circle()
-                .frame(width: 30, height: 30)
+            DodamAvatar.extraSmall(url: data.profileImage)
                 .padding(.horizontal, 1)
             
-            Text(data.name)
-                .font(.body1(.medium))
-                .foreground(DodamColor.Label.normal)
+            VStack(alignment: .leading) {
+                Text(data.name)
+                    .font(.body1(.medium))
+                    .foreground(DodamColor.Label.normal)
+                
+                Text("\(data.grade)-\(data.room)")
+                    .font(.body2(.medium))
+                    .foreground(DodamColor.Label.alternative)
+            }
             Spacer()
-            Text("\(data.grade)-\(data.room)")
-                .font(.body2(.medium))
-                .foreground(DodamColor.Label.alternative)
+            
+            data.status.mark
         }
-        .padding(.horizontal, 4)
+        .padding(.horizontal)
     }
 }

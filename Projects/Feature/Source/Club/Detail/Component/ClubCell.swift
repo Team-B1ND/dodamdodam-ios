@@ -10,6 +10,21 @@ import DDS
 import Domain
 import CachedAsyncImage
 
+extension StateType {
+    var tag: StateTypeTag? {
+        switch self {
+        case .allowed:
+            return StateTypeTag(title: "승인됨", type: .primary)
+        case .waiting:
+            return StateTypeTag(title: "대기중", type: .secondary)
+        case .deleted:
+            return StateTypeTag(title: "거절됨", type: .negative)
+        case .pending, .rejected:
+            return nil
+        }
+    }
+}
+
 struct ClubCell: View {
     private let data: ClubsResponse
     private let action: () -> Void
@@ -28,7 +43,7 @@ struct ClubCell: View {
                     image
                         .resizable()
                         .frame(width: 82, height: 85)
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipShape(.extraSmall)
                 } placeholder: {
                     Rectangle()
                         .frame(width: 82, height: 85)
@@ -52,6 +67,8 @@ struct ClubCell: View {
                         .foreground(DodamColor.Label.normal)
                 }
                 .padding(.bottom, 8)
+                
+                data.state.tag
             }
             .padding(.vertical, 2)
             .frame(maxWidth: .infinity, alignment: .leading)

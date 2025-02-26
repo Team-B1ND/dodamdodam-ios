@@ -55,11 +55,13 @@ struct ClubDetailView: View {
             VStack {
                 VStack(spacing: 0) {
                     HStack {
-                        Text("멤버")
-                            .font(.headline(.bold))
-                            .foreground(DodamColor.Label.normal)
-                            .padding(.top, 10)
-                        Spacer()
+                        if let members = viewModel.clubMembers?.isEmpty {
+                            Text(members ? "멤버" : "멤버현황")
+                                .font(.headline(.bold))
+                                .foreground(DodamColor.Label.normal)
+                                .padding(.top, 10)
+                            Spacer()
+                        }
                     }
                     .padding(.leading)
                     .padding(.vertical, 10)

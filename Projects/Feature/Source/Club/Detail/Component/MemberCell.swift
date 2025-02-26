@@ -8,6 +8,7 @@
 import SwiftUI
 import DDS
 import Domain
+import CachedAsyncImage
 
 struct MemberCell: View {
     private let data: ClubMembersResponse
@@ -18,8 +19,7 @@ struct MemberCell: View {
     
     var body: some View {
         HStack {
-            Circle()
-                .frame(width: 30, height: 30)
+            DodamAvatar.extraSmall(url: data.profileImage)
                 .padding(.horizontal, 1)
             
             Text(data.name)
