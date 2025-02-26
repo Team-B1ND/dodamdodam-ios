@@ -24,14 +24,7 @@ final class ClubDetailViewModel: ObservableObject {
     
     // MARK: - Repository
     @MainActor
-    func fetchAllData(id: Int) async {
-        async let fetchClubDetail: () = fetchClubDetail(id: id)
-        async let fetchClubMembers: () = fetchClubMembers(id: id)
-        _ = await [fetchClubDetail, fetchClubMembers]
-    }
-    
-    @MainActor
-    func fetchClubDetail(id: Int) async {
+    func fetchClubDetail(id: Int = 0) async {
         do {
             clubDetail = try await clubRepository.fetchClubDetail(id: id)
         } catch {
@@ -40,7 +33,7 @@ final class ClubDetailViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchClubMembers(id: Int) async {
+    func fetchClubMembers(id: Int = 0) async {
         do {
             leaderMembers = try await clubRepository.fetchAllClubMembers(id: id)
         } catch {
@@ -51,5 +44,14 @@ final class ClubDetailViewModel: ObservableObject {
                 print(error)
             }
         }
+    }
+}
+
+extension ClubDetailViewModel: OnAppearProtocol {
+    @MainActor
+    func fetchAllData() async {
+        async let fetchClubDetail: () = fetchClubDetail()
+        async let fetchClubMembers: () = fetchClubMembers()
+        _ = await [fetchClubDetail, fetchClubMembers]
     }
 }

@@ -48,6 +48,9 @@ struct ClubDetailView: View {
                         .font(.body1(.medium))
                         .foreground(DodamColor.Label.normal)
                 }
+                    .task {
+                        viewModel.fetchClubDetail(id: id)
+                    }
             }
             .padding(.top, 4)
             .padding(.horizontal, 14)
@@ -73,6 +76,9 @@ struct ClubDetailView: View {
                                 ForEach(members.indices, id: \.self) { index in
                                     let member = members[index]
                                     MemberCell(for: member)
+                                        .task {
+                                            viewModel.fetchClubMembers(id: id)
+                                        }
                                         .onAppear {
                                             if index > 1 && !isExpanded {
                                                 withAnimation(.spring()) {
@@ -86,6 +92,9 @@ struct ClubDetailView: View {
                                 ForEach(leaderMembers.indices, id: \.self) { index in
                                     let leaderMember = leaderMembers[index]
                                     LeaderCell(for: leaderMember)
+                                        .task {
+                                            viewModel.fetchClubMembers(id: id)
+                                        }
                                         .onAppear {
                                             if index > 1 && !isExpanded {
                                                 withAnimation(.spring()) {
@@ -113,8 +122,8 @@ struct ClubDetailView: View {
                                         isExpanded = true
                                     }
                                 }
-                                return Color.clear
                             }
+                            return Color.clear
                         }
                     }
                     .coordinateSpace(name: "스크롤상단 감지")
@@ -147,7 +156,7 @@ struct ClubDetailView: View {
         }
         .background(DodamColor.Background.neutral)
         .task {
-            await viewModel.fetchAllData(id: id)
+            await viewModel.onAppear()
         }
     }
 }
