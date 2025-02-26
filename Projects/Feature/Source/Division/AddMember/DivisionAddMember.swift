@@ -65,7 +65,7 @@ struct DivisionAddMember: View {
         ForEach(divisions, id: \.id) { division in
             let divisionId = division.id
             let isExpanded = expandedDivisionId.contains(divisionId)
-
+            
             CustomAccordion(
                 title: division.name,
                 isExpanded: isExpanded,
@@ -95,7 +95,7 @@ struct DivisionAddMember: View {
             }
         }
     }
-
+    
     private func toggleAccordion(for divisionId: Int) {
         if expandedDivisionId.contains(divisionId) {
             expandedDivisionId.remove(divisionId)
@@ -114,21 +114,20 @@ struct DivisionAddMember: View {
             .role(.assistive)
             .padding(.trailing, 8)
             
-//            DodamButton.fullWidth(
-//                title: "추가"
-//            ) {
-//                Task {
-//                    let selectedMemberIds: [String] = selectedMembers.flatMap { division in
-//                        division.value.filter { $0.value }.map { String($0.key) }
-//                    }
-//                    
-//                    if !selectedMemberIds.isEmpty {
-//                        await viewModel.addMembers(id: id, memberId: selectedMemberIds)
-//                    }
-//                }
-//            }
-//            .role(.primary)
-            //TODO: 이거 커밋할때 [String]으로
+            DodamButton.fullWidth(
+                title: "추가"
+            ) {
+                Task {
+                    let selectedMemberIds: [String] = selectedMembers.flatMap { division in
+                        division.value.filter { $0.value }.map { String($0.key) }
+                    }
+                    
+                    if !selectedMemberIds.isEmpty {
+                        await viewModel.addMembers(id: id, memberId: selectedMemberIds)
+                    }
+                }
+            }
+            .role(.primary)
         }
         .padding(.top, 55)
         .padding(.bottom, 12)

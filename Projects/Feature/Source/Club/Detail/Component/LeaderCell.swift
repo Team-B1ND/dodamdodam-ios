@@ -38,9 +38,15 @@ struct LeaderCell: View {
                 .padding(.horizontal, 1)
             
             VStack(alignment: .leading) {
-                Text(data.name)
-                    .font(.body1(.medium))
-                    .foreground(DodamColor.Label.normal)
+                HStack {
+                    Text(data.name)
+                        .font(.body1(.medium))
+                        .foreground(DodamColor.Label.normal)
+                    
+                    if data.permission == .clubLeader {
+                        Image(icon: .crown)
+                    }
+                }
                 
                 Text("\(data.grade)-\(data.room)")
                     .font(.body2(.medium))

@@ -48,8 +48,7 @@ final class DivisionWaitingViewModel: ObservableObject {
     }
     
     @MainActor
-    func addMembers(id: Int, memberId: [Int]) async {
-        //TODO: 이거 커밋할때 [String]으로
+    func addMembers(id: Int, memberId: [String]) async {
         do {
             try await divisionRepository.addMembers(id: id,request: .init (memberIdList: memberId))
             

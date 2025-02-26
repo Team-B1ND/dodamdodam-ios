@@ -26,10 +26,8 @@ struct MemberCell: View {
                 .font(.body1(.medium))
                 .foreground(DodamColor.Label.normal)
             
-            if data.permission == .clubLeader { // 왕관 dds에 추가해야함
-                Image(systemName: "crown.fill")
-                    .foregroundColor(.yellow)
-                    .font(.system(size: 14))
+            if data.permission == .clubLeader {
+                Image(icon: .crown)
             }
             
             Spacer()

@@ -37,6 +37,6 @@ struct StateTypeTag: View {
             .padding(.horizontal, 6)
             .padding(.vertical, 4)
             .background(type.color)
-            .clipShape(.extraSmall)
+            .clipShape(.extraLarge)
     }
 }

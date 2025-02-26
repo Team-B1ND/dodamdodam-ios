@@ -7,6 +7,7 @@
 
 import SwiftUI
 import DDS
+import MarkdownUI
 
 struct ClubDetailView: View {
     @StateObject private var viewModel = ClubViewModel()
@@ -43,7 +44,7 @@ struct ClubDetailView: View {
                         .foreground(DodamColor.Label.normal)
                         .padding(.vertical, 4)
                     
-                    Text(data.description)
+                    Markdown(data.description)
                         .font(.body1(.medium))
                         .foreground(DodamColor.Label.normal)
                 }
