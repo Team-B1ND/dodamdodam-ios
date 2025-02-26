@@ -9,7 +9,7 @@ import SwiftUI
 import DDS
 import Shared
 
-struct ApplyView: View {
+struct ClubApplyView: View {
     @State var selection: Int = 0
     @State private var selection1: [(text: String, club: String?)] = [(text: "", club: nil)]
     @State private var selection2: [(text: String, club: String?)] = [(text: "", club: nil)]

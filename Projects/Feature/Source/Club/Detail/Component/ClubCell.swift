@@ -48,7 +48,7 @@ struct ClubCell: View {
                     Rectangle()
                         .frame(width: 82, height: 85)
                         .shimmer()
-                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                        .clipShape(.extraSmall)
                 }
                 .padding(.vertical, 4)
                 .padding(.horizontal, 3)

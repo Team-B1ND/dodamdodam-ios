@@ -20,7 +20,7 @@ struct MyClubView: View {
                     icon: .fullMoonFace,
                     buttonTitle: "동아리 입부 신청하기"
                 ) {
-                    flow.push(ApplyView())
+                    flow.push(ClubApplyView())
                 }
                 .padding(.vertical)
             }

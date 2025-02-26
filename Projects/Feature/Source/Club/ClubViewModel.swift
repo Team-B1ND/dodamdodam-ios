@@ -14,9 +14,6 @@ import Shared
 final class ClubViewModel: ObservableObject {
     // MARK: - State
     @Published var clubs: [ClubsResponse]?
-    @Published var clubMembers: [ClubMembersResponse]?
-    @Published var leaderMembers: [ClubAllMembersResponse]?
-    @Published var clubDetail: ClubDetailResponse?
     
     var isFirstOnAppear: Bool = true
     
@@ -24,7 +21,6 @@ final class ClubViewModel: ObservableObject {
     @Inject private var clubRepository: ClubRepository
     
     // MARK: - Method
-    
     @MainActor
     func fetchClubs() async {
         do {
@@ -33,31 +29,6 @@ final class ClubViewModel: ObservableObject {
             print(error)
         }
     }
-    
-    @MainActor
-    func fetchClubDetail(id: Int) async {
-        do {
-            clubDetail = try await clubRepository.fetchClubDetail(id: id)
-        } catch {
-            print(error)
-        }
-    }
-    
-    @MainActor
-    func fetchClubMembers(id: Int) async {
-        do {
-            leaderMembers = try await clubRepository.fetchAllClubMembers(id: id)
-        } catch {
-            print(error)
-            do {
-                clubMembers = try await clubRepository.fetchClubMembers(id: id)
-            } catch {
-                print(error)
-            }
-        }
-    }
-    
-    
     
     @MainActor
     func onRefresh() async {

@@ -10,7 +10,7 @@ import DDS
 import MarkdownUI
 
 struct ClubDetailView: View {
-    @StateObject private var viewModel = ClubViewModel()
+    @StateObject private var viewModel = ClubDetailViewModel()
     @State private var sheetHeight: CGFloat = 300
     @State private var isExpanded: Bool = false
     private let minHeight: CGFloat = 300
@@ -20,7 +20,7 @@ struct ClubDetailView: View {
     let id: Int
     
     var body: some View {
-        DodamScrollView.medium(title: "자세히보기") {
+        DodamScrollView.medium(title: "") {
             VStack(alignment: .leading, spacing: 6) {
                 if let data = viewModel.clubDetail {
                     Text(data.subject)
@@ -102,18 +102,15 @@ struct ClubDetailView: View {
                             GeometryReader { geo -> Color in
                                 let offset = geo.frame(in: .named("스크롤상단 감지")).minY
                                 
-                                DispatchQueue.main.async {
-                                    // 맨 위 계산식
-                                    if offset >= 0 && isExpanded {
-                                        withAnimation(.spring(duration: 0.1)) {
-                                            sheetHeight = minHeight
-                                            isExpanded = false
-                                        }
-                                    } else if offset < -20 && !isExpanded {
-                                        withAnimation(.spring()) {
-                                            sheetHeight = maxHeight
-                                            isExpanded = true
-                                        }
+                                if offset >= 0 && isExpanded {
+                                    withAnimation(.spring(duration: 0.1)) {
+                                        sheetHeight = minHeight
+                                        isExpanded = false
+                                    }
+                                } else if offset < -20 && !isExpanded {
+                                    withAnimation(.spring()) {
+                                        sheetHeight = maxHeight
+                                        isExpanded = true
                                     }
                                 }
                                 return Color.clear
@@ -124,7 +121,7 @@ struct ClubDetailView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: sheetHeight)
                 .background(DodamColor.Background.normal)
-                .cornerRadius(20)
+                .clipShape(.extraSmall)
                 .gesture(
                     DragGesture()
                         .onChanged { value in
