@@ -24,6 +24,13 @@ final class ClubDetailViewModel: ObservableObject {
     
     // MARK: - Repository
     @MainActor
+    func fetchAllData(id: Int) async {
+        async let fetchClubDetail: () = fetchClubDetail(id: id)
+        async let fetchClubMembers: () = fetchClubMembers(id: id)
+        _ = await [fetchClubDetail, fetchClubMembers]
+    }
+    
+    @MainActor
     func fetchClubDetail(id: Int) async {
         do {
             clubDetail = try await clubRepository.fetchClubDetail(id: id)

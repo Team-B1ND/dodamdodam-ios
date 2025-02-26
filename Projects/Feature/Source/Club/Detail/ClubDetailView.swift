@@ -147,8 +147,7 @@ struct ClubDetailView: View {
         }
         .background(DodamColor.Background.neutral)
         .task {
-            await viewModel.fetchClubDetail(id: id)
-            await viewModel.fetchClubMembers(id: id)
+            await viewModel.fetchAllData(id: id)
         }
     }
 }
