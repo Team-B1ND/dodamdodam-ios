@@ -48,9 +48,6 @@ struct ClubDetailView: View {
                         .font(.body1(.medium))
                         .foreground(DodamColor.Label.normal)
                 }
-                    .task {
-                        viewModel.fetchClubDetail(id: id)
-                    }
             }
             .padding(.top, 4)
             .padding(.horizontal, 14)
@@ -76,9 +73,6 @@ struct ClubDetailView: View {
                                 ForEach(members.indices, id: \.self) { index in
                                     let member = members[index]
                                     MemberCell(for: member)
-                                        .task {
-                                            viewModel.fetchClubMembers(id: id)
-                                        }
                                         .onAppear {
                                             if index > 1 && !isExpanded {
                                                 withAnimation(.spring()) {
@@ -92,9 +86,6 @@ struct ClubDetailView: View {
                                 ForEach(leaderMembers.indices, id: \.self) { index in
                                     let leaderMember = leaderMembers[index]
                                     LeaderCell(for: leaderMember)
-                                        .task {
-                                            viewModel.fetchClubMembers(id: id)
-                                        }
                                         .onAppear {
                                             if index > 1 && !isExpanded {
                                                 withAnimation(.spring()) {
@@ -111,19 +102,21 @@ struct ClubDetailView: View {
                             GeometryReader { geo -> Color in
                                 let offset = geo.frame(in: .named("스크롤상단 감지")).minY
                                 
-                                if offset >= 0 && isExpanded {
-                                    withAnimation(.spring(duration: 0.1)) {
-                                        sheetHeight = minHeight
-                                        isExpanded = false
-                                    }
-                                } else if offset < -20 && !isExpanded {
-                                    withAnimation(.spring()) {
-                                        sheetHeight = maxHeight
-                                        isExpanded = true
+                                DispatchQueue.main.async {
+                                    if offset >= 0 && isExpanded {
+                                        withAnimation(.spring(duration: 0.1)) {
+                                            sheetHeight = minHeight
+                                            isExpanded = false
+                                        }
+                                    } else if offset < -20 && !isExpanded {
+                                        withAnimation(.spring()) {
+                                            sheetHeight = maxHeight
+                                            isExpanded = true
+                                        }
                                     }
                                 }
+                                return Color.clear
                             }
-                            return Color.clear
                         }
                     }
                     .coordinateSpace(name: "스크롤상단 감지")
@@ -156,7 +149,9 @@ struct ClubDetailView: View {
         }
         .background(DodamColor.Background.neutral)
         .task {
-            await viewModel.onAppear()
+            async let fetchClubDetail: () = viewModel.fetchClubDetail(id: id)
+            async let fetchClubMember: () = viewModel.fetchClubMembers(id: id)
+            _ = await [fetchClubDetail, fetchClubMember]
         }
     }
 }

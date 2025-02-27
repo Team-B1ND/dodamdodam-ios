@@ -12,6 +12,7 @@ import Domain
 import Shared
 
 final class ClubDetailViewModel: ObservableObject {
+    
     // MARK: - State
     @Published var clubMembers: [ClubMembersResponse]?
     @Published var leaderMembers: [ClubAllMembersResponse]?
@@ -24,7 +25,7 @@ final class ClubDetailViewModel: ObservableObject {
     
     // MARK: - Repository
     @MainActor
-    func fetchClubDetail(id: Int = 0) async {
+    func fetchClubDetail(id: Int) async {
         do {
             clubDetail = try await clubRepository.fetchClubDetail(id: id)
         } catch {
@@ -33,7 +34,7 @@ final class ClubDetailViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchClubMembers(id: Int = 0) async {
+    func fetchClubMembers(id: Int) async {
         do {
             leaderMembers = try await clubRepository.fetchAllClubMembers(id: id)
         } catch {
@@ -44,14 +45,5 @@ final class ClubDetailViewModel: ObservableObject {
                 print(error)
             }
         }
-    }
-}
-
-extension ClubDetailViewModel: OnAppearProtocol {
-    @MainActor
-    func fetchAllData() async {
-        async let fetchClubDetail: () = fetchClubDetail()
-        async let fetchClubMembers: () = fetchClubMembers()
-        _ = await [fetchClubDetail, fetchClubMembers]
     }
 }
