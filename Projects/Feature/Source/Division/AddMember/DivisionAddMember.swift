@@ -65,7 +65,7 @@ struct DivisionAddMember: View {
         ForEach(divisions, id: \.id) { division in
             let divisionId = division.id
             let isExpanded = expandedDivisionId.contains(divisionId)
-
+            
             CustomAccordion(
                 title: division.name,
                 isExpanded: isExpanded,
@@ -95,7 +95,7 @@ struct DivisionAddMember: View {
             }
         }
     }
-
+    
     private func toggleAccordion(for divisionId: Int) {
         if expandedDivisionId.contains(divisionId) {
             expandedDivisionId.remove(divisionId)

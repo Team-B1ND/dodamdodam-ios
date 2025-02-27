@@ -66,5 +66,9 @@ struct RemoteAssembly: Assembly {
         container.register(WakeupSongRemote.self) { _ in
                 .init()
         }.inObjectScope(.container)
+        
+        container.register(ClubRemote.self) { _ in
+                .init()
+        }.inObjectScope(.container)
     }
 }
