@@ -11,14 +11,18 @@ import DIContainer
 import Domain
 import Shared
 
-final class ClubDetailViewModel: ObservableObject {
-    
+final class ClubDetailViewModel: ObservableObject, OnAppearProtocol {
     // MARK: - State
     @Published var clubMembers: [ClubMembersResponse]?
     @Published var leaderMembers: [ClubAllMembersResponse]?
     @Published var clubDetail: ClubDetailResponse?
+    @Published var clubId: Int?
     
     var isFirstOnAppear: Bool = true
+    
+    init(clubId: Int) {
+        self.clubId = clubId
+    }
     
     // MARK: - Method
     @Inject private var clubRepository: ClubRepository
@@ -45,5 +49,13 @@ final class ClubDetailViewModel: ObservableObject {
                 print(error)
             }
         }
+    }
+    
+    @MainActor
+    func fetchAllData() async {
+        guard let id = clubId else { return }
+        async let fetchClubDetail: () = fetchClubDetail(id: id)
+        async let fetchClubMember: () = fetchClubMembers(id: id)
+        _ = await [fetchClubDetail, fetchClubMember]
     }
 }

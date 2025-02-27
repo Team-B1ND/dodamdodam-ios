@@ -10,7 +10,7 @@ import DDS
 import MarkdownUI
 
 struct ClubDetailView: View {
-    @StateObject private var viewModel = ClubDetailViewModel()
+    @StateObject private var viewModel: ClubDetailViewModel
     @State private var sheetHeight: CGFloat = 300
     @State private var isExpanded: Bool = false
     private let minHeight: CGFloat = 300
@@ -18,6 +18,11 @@ struct ClubDetailView: View {
     private let sheetWidth: CGFloat = 380
     
     let id: Int
+    
+    init(id: Int) {
+        self.id = id
+        self._viewModel = StateObject(wrappedValue: ClubDetailViewModel(clubId: id))
+    }
     
     var body: some View {
         DodamScrollView.medium(title: "") {
@@ -99,23 +104,22 @@ struct ClubDetailView: View {
                         }
                         .padding()
                         .overlay {
-                            GeometryReader { geo -> Color in
-                                let offset = geo.frame(in: .named("스크롤상단 감지")).minY
-                                
-                                DispatchQueue.main.async {
-                                    if offset >= 0 && isExpanded {
-                                        withAnimation(.spring(duration: 0.1)) {
-                                            sheetHeight = minHeight
-                                            isExpanded = false
-                                        }
-                                    } else if offset < -20 && !isExpanded {
-                                        withAnimation(.spring()) {
-                                            sheetHeight = maxHeight
-                                            isExpanded = true
+                            GeometryReader { geo in
+                                Color .clear
+                                    .onAppear {
+                                        let offset = geo.frame(in: .named("스크롤상단 감지")).minY
+                                        if offset >= 0 && isExpanded {
+                                            withAnimation(.spring(duration: 0.1)) {
+                                                sheetHeight = minHeight
+                                                isExpanded = false
+                                            }
+                                        } else if offset < -20 && !isExpanded {
+                                            withAnimation(.spring()) {
+                                                sheetHeight = maxHeight
+                                                isExpanded = true
+                                            }
                                         }
                                     }
-                                }
-                                return Color.clear
                             }
                         }
                     }
@@ -149,9 +153,7 @@ struct ClubDetailView: View {
         }
         .background(DodamColor.Background.neutral)
         .task {
-            async let fetchClubDetail: () = viewModel.fetchClubDetail(id: id)
-            async let fetchClubMember: () = viewModel.fetchClubMembers(id: id)
-            _ = await [fetchClubDetail, fetchClubMember]
+            await viewModel.onAppear()
         }
     }
 }
