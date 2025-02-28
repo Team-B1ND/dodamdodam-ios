@@ -13,15 +13,15 @@ import CachedAsyncImage
 extension StateType {
     var tag: StateTypeTag? {
         switch self {
-        case .allowed:
-            return StateTypeTag(title: "승인됨", type: .primary)
-        case .waiting:
-            return StateTypeTag(title: "대기중", type: .secondary)
-        case .deleted:
-            return StateTypeTag(title: "거절됨", type: .negative)
-        case .pending, .rejected:
-            return nil
-        }
+                case .allowed:
+                    return StateTypeTag(title: "승인됨", type: .primary)
+                case .waiting, .pending:
+                    return StateTypeTag(title: "대기중", type: .secondary)
+                case .rejected:
+                    return StateTypeTag(title: "거절됨", type: .negative)
+                case .deleted:
+                    return nil
+                }
     }
 }
 
@@ -68,7 +68,10 @@ struct ClubCell: View {
                 }
                 .padding(.bottom, 8)
                 
-                data.state.tag
+                Spacer()
+
+                                data.state.tag
+                                    .padding(.horizontal)
             }
             .padding(.vertical, 2)
             .frame(maxWidth: .infinity, alignment: .leading)

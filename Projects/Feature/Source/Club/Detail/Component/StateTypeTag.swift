@@ -34,8 +34,7 @@ struct StateTypeTag: View {
         Text(title)
             .font(.caption2(.bold))
             .foreground(DodamColor.Static.white)
-            .padding(.horizontal, 6)
-            .padding(.vertical, 4)
+            .padding(8)
             .background(type.color)
             .clipShape(.extraLarge)
     }

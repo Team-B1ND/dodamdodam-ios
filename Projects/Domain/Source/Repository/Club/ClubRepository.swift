@@ -16,4 +16,8 @@ public protocol ClubRepository: RepositoryProtocol {
     func fetchClubDetail(id: Int) async throws -> ClubDetailResponse
     
     func fetchClubJoinRequests() async throws -> [ClubJoinRequestsResponse]
+    
+    func acceptJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse
+        
+    func rejectJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse
 }

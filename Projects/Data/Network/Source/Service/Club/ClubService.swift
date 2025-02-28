@@ -14,6 +14,8 @@ enum ClubService: ServiceProtocol {
     case fetchAllClubMembers(id: Int)
     case fetchClubDetail(id: Int)
     case fetchClubJoinRequests
+    case acceptJoinRequest(id: Int)
+    case rejectJoinRequest(id: Int)
 }
 
 extension ClubService {
@@ -23,11 +25,12 @@ extension ClubService {
     
     var path: String {
         switch self {
-        case .fetchClub: "/members"
+        case .fetchClub: ""
         case .fetchClubMembers(let id): "/\(id)/members"
         case .fetchAllClubMembers(let id): "/\(id)/all-members"
         case .fetchClubDetail(let id): "/\(id)"
         case .fetchClubJoinRequests: "/join-requests/received"
+        case .acceptJoinRequest(let id), .rejectJoinRequest(let id): "/join-requests/\(id)"
         }
     }
     
@@ -38,21 +41,21 @@ extension ClubService {
         case .fetchAllClubMembers(let id): .get
         case .fetchClubDetail(let id): .get
         case .fetchClubJoinRequests: .get
+        case .acceptJoinRequest: .post
+        case .rejectJoinRequest: .delete
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .fetchClub:
-                .requestPlain
-        case .fetchClubMembers(let id):
-                .requestPlain
-        case .fetchAllClubMembers(let id):
-                .requestPlain
-        case .fetchClubDetail(let id):
-                .requestPlain
-        case .fetchClubJoinRequests:
-                .requestPlain
+        case .fetchClub,
+             .fetchClubMembers,
+             .fetchAllClubMembers,
+             .fetchClubDetail,
+             .fetchClubJoinRequests,
+             .acceptJoinRequest,
+             .rejectJoinRequest:
+            return .requestPlain
         }
     }
 }

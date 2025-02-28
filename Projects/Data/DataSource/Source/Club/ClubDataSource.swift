@@ -39,4 +39,14 @@ public struct ClubDataSource: DataSourceProtocol {
         let response = try await remote.fetchClubJoinRequests()
         return response.data
     }
+    
+    public func acceptJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse {
+        let response = try await remote.acceptJoinRequest(id: id)
+        return response.data
+    }
+    
+    public func rejectJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse {
+        let response = try await remote.rejectJoinRequest(id: id)
+        return response.data
+    }
 }

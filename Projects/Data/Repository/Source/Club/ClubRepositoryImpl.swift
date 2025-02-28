@@ -1,10 +1,3 @@
-//
-//  ClubRepositoryImpl.swift
-//  Repository
-//
-//  Created by dgsw30 on 2/25/25.
-//
-
 import Domain
 import DataSource
 
@@ -33,5 +26,13 @@ public struct ClubRepositoryImpl: ClubRepository {
     
     public func fetchClubJoinRequests() async throws -> [ClubJoinRequestsResponse] {
         return try await dataSource.fetchClubJoinRequests()
+    }
+    
+    public func acceptJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse {
+        return try await dataSource.acceptJoinRequest(id: id)
+    }
+    
+    public func rejectJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse {
+        return try await dataSource.rejectJoinRequest(id: id)
     }
 }
