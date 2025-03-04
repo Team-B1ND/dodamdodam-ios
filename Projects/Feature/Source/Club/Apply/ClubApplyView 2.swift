@@ -1,21 +1,22 @@
 //
-//  ApplyView.swift
+//  ClubApplyView 2.swift
 //  Feature
 //
-//  Created by dgsw30 on 2/20/25.
+//  Created by dgsw01 on 3/4/25.
 //
+
 
 import SwiftUI
 import DDS
 import Shared
 import Domain
-import DIContainer
 
 struct ClubApplyView: View {
     @StateObject private var viewModel: ClubApplyViewModel
     @State private var selection: Int = 0
     
     init() {
+        // 실제 ClubRepository 의존성 주입
         let repository = DependencyProvider.shared.container.resolve(ClubRepository.self)!
         _viewModel = StateObject(wrappedValue: ClubApplyViewModel(clubRepository: repository))
     }
@@ -27,6 +28,7 @@ struct ClubApplyView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding(.vertical, 100)
             } else if selection == 0 {
+                // 창체 동아리 화면
                 VStack(spacing: 16) {
                     ForEach(viewModel.creativeSelections.indices, id: \.self) { index in
                         VStack(alignment: .leading, spacing: 4) {
@@ -72,6 +74,7 @@ struct ClubApplyView: View {
                 }
                 .padding()
             } else if selection == 1 {
+                // 자율 동아리 화면
                 VStack(spacing: 16) {
                     ForEach(viewModel.freeSelections.indices, id: \.self) { index in
                         VStack(alignment: .leading, spacing: 4) {
@@ -155,6 +158,7 @@ struct ClubApplyView: View {
         .background(DodamColor.Background.neutral)
         .hideKeyboardWhenTap()
         .task {
+            // 페이지 로드시 동아리 목록 가져오기
             await viewModel.fetchClubs()
         }
         .alert(isPresented: $viewModel.showAlert) {

@@ -54,7 +54,7 @@ struct ClubCell: View {
                 .padding(.horizontal, 3)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(data.subject)
+                    Text(data.subject!)
                         .font(.caption1(.medium))
                         .foreground(DodamColor.Label.alternative)
                     
@@ -62,7 +62,7 @@ struct ClubCell: View {
                         .font(.heading1(.bold))
                         .foreground(DodamColor.Label.normal)
                     
-                    Text(data.shortDescription)
+                    Text(data.shortDescription!)
                         .font(.body2(.medium))
                         .foreground(DodamColor.Label.normal)
                 }

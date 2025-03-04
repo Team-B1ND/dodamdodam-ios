@@ -10,12 +10,17 @@ import Domain
 
 enum ClubService: ServiceProtocol {
     case fetchClub
+    case fetchCreativeClubs
+    case fetchFreeClubs
     case fetchClubMembers(id: Int)
     case fetchAllClubMembers(id: Int)
     case fetchClubDetail(id: Int)
     case fetchClubJoinRequests
     case acceptJoinRequest(id: Int)
     case rejectJoinRequest(id: Int)
+    case applyToClub(request: ClubApplyRequest)
+    case fetchJoinedClubs
+    case fetchMyClubs
 }
 
 extension ClubService {
@@ -26,36 +31,44 @@ extension ClubService {
     var path: String {
         switch self {
         case .fetchClub: ""
+        case .fetchCreativeClubs: ""
+        case .fetchFreeClubs: ""
         case .fetchClubMembers(let id): "/\(id)/members"
         case .fetchAllClubMembers(let id): "/\(id)/all-members"
         case .fetchClubDetail(let id): "/\(id)"
         case .fetchClubJoinRequests: "/join-requests/received"
         case .acceptJoinRequest(let id), .rejectJoinRequest(let id): "/join-requests/\(id)"
+        case .applyToClub: "/join-requests"
+        case .fetchJoinedClubs: "/joined"
+        case .fetchMyClubs: "/my"   
         }
     }
     
     var method: Method {
         switch self {
-        case .fetchClub: .get
-        case .fetchClubMembers(let id): .get
-        case .fetchAllClubMembers(let id): .get
-        case .fetchClubDetail(let id): .get
-        case .fetchClubJoinRequests: .get
-        case .acceptJoinRequest: .post
-        case .rejectJoinRequest: .delete
+        case .fetchClub, .fetchCreativeClubs, .fetchFreeClubs,
+             .fetchClubMembers, .fetchAllClubMembers,
+             .fetchClubDetail, .fetchClubJoinRequests, .fetchJoinedClubs,
+             .fetchMyClubs:
+            return .get
+        case .acceptJoinRequest, .applyToClub:
+            return .post
+        case .rejectJoinRequest:
+            return .delete
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .fetchClub,
-             .fetchClubMembers,
-             .fetchAllClubMembers,
-             .fetchClubDetail,
-             .fetchClubJoinRequests,
-             .acceptJoinRequest,
-             .rejectJoinRequest:
+        case .fetchClub, .fetchCreativeClubs, .fetchFreeClubs,
+             .fetchClubMembers, .fetchAllClubMembers,
+             .fetchClubDetail, .fetchClubJoinRequests,
+             .acceptJoinRequest, .rejectJoinRequest, .fetchJoinedClubs,
+             .fetchMyClubs:
             return .requestPlain
+            
+        case .applyToClub(let request):
+            return .requestJSONEncodable(request)
         }
     }
 }
