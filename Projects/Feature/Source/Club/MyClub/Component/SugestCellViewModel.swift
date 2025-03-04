@@ -17,27 +17,6 @@ final class SugestCellViewModel: ObservableObject {
         self.clubRepository = clubRepository
     }
     
-    // 프리뷰, 테스트용
-    convenience init() {
-        class DummyRepository: ClubRepository {
-            func fetchClubs() async throws -> [ClubsResponse] { [] }
-            func fetchClubMembers(id: Int) async throws -> [ClubMembersResponse] { [] }
-            func fetchAllClubMembers(id: Int) async throws -> [ClubAllMembersResponse] { [] }
-            func fetchClubDetail(id: Int) async throws -> ClubDetailResponse {
-                fatalError("Not implemented")
-            }
-            func fetchClubJoinRequests() async throws -> [ClubJoinRequestsResponse] { [] }
-            func acceptJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse {
-                fatalError("Not implemented")
-            }
-            func rejectJoinRequest(id: Int) async throws -> ClubJoinRequestsResponse {
-                fatalError("Not implemented")
-            }
-        }
-        
-        self.init(clubRepository: DummyRepository())
-    }
-    
     // MARK: - Method
     @MainActor
     func fetchReceivedJoinRequests() async {

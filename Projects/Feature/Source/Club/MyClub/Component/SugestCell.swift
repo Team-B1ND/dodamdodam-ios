@@ -1,9 +1,15 @@
 import SwiftUI
+import DIContainer
 import DDS
 import Domain
 
 struct SugestCell: View {
-    @StateObject private var viewModel = SugestCellViewModel()
+    @StateObject private var viewModel: SugestCellViewModel
+    
+    init() {
+        let repository: any ClubRepository = Inject<any ClubRepository>().wrappedValue
+        _viewModel = StateObject(wrappedValue: SugestCellViewModel(clubRepository: repository))
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -23,15 +29,11 @@ struct SugestCell: View {
             } else if let joinRequests = viewModel.joinRequests, !joinRequests.isEmpty {
                 VStack(alignment: .leading, spacing: 14) {
                     ForEach(joinRequests, id: \.id) { request in
-                        VStack(alignment: .leading, spacing: 4) {
+                        HStack {
                             Text(request.club.name)
                                 .font(.body2(.medium))
                                 .foreground(DodamColor.Label.normal)
-                            
-                            Text(request.club.shortDescription)
-                                .font(.caption1(.regular))
-                                .foreground(DodamColor.Label.alternative)
-                                .lineLimit(2)
+                            Spacer()
                             
                             HStack {
                                 Spacer()
@@ -41,9 +43,7 @@ struct SugestCell: View {
                                         await viewModel.acceptJoinRequest(id: request.id)
                                     }
                                 } label: {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.blue)
-                                        .font(.system(size: 24))
+                                    Image(icon: DodamIconography.checkCircle)
                                 }
                                 .padding(.horizontal, 8)
                                 
@@ -52,9 +52,7 @@ struct SugestCell: View {
                                         await viewModel.rejectJoinRequest(id: request.id)
                                     }
                                 } label: {
-                                    Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(.red)
-                                        .font(.system(size: 24))
+                                    Image(icon: DodamIconography.xmarkCircle)
                                 }
                                 .padding(.horizontal, 8)
                             }
@@ -87,8 +85,4 @@ struct SugestCell: View {
             }
         }
     }
-}
-
-#Preview {
-    SugestCell()
 }

@@ -24,7 +24,7 @@ struct MyClubView: View {
                     }
                     .padding(.vertical)
                 }
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 16)
                 
                 MyApplyCell() //내신청
                 
