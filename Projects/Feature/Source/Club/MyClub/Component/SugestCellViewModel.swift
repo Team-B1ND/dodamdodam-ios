@@ -1,6 +1,7 @@
 import Foundation
 import Domain
 import Shared
+import DIContainer
 
 final class SugestCellViewModel: ObservableObject {
     
@@ -10,21 +11,13 @@ final class SugestCellViewModel: ObservableObject {
     var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
-    private let clubRepository: any ClubRepository
-    
-    // MARK: - Init
-    init(clubRepository: any ClubRepository) {
-        self.clubRepository = clubRepository
-    }
+    @Inject private var clubRepository: ClubRepository
     
     // MARK: - Method
     @MainActor
     func fetchReceivedJoinRequests() async {
-        print("받은 부원 제안 불러왔음")
         do {
-            let result = try await clubRepository.fetchClubJoinRequests()
-            print("받은 부원 제안 불러오기 성공 \(result.count)개")
-            joinRequests = result
+            joinRequests = try await clubRepository.fetchClubJoinRequests()
         } catch let error {
             print("받은 부원 제안 불러오기 실패: \(error)")
         }

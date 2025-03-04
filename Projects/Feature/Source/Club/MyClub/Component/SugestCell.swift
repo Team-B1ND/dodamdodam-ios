@@ -4,12 +4,7 @@ import DDS
 import Domain
 
 struct SugestCell: View {
-    @StateObject private var viewModel: SugestCellViewModel
-    
-    init() {
-        let repository: any ClubRepository = Inject<any ClubRepository>().wrappedValue
-        _viewModel = StateObject(wrappedValue: SugestCellViewModel(clubRepository: repository))
-    }
+    @StateObject private var viewModel = SugestCellViewModel()
     
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {

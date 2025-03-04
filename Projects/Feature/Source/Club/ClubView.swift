@@ -40,6 +40,8 @@ struct ClubView: View {
                                     .padding(.vertical, 2)
                                 }
                             }
+                        } else {
+                            DodamLoadingView()
                         }
                     }
                 }
@@ -47,9 +49,9 @@ struct ClubView: View {
                     if let data = viewModel.clubs?.filter({ $0.type == .directActivity }) {
                         if data.isEmpty {
                             DodamEmptyView(
-                                title: "아직 신청한 외출이 없어요.",
+                                title: "아직 등록된 동아리가 없어요.",
                                 icon: .convenienceStore,
-                                buttonTitle: "외출 신청하기"
+                                buttonTitle: "동아리 생성하기"
                             ) {
                                 if let url = URL(string: "") {
                                     openURL(url)
@@ -63,6 +65,8 @@ struct ClubView: View {
                                 .padding(.vertical, 2)
                             }
                         }
+                    } else {
+                        DodamLoadingView()
                     }
                 }
             }

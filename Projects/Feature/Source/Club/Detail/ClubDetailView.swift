@@ -52,6 +52,31 @@ struct ClubDetailView: View {
                     Markdown(data.description)
                         .font(.body1(.medium))
                         .foreground(DodamColor.Label.normal)
+                } else {
+                    Text("창체")
+                        .font(.label(.medium))
+                        .foreground(DodamColor.Label.alternative)
+                        .shimmer()
+                    
+                    Text("바인드")
+                        .font(.heading1(.bold))
+                        .foreground(DodamColor.Label.normal)
+                        .shimmer()
+                    
+                    Text("세계최고 동아리 바인드")
+                        .font(.body1(.medium))
+                        .foreground(DodamColor.Label.normal)
+                        .shimmer()
+                    
+                    DodamDivider()
+                        .padding(.vertical, 24)
+                        .padding(.horizontal, 4)
+                    
+                    Markdown("바인드 최고!")
+                        .font(.body1(.medium))
+                        .foreground(DodamColor.Label.normal)
+                        .shimmer()
+                    
                 }
             }
             .padding(.top, 4)
@@ -62,7 +87,7 @@ struct ClubDetailView: View {
                 VStack(spacing: 0) {
                     HStack {
                         if let members = viewModel.clubMembers?.isEmpty {
-                            Text(members ? "멤버" : "멤버현황")
+                            Text(members ? "멤버현황" : "멤버")
                                 .font(.headline(.bold))
                                 .foreground(DodamColor.Label.normal)
                                 .padding(.top, 10)
@@ -99,6 +124,25 @@ struct ClubDetailView: View {
                                                 }
                                             }
                                         }
+                                }
+                            } else {
+                                ForEach(1...10, id: \.self) { _ in
+                                    HStack {
+                                        Rectangle()
+                                            .frame(width: 32, height: 32)
+                                            .clipShape(.extraLarge)
+                                            .shimmer()
+                                            .padding(.trailing, 2)
+                                        
+                                        Text("김은찬")
+                                            .shimmer()
+                                        
+                                        Spacer()
+                                        
+                                        Text("2-1")
+                                            .shimmer()
+                                    }
+                                    .padding(.horizontal)
                                 }
                             }
                         }

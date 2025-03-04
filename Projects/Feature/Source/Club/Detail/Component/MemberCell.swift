@@ -19,7 +19,7 @@ struct MemberCell: View {
     
     var body: some View {
         HStack {
-            DodamAvatar.extraSmall(url: data.profileImage)
+            DodamAvatar.medium(url: data.profileImage)
                 .padding(.horizontal, 1)
             
             Text(data.name)
