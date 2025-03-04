@@ -9,7 +9,6 @@ import SwiftUI
 import DDS
 import Domain
 import Shared
-import DIContainer
 
 struct CreateClubCell: View {
     @StateObject private var viewModel = CreateClubCellViewModel()

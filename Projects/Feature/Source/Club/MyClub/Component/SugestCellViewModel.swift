@@ -19,7 +19,7 @@ final class SugestCellViewModel: ObservableObject {
         do {
             joinRequests = try await clubRepository.fetchClubJoinRequests()
         } catch let error {
-            print("받은 부원 제안 불러오기 실패: \(error)")
+            print(error.localizedDescription)
         }
     }
     

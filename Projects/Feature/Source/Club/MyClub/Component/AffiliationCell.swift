@@ -9,7 +9,6 @@ import SwiftUI
 import DDS
 import Domain
 import Shared
-import DIContainer
 
 struct AffiliationCell: View {
     @StateObject private var viewModel = AffiliationCellViewModel()

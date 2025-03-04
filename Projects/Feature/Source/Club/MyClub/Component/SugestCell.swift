@@ -1,5 +1,4 @@
 import SwiftUI
-import DIContainer
 import DDS
 import Domain
 

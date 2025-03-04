@@ -46,6 +46,7 @@ struct ClubCell: View {
                         .clipShape(.extraSmall)
                 } placeholder: {
                     Rectangle()
+                        .fill(Color.gray)
                         .frame(width: 82, height: 85)
                         .shimmer()
                         .clipShape(.extraSmall)
