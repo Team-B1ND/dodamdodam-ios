@@ -58,6 +58,7 @@ final class SugestCellViewModel: ObservableObject {
 extension SugestCellViewModel: OnAppearProtocol {
     @MainActor
     func fetchAllData() async {
-        await fetchReceivedJoinRequests()
+        async let fetchReceivedJoinRequests: () = fetchReceivedJoinRequests()
+        _ = await fetchReceivedJoinRequests
     }
 }

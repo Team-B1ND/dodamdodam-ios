@@ -14,16 +14,9 @@ struct SugestCell: View {
                     .foreground(DodamColor.Label.normal)
             }
             
-            if viewModel.joinRequests == nil {
-                HStack {
-                    Spacer()
-                    ProgressView()
-                    Spacer()
-                }
-                .padding(.vertical, 20)
-            } else if let joinRequests = viewModel.joinRequests, !joinRequests.isEmpty {
+            if let joinRequests = viewModel.joinRequests, !joinRequests.isEmpty {
                 VStack(alignment: .leading, spacing: 14) {
-                    ForEach(joinRequests, id: \.id) { request in
+                    ForEach(joinRequests, id: \.self) { request in
                         HStack {
                             Text(request.club.name)
                                 .font(.body2(.medium))
@@ -74,10 +67,7 @@ struct SugestCell: View {
         .clipShape(.medium)
         .padding(16)
         .task {
-            if viewModel.isFirstOnAppear {
-                viewModel.isFirstOnAppear = false
-                await viewModel.fetchAllData()
-            }
+            await viewModel.onAppear()
         }
     }
 }
