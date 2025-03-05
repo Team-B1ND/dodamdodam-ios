@@ -16,19 +16,18 @@ public struct MainView: View {
     public init() {}
     
     public var body: some View {
-        ClubView()
-//        DodamTabView(selection: $selection) {
-//            HomeView(selection: $selection)
-//                .page(.icon(.home))
-//            MealView()
-//                .page(.icon(.forkAndKnife))
-//            OutView()
-//                .page(.icon(.doorOpen))
-//            NightStudyView()
-//                .page(.icon(.moonPlus))
-//            AllView(selection: $selection)
-//                .page(.icon(.menu))
-//        }
+        DodamTabView(selection: $selection) {
+            HomeView(selection: $selection)
+                .page(.icon(.home))
+            MealView()
+                .page(.icon(.forkAndKnife))
+            OutView()
+                .page(.icon(.doorOpen))
+            NightStudyView()
+                .page(.icon(.moonPlus))
+            AllView(selection: $selection)
+                .page(.icon(.menu))
+        }
     }
 }
 

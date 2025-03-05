@@ -12,21 +12,12 @@ import Domain
 import DIContainer
 
 struct ClubApplyView: View {
-    @StateObject private var viewModel: ClubApplyViewModel
+    @StateObject private var viewModel = ClubApplyViewModel()
     @State private var selection: Int = 0
-    
-    init() {
-        let repository = DependencyProvider.shared.container.resolve(ClubRepository.self)!
-        _viewModel = StateObject(wrappedValue: ClubApplyViewModel(clubRepository: repository))
-    }
     
     var body: some View {
         DodamScrollView.medium(title: "동아리 신청") {
-            if viewModel.isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .padding(.vertical, 100)
-            } else if selection == 0 {
+            if selection == 0 {
                 VStack(spacing: 16) {
                     ForEach(viewModel.creativeSelections.indices, id: \.self) { index in
                         VStack(alignment: .leading, spacing: 4) {
@@ -133,6 +124,8 @@ struct ClubApplyView: View {
                     }
                 }
                 .padding()
+            } else {
+                DodamLoadingView()
             }
         }
         .subView {
@@ -156,21 +149,6 @@ struct ClubApplyView: View {
         .hideKeyboardWhenTap()
         .task {
             await viewModel.fetchClubs()
-        }
-        .alert(isPresented: $viewModel.showAlert) {
-            if let successMessage = viewModel.successMessage {
-                return Alert(
-                    title: Text("성공"),
-                    message: Text(successMessage),
-                    dismissButton: .default(Text("확인"))
-                )
-            } else {
-                return Alert(
-                    title: Text("오류"),
-                    message: Text(viewModel.errorMessage ?? "알 수 없는 오류가 발생했습니다."),
-                    dismissButton: .default(Text("확인"))
-                )
-            }
         }
     }
 }
