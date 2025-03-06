@@ -44,7 +44,6 @@ struct HomeView: View {
                             )
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(6)
-                            
                         }
                         .scaledButtonStyle()
                     }
