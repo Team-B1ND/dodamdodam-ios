@@ -25,6 +25,10 @@ struct DataSourceAssembly: Assembly {
             .init(remote: $0.resolve(BusRemote.self)!)
         }.inObjectScope(.container)
         
+        container.register(DivisionDataSource.self) {
+            .init(remote: $0.resolve(DivisionRemote.self)!)
+        }.inObjectScope(.container)
+        
         container.register(MealDataSource.self) {
             .init(remote: $0.resolve(MealRemote.self)!)
         }.inObjectScope(.container)
@@ -39,6 +43,10 @@ struct DataSourceAssembly: Assembly {
         
         container.register(NightStudyDataSource.self) {
             .init(remote: $0.resolve(NightStudyRemote.self)!)
+        }.inObjectScope(.container)
+        
+        container.register(NoticeDataSource.self) {
+            .init(remote: $0.resolve(NoticeRemote.self)!)
         }.inObjectScope(.container)
         
         container.register(OutGoingDataSource.self) {
@@ -63,6 +71,10 @@ struct DataSourceAssembly: Assembly {
         
         container.register(WakeupSongDataSource.self) {
             .init(remote: $0.resolve(WakeupSongRemote.self)!)
+        }.inObjectScope(.container)
+        
+        container.register(ClubDataSource.self) {
+            .init(remote: $0.resolve(ClubRemote.self)!)
         }.inObjectScope(.container)
     }
 }

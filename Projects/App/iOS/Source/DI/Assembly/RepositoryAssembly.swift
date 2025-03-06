@@ -25,6 +25,10 @@ struct RepositoryAssembly: Assembly {
             BusRepositoryImpl(dataSource: $0.resolve(BusDataSource.self)!)
         }.inObjectScope(.container)
         
+        container.register((any DivisionRepository).self) {
+            DivisionRepositoryImpl(dataSource: $0.resolve(DivisionDataSource.self)!)
+        }.inObjectScope(.container)
+        
         container.register((any MealRepository).self) {
             MealRepositoryImpl(
                 dataSource: $0.resolve(MealDataSource.self)!,
@@ -38,6 +42,10 @@ struct RepositoryAssembly: Assembly {
         
         container.register((any NightStudyRepository).self) {
             NightStudyRepositoryImpl(dataSource: $0.resolve(NightStudyDataSource.self)!)
+        }.inObjectScope(.container)
+        
+        container.register((any NoticeRepository).self) {
+            NoticeRepositoryImpl(dataSource: $0.resolve(NoticeDataSource.self)!)
         }.inObjectScope(.container)
         
         container.register((any OutGoingRepository).self) {
@@ -62,6 +70,10 @@ struct RepositoryAssembly: Assembly {
         
         container.register((any WakeupSongRepository).self) {
             WakeupSongRepositoryImpl(dataSource: $0.resolve(WakeupSongDataSource.self)!)
+        }.inObjectScope(.container)
+        
+        container.register((any ClubRepository).self) {
+            ClubRepositoryImpl(dataSource: $0.resolve(ClubDataSource.self)!)
         }.inObjectScope(.container)
     }
 }

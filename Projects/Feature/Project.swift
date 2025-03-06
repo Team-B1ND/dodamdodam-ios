@@ -17,7 +17,8 @@ let project = Project(
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
                 .external(name: "CachedAsyncImage"),
                 .external(name: "SwiftUIIntrospect"),
-                .project(target: "Shared", path: .relativeToRoot("Projects/Shared"))
+                .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
+                .external(name: "MarkdownUI")
             ]
         )
     ]
