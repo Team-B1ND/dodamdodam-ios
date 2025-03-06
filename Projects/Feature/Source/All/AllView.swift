@@ -84,10 +84,18 @@ struct AllView: View {
                     if let role = viewModel.memberData?.role {
                         if role == .parent {
                             AllCell("내 자녀 관리", icon: .smilingFace) {
-                                //
+                                if Sign.isLoggedIn {
+                                    flow.push(ChildrenManageView())
+                                } else {
+                                    presentLoginDialog()
+                                }
                             }
                             AllCell("그룹", icon: .handshake) {
-                                //
+                                if Sign.isLoggedIn {
+                                    flow.push(DivisionView())
+                                } else {
+                                    presentLoginDialog()
+                                }
                             }
                         } else {
                             AllCell("내 상벌점 보기", icon: .barChart) {
