@@ -21,24 +21,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         // 파이어베이스 설정
         FirebaseApp.configure()
         
-        // Setting Up Notifications...
-        // 원격 알림 등록
-        if #available(iOS 10.0, *) {
-            // For iOS 10 display notification (sent via APNS)
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
-        } else {
-            let settings: UIUserNotificationSettings =
-            UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
-            application.registerUserNotificationSettings(settings)
-        }
-        
-        application.registerForRemoteNotifications()
-        
-        // Setting Up Cloud Messaging...
-        // 메세징 델리겟
         Messaging.messaging().delegate = self
+        Messaging.messaging().isAutoInitEnabled = true
+        
         UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { _, _ in }
+        
         UIApplication.shared.registerForRemoteNotifications()
+        
         return true
     }
     
@@ -81,12 +71,8 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             print("✅ AppDelegate.userNotificationCenter.didReceive - Message ID: \(messageID)")
         }
         print("✅ AppDelegate.userNotificationCenter.didReceive - \(userInfo)")
-        
-        return if #available(iOS 14.0, *) {
-            [[.list, .banner, .sound]]
-        } else {
-            [[.alert, .sound]]
-        }
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        return [[.list, .banner, .sound]]
     }
     
     // 푸시메세지를 받았을 떄
@@ -96,7 +82,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) async {
         let userInfo = response.notification.request.content.userInfo
         
-            // Do Something With MSG Data...
+        // Do Something With MSG Data...
         if let messageID = userInfo[gcmMessageIDKey] {
             print("✅ AppDelegate.userNotificationCenter.didReceive - Message ID: \(messageID)")
         }
