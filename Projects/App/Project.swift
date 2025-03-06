@@ -6,7 +6,7 @@ let project = Project(
     options: .options(
         defaultKnownRegions: ["en", "ko"],
         developmentRegion: "ko"
-    ), 
+    ),
     settings: .settings(
         base: .init()
             .otherLinkerFlags(["$(inherited) -ObjC"]),
@@ -30,16 +30,23 @@ let project = Project(
                     "CFBundleVersion": "1",
                     "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
                     "UIMainStoryboardFile": "",
-                    "UILaunchStoryboardName": "LaunchScreen"
+                    "UILaunchStoryboardName": "LaunchScreen",
+                    "FirebaseAppDelegateProxyEnabled": .boolean(false),
+                    "UIBackgroundModes": [
+                        "remote-notification",
+                        "fetch"
+                    ]
                 ]
             ),
             sources: ["iOS/Source/**"],
             resources: ["iOS/Resource/**"],
+            entitlements: .file(path: "iOS/Resource/DodamDodam.entitlements"),
             scripts: [.swiftLint],
             dependencies: [
                 .project(target: "Feature", path: .relativeToRoot("Projects/Feature")),
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
+                .external(name: "FirebaseMessaging"),
                 .target(name: "DodamDodamWidget")
             ]
         ),

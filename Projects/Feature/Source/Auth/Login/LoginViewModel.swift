@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Foundation
 import SignKit
 import DIContainer
 import Domain
@@ -28,8 +29,13 @@ class LoginViewModel: ObservableObject {
     func postLogin(_ completion: @escaping () -> Void) async {
         isShowingAlert = false
         do {
+            guard let pushToken = UserDefaults.standard.string(forKey: "pushToken") else {
+                print("pushToken is nil")
+                isShowingAlert = true
+                return
+            }
             _ = try await authRepository.postLogin(
-                .init(id: idText, pw: pwText)
+                .init(id: idText, pw: pwText, pushToken: pushToken)
             )
             completion()
         } catch let error {
