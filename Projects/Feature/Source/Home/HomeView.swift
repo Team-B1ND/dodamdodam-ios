@@ -44,85 +44,89 @@ struct HomeView: View {
                             )
                             .fixedSize(horizontal: false, vertical: true)
                             .padding(6)
-                            
                         }
                         .scaledButtonStyle()
                     }
-                    DodamContainer.default(
-                        title: "오늘의 기상송",
-                        icon: Dodam.icon(.note)
-                    ) {
-                        Button {
-                            if Sign.isLoggedIn || !(viewModel.wakeupSongData?.isEmpty ?? true) {
-                                flow.push(WakeupSongView())
-                            } else {
-                                flow.push(LoginView())
+                    if viewModel.memberData?.role != .parent {
+                        DodamContainer.default(
+                            title: "오늘의 기상송",
+                            icon: Dodam.icon(.note)
+                        ) {
+                            Button {
+                                if Sign.isLoggedIn || !(viewModel.wakeupSongData?.isEmpty ?? true) {
+                                    flow.push(WakeupSongView())
+                                } else {
+                                    flow.push(LoginView())
+                                }
+                            } label: {
+                                WakeupSongContainer(
+                                    data: viewModel.wakeupSongData
+                                )
+                                .padding(6)
                             }
-                        } label: {
-                            WakeupSongContainer(
-                                data: viewModel.wakeupSongData
-                            )
-                            .padding(6)
+                            .scaledButtonStyle()
                         }
-                        .scaledButtonStyle()
+                        HStack(alignment: .top, spacing: 12) {
+                            DodamContainer.default(
+                                title: "외출 외박",
+                                icon: Dodam.icon(.doorOpen)
+                            ) {
+                                if Sign.isLoggedIn {
+                                    Button {
+                                        flow.push(OutApplyView(
+                                            selected: $selection
+                                        ))
+                                    } label: {
+                                        OutStatusContainer(
+                                            data: viewModel.outGoingData
+                                        )
+                                        .padding(6)
+                                    }
+                                    .scaledButtonStyle()
+                                } else {
+                                    Button {
+                                        flow.push(LoginView())
+                                    } label: {
+                                        SupportingContainer(
+                                            subTitle: "외출, 외박을 신청하려면",
+                                            title: "로그인하세요"
+                                        )
+                                        .padding(6)
+                                    }
+                                    .scaledButtonStyle()
+                                }
+                            }
+                            DodamContainer.default(
+                                title: "심야 자습",
+                                icon: Dodam.icon(.moonPlus)
+                            ) {
+                                if Sign.isLoggedIn {
+                                    Button {
+                                        flow.push(NightStudyApplyView())
+                                    } label: {
+                                        NightStudyStatusContainer(
+                                            data: viewModel.nightStudyData
+                                        )
+                                        .padding(6)
+                                    }
+                                    .scaledButtonStyle()
+                                } else {
+                                    Button {
+                                        flow.push(LoginView())
+                                    } label: {
+                                        SupportingContainer(
+                                            subTitle: "심야 자습을 신청하려면",
+                                            title: "로그인하세요"
+                                        )
+                                        .padding(6)
+                                    }
+                                    .scaledButtonStyle()
+                                }
+                            }
+                        }
                     }
-                    HStack(alignment: .top, spacing: 12) {
-                        DodamContainer.default(
-                            title: "외출 외박",
-                            icon: Dodam.icon(.doorOpen)
-                        ) {
-                            if Sign.isLoggedIn {
-                                Button {
-                                    flow.push(OutApplyView(
-                                        selected: $selection
-                                    ))
-                                } label: {
-                                    OutStatusContainer(
-                                        data: viewModel.outGoingData
-                                    )
-                                    .padding(6)
-                                }
-                                .scaledButtonStyle()
-                            } else {
-                                Button {
-                                    flow.push(LoginView())
-                                } label: {
-                                    SupportingContainer(
-                                        subTitle: "외출, 외박을 신청하려면",
-                                        title: "로그인하세요"
-                                    )
-                                    .padding(6)
-                                }
-                                .scaledButtonStyle()
-                            }
-                        }
-                        DodamContainer.default(
-                            title: "심야 자습",
-                            icon: Dodam.icon(.moonPlus)
-                        ) {
-                            if Sign.isLoggedIn {
-                                Button {
-                                    flow.push(NightStudyApplyView())
-                                } label: {
-                                    NightStudyStatusContainer(
-                                        data: viewModel.nightStudyData
-                                    )
-                                    .padding(6)
-                                }
-                                .scaledButtonStyle()
-                            } else {
-                                Button {
-                                    flow.push(LoginView())
-                                } label: {
-                                    SupportingContainer(
-                                        subTitle: "심야 자습을 신청하려면",
-                                        title: "로그인하세요"
-                                    )
-                                    .padding(6)
-                                }
-                                .scaledButtonStyle()
-                            }
-                        }
+                    DodamContainer.default(title: "가까운 일정", icon: Dodam.icon(.calendar)) {
+                        ScheduleContainer(data: viewModel.scheduleData)
                     }
                 }
                 .padding(.horizontal, 16)

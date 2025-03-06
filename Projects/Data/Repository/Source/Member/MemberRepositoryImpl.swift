@@ -16,8 +16,24 @@ public struct MemberRepositoryImpl: MemberRepository {
         self.dataSource = dataSource
     }
     
-    public func postJoin(_ request: PostJoinRequest) async throws {
-        try await dataSource.postJoin(request)
+    public func postStudentJoin(_ request: PostJoinStudentRequest) async throws {
+        try await dataSource.postStudentJoin(request)
+    }
+    
+    public func postParentJoin(_ request: PostJoinParentRequest) async throws {
+        try await dataSource.postParentJoin(request)
+    }
+    
+    public func postAuthCode(type: AuthType, _ request: PostAuthCodeRequest) async throws {
+        try await dataSource.postAuthCode(type: type, request)
+    }
+    
+    public func postVerifyAuthCode(type: AuthType, _ request: PostVerifyAuthCodeRequest) async throws {
+        try await dataSource.postVerifyAuthCode(type: type, request)
+    }
+    
+    public func postRelation(_ request: PostRelationRequest) async throws {
+        try await dataSource.postRelation(request)
     }
     
     public func patchDeactivate() async throws {
@@ -38,5 +54,13 @@ public struct MemberRepositoryImpl: MemberRepository {
     
     public func fetchInfo() async throws -> MemberResponse {
         try await dataSource.fetchInfo()
+    }
+    
+    public func fetchMemberByCode(code: String) async throws -> MemberResponse {
+        try await dataSource.fetchMemberByCode(code: code)
+    }
+    
+    public func fetchRelation() async throws -> [ConnectStudentResponse] {
+        try await dataSource.fetchRelation()
     }
 }

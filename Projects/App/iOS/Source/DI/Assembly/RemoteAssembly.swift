@@ -23,6 +23,10 @@ struct RemoteAssembly: Assembly {
                 .init()
         }.inObjectScope(.container)
         
+        container.register(DivisionRemote.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
         container.register(MealRemote.self) { _ in
                 .init()
         }.inObjectScope(.container)
@@ -32,6 +36,10 @@ struct RemoteAssembly: Assembly {
         }.inObjectScope(.container)
         
         container.register(NightStudyRemote.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(NoticeRemote.self) { _ in
                 .init()
         }.inObjectScope(.container)
         
@@ -56,6 +64,10 @@ struct RemoteAssembly: Assembly {
         }.inObjectScope(.container)
         
         container.register(WakeupSongRemote.self) { _ in
+                .init()
+        }.inObjectScope(.container)
+        
+        container.register(ClubRemote.self) { _ in
                 .init()
         }.inObjectScope(.container)
     }
