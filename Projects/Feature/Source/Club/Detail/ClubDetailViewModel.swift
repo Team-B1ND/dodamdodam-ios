@@ -13,8 +13,7 @@ import Shared
 
 final class ClubDetailViewModel: ObservableObject, OnAppearProtocol {
     // MARK: - State
-    @Published var clubMembers: [ClubMembersResponse]?
-    @Published var leaderMembers: [ClubAllMembersResponse]?
+    @Published var clubMembers: ClubMembersInfoResponse?
     @Published var clubDetail: ClubDetailResponse?
     @Published var clubId: Int?
     
@@ -40,14 +39,9 @@ final class ClubDetailViewModel: ObservableObject, OnAppearProtocol {
     @MainActor
     func fetchClubMembers(id: Int) async {
         do {
-            leaderMembers = try await clubRepository.fetchAllClubMembers(id: id)
-        } catch {
-            print(error)
-            do {
-                clubMembers = try await clubRepository.fetchClubMembers(id: id)
-            } catch {
-                print(error)
-            }
+            clubMembers = try await clubRepository.fetchClubMembers(id: id)
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
     

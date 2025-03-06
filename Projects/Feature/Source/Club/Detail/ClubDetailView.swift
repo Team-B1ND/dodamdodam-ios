@@ -8,6 +8,7 @@
 import SwiftUI
 import DDS
 import MarkdownUI
+import FlowKit
 
 struct ClubDetailView: View {
     @StateObject private var viewModel: ClubDetailViewModel
@@ -17,6 +18,7 @@ struct ClubDetailView: View {
     private let maxHeight: CGFloat = 550
     private let sheetWidth: CGFloat = 380
     
+    @Flow var flow
     let id: Int
     
     init(id: Int) {
@@ -86,7 +88,7 @@ struct ClubDetailView: View {
             VStack {
                 VStack(spacing: 0) {
                     HStack {
-                        if let members = viewModel.clubMembers?.isEmpty {
+                        if let members = viewModel.clubMembers?.isLeader {
                             Text(members ? "멤버현황" : "멤버")
                                 .font(.headline(.bold))
                                 .foreground(DodamColor.Label.normal)
@@ -99,31 +101,14 @@ struct ClubDetailView: View {
                     
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 15) {
-                            if let members = viewModel.clubMembers {
-                                ForEach(members.indices, id: \.self) { index in
-                                    let member = members[index]
-                                    MemberCell(for: member)
-                                        .onAppear {
-                                            if index > 1 && !isExpanded {
-                                                withAnimation(.spring()) {
-                                                    sheetHeight = maxHeight
-                                                    isExpanded = true
-                                                }
-                                            }
-                                        }
-                                }
-                            } else if let leaderMembers = viewModel.leaderMembers {
-                                ForEach(leaderMembers.indices, id: \.self) { index in
-                                    let leaderMember = leaderMembers[index]
-                                    LeaderCell(for: leaderMember)
-                                        .onAppear {
-                                            if index > 1 && !isExpanded {
-                                                withAnimation(.spring()) {
-                                                    sheetHeight = maxHeight
-                                                    isExpanded = true
-                                                }
-                                            }
-                                        }
+                            if let clubMembers = viewModel.clubMembers {
+                                ForEach(clubMembers.students.indices, id: \.self) { index in
+                                    let member = clubMembers.students[index]
+                                    if clubMembers.isLeader {
+                                        LeaderCell(for: member)
+                                    } else {
+                                        MemberCell(for: member)
+                                    }
                                 }
                             } else {
                                 ForEach(1...10, id: \.self) { _ in
@@ -132,7 +117,7 @@ struct ClubDetailView: View {
                                             .frame(width: 32, height: 32)
                                             .clipShape(.extraLarge)
                                             .shimmer()
-                                            .padding(.trailing, 2)
+                                            .padding(.horizontal, 1)
                                         
                                         Text("김은찬")
                                             .shimmer()
@@ -142,7 +127,7 @@ struct ClubDetailView: View {
                                         Text("2-1")
                                             .shimmer()
                                     }
-                                    .padding(.horizontal)
+                                    .padding(.horizontal, 4)
                                 }
                             }
                         }
@@ -192,8 +177,14 @@ struct ClubDetailView: View {
                             }
                         }
                 )
+                .padding(.horizontal, 6)
+                DodamButton.fullWidth(
+                    title: "입부 신청하기"
+                ) {
+                    flow.push(ClubApplyView())
+                }
+                .padding([.bottom, .horizontal], 16)
             }
-            .padding(.horizontal, 6)
         }
         .background(DodamColor.Background.neutral)
         .task {

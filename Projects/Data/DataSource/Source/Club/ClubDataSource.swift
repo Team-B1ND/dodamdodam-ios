@@ -30,13 +30,8 @@ public struct ClubDataSource: DataSourceProtocol {
         return response.data
     }
     
-    public func fetchClubMembers(id: Int) async throws -> [ClubMembersResponse] {
+    public func fetchClubMembers(id: Int) async throws -> ClubMembersInfoResponse {
         let response = try await remote.fetchClubMembers(id: id)
-        return response.data
-    }
-    
-    public func fetchAllClubMembers(id: Int) async throws -> [ClubAllMembersResponse] {
-        let response = try await remote.fetchAllClubMembers(id: id)
         return response.data
     }
     

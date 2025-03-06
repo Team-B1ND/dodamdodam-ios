@@ -27,12 +27,8 @@ public struct ClubRepositoryImpl: ClubRepository {
         return try await dataSource.fetchFreeClubs()
     }
     
-    public func fetchClubMembers(id: Int) async throws -> [ClubMembersResponse] {
+    public func fetchClubMembers(id: Int) async throws -> ClubMembersInfoResponse {
         return try await dataSource.fetchClubMembers(id: id)
-    }
-    
-    public func fetchAllClubMembers(id: Int) async throws -> [ClubAllMembersResponse] {
-        return try await dataSource.fetchAllClubMembers(id: id)
     }
     
     public func fetchClubDetail(id: Int) async throws -> ClubDetailResponse {

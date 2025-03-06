@@ -25,12 +25,8 @@ public struct ClubRemote: RemoteProtocol {
         try await self.request(target: .fetchFreeClubs, res: [ClubsResponse].self)
     }
     
-    public func fetchClubMembers(id: Int) async throws -> Response<[ClubMembersResponse]> {
-        try await self.request(target: .fetchClubMembers(id: id), res: [ClubMembersResponse].self)
-    }
-    
-    public func fetchAllClubMembers(id: Int) async throws -> Response<[ClubAllMembersResponse]> {
-        try await self.request(target: .fetchAllClubMembers(id: id), res: [ClubAllMembersResponse].self)
+    public func fetchClubMembers(id: Int) async throws -> Response<ClubMembersInfoResponse> {
+        try await self.request(target: .fetchClubMembers(id: id), res: ClubMembersInfoResponse.self)
     }
     
     public func fetchClubDetail(id: Int) async throws -> Response<ClubDetailResponse> {

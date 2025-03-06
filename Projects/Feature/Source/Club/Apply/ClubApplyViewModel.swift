@@ -29,7 +29,6 @@ class ClubApplyViewModel: ObservableObject {
     
     // MARK: - Repository
     @Inject private var clubRepository: ClubRepository
-    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Methods
     @MainActor
