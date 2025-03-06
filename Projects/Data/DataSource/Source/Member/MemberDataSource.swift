@@ -15,8 +15,24 @@ public struct MemberDataSource: DataSourceProtocol {
         self.remote = remote
     }
     
-    public func postJoin(_ request: PostJoinRequest) async throws {
-        _ = try await remote.postJoin(request)
+    public func postStudentJoin(_ request: PostJoinStudentRequest) async throws {
+        _ = try await remote.postStudentJoin(request)
+    }
+    
+    public func postParentJoin(_ request: PostJoinParentRequest) async throws {
+        _ = try await remote.postParentJoin(request)
+    }
+    
+    public func postAuthCode(type: AuthType, _ request: PostAuthCodeRequest) async throws {
+        _ = try await remote.postAuthCode(type: type, request: request)
+    }
+    
+    public func postVerifyAuthCode(type: AuthType, _ request: PostVerifyAuthCodeRequest) async throws {
+        _ = try await remote.postVerifyAuthCode(type: type, request: request)
+    }
+    
+    public func postRelation(_ request: PostRelationRequest) async throws {
+        _ = try await remote.postRelation(request)
     }
     
     public func patchDeactivate() async throws {
@@ -37,6 +53,16 @@ public struct MemberDataSource: DataSourceProtocol {
     
     public func fetchInfo() async throws -> MemberResponse {
         let response = try await remote.fetchInfo()
+        return response.data
+    }
+    
+    public func fetchMemberByCode(code: String) async throws -> MemberResponse {
+        let response = try await remote.fetchMemberByCode(code: code)
+        return response.data
+    }
+    
+    public func fetchRelation() async throws -> [ConnectStudentResponse] {
+        let response = try await remote.fetchRelation()
         return response.data
     }
 }
