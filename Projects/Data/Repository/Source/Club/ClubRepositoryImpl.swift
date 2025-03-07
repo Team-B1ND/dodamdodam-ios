@@ -47,7 +47,7 @@ public struct ClubRepositoryImpl: ClubRepository {
         return try await dataSource.rejectJoinRequest(id: id)
     }
     
-    public func applyToClub(request: ClubApplyRequest) async throws -> Void {
+    public func applyToClub(request: [ClubApplyRequest]) async throws {
         return try await dataSource.applyToClub(request: request)
     }
     
@@ -56,6 +56,10 @@ public struct ClubRepositoryImpl: ClubRepository {
     }
     
     public func fetchMyClubs() async throws -> [MyClubResponse] {
-           return try await dataSource.fetchMyClubs()
-       }
+        return try await dataSource.fetchMyClubs()
+    }
+    
+    public func fetchMyApplyClubs() async throws -> [MyApplyClubResponse] {
+        return try await dataSource.fetchMyApplyClubs()
+    }
 }

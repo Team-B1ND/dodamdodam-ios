@@ -1,9 +1,13 @@
 import SwiftUI
 import DDS
 import Domain
+import Shared
+import FlowKit
 
 struct SugestCell: View {
     @StateObject private var viewModel = SugestCellViewModel()
+    @DodamDialog private var dialog
+    @Flow var flow
     
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -26,20 +30,32 @@ struct SugestCell: View {
                                 Spacer()
                                 
                                 Button {
-                                    Task {
-                                        await viewModel.acceptJoinRequest(id: request.id)
-                                    }
+                                    let dialog = Dialog(title: "\(request.club.name)에 \n입부하시겠습니까?", message: "이 선택은 되돌릴 수 없습니다.")
+                                        .primaryButton("수락") {
+                                            Task {
+                                                await viewModel.acceptJoinRequest(id: request.id)
+                                            }
+                                            flow.pop()
+                                        }
+                                        .secondaryButton("취소") {}
+                                    self.dialog.present(dialog)
                                 } label: {
                                     Image(icon: DodamIconography.checkCircle)
                                 }
                                 .padding(.horizontal, 8)
                                 
                                 Button {
-                                    Task {
-                                        await viewModel.rejectJoinRequest(id: request.id)
-                                    }
+                                    let dialog = Dialog(title: "\(request.club.name)에 \n입부하시겠습니까?", message: "이 선택은 되돌릴 수 없습니다.")
+                                        .primaryButton("거절") {
+                                            Task {
+                                                await viewModel.rejectJoinRequest(id: request.id)
+                                            }
+                                            flow.pop()
+                                        }
+                                        .secondaryButton("취소") {}
+                                    self.dialog.present(dialog)
                                 } label: {
-                                    Image(icon: DodamIconography.xmarkCircle)
+                                    Image(icon: DodamIconography.redXmarkCircle)
                                 }
                                 .padding(.horizontal, 8)
                             }

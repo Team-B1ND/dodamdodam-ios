@@ -17,7 +17,7 @@ struct ClubView: View {
     @Flow var flow
     
     var body: some View {
-        DodamScrollView.default(title: "동아리") {
+        DodamScrollView.medium(title: "동아리") {
             VStack(spacing: 12) {
                 if selection == 0 {
                     VStack {
@@ -42,6 +42,7 @@ struct ClubView: View {
                             }
                         } else {
                             DodamLoadingView()
+                                .padding(8)
                         }
                     }
                 }

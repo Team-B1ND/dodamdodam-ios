@@ -14,6 +14,7 @@ import DIContainer
 class AffiliationCellViewModel: ObservableObject {
     // MARK: - State
     @Published var joinedClubs: [JoinedClubResponse]?
+    @Published var myApplyClub: [MyApplyClubResponse]?
     
     var isFirstOnAppear: Bool = true
     
@@ -31,6 +32,15 @@ class AffiliationCellViewModel: ObservableObject {
     }
     
     @MainActor
+    func fetchMyApplyClubs() async {
+        do {
+            myApplyClub = try await clubRepository.fetchMyApplyClubs()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    @MainActor
     func onRefresh() async {
         await fetchJoinedClubs()
     }
@@ -40,6 +50,7 @@ extension AffiliationCellViewModel: OnAppearProtocol {
     @MainActor
     func fetchAllData() async {
         async let fetchJoinedClubs: () = fetchJoinedClubs()
-        _ = await fetchJoinedClubs
+        async let fetchMyApplyClubs: () = fetchMyApplyClubs()
+        _ = await [fetchJoinedClubs, fetchMyApplyClubs]
     }
 }

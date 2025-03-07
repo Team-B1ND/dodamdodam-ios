@@ -45,7 +45,7 @@ public struct ClubRemote: RemoteProtocol {
         try await self.request(target: .rejectJoinRequest(id: id), res: ClubJoinRequestsResponse.self)
     }
     
-    public func applyToClub(request: ClubApplyRequest) async throws -> Response<VoidResponse> {
+    public func applyToClub(request: [ClubApplyRequest]) async throws -> Response<VoidResponse> {
         try await self.request(target: .applyToClub(request: request), res: VoidResponse.self)
     }
     
@@ -54,6 +54,10 @@ public struct ClubRemote: RemoteProtocol {
     }
     
     public func fetchMyClubs() async throws -> Response<[MyClubResponse]> {
-            try await self.request(target: .fetchMyClubs, res: [MyClubResponse].self)
-        }
+        try await self.request(target: .fetchMyClubs, res: [MyClubResponse].self)
+    }
+    
+    public func fetchMyApplyClubs() async throws -> Response<[MyApplyClubResponse]> {
+        try await self.request(target: .fetchMyApplyClubs, res: [MyApplyClubResponse].self)
+    }
 }

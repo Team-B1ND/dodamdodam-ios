@@ -42,24 +42,15 @@ struct CreateClubCell: View {
                                 HStack {
                                     Text(club.name)
                                     Spacer()
+                                    
                                     statusTag(for: club.state)
                                 }
                                 .font(.body2(.medium))
                                 .foreground(DodamColor.Label.normal)
-                                
-                                if club.id != creativeClubs.last?.id {
-                                    Divider()
-                                        .padding(.vertical, 4)
-                                }
                             }
                         }
                         
                         if !freeClubs.isEmpty {
-                            if !creativeClubs.isEmpty {
-                                Divider()
-                                    .padding(.vertical, 8)
-                            }
-                            
                             Text("자율")
                                 .font(.caption2(.bold))
                                 .foreground(DodamColor.Label.alternative)
@@ -68,15 +59,11 @@ struct CreateClubCell: View {
                                 HStack {
                                     Text(club.name)
                                     Spacer()
+                                    
                                     statusTag(for: club.state)
                                 }
                                 .font(.body2(.medium))
-                                .foreground(DodamColor.Label.normal)
-                                
-                                if club.id != freeClubs.last?.id {
-                                    Divider()
-                                        .padding(.vertical, 4)
-                                }
+                                .foreground(DodamColor.Label.normal) 
                             }
                         }
                     }
@@ -100,16 +87,14 @@ struct CreateClubCell: View {
     @ViewBuilder
     func statusTag(for state: StateType) -> some View {
         switch state {
-        case .pending:
-            DodamTag("승인 대기중", type: .negative)
         case .allowed:
-            DodamTag("승인 완료", type: .negative)
+            Image(icon: .checkCircle)
         case .rejected:
-            DodamTag("거절됨", type: .negative)
-        case .waiting:
-            DodamTag("대기중", type: .negative)
+            Image(icon: .redXmarkCircle)
+        case .waiting, .pending:
+            Image(icon: .yellowClock)
         case .deleted:
-            DodamTag("삭제됨", type: .negative)
+            EmptyView()
         }
     }
 }

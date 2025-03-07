@@ -13,10 +13,6 @@ import FlowKit
 struct ClubDetailView: View {
     @StateObject private var viewModel: ClubDetailViewModel
     @State private var sheetHeight: CGFloat = 300
-    @State private var isExpanded: Bool = false
-    private let minHeight: CGFloat = 300
-    private let maxHeight: CGFloat = 550
-    private let sheetWidth: CGFloat = 380
     
     @Flow var flow
     let id: Int
@@ -78,11 +74,11 @@ struct ClubDetailView: View {
                         .font(.body1(.medium))
                         .foreground(DodamColor.Label.normal)
                         .shimmer()
-                    
                 }
             }
             .padding(.top, 4)
             .padding(.horizontal, 14)
+            .padding(.bottom, sheetHeight)
         }
         .overlay(alignment: .bottom) {
             VStack {
@@ -94,6 +90,13 @@ struct ClubDetailView: View {
                                 .foreground(DodamColor.Label.normal)
                                 .padding(.top, 10)
                             Spacer()
+                            
+                            if let membersCount = viewModel.clubMembers?.students.count {
+                                Text("\(membersCount)명")
+                                    .font(.headline(.bold))
+                                    .foreground(DodamColor.Label.normal)
+                                    .padding(.horizontal)
+                            }
                         }
                     }
                     .padding(.leading)
@@ -132,52 +135,13 @@ struct ClubDetailView: View {
                             }
                         }
                         .padding()
-                        .overlay {
-                            GeometryReader { geo in
-                                Color .clear
-                                    .onAppear {
-                                        let offset = geo.frame(in: .named("스크롤상단 감지")).minY
-                                        if offset >= 0 && isExpanded {
-                                            withAnimation(.spring(duration: 0.1)) {
-                                                sheetHeight = minHeight
-                                                isExpanded = false
-                                            }
-                                        } else if offset < -20 && !isExpanded {
-                                            withAnimation(.spring()) {
-                                                sheetHeight = maxHeight
-                                                isExpanded = true
-                                            }
-                                        }
-                                    }
-                            }
-                        }
                     }
-                    .coordinateSpace(name: "스크롤상단 감지")
                 }
                 .frame(maxWidth: .infinity, maxHeight: sheetHeight)
                 .background(DodamColor.Background.normal)
                 .clipShape(.extraSmall)
-                .gesture(
-                    DragGesture()
-                        .onChanged { value in
-                            let newHeight = sheetHeight - value.translation.height
-                            if newHeight >= minHeight, newHeight <= maxHeight {
-                                sheetHeight = newHeight
-                            }
-                        }
-                        .onEnded { value in
-                            withAnimation(.spring(duration: 0.1)) {
-                                if value.translation.height < -50 {
-                                    sheetHeight = maxHeight
-                                    isExpanded = true
-                                } else {
-                                    sheetHeight = minHeight
-                                    isExpanded = false
-                                }
-                            }
-                        }
-                )
                 .padding(.horizontal, 6)
+                
                 DodamButton.fullWidth(
                     title: "입부 신청하기"
                 ) {
@@ -186,6 +150,7 @@ struct ClubDetailView: View {
                 .padding([.bottom, .horizontal], 16)
             }
         }
+        
         .background(DodamColor.Background.neutral)
         .task {
             await viewModel.onAppear()

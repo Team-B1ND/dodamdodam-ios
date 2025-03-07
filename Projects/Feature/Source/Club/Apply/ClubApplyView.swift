@@ -14,21 +14,27 @@ import DIContainer
 struct ClubApplyView: View {
     @StateObject private var viewModel = ClubApplyViewModel()
     @State private var selection: Int = 0
+    @DodamDialog private var dialog
+    
+    private var isValidDivisionDescription: Bool {
+        viewModel.freeSelections.contains(where: { $0.text.count <= 300 })
+    }
     
     var body: some View {
         DodamScrollView.medium(title: "동아리 신청") {
             if selection == 0 {
                 VStack(spacing: 16) {
-                    ForEach(viewModel.creativeSelections.indices, id: \.self) { index in
-                        VStack(alignment: .leading, spacing: 4) {
+                    ForEach(viewModel.activitySelections.indices, id: \.self) { index in
+                        VStack {
                             Menu {
-                                ForEach(viewModel.creativeClubs, id: \.id) { club in
+                                ForEach(viewModel.activityClubs, id: \.id) { club in
+                                    let isClubSelected = viewModel.activitySelections.contains { $0?.id == club.id }
                                     Button {
-                                        viewModel.creativeSelections[index].club = club
+                                        viewModel.activitySelections[index] = club
                                     } label: {
                                         Text(club.name)
                                     }
-                                    .disabled(viewModel.creativeSelections.contains { $0.club?.id == club.id })
+                                    .disabled(isClubSelected)
                                 }
                             } label: {
                                 HStack {
@@ -36,32 +42,22 @@ struct ClubApplyView: View {
                                         .foreground(DodamColor.Label.normal)
                                         .font(.headline(.bold))
                                     
-                                    Text(viewModel.creativeSelections[index].club?.name ?? "동아리 선택")
+                                    Text(viewModel.activitySelections[index]?.name ?? "동아리 선택")
                                     
                                     Image(systemName: "chevron.up.chevron.down")
                                 }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(12)
                             }
-                            
-                            DodamTextField.editor(
-                                title: "자기소개",
-                                text: Binding(
-                                    get: { viewModel.creativeSelections[index].text },
-                                    set: { viewModel.creativeSelections[index].text = $0 }
-                                )
-                            )
-                            .font(.body1(.medium))
-                            .foreground(DodamColor.Label.normal)
-                            .frame(height: 300)
-                            Spacer()
                         }
-                        .padding(16)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 363)
-                        .background(DodamColor.Background.normal)
-                        .clipShape(.medium)
                     }
                 }
-                .padding()
+                .frame(maxWidth: .infinity)
+                .frame(height: 191)
+                .background(DodamColor.Background.normal)
+                .clipShape(.medium)
+                .padding(16)
+                
             } else if selection == 1 {
                 VStack(spacing: 16) {
                     ForEach(viewModel.freeSelections.indices, id: \.self) { index in
@@ -97,11 +93,28 @@ struct ClubApplyView: View {
                             .font(.body1(.medium))
                             .foreground(DodamColor.Label.normal)
                             .frame(height: 300)
-                            Spacer()
+                            
+                            HStack(spacing: 0) {
+                                Spacer()
+                                Text("\(viewModel.freeSelections[index].text.count)")
+                                    .font(.body1(.medium))
+                                    .foreground(
+                                        isValidDivisionDescription
+                                        ? DodamColor.Primary.normal
+                                        : DodamColor.Status.negative
+                                    )
+                                Text("/300")
+                                    .font(.body1(.medium))
+                                    .foreground(
+                                        isValidDivisionDescription
+                                        ? DodamColor.Label.assistive
+                                        : DodamColor.Status.negative
+                                    )
+                            }
                         }
                         .padding(16)
                         .frame(maxWidth: .infinity)
-                        .frame(height: 363)
+                        .frame(height: 383)
                         .background(DodamColor.Background.normal)
                         .clipShape(.medium)
                         
@@ -138,17 +151,49 @@ struct ClubApplyView: View {
             DodamButton.fullWidth(
                 title: "동아리 입부 신청하기"
             ) {
-                Task {
-                    await viewModel.applyToClub()
+                let isFreeSelectionEmpty = viewModel.freeSelections.contains(where: { $0.text.isEmpty || $0.club == nil })
+                
+                let lastDialog = Dialog(title: "정말 확실합니까?", message: "창체동아리: \n\(viewModel.activityMessage) \n 위동아리로 신청을 넣겠습니까?")
+                    .primaryButton("신청하기") {
+                        Task {
+                            await viewModel.applyToClub()
+                        }
+                    }
+                    .secondaryButton("취소") {}
+                
+                let dialog: Dialog
+                
+                if isFreeSelectionEmpty {
+                    dialog = Dialog(
+                        title: "정말 확실합니까?",
+                        message: "자율동아리 신청이 비었어요. \n창체만 신청 하시겠습니까?"
+                    )
+                    .primaryButton("네") {
+                        Task {
+                            try? await Task.sleep(seconds: 0.3)
+                            self.dialog.present(lastDialog)
+                        }
+                    }
+                    .secondaryButton("취소") {}
+                } else {
+                    dialog = Dialog(title: "정말 확실합니까?", message: "창체동아리: \n\(viewModel.activityMessage) \n 자율동아리: \(viewModel.freeClubsMessage) \n 위동아리로 신청을 넣겠습니까?")
+                        .primaryButton("신청하기") {
+                            Task {
+                                await viewModel.applyToClub()
+                            }
+                        }
+                        .secondaryButton("취소") {}
                 }
+                self.dialog.present(dialog)
             }
+            .disabled(!viewModel.activitySelections.allSatisfy { $0 != nil })
             .padding([.bottom, .horizontal], 16)
         }
         .ignoresSafeArea(.keyboard)
         .background(DodamColor.Background.neutral)
         .hideKeyboardWhenTap()
         .task {
-            await viewModel.fetchClubs()
+            await viewModel.onAppear()
         }
     }
 }

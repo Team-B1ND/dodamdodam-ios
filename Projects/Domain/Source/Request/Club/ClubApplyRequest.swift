@@ -7,20 +7,14 @@
 
 import Foundation
 
-public enum ClubPriority: String, Codable {
-    case first = "CREATIVE_ACTIVITY_CLUB_1"
-    case second = "CREATIVE_ACTIVITY_CLUB_2"
-    case third = "CREATIVE_ACTIVITY_CLUB_3"
-}
-
 public struct ClubApplyRequest: Codable {
     public let clubId: Int
     public let clubPriority: String?
-    public let introduction: String
+    public let introduction: String?
     
-    public init(clubId: Int, clubPriority: ClubPriority?, introduction: String) {
+    public init(clubId: Int, clubPriority: ClubPriority?, introduction: String?) {
         self.clubId = clubId
-        self.clubPriority = clubPriority?.rawValue 
+        self.clubPriority = clubPriority?.rawValue
         self.introduction = introduction
     }
 }

@@ -55,7 +55,7 @@ public struct ClubDataSource: DataSourceProtocol {
         return response.data
     }
     
-    public func applyToClub(request: ClubApplyRequest) async throws -> Void {
+    public func applyToClub(request: [ClubApplyRequest]) async throws {
         _ = try await remote.applyToClub(request: request)
     }
     
@@ -65,7 +65,12 @@ public struct ClubDataSource: DataSourceProtocol {
     }
     
     public func fetchMyClubs() async throws -> [MyClubResponse] {
-            let response = try await remote.fetchMyClubs()
-            return response.data
-        }
+        let response = try await remote.fetchMyClubs()
+        return response.data
+    }
+    
+    public func fetchMyApplyClubs() async throws -> [MyApplyClubResponse] {
+        let response = try await remote.fetchMyApplyClubs()
+        return response.data
+    }
 }
