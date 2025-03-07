@@ -69,6 +69,9 @@ struct CreateClubCell: View {
                     }
                     .padding(.vertical, 4)
                 }
+            } else {
+                DodamLoadingView()
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

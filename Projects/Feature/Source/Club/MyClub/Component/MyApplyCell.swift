@@ -59,6 +59,9 @@ struct MyApplyCell: View {
                         .foreground(DodamColor.Label.normal)
                     }
                 }
+            } else {
+                DodamLoadingView()
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

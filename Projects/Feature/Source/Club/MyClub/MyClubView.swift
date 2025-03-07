@@ -32,12 +32,12 @@ struct MyClubView: View {
                         AffiliationCell()
                     }
                 }
-            }
                 
                 CreateClubCell()
-            
+                
                 SugestCell()
             }
+        }
         .background(DodamColor.Background.neutral)
         .task {
             await viewModel.onAppear()
