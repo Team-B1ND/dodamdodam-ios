@@ -8,24 +8,48 @@
 import SwiftUI
 import DDS
 import FlowKit
+import Foundation
 
 struct MyClubView: View {
     @StateObject private var viewModel = AffiliationCellViewModel()
     @Flow var flow
     
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter
+    }()
+    
+    var formattedDate: String {
+        let currentDate = Date()
+        return dateFormatter.string(from: currentDate)
+    }
+    
     var body: some View {
         DodamScrollView.medium(title: "내동아리") {
-            VStack {
+            VStack(spacing: 0) {
                 if let myApplyClub = viewModel.myApplyClub, let joinedClubs = viewModel.joinedClubs {
-                    if !myApplyClub.isEmpty && !joinedClubs.isEmpty {
-                        DodamEmptyView(
-                            title: "아직 동아리에 신청하지 않았어요!\n신청 마감 : 2025. 03. 19.",
-                            icon: .fullMoonFace,
-                            buttonTitle: "동아리 입부 신청하기"
-                        ) {
-                            flow.push(ClubApplyView())
+                    if myApplyClub.isEmpty && joinedClubs.isEmpty {
+                        if let clubRegisterTime = viewModel.clubRegisterTime {
+                            VStack {
+                                if formattedDate == clubRegisterTime.applicantEnd {
+                                    DodamEmptyView(
+                                        title: "신청이 마감 되었어요!",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: "다음에 또 만나요!"
+                                    ) {}
+                                } else {
+                                    DodamEmptyView(
+                                        title: "신청 마감 : \(clubRegisterTime.applicantEnd)",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: "동아리 입부 신청하기"
+                                    ) {
+                                        flow.push(ClubApplyView())
+                                    }
+                                }
+                            }
+                            .padding(16)
                         }
-                        .padding(.vertical)
                     } else {
                         MyApplyCell()
                         

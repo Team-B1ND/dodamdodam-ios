@@ -90,7 +90,7 @@ class ClubApplyViewModel: ObservableObject, OnAppearProtocol {
             }
             
             let freeRequests = freeSelections.compactMap { selection -> ClubApplyRequest? in
-                guard let club = selection.club, !selection.text.isEmpty else { return nil }
+                guard let club = selection.club else { return nil }
                 
                 return ClubApplyRequest(
                     clubId: club.id,

@@ -68,6 +68,7 @@ struct ClubView: View {
                         }
                     } else {
                         DodamLoadingView()
+                            .padding(8)
                     }
                 }
             }

@@ -30,4 +30,6 @@ public protocol ClubRepository: RepositoryProtocol {
     func fetchMyClubs() async throws -> [MyClubResponse]
     
     func fetchMyApplyClubs() async throws -> [MyApplyClubResponse]
+    
+    func fetchClubRegisterTime() async throws -> ClubRegisterTimeResponse
 }

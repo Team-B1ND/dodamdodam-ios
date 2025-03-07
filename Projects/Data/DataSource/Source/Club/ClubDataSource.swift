@@ -73,4 +73,9 @@ public struct ClubDataSource: DataSourceProtocol {
         let response = try await remote.fetchMyApplyClubs()
         return response.data
     }
+    
+    public func fetchClubRegisterTime() async throws -> ClubRegisterTimeResponse {
+        let response = try await remote.fetchClubRegisterTime()
+        return response.data
+    }
 }

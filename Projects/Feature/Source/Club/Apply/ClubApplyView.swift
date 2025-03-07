@@ -10,11 +10,13 @@ import DDS
 import Shared
 import Domain
 import DIContainer
+import FlowKit
 
 struct ClubApplyView: View {
     @StateObject private var viewModel = ClubApplyViewModel()
     @State private var selection: Int = 0
     @DodamDialog private var dialog
+    @Flow var flow
     
     private var isValidDivisionDescription: Bool {
         viewModel.freeSelections.contains(where: { $0.text.count <= 300 })
@@ -26,28 +28,32 @@ struct ClubApplyView: View {
                 VStack(spacing: 16) {
                     ForEach(viewModel.activitySelections.indices, id: \.self) { index in
                         VStack {
-                            Menu {
-                                ForEach(viewModel.activityClubs, id: \.id) { club in
-                                    let isClubSelected = viewModel.activitySelections.contains { $0?.id == club.id }
-                                    Button {
-                                        viewModel.activitySelections[index] = club
-                                    } label: {
-                                        Text(club.name)
+                            let activityClubs = viewModel.activityClubs.filter { $0.state == .allowed }
+                            if !activityClubs.isEmpty {
+                                Menu {
+                                    ForEach(activityClubs, id: \.id) { club in
+                                        let isClubSelected = viewModel.activitySelections.contains { $0?.id == club.id }
+                                        Button {
+                                            viewModel.activitySelections[index] = club
+                                        } label: {
+                                            Text(club.name)
+                                        }
+                                        .disabled(isClubSelected)
                                     }
-                                    .disabled(isClubSelected)
+                                } label: {
+                                    HStack {
+                                        Text("\(index + 1)순위:")
+                                            .foreground(DodamColor.Label.normal)
+                                            .font(.headline(.bold))
+                                        
+                                        Text(viewModel.activitySelections[index]?.name ?? "동아리 선택")
+                                        
+                                        Image(systemName: "chevron.up.chevron.down")
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(12)
+                                    .padding(.horizontal, 6)
                                 }
-                            } label: {
-                                HStack {
-                                    Text("\(index + 1)순위:")
-                                        .foreground(DodamColor.Label.normal)
-                                        .font(.headline(.bold))
-                                    
-                                    Text(viewModel.activitySelections[index]?.name ?? "동아리 선택")
-                                    
-                                    Image(systemName: "chevron.up.chevron.down")
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(12)
                             }
                         }
                     }
@@ -62,24 +68,27 @@ struct ClubApplyView: View {
                 VStack(spacing: 16) {
                     ForEach(viewModel.freeSelections.indices, id: \.self) { index in
                         VStack(alignment: .leading, spacing: 4) {
-                            Menu {
-                                ForEach(viewModel.freeClubs, id: \.id) { club in
-                                    Button {
-                                        viewModel.freeSelections[index].club = club
-                                    } label: {
-                                        Text(club.name)
+                            let freeClubs = viewModel.freeClubs.filter { $0.state == .allowed }
+                            if !freeClubs.isEmpty {
+                                Menu {
+                                    ForEach(freeClubs, id: \.id) { club in
+                                        Button {
+                                            viewModel.freeSelections[index].club = club
+                                        } label: {
+                                            Text(club.name)
+                                        }
+                                        .disabled(viewModel.freeSelections.contains { $0.club?.id == club.id })
                                     }
-                                    .disabled(viewModel.freeSelections.contains { $0.club?.id == club.id })
-                                }
-                            } label: {
-                                HStack {
-                                    Text("자율동아리:")
-                                        .foreground(DodamColor.Label.normal)
-                                        .font(.headline(.bold))
-                                    
-                                    Text(viewModel.freeSelections[index].club?.name ?? "동아리 선택")
-                                    
-                                    Image(systemName: "chevron.up.chevron.down")
+                                } label: {
+                                    HStack {
+                                        Text("자율동아리:")
+                                            .foreground(DodamColor.Label.normal)
+                                            .font(.headline(.bold))
+                                        
+                                        Text(viewModel.freeSelections[index].club?.name ?? "동아리 선택")
+                                        
+                                        Image(systemName: "chevron.up.chevron.down")
+                                    }
                                 }
                             }
                             
@@ -158,6 +167,7 @@ struct ClubApplyView: View {
                         Task {
                             await viewModel.applyToClub()
                         }
+                        flow.pop()
                     }
                     .secondaryButton("취소") {}
                 
@@ -181,12 +191,13 @@ struct ClubApplyView: View {
                             Task {
                                 await viewModel.applyToClub()
                             }
+                            flow.pop()
                         }
                         .secondaryButton("취소") {}
                 }
                 self.dialog.present(dialog)
             }
-            .disabled(!viewModel.activitySelections.allSatisfy { $0 != nil })
+            .disabled(selection == 0 && !viewModel.activitySelections.allSatisfy { $0 != nil })
             .padding([.bottom, .horizontal], 16)
         }
         .ignoresSafeArea(.keyboard)

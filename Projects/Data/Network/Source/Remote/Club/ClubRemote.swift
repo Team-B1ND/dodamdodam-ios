@@ -60,4 +60,8 @@ public struct ClubRemote: RemoteProtocol {
     public func fetchMyApplyClubs() async throws -> Response<[MyApplyClubResponse]> {
         try await self.request(target: .fetchMyApplyClubs, res: [MyApplyClubResponse].self)
     }
+    
+    public func fetchClubRegisterTime() async throws -> Response<ClubRegisterTimeResponse> {
+        try await self.request(target: .fetchClubRegisterTime, res: ClubRegisterTimeResponse.self)
+    }
 }

@@ -21,6 +21,7 @@ enum ClubService: ServiceProtocol {
     case fetchJoinedClubs
     case fetchMyClubs
     case fetchMyApplyClubs
+    case fetchClubRegisterTime
 }
 
 extension ClubService {
@@ -41,6 +42,7 @@ extension ClubService {
         case .fetchJoinedClubs: "/joined"
         case .fetchMyClubs: "/my"   
         case .fetchMyApplyClubs: "/my/join-requests"
+        case .fetchClubRegisterTime: "/time"
         }
     }
     
@@ -49,7 +51,7 @@ extension ClubService {
         case .fetchClub, .fetchCreativeClubs, .fetchFreeClubs,
              .fetchClubMembers,
              .fetchClubDetail, .fetchClubJoinRequests, .fetchJoinedClubs,
-             .fetchMyClubs, .fetchMyApplyClubs:
+             .fetchMyClubs, .fetchMyApplyClubs, .fetchClubRegisterTime:
             return .get
         case .acceptJoinRequest, .applyToClub:
             return .post
@@ -64,7 +66,7 @@ extension ClubService {
              .fetchClubMembers,
              .fetchClubDetail, .fetchClubJoinRequests,
              .acceptJoinRequest, .rejectJoinRequest, .fetchJoinedClubs,
-             .fetchMyClubs, .fetchMyApplyClubs:
+             .fetchMyClubs, .fetchMyApplyClubs, .fetchClubRegisterTime:
             return .requestPlain
             
         case .applyToClub(let request):

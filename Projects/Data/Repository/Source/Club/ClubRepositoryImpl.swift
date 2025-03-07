@@ -62,4 +62,8 @@ public struct ClubRepositoryImpl: ClubRepository {
     public func fetchMyApplyClubs() async throws -> [MyApplyClubResponse] {
         return try await dataSource.fetchMyApplyClubs()
     }
+    
+    public func fetchClubRegisterTime() async throws -> ClubRegisterTimeResponse {
+        return try await dataSource.fetchClubRegisterTime()
+    }
 }
