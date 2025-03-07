@@ -18,6 +18,7 @@ struct DivisionAddMember: View {
     
     @State private var selectedMembers: [Int: [Int: Bool]] = [:]
     @State private var expandedDivisionId: Set<Int> = []
+    @State private var controlButtonsSize: CGSize = .zero
     let id: Int
     
     var filteredDivisions: [DivisionOverviewResponse] {
@@ -32,29 +33,26 @@ struct DivisionAddMember: View {
     }
     
     var body: some View {
-        VStack {
-            DodamScrollView.small(title: "멤버 추가") {
-                VStack(spacing: 12) {
-                    DodamTextField.default(
-                        title: "멤버 검색",
-                        text: $memberSearchText
-                    )
-                    
-                    if let _ = viewModel.divisions {
-                        divisionListView(filteredDivisions)
-                    } else {
-                        DodamLoadingView()
-                            .padding(.vertical, 40)
-                    }
+        DodamScrollView.small(title: "멤버 추가") {
+            VStack(spacing: 12) {
+                DodamTextField.default(
+                    title: "멤버 검색",
+                    text: $memberSearchText
+                )
+                
+                if let _ = viewModel.divisions {
+                    divisionListView(filteredDivisions)
+                } else {
+                    DodamLoadingView()
+                        .padding(.vertical, 40)
                 }
-                .padding(.horizontal, 16)
             }
-            .frame(maxHeight: .infinity)
-            
-            controlButtons
+            .padding(.horizontal, 16)
         }
         .background(DodamColor.Background.neutral)
-        .padding(.horizontal, 16)
+        .safeAreaInset(edge: .bottom) {
+            controlButtons
+        }
         .task {
             await viewModel.fetchDivisions()
         }
@@ -105,14 +103,14 @@ struct DivisionAddMember: View {
     }
     
     private var controlButtons: some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .center, spacing: 8) {
             DodamButton.fullWidth(
                 title: "전체 취소"
             ) {
                 resetSelectedMembers()
             }
             .role(.assistive)
-            .padding(.trailing, 8)
+            .frame(width: controlButtonsSize.width / 3)
             
             DodamButton.fullWidth(
                 title: "추가"
@@ -129,7 +127,12 @@ struct DivisionAddMember: View {
             }
             .role(.primary)
         }
-        .padding(.top, 55)
+        .background(GeometryReader { proxy in
+            Color.clear.onAppear {
+                controlButtonsSize = proxy.size
+            }
+        })
+        .padding(.horizontal, 16)
         .padding(.bottom, 12)
     }
     

@@ -43,7 +43,6 @@ struct CustomAccordion<Content: View>: View {
             
             if isExpanded {
                 content
-                    .transition(.opacity)
                     .padding(.horizontal, 16)
             }
         }

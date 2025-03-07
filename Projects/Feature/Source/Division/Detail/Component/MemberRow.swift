@@ -33,7 +33,9 @@ struct MemberSection: View {
             
             VStack {
                 ForEach(members.indices, id: \.self) { index in
-                    Button(action: { onSelect(members[index]) }) {
+                    Button {
+                        onSelect(members[index])
+                    } label: {
                         HStack {
                             DodamAvatar.small(url: members[index].profileImage)
                             Text(members[index].memberName)
@@ -42,7 +44,7 @@ struct MemberSection: View {
                                 .padding(.leading, 8)
                             Spacer()
 
-                            Text(members[index].permission.rawValue)
+                            Text(members[index].role.korean)
                                 .body2(.medium)
                                 .foreground(DodamColor.Label.alternative)
                         }
