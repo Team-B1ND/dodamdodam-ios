@@ -30,3 +30,9 @@ public struct DivisionMemberResponse: ResponseProtocol {
         self.role = role
     }
 }
+
+public extension [DivisionMemberResponse] {
+    func find(permission: DivisionPermission) -> Self {
+        filter { $0.permission == permission }
+    }
+}

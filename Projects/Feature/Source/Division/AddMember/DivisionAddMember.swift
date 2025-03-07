@@ -11,9 +11,11 @@ import FlowKit
 import Domain
 import Shared
 
+// memberSearchText:
+// 추후 서버 구현. 마감 때문에 우선순위 미룸
 struct DivisionAddMember: View {
     @Flow var flow
-    @State var memberSearchText: String = ""
+//    @State var memberSearchText: String = ""
     @StateObject private var viewModel = AddMemberViewModel()
     
     @State private var selectedMembers: [Int: [Int: Bool]] = [:]
@@ -21,27 +23,27 @@ struct DivisionAddMember: View {
     @State private var controlButtonsSize: CGSize = .zero
     let id: Int
     
-    var filteredDivisions: [DivisionOverviewResponse] {
-        if memberSearchText.isEmpty {
-            return viewModel.divisions ?? []
-        } else {
-            return viewModel.divisions?.filter { division in
-                let members = viewModel.divisionMembers[division.id] ?? []
-                return members.contains { $0.memberName.localizedCaseInsensitiveContains(memberSearchText) }
-            } ?? []
-        }
-    }
+//    var filteredDivisions: [DivisionOverviewResponse] {
+//        if memberSearchText.isEmpty {
+//            return viewModel.divisions ?? []
+//        } else {
+//            return viewModel.divisions?.filter { division in
+//                let members = viewModel.divisionMembers[division.id] ?? []
+//                return members.contains { $0.memberName.localizedCaseInsensitiveContains(memberSearchText) }
+//            } ?? []
+//        }
+//    }
     
     var body: some View {
         DodamScrollView.small(title: "멤버 추가") {
             VStack(spacing: 12) {
-                DodamTextField.default(
-                    title: "멤버 검색",
-                    text: $memberSearchText
-                )
+//                DodamTextField.default(
+//                    title: "멤버 검색",
+//                    text: $memberSearchText
+//                )
                 
-                if let _ = viewModel.divisions {
-                    divisionListView(filteredDivisions)
+                if let divisions = viewModel.divisions {
+                    divisionListView(divisions)
                 } else {
                     DodamLoadingView()
                         .padding(.vertical, 40)
@@ -74,16 +76,18 @@ struct DivisionAddMember: View {
                     }
                 }
             ) {
-                let members = viewModel.divisionMembers[divisionId] ?? []
-                MemberListView(
-                    selectedMembers: Binding(
-                        get: { selectedMembers[divisionId, default: [:]] },
-                        set: { selectedMembers[divisionId] = $0 }
-                    ),
-                    members: members.filter { member in
-                        memberSearchText.isEmpty || member.memberName.localizedCaseInsensitiveContains(memberSearchText)
-                    }
-                )
+                if let members = viewModel.divisionMembers[divisionId] {
+                    MemberListView(
+                        selectedMembers: Binding(
+                            get: { selectedMembers[divisionId, default: [:]] },
+                            set: { selectedMembers[divisionId] = $0 }
+                        ),
+                        members: members
+                    )
+                } else {
+                    DodamLoadingView()
+                        .padding(.vertical, 10)
+                }
             }
             .task {
                 if let index = divisions.firstIndex(where: { $0.id == division.id }),
@@ -92,6 +96,7 @@ struct DivisionAddMember: View {
                 }
             }
         }
+        .animation(.easeOut(duration: 0.2), value: viewModel.divisionMembers)
     }
     
     private func toggleAccordion(for divisionId: Int) {
@@ -125,7 +130,6 @@ struct DivisionAddMember: View {
                     }
                 }
             }
-            .role(.primary)
         }
         .background(GeometryReader { proxy in
             Color.clear.onAppear {

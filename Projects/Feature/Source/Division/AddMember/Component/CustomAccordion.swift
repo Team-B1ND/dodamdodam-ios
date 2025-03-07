@@ -22,31 +22,33 @@ struct CustomAccordion<Content: View>: View {
     }
 
     var body: some View {
-        VStack {
-            Button(action: {
-                withAnimation {
+        VStack(spacing: 16) {
+            Button {
+                withAnimation(.easeOut(duration: 0.2)) {
                     onToggle()
                 }
-            }) {
+            } label: {
                 HStack {
                     Text(title)
                         .headline(.bold)
                         .foreground(DodamColor.Label.normal)
-                    
                     Spacer()
                     Image(icon: isExpanded ? .chevronUp : .chevronDown)
-                        .frame(width: 18, height: 18)
+                        .resizable()
+                        .renderingMode(.template)
                         .foreground(DodamColor.Label.normal)
+                        .frame(width: 18, height: 18)
+                        .padding(4)
                 }
-                .padding(16)
             }
             
             if isExpanded {
                 content
-                    .padding(.horizontal, 16)
             }
         }
+        .padding(16)
         .background(DodamColor.Background.normal)
         .cornerRadius(12)
+        .drawingGroup()
     }
 }

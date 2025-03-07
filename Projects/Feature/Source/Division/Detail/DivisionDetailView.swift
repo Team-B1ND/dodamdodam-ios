@@ -27,16 +27,11 @@ struct DivisionDetailView: View {
     var body: some View {
         DodamScrollView.small(title: "") {
             VStack(spacing: 12) {
-                if viewModel.division == nil {
-                    DodamLoadingView()
-                        .padding(.vertical, 40)
-                } else {
-                    headerSection
-                    if viewModel.division?.myPermission == .admin {
-                        actionButtons
-                    }
-                    memberListSection
+                headerSection
+                if viewModel.division?.myPermission == .admin {
+                    actionButtons
                 }
+                memberListSection
             }
             .padding(.horizontal, 16)
             .padding(.top, 8)
@@ -68,12 +63,13 @@ struct DivisionDetailView: View {
             set: { isSheetPresented = $0 }
         )) {
             if let member = selectedMember {
+                let view = MemberDetailSheetView(member: member, id: divisionId, viewModel: viewModel)
                 if #available(iOS 16.0, *) {
-                    MemberDetailSheetView(member: member, id: divisionId)
+                    view
                         .presentationDragIndicator(.visible)
                         .presentationDetents([.height(dynamicHeight(for: member))])
                 } else {
-                    MemberDetailSheetView(member: member, id: divisionId)
+                    view
                 }
             } else {
                 Text("멤버 정보를 불러올 수 없습니다.")
@@ -106,6 +102,7 @@ struct DivisionDetailView: View {
                     .padding(.vertical, 10)
             }
         }
+        .frame(maxWidth: .infinity)
         .padding(16)
         .background(DodamColor.Background.normal)
         .cornerRadius(12)
@@ -115,7 +112,9 @@ struct DivisionDetailView: View {
         HStack {
             Spacer()
             Button {
-                flow.push(DivisionWaitingMemberView(divisionId: divisionId, group: viewModel.division!.divisionName))
+                if let division = viewModel.division {
+                    flow.push(DivisionWaitingMemberView(division: division))
+                }
             } label: {
                 Text("가입 신청")
                     .headline(.bold)
@@ -149,30 +148,44 @@ struct DivisionDetailView: View {
     }
 
     private var memberListSection: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack {
-                Text("멤버")
-                    .heading1(.bold)
-                    .foreground(DodamColor.Label.normal)
-                Spacer()
-            }
-            .padding(.bottom, 4)
-
-            if !admins.isEmpty {
-                MemberSection(title: "관리자", members: admins, onSelect: { showMemberSheet(member: $0) }, showDivider: !writers.isEmpty || !readers.isEmpty)
-            }
-
-            if !writers.isEmpty {
-                MemberSection(title: "부관리자", members: writers, onSelect: { showMemberSheet(member: $0) }, showDivider: !readers.isEmpty)
-            }
-
-            if !readers.isEmpty {
-                MemberSection(title: "멤버", members: readers, onSelect: { showMemberSheet(member: $0) }, showDivider: false)
+        VStack(spacing: 16) {
+            Text("멤버")
+                .heading1(.bold)
+                .foreground(DodamColor.Label.normal)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            if viewModel.division == nil {
+                DodamLoadingView()
+                    .padding(.vertical, 40)
+            } else if let divisionMember = viewModel.divisionMember {
+                let writers = divisionMember.find(permission: .writer)
+                let readers = divisionMember.find(permission: .writer)
+                
+                // 관리자가 없는 경우는 없음. 무조건 그룹에 한 명이 존재함.
+                MemberSection(title: "관리자", members: divisionMember.find(permission: .admin)) {
+                    showMemberSheet(member: $0)
+                }
+                
+                if !writers.isEmpty {
+                    DodamDivider()
+                        .padding(.horizontal, 8)
+                    MemberSection(title: "부관리자", members: writers) {
+                        showMemberSheet(member: $0)
+                    }
+                }
+                
+                if !readers.isEmpty {
+                    DodamDivider()
+                        .padding(.horizontal, 8)
+                    MemberSection(title: "멤버", members: readers) {
+                        showMemberSheet(member: $0)
+                    }
+                }
             }
         }
         .padding(16)
         .background(DodamColor.Background.normal)
-        .cornerRadius(12)
+        .clipShape(.medium)
     }
 
     private func showMemberSheet(member: DivisionMemberResponse) {
@@ -182,16 +195,16 @@ struct DivisionDetailView: View {
         }
     }
     
-    private var admins: [DivisionMemberResponse] {
-        viewModel.divisionMember?.filter { $0.permission == .admin } ?? []
+    private var admins: [DivisionMemberResponse]? {
+        viewModel.divisionMember?.find(permission: .admin)
     }
 
-    private var writers: [DivisionMemberResponse] {
-        viewModel.divisionMember?.filter { $0.permission == .writer } ?? []
+    private var writers: [DivisionMemberResponse]? {
+        viewModel.divisionMember?.find(permission: .writer)
     }
 
-    private var readers: [DivisionMemberResponse] {
-        viewModel.divisionMember?.filter { $0.permission == .reader } ?? []
+    private var readers: [DivisionMemberResponse]? {
+        viewModel.divisionMember?.find(permission: .reader)
     }
 
     private func dynamicHeight(for member: DivisionMemberResponse) -> CGFloat {

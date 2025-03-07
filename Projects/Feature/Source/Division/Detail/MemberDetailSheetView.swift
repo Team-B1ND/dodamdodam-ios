@@ -10,26 +10,30 @@ import DDS
 import Domain
 
 struct MemberDetailSheetView: View {
-    @EnvironmentObject private var viewModel: DivisionDetailViewModel
+    @EnvironmentObject private var dialog: DialogProvider
+    @ObservedObject private var viewModel: DivisionDetailViewModel
     
     private let member: DivisionMemberResponse
     private let id: Int
     
-    init(member: DivisionMemberResponse, id: Int) {
+    init(member: DivisionMemberResponse, id: Int, viewModel: DivisionDetailViewModel) {
         self.member = member
         self.id = id
+        self._viewModel = ObservedObject(wrappedValue: viewModel)
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("\(member.memberName)님 정보")
-                .heading1(.bold)
-                .foreground(DodamColor.Label.normal)
-            
-            Text("\(member.grade ?? 0)학년 \(member.room ?? 0)반 \(member.number ?? 0)번")
-                .headline(.medium)
-                .foreground(DodamColor.Label.assistive)
-                .padding(.top, 8)
+        VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("\(member.memberName)님 정보")
+                    .heading1(.bold)
+                    .foreground(DodamColor.Label.normal)
+                if let grade = member.grade, let room = member.room, let number = member.number {
+                    Text("\(grade)학년 \(room)반 \(number)번")
+                        .headline(.medium)
+                        .foreground(DodamColor.Label.assistive)
+                }
+            }
             
             HStack {
                 Text("권한 정보")
@@ -60,9 +64,8 @@ struct MemberDetailSheetView: View {
                         .foreground(DodamColor.Label.assistive)
                 }
             }
-            .padding(.top, 24)
             
-            Text(member.role.rawValue)
+            Text(member.role.korean)
                 .headline(.medium)
                 .foreground(DodamColor.Label.assistive)
                 .padding(.top, 8)
@@ -70,14 +73,18 @@ struct MemberDetailSheetView: View {
             DodamButton.medium(
                 title: "내보내기"
             ) {
-                await viewModel.deleteMembers(id: id, idList: [member.id])
+                dialog.present(
+                    .init(title: "정말 멤버를 내보내시겠습니까?")
+                    .primaryButton("내보내기") {
+                        Task {
+                            await viewModel.deleteMembers(id: id, idList: [member.id])
+                        }
+                    }.secondaryButton("취소")
+                )
             }
             .role(.assistive)
-            .padding(.top, 24)
-            
-            Spacer()
         }
-        .padding(.top, 37)
+//        .padding(.top, 37)
         .padding(.horizontal, 16)
     }
 }
