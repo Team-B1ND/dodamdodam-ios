@@ -9,8 +9,11 @@ import Foundation
 import DIContainer
 import Domain
 import Shared
+import Combine
 
 final class NoticeViewModel: ObservableObject {
+    var subscription = Set<AnyCancellable>()
+    
     // MARK: - State
     @Published var notices: [NoticeResponse]?
     @Published var myDivisions: [DivisionOverviewResponse]?
@@ -22,6 +25,15 @@ final class NoticeViewModel: ObservableObject {
     @Inject private var divisionRepository: DivisionRepository
 
     // MARK: - Method
+    init() {
+        $selectedDivision.sink { [self] _ in
+            Task {
+                await fetchNotices()
+            }
+        }
+        .store(in: &subscription)
+    }
+    
     @MainActor
     func clearData() {
         notices = nil
