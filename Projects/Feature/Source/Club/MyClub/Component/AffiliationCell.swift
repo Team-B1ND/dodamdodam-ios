@@ -43,27 +43,23 @@ struct AffiliationCell: View {
                                     Text(club.name)
                                     Spacer()
                                     if club.myStatus == .allowed {
-                                        DodamTag("입부완료", type: .negative)
-                                    } else {
-                                        DodamTag("처리중", type: .negative)
+                                        Text("입부 완료")
+                                            .font(.caption2(.bold))
+                                            .foreground(DodamColor.Primary.normal)
+                                            .padding(8)
+                                            .background(DodamColor.Background.alternative)
+                                            .clipShape(.extraSmall)
                                     }
                                 }
                                 .font(.body2(.regular))
                                 .foreground(DodamColor.Label.normal)
-                                
-                                if club.id != creativeClubs.last?.id {
-                                    Divider()
-                                        .padding(.vertical, 4)
-                                }
                             }
                         }
                         
+                        DodamDivider()
+                            .padding(.vertical, 2)
+                        
                         if !freeClubs.isEmpty {
-                            if !creativeClubs.isEmpty {
-                                Divider()
-                                    .padding(.vertical, 8)
-                            }
-                            
                             Text("자율")
                                 .font(.caption2(.bold))
                                 .foreground(DodamColor.Label.alternative)
@@ -73,18 +69,16 @@ struct AffiliationCell: View {
                                     Text(club.name)
                                     Spacer()
                                     if club.myStatus == .allowed {
-                                        DodamTag("입부완료", type: .primary)
-                                    } else {
-                                        DodamTag("처리중", type: .secondary)
+                                        Text("입부 완료")
+                                            .font(.caption2(.bold))
+                                            .foreground(DodamColor.Primary.normal)
+                                            .padding(8)
+                                            .background(DodamColor.Background.alternative)
+                                            .clipShape(.extraSmall)
                                     }
                                 }
                                 .font(.body2(.medium))
                                 .foreground(DodamColor.Label.normal)
-                                
-                                if club.id != freeClubs.last?.id {
-                                    Divider()
-                                        .padding(.vertical, 4)
-                                }
                             }
                         }
                     }

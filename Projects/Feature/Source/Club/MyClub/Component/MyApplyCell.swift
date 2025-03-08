@@ -51,6 +51,9 @@ struct MyApplyCell: View {
                         .padding(.vertical, 16)
                     }
                     
+                    DodamDivider()
+                        .padding(.vertical, 2)
+                    
                     if !freeClubs.isEmpty {
                         VStack(alignment: .leading, spacing: 14) {
                             Text("자율")
@@ -65,6 +68,7 @@ struct MyApplyCell: View {
                             .font(.body2(.medium))
                             .foreground(DodamColor.Label.normal)
                         }
+                        .padding(.vertical, 8)
                     }
                 }
             } else {

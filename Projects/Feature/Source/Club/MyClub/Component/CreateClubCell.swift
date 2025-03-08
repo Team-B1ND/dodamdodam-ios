@@ -50,6 +50,9 @@ struct CreateClubCell: View {
                             }
                         }
                         
+                        DodamDivider()
+                            .padding(.vertical, 2)
+                        
                         if !freeClubs.isEmpty {
                             Text("자율")
                                 .font(.caption2(.bold))
@@ -63,7 +66,7 @@ struct CreateClubCell: View {
                                     statusTag(for: club.state)
                                 }
                                 .font(.body2(.medium))
-                                .foreground(DodamColor.Label.normal) 
+                                .foreground(DodamColor.Label.normal)
                             }
                         }
                     }
