@@ -19,8 +19,9 @@ public struct NoticeDataSource: DataSourceProtocol {
         let response = try await remote.fetchNotice(request)
         return response.data
     }
-    public func fetchCategoryNotice(id: Int, _ request: FetchCategoryNoticeRequest) async throws -> [NoticeResponse] {
-        let response = try await remote.fetchCategoryNotice(id: id, request)
+    
+    public func fetchNoticeByDivision(_ request: FetchNoticeByDivisionRequest) async throws -> [NoticeResponse] {
+        let response = try await remote.fetchNoticeByDivision(request)
         return response.data
     }
 }

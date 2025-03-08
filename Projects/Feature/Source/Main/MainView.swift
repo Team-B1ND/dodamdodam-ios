@@ -19,8 +19,8 @@ public struct MainView: View {
         DodamTabView(selection: $selection) {
             HomeView(selection: $selection)
                 .page(.icon(.home))
-            MealView()
-                .page(.icon(.forkAndKnife))
+            NoticeView()
+                .page(.icon(.bell))
             OutView()
                 .page(.icon(.doorOpen))
             NightStudyView()

@@ -11,7 +11,7 @@ import FlowKit
 import Shared
 
 struct DivisionView: View {
-    static let pagingInterval = 10
+    static let pagingInterval = 30
     
     @Flow private var flow
     @StateObject private var viewModel = DivisionViewModel()
