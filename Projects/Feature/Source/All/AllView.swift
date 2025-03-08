@@ -84,6 +84,9 @@ struct AllView: View {
                             AllCell("내 자녀 관리", icon: .smilingFace) {
                                 flow.push(ChildrenManageView())
                             }
+                            AllCell("그룹", icon: .handshake) {
+                                flow.push(DivisionView())
+                            }
                         } else {
                             AllCell("내 상벌점 보기", icon: .barChart) {
                                 flow.push(PointView())
@@ -107,16 +110,12 @@ struct AllView: View {
                                 flow.push(WakeupSongView(), animated: false)
                                 flow.push(WakeupSongApplyView())
                             }
-                        }
-                        AllCell("그룹", icon: .handshake) {
-                            flow.push(DivisionView())
-                        }
-                    }
-                    AllCell("동아리", icon: .clubMember) {
-                        if Sign.isLoggedIn {
-                            flow.push(ClubView())
-                        } else {
-                            presentLoginDialog()
+                            AllCell("동아리", icon: .clubMember) {
+                                flow.push(ClubView())
+                            }
+                            AllCell("그룹", icon: .handshake) {
+                                flow.push(DivisionView())
+                            }
                         }
                     }
                 }
