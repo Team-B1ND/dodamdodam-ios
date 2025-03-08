@@ -18,7 +18,15 @@ public struct MyClubResponse: ResponseProtocol {
     public let teacher: Int?
     public let state: StateType
     
-    private enum CodingKeys: String, CodingKey {
-        case id, name, shortDescription, description, image, subject, type, teacher, state
+    public init(id: Int, name: String, shortDescription: String, description: String, image: String?, subject: String, type: ClubType, teacher: Int?, state: StateType) {
+        self.id = id
+        self.name = name
+        self.shortDescription = shortDescription
+        self.description = description
+        self.image = image
+        self.subject = subject
+        self.type = type
+        self.teacher = teacher
+        self.state = state
     }
 }

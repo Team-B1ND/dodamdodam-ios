@@ -19,11 +19,4 @@ public struct JoinedClubResponse: ResponseProtocol {
         self.type = type
         self.myStatus = myStatus
     }
-    
-    enum CodingKeys: String, CodingKey {
-        case id
-        case name
-        case type
-        case myStatus
-    }
 }

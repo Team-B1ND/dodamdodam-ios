@@ -23,7 +23,7 @@ struct MyApplyCell: View {
                 let creativeClubs = applyClub.filter { $0.club.type == .activity }
                 let freeClubs = applyClub.filter { $0.club.type == .directActivity }
                 
-                if creativeClubs.isEmpty {
+                if !creativeClubs.isEmpty {
                     VStack(alignment: .leading, spacing: 14) {
                         Text("창체")
                             .font(.caption2(.bold))
