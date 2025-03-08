@@ -11,7 +11,11 @@ import Domain
 import Shared
 
 struct AffiliationCell: View {
-    @StateObject private var viewModel = AffiliationCellViewModel()
+    @ObservedObject var viewModel: MyClubViewModel
+    
+    init(for viewModel: MyClubViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -94,15 +98,5 @@ struct AffiliationCell: View {
         .background(DodamColor.Background.normal)
         .clipShape(.medium)
         .padding(16)
-        .task {
-            await viewModel.onAppear()
-        }
-        .refreshable {
-            await viewModel.onRefresh()
-        }
     }
-}
-
-#Preview {
-    AffiliationCell()
 }

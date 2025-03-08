@@ -12,7 +12,8 @@ import Foundation
 import Shared
 
 struct MyClubView: View {
-    @StateObject private var viewModel = AffiliationCellViewModel()
+//    @StateObject private var viewModel = AffiliationCellViewModel()
+    @StateObject private var viewModel = MyClubViewModel()
     @Flow var flow
     
     var body: some View {
@@ -40,17 +41,20 @@ struct MyClubView: View {
                 }
             }
             
-            AffiliationCell()
+            AffiliationCell(for: viewModel)
             
-            MyApplyCell()
+            MyApplyCell(for: viewModel)
             
-            CreateClubCell()
+            CreateClubCell(for: viewModel)
             
-            SugestCell()
+            SugestCell(for: viewModel)
         }
         .background(DodamColor.Background.neutral)
         .task {
             await viewModel.onAppear()
+        }
+        .refreshable {
+            await viewModel.onRefresh()
         }
     }
 }

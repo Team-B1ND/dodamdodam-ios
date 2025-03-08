@@ -197,7 +197,10 @@ struct ClubApplyView: View {
                 }
                 self.dialog.present(dialog)
             }
-            .disabled(selection == 0 && !viewModel.activitySelections.allSatisfy { $0 != nil })
+            .disabled(
+                (selection == 0 && !viewModel.activitySelections.allSatisfy { $0 != nil }) ||
+                (selection == 1 && !(viewModel.activitySelections.allSatisfy { $0 == nil } || viewModel.activitySelections.allSatisfy { $0 != nil } ) || !isValidDivisionDescription)
+            )
             .padding([.bottom, .horizontal], 16)
         }
         .ignoresSafeArea(.keyboard)
@@ -205,6 +208,20 @@ struct ClubApplyView: View {
         .hideKeyboardWhenTap()
         .task {
             await viewModel.onAppear()
+            
+            let emptyActivityClubs = viewModel.activityClubs.filter { $0.state == .allowed }.isEmpty
+            let emptyActivityClubsFreeClubs = viewModel.freeClubs.filter { $0.state == .allowed }.isEmpty
+            if emptyActivityClubs && emptyActivityClubsFreeClubs {
+                let alertDialog = Dialog(
+                    title: "동아리 없음",
+                    message: "현재 신청 가능한 동아리가 없습니다."
+                )
+                    .primaryButton("확인") {
+                        flow.pop()
+                    }
+                
+                self.dialog.present(alertDialog)
+            }
         }
     }
 }

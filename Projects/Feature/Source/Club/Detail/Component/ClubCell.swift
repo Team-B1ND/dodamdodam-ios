@@ -42,6 +42,7 @@ struct ClubCell: View {
                 CachedAsyncImage(url: URL(string: data.image)) { image in
                     image
                         .resizable()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 82, height: 85)
                         .clipShape(.extraSmall)
                 } placeholder: {

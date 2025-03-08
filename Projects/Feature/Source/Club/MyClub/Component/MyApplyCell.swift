@@ -10,7 +10,12 @@ import DDS
 import Domain
 
 struct MyApplyCell: View {
-    @StateObject private var viewModel = MyApplyCellViewModel()
+    @ObservedObject var viewModel: MyClubViewModel
+    
+    init(for viewModel: MyClubViewModel) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
@@ -81,9 +86,6 @@ struct MyApplyCell: View {
         .background(DodamColor.Background.normal)
         .clipShape(.medium)
         .padding(16)
-        .task {
-            await viewModel.onAppear()
-        }
     }
 }
 
@@ -93,8 +95,4 @@ func priorityLabel(_ priority: ClubPriority) -> String {
     case .second: return "2"
     case .third: return "3"
     }
-}
-
-#Preview {
-    MyApplyCell()
 }
