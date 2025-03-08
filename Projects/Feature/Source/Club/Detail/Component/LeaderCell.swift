@@ -26,18 +26,18 @@ extension StateType {
 }
 
 struct LeaderCell: View {
-    private let data: ClubAllMembersResponse
+    private let data: ClubMembersResponse
     
-    init(for data: ClubAllMembersResponse) {
+    init(for data: ClubMembersResponse) {
         self.data = data
     }
     
     var body: some View {
         HStack {
-            DodamAvatar.extraSmall(url: data.profileImage)
+            DodamAvatar.medium(url: data.profileImage)
                 .padding(.horizontal, 1)
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     Text(data.name)
                         .font(.body1(.medium))
@@ -56,6 +56,6 @@ struct LeaderCell: View {
             
             data.status.mark
         }
-        .padding(.horizontal)
+        .padding(.horizontal, 4)
     }
 }

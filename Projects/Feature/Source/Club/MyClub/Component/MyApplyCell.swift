@@ -7,8 +7,14 @@
 
 import SwiftUI
 import DDS
+import Domain
 
 struct MyApplyCell: View {
+    @ObservedObject var viewModel: MyClubViewModel
+    
+    init(for viewModel: MyClubViewModel) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -18,50 +24,61 @@ struct MyApplyCell: View {
                     .foreground(DodamColor.Label.normal)
             }
             
-            VStack(alignment: .leading, spacing: 14) {
-                Text("창체")
-                    .font(.caption2(.bold))
-                    .foreground(DodamColor.Label.alternative)
-                
-                HStack {
-                    Text("1지망")
-                    Spacer()
-                    Text("B1ND")
+            if let applyClub = viewModel.myApplyClub {
+                if applyClub.isEmpty {
+                    Text("신청한 동아리가 없습니다")
+                        .font(.body2(.regular))
+                        .foreground(DodamColor.Label.alternative)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.vertical, 12)
+                } else {
+                    let creativeClubs = applyClub.filter { $0.club.type == .activity }
+                    let freeClubs = applyClub.filter { $0.club.type == .directActivity }
+                    
+                    if !creativeClubs.isEmpty {
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text("창체")
+                                .font(.caption2(.bold))
+                                .foreground(DodamColor.Label.alternative)
+                            
+                            ForEach(ClubPriority.allCases, id: \.self) { priority in
+                                if let club = creativeClubs.first(where: { $0.priority == priority }) {
+                                    HStack {
+                                        Text("\(priorityLabel(priority))지망")
+                                        Spacer()
+                                        Text(club.club.name)
+                                    }
+                                    .font(.body2(.medium))
+                                    .foreground(DodamColor.Label.normal)
+                                }
+                            }
+                        }
+                        .padding(.vertical, 16)
+                    }
+                    
+                    DodamDivider()
+                        .padding(.vertical, 2)
+                    
+                    if !freeClubs.isEmpty {
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text("자율")
+                                .font(.caption2(.bold))
+                                .foreground(DodamColor.Label.alternative)
+                            
+                            VStack(alignment: .leading, spacing: 14) {
+                                ForEach(freeClubs, id: \.id) { freeClub in
+                                    Text(freeClub.club.name)
+                                }
+                            }
+                            .font(.body2(.medium))
+                            .foreground(DodamColor.Label.normal)
+                        }
+                        .padding(.vertical, 8)
+                    }
                 }
-                .font(.body2(.medium))
-                .foreground(DodamColor.Label.normal)
-                
-                HStack {
-                    Text("2지망")
-                    Spacer()
-                    Text("ALT")
-                }
-                .font(.body2(.medium))
-                .foreground(DodamColor.Label.normal)
-                
-                HStack {
-                    Text("3지망")
-                    Spacer()
-                    Text("두카미")
-                }
-                .font(.body2(.medium))
-                .foreground(DodamColor.Label.normal)
-            }
-            .padding(.vertical, 16)
-            
-            VStack(alignment: .leading, spacing: 14) {
-                Text("자율")
-                    .font(.caption2(.bold))
-                    .foreground(DodamColor.Label.alternative)
-                
-                VStack(alignment: .leading, spacing: 14) {
-                    Text("자탄학")
-                    Text("IND")
-                    Text("Draw")
-                }
-                .font(.body2(.medium))
-                .foreground(DodamColor.Label.normal)
-                
+            } else {
+                DodamLoadingView()
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -72,6 +89,10 @@ struct MyApplyCell: View {
     }
 }
 
-#Preview {
-    MyApplyCell()
+func priorityLabel(_ priority: ClubPriority) -> String {
+    switch priority {
+    case .first: return "1"
+    case .second: return "2"
+    case .third: return "3"
+    }
 }

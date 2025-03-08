@@ -7,8 +7,16 @@
 
 import SwiftUI
 import DDS
+import Domain
+import Shared
 
 struct CreateClubCell: View {
+    @ObservedObject var viewModel: MyClubViewModel
+    
+    init(for viewModel: MyClubViewModel) {
+        self.viewModel = viewModel
+    }
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
@@ -17,28 +25,61 @@ struct CreateClubCell: View {
                     .foreground(DodamColor.Label.normal)
             }
             
-            VStack(alignment: .leading, spacing: 14) {
-                Text("창체")
-                    .font(.caption2(.bold))
-                    .foreground(DodamColor.Label.alternative)
-                
-                HStack {
-                    Text("B1ND")
-                        .font(.body2(.medium))
-                        .foreground(DodamColor.Label.normal)
+            if let myClubs = viewModel.myClubs {
+                if myClubs.isEmpty {
+                    Text("개설한 동아리가 없습니다")
+                        .font(.body2(.regular))
+                        .foreground(DodamColor.Label.alternative)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.vertical, 12)
+                } else {
+                    let creativeClubs = myClubs.filter { $0.type == .activity }
+                    let freeClubs = myClubs.filter { $0.type == .directActivity }
+                    
+                    VStack(alignment: .leading, spacing: 14) {
+                        if !creativeClubs.isEmpty {
+                            Text("창체")
+                                .font(.caption2(.bold))
+                                .foreground(DodamColor.Label.alternative)
+                            
+                            ForEach(creativeClubs, id: \.id) { club in
+                                HStack {
+                                    Text(club.name)
+                                    Spacer()
+                                    
+                                    statusTag(for: club.state)
+                                }
+                                .font(.body2(.medium))
+                                .foreground(DodamColor.Label.normal)
+                            }
+                        }
+                        
+                        DodamDivider()
+                            .padding(.vertical, 2)
+                        
+                        if !freeClubs.isEmpty {
+                            Text("자율")
+                                .font(.caption2(.bold))
+                                .foreground(DodamColor.Label.alternative)
+                            
+                            ForEach(freeClubs, id: \.id) { club in
+                                HStack {
+                                    Text(club.name)
+                                    Spacer()
+                                    
+                                    statusTag(for: club.state)
+                                }
+                                .font(.body2(.medium))
+                                .foreground(DodamColor.Label.normal)
+                            }
+                        }
+                    }
+                    .padding(.vertical, 4)
                 }
-                HStack {
-                    Text("ALT")
-                        .font(.body2(.medium))
-                        .foreground(DodamColor.Label.normal)
-                }
-                HStack {
-                    Text("두카미")
-                        .font(.body2(.medium))
-                        .foreground(DodamColor.Label.normal)
-                }
+            } else {
+                DodamLoadingView()
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
-            .padding(.vertical, 4)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
@@ -46,8 +87,18 @@ struct CreateClubCell: View {
         .clipShape(.medium)
         .padding(16)
     }
-}
-
-#Preview {
-    CreateClubCell()
+    
+    @ViewBuilder
+    func statusTag(for state: StateType) -> some View {
+        switch state {
+        case .allowed:
+            Image(icon: .checkCircle)
+        case .rejected:
+            Image(icon: .redXmarkCircle)
+        case .waiting, .pending:
+            Image(icon: .yellowClock)
+        case .deleted:
+            EmptyView()
+        }
+    }
 }

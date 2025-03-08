@@ -15,11 +15,11 @@ extension StateType {
         switch self {
         case .allowed:
             return StateTypeTag(title: "승인됨", type: .primary)
-        case .waiting:
+        case .waiting, .pending:
             return StateTypeTag(title: "대기중", type: .secondary)
-        case .deleted:
+        case .rejected:
             return StateTypeTag(title: "거절됨", type: .negative)
-        case .pending, .rejected:
+        case .deleted:
             return nil
         }
     }
@@ -42,10 +42,12 @@ struct ClubCell: View {
                 CachedAsyncImage(url: URL(string: data.image)) { image in
                     image
                         .resizable()
+                        .aspectRatio(contentMode: .fit)
                         .frame(width: 82, height: 85)
                         .clipShape(.extraSmall)
                 } placeholder: {
                     Rectangle()
+                        .fill(Color.gray)
                         .frame(width: 82, height: 85)
                         .shimmer()
                         .clipShape(.extraSmall)
@@ -54,7 +56,7 @@ struct ClubCell: View {
                 .padding(.horizontal, 3)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(data.subject)
+                    Text(data.subject!)
                         .font(.caption1(.medium))
                         .foreground(DodamColor.Label.alternative)
                     
@@ -62,13 +64,16 @@ struct ClubCell: View {
                         .font(.heading1(.bold))
                         .foreground(DodamColor.Label.normal)
                     
-                    Text(data.shortDescription)
+                    Text(data.shortDescription!)
                         .font(.body2(.medium))
                         .foreground(DodamColor.Label.normal)
                 }
                 .padding(.bottom, 8)
                 
+                Spacer()
+                
                 data.state.tag
+                    .padding(.horizontal)
             }
             .padding(.vertical, 2)
             .frame(maxWidth: .infinity, alignment: .leading)

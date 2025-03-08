@@ -112,6 +112,13 @@ struct AllView: View {
                             flow.push(DivisionView())
                         }
                     }
+                    AllCell("동아리", icon: .clubMember) {
+                        if Sign.isLoggedIn {
+                            flow.push(ClubView())
+                        } else {
+                            presentLoginDialog()
+                        }
+                    }
                 }
             }
             .padding([.top, .horizontal], 16)

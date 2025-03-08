@@ -8,33 +8,54 @@
 import SwiftUI
 import DDS
 import FlowKit
+import Foundation
+import Shared
 
 struct MyClubView: View {
+//    @StateObject private var viewModel = AffiliationCellViewModel()
+    @StateObject private var viewModel = MyClubViewModel()
     @Flow var flow
     
     var body: some View {
         DodamScrollView.medium(title: "내동아리") {
-            VStack {
-                DodamEmptyView(
-                    title: "아직 동아리에 신청하지 않았어요!\n신청 마감 : 2025. 03. 19.",
-                    icon: .fullMoonFace,
-                    buttonTitle: "동아리 입부 신청하기"
-                ) {
-                    flow.push(ClubApplyView())
+            VStack(spacing: 0) {
+                if let clubRegisterTime = viewModel.clubRegisterTime {
+                    let dateFormatter = DateFormatter(type: .isoDate)
+                    
+                    if let endDate = dateFormatter.date(from: clubRegisterTime.applicantEnd) {
+                        let isApplicationOpen = Date() <= endDate
+                        let title = isApplicationOpen ? "신청 마감 : \(clubRegisterTime.applicantEnd)" : "신청이 마감 되었어요!"
+                        let buttonTitle = isApplicationOpen ? "동아리 입부 신청하기" : "다음에 또 만나요!"
+                        let action: () -> Void = isApplicationOpen ? { flow.push(ClubApplyView()) } : {}
+                        
+                        VStack {
+                            DodamEmptyView(
+                                title: title,
+                                icon: .fullMoonFace,
+                                buttonTitle: buttonTitle,
+                                action: action
+                            )
+                        }
+                        .padding(16)
+                    }
                 }
-                .padding(.vertical)
             }
-            .padding(.horizontal, 16)
             
-            MyApplyCell() //내신청
+            AffiliationCell(for: viewModel)
             
-            AffiliationCell() //소속된 동아리
+            MyApplyCell(for: viewModel)
             
-            CreateClubCell() //내 개설 신청
+            CreateClubCell(for: viewModel)
             
-            SugestCell() //부원 제안
+            SugestCell(for: viewModel)
         }
         .background(DodamColor.Background.neutral)
+        .task {
+            await viewModel.onAppear()
+        }
+        .refreshable {
+            await viewModel.onRefresh()
+        }
     }
 }
 

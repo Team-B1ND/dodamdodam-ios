@@ -17,7 +17,7 @@ struct ClubView: View {
     @Flow var flow
     
     var body: some View {
-        DodamScrollView.default(title: "동아리") {
+        DodamScrollView.medium(title: "동아리") {
             VStack(spacing: 12) {
                 if selection == 0 {
                     VStack {
@@ -28,7 +28,7 @@ struct ClubView: View {
                                     icon: .fullMoonFace,
                                     buttonTitle: "동아리 생성하기"
                                 ) {
-                                    if let url = URL(string: "") {
+                                    if let url = URL(string: "https://dodam.b1nd.com/") {
                                         openURL(url)
                                     }
                                 }
@@ -40,6 +40,9 @@ struct ClubView: View {
                                     .padding(.vertical, 2)
                                 }
                             }
+                        } else {
+                            DodamLoadingView()
+                                .padding(8)
                         }
                     }
                 }
@@ -47,9 +50,9 @@ struct ClubView: View {
                     if let data = viewModel.clubs?.filter({ $0.type == .directActivity }) {
                         if data.isEmpty {
                             DodamEmptyView(
-                                title: "아직 신청한 외출이 없어요.",
-                                icon: .convenienceStore,
-                                buttonTitle: "외출 신청하기"
+                                title: "아직 등록된 동아리가 없어요.",
+                                icon: .fullMoonFace,
+                                buttonTitle: "동아리 생성하기"
                             ) {
                                 if let url = URL(string: "") {
                                     openURL(url)
@@ -63,6 +66,9 @@ struct ClubView: View {
                                 .padding(.vertical, 2)
                             }
                         }
+                    } else {
+                        DodamLoadingView()
+                            .padding(8)
                     }
                 }
             }
