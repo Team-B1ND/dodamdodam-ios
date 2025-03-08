@@ -28,7 +28,7 @@ struct ClubView: View {
                                     icon: .fullMoonFace,
                                     buttonTitle: "동아리 생성하기"
                                 ) {
-                                    if let url = URL(string: "https://dodam.b1nd.com/") {
+                                    if let url = URL(string: "https://dodam.b1nd.com/club/create") {
                                         openURL(url)
                                     }
                                 }
@@ -54,7 +54,7 @@ struct ClubView: View {
                                 icon: .fullMoonFace,
                                 buttonTitle: "동아리 생성하기"
                             ) {
-                                if let url = URL(string: "") {
+                                if let url = URL(string: "https://dodam.b1nd.com/club/create") {
                                     openURL(url)
                                 }
                             }

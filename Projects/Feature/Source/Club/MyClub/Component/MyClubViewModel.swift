@@ -66,8 +66,6 @@ class MyClubViewModel: ObservableObject {
         }
     }
     
-    
-    
     // 동아리 개설 신청
     @MainActor
     func fetchMyClubs() async {
@@ -77,7 +75,6 @@ class MyClubViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
-    
     
     // 소속된 동아리
     @MainActor
@@ -89,7 +86,6 @@ class MyClubViewModel: ObservableObject {
         }
     }
     
-    
     //시간
     @MainActor
     func fetchchClubRegisterTime() async {
@@ -99,7 +95,6 @@ class MyClubViewModel: ObservableObject {
             print(error.localizedDescription)
         }
     }
-    
     
     @MainActor
     func onRefresh() async {
@@ -128,4 +123,3 @@ extension MyClubViewModel: OnAppearProtocol {
         _ = await [fetchMyApplyClubs, fetchReceivedJoinRequests, fetchMyClubs, fetchJoinedClubs, fetchchClubRegisterTime]
     }
 }
-

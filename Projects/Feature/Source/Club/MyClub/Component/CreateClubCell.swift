@@ -38,42 +38,44 @@ struct CreateClubCell: View {
                     
                     VStack(alignment: .leading, spacing: 14) {
                         if !creativeClubs.isEmpty {
-                            Text("창체")
-                                .font(.caption2(.bold))
-                                .foreground(DodamColor.Label.alternative)
-                            
-                            ForEach(creativeClubs, id: \.id) { club in
-                                HStack {
-                                    Text(club.name)
-                                    Spacer()
-                                    
-                                    statusTag(for: club.state)
+                            VStack(alignment: .leading, spacing: 7) {
+                                Text("창체")
+                                    .font(.caption2(.bold))
+                                    .foreground(DodamColor.Label.alternative)
+                                
+                                ForEach(creativeClubs, id: \.id) { club in
+                                    HStack {
+                                        Text(club.name)
+                                        Spacer()
+                                        
+                                        statusTag(for: club.state)
+                                    }
+                                    .font(.body2(.medium))
+                                    .foreground(DodamColor.Label.normal)
                                 }
-                                .font(.body2(.medium))
-                                .foreground(DodamColor.Label.normal)
                             }
                         }
                         
-                        DodamDivider()
-                            .padding(.vertical, 2)
-                        
                         if !freeClubs.isEmpty {
-                            Text("자율")
-                                .font(.caption2(.bold))
-                                .foreground(DodamColor.Label.alternative)
-                            
-                            ForEach(freeClubs, id: \.id) { club in
-                                HStack {
-                                    Text(club.name)
-                                    Spacer()
-                                    
-                                    statusTag(for: club.state)
+                            VStack(alignment: .leading, spacing: 7) {
+                                Text("자율")
+                                    .font(.caption2(.bold))
+                                    .foreground(DodamColor.Label.alternative)
+                                
+                                ForEach(freeClubs, id: \.id) { club in
+                                    HStack {
+                                        Text(club.name)
+                                        Spacer()
+                                        
+                                        statusTag(for: club.state)
+                                    }
+                                    .font(.body2(.medium))
+                                    .foreground(DodamColor.Label.normal)
                                 }
-                                .font(.body2(.medium))
-                                .foreground(DodamColor.Label.normal)
                             }
                         }
                     }
+                    .padding(.top, 8)
                     .padding(.vertical, 4)
                 }
             } else {

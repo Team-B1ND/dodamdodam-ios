@@ -36,7 +36,7 @@ struct MyApplyCell: View {
                     let freeClubs = applyClub.filter { $0.club.type == .directActivity }
                     
                     if !creativeClubs.isEmpty {
-                        VStack(alignment: .leading, spacing: 14) {
+                        VStack(alignment: .leading, spacing: 12) {
                             Text("창체")
                                 .font(.caption2(.bold))
                                 .foreground(DodamColor.Label.alternative)
@@ -56,11 +56,8 @@ struct MyApplyCell: View {
                         .padding(.vertical, 16)
                     }
                     
-                    DodamDivider()
-                        .padding(.vertical, 2)
-                    
                     if !freeClubs.isEmpty {
-                        VStack(alignment: .leading, spacing: 14) {
+                        VStack(alignment: .leading, spacing: 12) {
                             Text("자율")
                                 .font(.caption2(.bold))
                                 .foreground(DodamColor.Label.alternative)
@@ -73,7 +70,7 @@ struct MyApplyCell: View {
                             .font(.body2(.medium))
                             .foreground(DodamColor.Label.normal)
                         }
-                        .padding(.vertical, 8)
+                    .padding(.vertical, 8)
                     }
                 }
             } else {

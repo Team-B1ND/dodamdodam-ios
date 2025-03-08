@@ -38,54 +38,56 @@ struct AffiliationCell: View {
                     
                     VStack(alignment: .leading, spacing: 14) {
                         if !creativeClubs.isEmpty {
+                            VStack(alignment: .leading, spacing: 7) {
                             Text("창체")
                                 .font(.caption2(.bold))
                                 .foreground(DodamColor.Label.alternative)
                             
-                            ForEach(creativeClubs, id: \.id) { club in
-                                HStack {
-                                    Text(club.name)
-                                    Spacer()
-                                    if club.myStatus == .allowed {
-                                        Text("입부 완료")
-                                            .font(.caption2(.bold))
-                                            .foreground(DodamColor.Primary.normal)
-                                            .padding(8)
-                                            .background(DodamColor.Background.alternative)
-                                            .clipShape(.extraSmall)
+                                ForEach(creativeClubs, id: \.id) { club in
+                                    HStack {
+                                        Text(club.name)
+                                        Spacer()
+                                        if club.myStatus == .allowed {
+                                            Text("입부 완료")
+                                                .font(.caption2(.bold))
+                                                .foreground(DodamColor.Primary.normal)
+                                                .padding(8)
+                                                .background(DodamColor.Background.alternative)
+                                                .clipShape(.extraSmall)
+                                        }
                                     }
+                                    .font(.body2(.regular))
+                                    .foreground(DodamColor.Label.normal)
                                 }
-                                .font(.body2(.regular))
-                                .foreground(DodamColor.Label.normal)
                             }
                         }
                         
-                        DodamDivider()
-                            .padding(.vertical, 2)
-                        
                         if !freeClubs.isEmpty {
-                            Text("자율")
-                                .font(.caption2(.bold))
-                                .foreground(DodamColor.Label.alternative)
-                            
-                            ForEach(freeClubs, id: \.id) { club in
-                                HStack {
-                                    Text(club.name)
-                                    Spacer()
-                                    if club.myStatus == .allowed {
-                                        Text("입부 완료")
-                                            .font(.caption2(.bold))
-                                            .foreground(DodamColor.Primary.normal)
-                                            .padding(8)
-                                            .background(DodamColor.Background.alternative)
-                                            .clipShape(.extraSmall)
+                            VStack(alignment: .leading, spacing: 7) {
+                                Text("자율")
+                                    .font(.caption2(.bold))
+                                    .foreground(DodamColor.Label.alternative)
+                                
+                                ForEach(freeClubs, id: \.id) { club in
+                                    HStack {
+                                        Text(club.name)
+                                        Spacer()
+                                        if club.myStatus == .allowed {
+                                            Text("입부 완료")
+                                                .font(.caption2(.bold))
+                                                .foreground(DodamColor.Primary.normal)
+                                                .padding(8)
+                                                .background(DodamColor.Background.alternative)
+                                                .clipShape(.extraSmall)
+                                        }
                                     }
+                                    .font(.body2(.medium))
+                                    .foreground(DodamColor.Label.normal)
                                 }
-                                .font(.body2(.medium))
-                                .foreground(DodamColor.Label.normal)
                             }
                         }
                     }
+                    .padding(.top, 8)
                     .padding(.vertical, 4)
                 }
             } else {

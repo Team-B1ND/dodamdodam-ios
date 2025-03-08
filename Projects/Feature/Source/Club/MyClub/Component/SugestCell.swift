@@ -50,7 +50,7 @@ struct SugestCell: View {
                                     .padding(.horizontal, 8)
                                     
                                     Button {
-                                        let dialog = Dialog(title: "\(request.club.name)에 \n입부하시겠습니까?", message: "이 선택은 되돌릴 수 없습니다.")
+                                        let dialog = Dialog(title: "\(request.club.name)에 \n입부요청을 거절하시겠습니까?", message: "이 선택은 되돌릴 수 없습니다.")
                                             .primaryButton("거절") {
                                                 Task {
                                                     await viewModel.rejectJoinRequest(id: request.id)
@@ -64,11 +64,6 @@ struct SugestCell: View {
                                     }
                                     .padding(.horizontal, 8)
                                 }
-                            }
-                            
-                            if request.id != joinRequests.last?.id {
-                                Divider()
-                                    .padding(.vertical, 4)
                             }
                         }
                     }
