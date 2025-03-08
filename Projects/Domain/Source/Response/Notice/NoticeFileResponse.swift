@@ -8,11 +8,11 @@
 import Foundation
 
 public struct NoticeFileResponse: ResponseProtocol {
-    public let fileUrl: String
+    public let fileUrl: URL?
     public let fileName: String
     public let fileType: FileType
     
-    public init(fileUrl: String, fileName: String, fileType: FileType) {
+    public init(fileUrl: URL?, fileName: String, fileType: FileType) {
         self.fileUrl = fileUrl
         self.fileName = fileName
         self.fileType = fileType

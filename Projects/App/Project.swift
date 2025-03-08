@@ -35,7 +35,11 @@ let project = Project(
                     "UIBackgroundModes": [
                         "remote-notification",
                         "fetch"
-                    ]
+                    ],
+                    "UIFileSharingEnabled": .boolean(true),
+                    "LSSupportsOpeningDocumentsInPlace": .boolean(true),
+                    "NSDocumentsFolderUsageDescription": "도담도담에서 파일을 저장하려면 '파일'에 접근해야 합니다.",
+                    "NSPhotoLibraryUsageDescription": "스기에서 이미지를 저장하려면 '사진'에 접근해야 합니다."
                 ]
             ),
             sources: ["iOS/Source/**"],

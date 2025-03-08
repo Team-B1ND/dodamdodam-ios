@@ -7,36 +7,39 @@
 
 import SwiftUI
 import DDS
-import Domain
 import Shared
 
 struct NoticeDivisionCell: View {
-    @Binding var selectedDivision: DivisionOverviewResponse?
-    let divisions: [DivisionOverviewResponse]
-
+    private let title: String
+    private let isSelected: Bool
+    private let action: () -> Void
+    
+    init(
+        _ title: String,
+        isSelected: Bool,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.isSelected = isSelected
+        self.action = action
+    }
+    
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 8) {
-                    CategoryButton("전체", isSelected: selectedDivision == nil) {
-                        selectedDivision = nil
-                    }
-                    ForEach(divisions, id: \.id) { division in
-                        CategoryButton(
-                            division.name,
-                            isSelected: selectedDivision == division
-                        ) {
-                            selectedDivision = division
-                        }
-                    }
+        Text(title)
+            .font(.label(.medium))
+            .padding(.vertical, 8)
+            .padding(.horizontal, 18)
+            .foreground(isSelected ? DodamColor.Static.white :  DodamColor.Label.alternative)
+            .background(isSelected ? DodamColor.Primary.normal : DodamColor.Background.normal)
+            .clipShape(.rect(cornerRadius: 30))
+            .overlay {
+                if !isSelected {
+                    RoundedRectangle(cornerRadius: 30)
+                        .dodamStroke(DodamColor.Line.alternative, lineWidth: 1)
                 }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
-            .frame(height: 58)
-            DodamDivider()
-        }
-        .padding(.top, -8)
+            .onTapGesture {
+                action()
+            }
     }
 }

@@ -32,6 +32,7 @@ struct NoticeView: View {
                     }
                 }
                 .padding(.horizontal, 16)
+                .padding(.top, 12)
             } else {
                 DodamLoadingView()
                     .padding(.vertical, 40)
@@ -39,7 +40,7 @@ struct NoticeView: View {
         }
         .subView {
             if let myDivisions = viewModel.myDivisions {
-                NoticeDivisionCell(
+                NoticeViewHeader(
                     selectedDivision: $viewModel.selectedDivision,
                     divisions: myDivisions
                 )
@@ -58,15 +59,3 @@ struct NoticeView: View {
         }
     }
 }
-
-/*
- 
- 
- @MainActor
- func selectCategory(_ id: Int?) async {
-     selectedDivision = id
-     notices = nil
-     
-     await fetchNotices()
- }
- */

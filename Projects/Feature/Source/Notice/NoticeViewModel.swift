@@ -11,6 +11,37 @@ import Domain
 import Shared
 import Combine
 
+let dummyNotices: [NoticeResponse] = [
+    .init(
+        id: 1,
+        title: "title",
+        content: "contnet https://forms.gle/wfp1fRNNfcr11RcHA",
+        noticeStatus: .created,
+        noticeFileRes: [
+            .init(
+                fileUrl: URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9SRRmhH4X5N2e4QalcoxVbzYsD44C-sQv-w&s")!,
+                fileName: "image",
+                fileType: .image
+            )
+        ],
+        memberInfoRes: .init(
+            id: "id",
+            name: "name",
+            email: "e",
+            role: .student,
+            status: .active,
+            profileImage: nil,
+            phone: "",
+            student: nil,
+            teacher: nil,
+            createdAt: .now,
+            modifiedAt: .now
+        ),
+        createdAt: .now,
+        modifiedAt: .now
+    )
+]
+
 final class NoticeViewModel: ObservableObject {
     var subscription = Set<AnyCancellable>()
     
@@ -27,6 +58,7 @@ final class NoticeViewModel: ObservableObject {
     // MARK: - Method
     init() {
         $selectedDivision.sink { [self] _ in
+            notices = nil
             Task {
                 await fetchNotices()
             }
@@ -48,12 +80,12 @@ final class NoticeViewModel: ObservableObject {
     }
     
     @MainActor
-    func fetchNotices(lastId: Int = 0) async {
+    func fetchNotices(lastId: Int? = nil) async {
         do {
             let response = try await noticeRepository.fetchNoticeByDivision(
                 .init(lastId: lastId, id: selectedDivision?.id, limit: NoticeView.pagingInterval)
             )
-            if lastId == 0 {
+            if lastId == nil {
                 notices = response
             } else {
                 notices?.append(contentsOf: response)
