@@ -17,7 +17,7 @@ public struct NoticeRemote: RemoteProtocol {
         try await self.request(target: .fetchNotice(request), res: [NoticeResponse].self)
     }
     
-    public func fetchCategoryNotice(id: Int, _ request: FetchCategoryNoticeRequest) async throws -> Response<[NoticeResponse]> {
-        try await self.request(target: .fetchCategoryNotice(id: id, request), res: [NoticeResponse].self)
+    public func fetchNoticeByDivision(_ request: FetchNoticeByDivisionRequest) async throws -> Response<[NoticeResponse]> {
+        try await self.request(target: .fetchNoticeDivision(request), res: [NoticeResponse].self)
     }
 }

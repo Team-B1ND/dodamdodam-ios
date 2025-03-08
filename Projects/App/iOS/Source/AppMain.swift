@@ -16,6 +16,8 @@ import Realm
 @main
 struct AppMain: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
     init() {
         Pretendard.register()
         DependencyProvider.shared.register()

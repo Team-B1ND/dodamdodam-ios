@@ -15,18 +15,21 @@ final class DivisionDetailViewModel: ObservableObject {
     @Published var division: DivisionDetailResponse?
     @Published var divisionMember: [DivisionMemberResponse]?
     @Published var divisionWaitingMember: [DivisionMemberResponse]?
-    @Published var waitingMemberCount: Int? = nil
+    @Published var waitingMemberCount: Int?
+    var isFirstOnAppear: Bool = true
+    private let divisionId: Int
         
     // MARK: - Repository
     @Inject private var divisionRepository: DivisionRepository
     
     // MARK: - Method
+    init(divisionId: Int) {
+        self.divisionId = divisionId
+    }
+    
     @MainActor
-    func fetchAllData(id: Int) async {
-        async let fetchDivision: () = fetchDivision(id: id)
-        async let fetchDivisionMembers: () = fetchDivisionMembers(id: id)
-        async let fetchDivisionWaitingMembers: () = fetchDivisionWaitingMembers(id: id)
-        _ = await [fetchDivision, fetchDivisionMembers, fetchDivisionWaitingMembers]
+    func onRefresh() async {
+        await fetchAllData()
     }
     
     @MainActor
@@ -65,7 +68,7 @@ final class DivisionDetailViewModel: ObservableObject {
     func applyMemberDivision(id: Int) async {
         do {
             try await divisionRepository.applyMemberDivision(id: id)
-            
+            await fetchDivision(id: divisionId)
         } catch {
             print(error)
         }
@@ -89,5 +92,16 @@ final class DivisionDetailViewModel: ObservableObject {
         } catch {
             print(error)
         }
+    }
+}
+
+extension DivisionDetailViewModel: OnAppearProtocol {
+    
+    @MainActor
+    func fetchAllData() async {
+        async let fetchDivision: () = fetchDivision(id: divisionId)
+        async let fetchDivisionMembers: () = fetchDivisionMembers(id: divisionId)
+        async let fetchDivisionWaitingMembers: () = fetchDivisionWaitingMembers(id: divisionId)
+        _ = await [fetchDivision, fetchDivisionMembers, fetchDivisionWaitingMembers]
     }
 }

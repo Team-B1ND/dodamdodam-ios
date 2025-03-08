@@ -9,11 +9,11 @@ import Foundation
 
 public extension Date {
     func from(string: String, format: String) -> Date? {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = format
-            dateFormatter.locale = Locale(identifier: "ko_KR")
-            return dateFormatter.date(from: string)
-        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        return dateFormatter.date(from: string)
+    }
     
     func parseString(format: String) -> String {
         let dateFormatter = DateFormatter()

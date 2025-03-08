@@ -73,11 +73,14 @@ class RemoteInterceptor: RequestInterceptor {
                 if let id = Sign.id,
                    let pw = Sign.password {
                     do {
+                        guard let pushToken = UserDefaults.standard.string(forKey: "pushToken") else {
+                            completion(.doNotRetryWithError(error))
+                            return
+                        }
                         _ = try await authRepository.postLogin(
-                            .init(id: id, pw: pw)
+                            .init(id: id, pw: pw, pushToken: pushToken)
                         )
                         DispatchQueue.main.async {
-//                            self.retryCount += 1
                             completion(.retry)
                         }
                     } catch let error {

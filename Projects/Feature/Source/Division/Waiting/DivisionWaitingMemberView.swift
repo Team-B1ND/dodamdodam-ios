@@ -12,46 +12,58 @@ import Domain
 struct DivisionWaitingMemberView: View {
     @State private var selectedMember: DivisionMemberResponse?
     @State private var isSheetPresented = false
-    @StateObject private var viewModel = DivisionWaitingViewModel()
-    let divisionId: Int
-    let group: String
+    @StateObject private var viewModel: DivisionWaitingViewModel
+    
+    private let division: DivisionDetailResponse
+    
+    init(division: DivisionDetailResponse) {
+        self.division = division
+        self._viewModel = StateObject(wrappedValue: DivisionWaitingViewModel(divisionId: division.id))
+    }
     
     var body: some View {
-        DodamScrollView.medium(title: "\(group) 그룹\n가입 신청 대기 중인 멤버") {
-            VStack(alignment: .leading, spacing: 0) {
-                if viewModel.divisionMember?.isEmpty ?? true {
-                    Text("대기 중인 멤버가 없습니다.")
-                        .body1(.medium)
-                        .foreground(DodamColor.Label.assistive)
-                        .padding()
+        DodamScrollView.medium(
+            title: "\(division.divisionName) 그룹\n가입 신청 대기 중인 멤버"
+        ) {
+            Group {
+                if let divisionMember = viewModel.divisionMember {
+                    if divisionMember.isEmpty {
+                        Text("대기 중인 멤버가 없습니다.")
+                            .body1(.medium)
+                            .foreground(DodamColor.Label.assistive)
+                            .padding()
+                    } else {
+                        MemberSection(
+                            title: "가입 신청 멤버",
+                            members: viewModel.divisionMember ?? [],
+                            onSelect: showMemberSheet
+                        )
+                    }
                 } else {
-                    MemberSection(
-                        title: "가입 신청 멤버",
-                        members: viewModel.divisionMember ?? [],
-                        onSelect: showMemberSheet,
-                        showDivider: false
-                    )
+                    DodamLoadingView()
+                        .padding(.vertical, 20)
                 }
             }
             .padding(16)
         }
         .refreshable {
-            await viewModel.fetchAllData(id: divisionId)
+            await viewModel.onRefresh()
         }
         .task {
-            await viewModel.fetchAllData(id: divisionId)
+            await viewModel.onAppear()
         }
         .onChange(of: selectedMember) { newValue in
             isSheetPresented = newValue != nil
         }
         .sheet(isPresented: $isSheetPresented) {
             if let member = selectedMember {
+                let view = WaitingMemberSheetView(member: member, id: division.id, viewModel: viewModel)
                 if #available(iOS 16.4, *) {
-                    WaitingMemberSheetView(member: member, id: divisionId)
+                    view
                         .presentationDragIndicator(.visible)
                         .presentationDetents([.height(dynamicHeight(for: member))])
                 } else {
-                    WaitingMemberSheetView(member: member, id: divisionId)
+                    view
                 }
             } else {
                 Text("멤버 정보를 불러올 수 없습니다.")

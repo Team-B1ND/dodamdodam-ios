@@ -24,21 +24,19 @@ struct SettingView: View {
                     HStack(spacing: 12) {
                         if let data = viewModel.memberData {
                             DodamAvatar.extraLarge(url: data.profileImage)
-                            if let student = data.student {
-                                VStack(alignment: .leading) {
-                                    Text("\(student.name)")
-                                        .headline(.bold)
-                                        .foreground(DodamColor.Label.normal)
-                                    Button {
-                                        flow.push(EditMemberInfoView(memberData: data))
-                                    } label: {
-                                        Text("정보 수정")
-                                            .underline()
-                                            .label(.medium)
-                                            .foreground(DodamColor.Label.alternative)
-                                    }
-                                    .scaledButtonStyle()
+                            VStack(alignment: .leading) {
+                                Text("\(data.name)")
+                                    .headline(.bold)
+                                    .foreground(DodamColor.Label.normal)
+                                Button {
+                                    flow.push(EditMemberInfoView(memberData: data))
+                                } label: {
+                                    Text("정보 수정")
+                                        .underline()
+                                        .label(.medium)
+                                        .foreground(DodamColor.Label.alternative)
                                 }
+                                .scaledButtonStyle()
                             }
                             Spacer()
                         } else {
