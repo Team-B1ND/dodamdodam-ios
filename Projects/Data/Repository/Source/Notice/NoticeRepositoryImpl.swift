@@ -20,7 +20,7 @@ public struct NoticeRepositoryImpl: NoticeRepository {
         try await dataSource.fetchNotice(request)
     }
     
-    public func fetchCategoryNotice(id: Int, _ request: FetchCategoryNoticeRequest) async throws -> [NoticeResponse] {
-        try await dataSource.fetchCategoryNotice(id: id, request)
+    public func fetchNoticeByDivision(_ request: FetchNoticeByDivisionRequest) async throws -> [NoticeResponse] {
+        try await dataSource.fetchNoticeByDivision(request)
     }
 }

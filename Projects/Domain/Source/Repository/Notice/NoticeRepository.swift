@@ -11,5 +11,5 @@ public protocol NoticeRepository: RepositoryProtocol {
     
     func fetchNotice(_ request: FetchNoticeRequest) async throws -> [NoticeResponse]
     
-    func fetchCategoryNotice(id: Int, _ request: FetchCategoryNoticeRequest) async throws -> [NoticeResponse]
+    func fetchNoticeByDivision(_ request: FetchNoticeByDivisionRequest) async throws -> [NoticeResponse]
 }

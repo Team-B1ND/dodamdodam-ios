@@ -13,47 +13,40 @@ struct MemberSection: View {
     let title: String
     let members: [DivisionMemberResponse]
     let onSelect: (DivisionMemberResponse) -> Void
-    let showDivider: Bool
 
     init(title: String,
          members: [DivisionMemberResponse],
-         onSelect: @escaping (DivisionMemberResponse) -> Void,
-         showDivider: Bool = true) {
+         onSelect: @escaping (DivisionMemberResponse) -> Void
+    ) {
         self.title = title
         self.members = members
         self.onSelect = onSelect
-        self.showDivider = showDivider
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 4) {
             Text(title)
                 .body2(.medium)
                 .foreground(DodamColor.Label.alternative)
             
-            VStack {
+            VStack(spacing: 12) {
                 ForEach(members.indices, id: \.self) { index in
-                    Button(action: { onSelect(members[index]) }) {
-                        HStack {
+                    Button {
+                        onSelect(members[index])
+                    } label: {
+                        HStack(spacing: 8) {
                             DodamAvatar.small(url: members[index].profileImage)
                             Text(members[index].memberName)
                                 .body1(.medium)
                                 .foreground(DodamColor.Label.normal)
-                                .padding(.leading, 8)
                             Spacer()
-
-                            Text(members[index].permission.rawValue)
+                            Text(members[index].role.korean)
                                 .body2(.medium)
                                 .foreground(DodamColor.Label.alternative)
                         }
                         .padding(.vertical, 12)
                     }
                 }
-            }
-            
-            if showDivider {
-                DodamDivider(type: .line)
-                    .padding(.horizontal, 8)
             }
         }
     }

@@ -11,7 +11,7 @@ import Domain
 enum NoticeService: ServiceProtocol {
     
     case fetchNotice(_ request: FetchNoticeRequest)
-    case fetchCategoryNotice(id: Int, _ request: FetchCategoryNoticeRequest)
+    case fetchNoticeDivision(_ request: FetchNoticeByDivisionRequest)
 }
 
 extension NoticeService {
@@ -23,14 +23,14 @@ extension NoticeService {
     var path: String {
         switch self {
         case .fetchNotice: ""
-        case .fetchCategoryNotice(let id, _): "/\(id)/division"
+        case .fetchNoticeDivision: "/division"
         }
     }
     
     var method: Method {
         switch self {
         case .fetchNotice: .get
-        case .fetchCategoryNotice: .get
+        case .fetchNoticeDivision: .get
         }
     }
     
@@ -38,7 +38,7 @@ extension NoticeService {
         switch self {
         case let .fetchNotice(request):
             request.toURLParameters()
-        case let .fetchCategoryNotice(_, request):
+        case let .fetchNoticeDivision(request):
             request.toURLParameters()
         }
     }
