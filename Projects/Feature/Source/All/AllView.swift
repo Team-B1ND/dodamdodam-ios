@@ -7,7 +7,6 @@
 
 import SwiftUI
 import DDS
-import CachedAsyncImage
 import SignKit
 import FlowKit
 import Shared
@@ -18,13 +17,13 @@ struct AllView: View {
     @Flow var flow
     @Binding var selection: Int
     
-    private func presentLoginDialog() {
+    func showStudentCode() {
+        guard let code = viewModel.memberData?.student?.code else { return }
         dialog.present(
-            .init(title: "로그인이 필요한 기능입니다", message: "로그인 하시겠습니까")
-            .primaryButton("로그인") {
-                flow.push(LoginView())
-            }
-            .secondaryButton("취소") {}
+            .init(title: "학생코드는 \(code)입니다")
+            .primaryButton("복사") {
+                UIPasteboard.general.string = code
+            }.secondaryButton("닫기")
         )
     }
     
@@ -35,11 +34,11 @@ struct AllView: View {
                     HStack(spacing: 16) {
                         if let data = viewModel.memberData {
                             DodamAvatar.extraLarge(url: data.profileImage)
-                            if let student = data.student {
-                                VStack(alignment: .leading) {
-                                    Text("환영합니다, \(student.name)님")
-                                        .headline(.bold)
-                                        .foreground(DodamColor.Label.normal)
+                            VStack(alignment: .leading) {
+                                Text("환영합니다, \(data.name)님")
+                                    .headline(.bold)
+                                    .foreground(DodamColor.Label.normal)
+                                if let student = data.student {
                                     Text("\(student.grade)학년 \(student.room)반 \(student.number)번")
                                         .label(.medium)
                                         .foreground(DodamColor.Label.alternative)
@@ -64,7 +63,6 @@ struct AllView: View {
                     .padding(.bottom, 8)
                 } else {
                     Button {
-                        dump(flow)
                         flow.push(LoginView())
                     } label: {
                         HStack(spacing: 16) {
@@ -81,35 +79,37 @@ struct AllView: View {
                     .scaledButtonStyle()
                 }
                 VStack(spacing: 12) {
-                    AllCell("내 상벌점 보기", icon: .barChart) {
-                        if Sign.isLoggedIn {
-                            flow.push(PointView())
+                    if let role = viewModel.memberData?.role {
+                        if role == .parent {
+                            AllCell("내 자녀 관리", icon: .smilingFace) {
+                                flow.push(ChildrenManageView())
+                            }
                         } else {
-                            presentLoginDialog()
+                            AllCell("내 상벌점 보기", icon: .barChart) {
+                                flow.push(PointView())
+                            }
+                            AllCell("내 학생코드 보기", icon: .creditCard) {
+                                showStudentCode()
+                            }
+                            DodamDivider()
+                                .padding(.horizontal, 8)
+
+                            AllCell("귀가 버스 신청하기", icon: .colorfulBus) {
+                                flow.push(BusApplyView())
+                            }
+                            AllCell("외출/외박 확인하기", icon: .tent) {
+                                selection = 2
+                            }
+                            AllCell("기상송 확인하기", icon: .wakeupMegaphone) {
+                                flow.push(WakeupSongView())
+                            }
+                            AllCell("기상송 신청하기", icon: .wakeupNote) {
+                                flow.push(WakeupSongView(), animated: false)
+                                flow.push(WakeupSongApplyView())
+                            }
                         }
-                    }
-                    DodamDivider()
-                        .padding(.horizontal, 8)
-                    
-                    AllCell("귀가 버스 신청하기", icon: .colorfulBus) {
-                        if Sign.isLoggedIn {
-                            flow.push(BusApplyView())
-                        } else {
-                            presentLoginDialog()
-                        }
-                    }
-                    AllCell("외출/외박 확인하기", icon: .tent) {
-                        selection = 2
-                    }
-                    AllCell("기상송 확인하기", icon: .wakeupMegaphone) {
-                        flow.push(WakeupSongView())
-                    }
-                    AllCell("기상송 신청하기", icon: .wakeupNote) {
-                        if Sign.isLoggedIn {
-                            flow.push(WakeupSongView(), animated: false)
-                            flow.push(WakeupSongApplyView())
-                        } else {
-                            presentLoginDialog()
+                        AllCell("그룹", icon: .handshake) {
+                            flow.push(DivisionView())
                         }
                     }
                     AllCell("동아리", icon: .clubMember) {

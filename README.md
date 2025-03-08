@@ -16,6 +16,7 @@
 ### 프로젝트 설정
 1. [mise](https://mise.jdx.dev/getting-started.html)를 설치 (Tuist 설치 및 실행에 사용됩니다.)
 2. 최상위 폴더에서 `make generate` 명령어를 실행 ([Makefile](https://github.com/Team-B1ND/dodamdodam-ios/blob/develop/Makefile)에서 명령어를 확인할 수 있습니다.)
+3. `GoogleService-info.plist`파일을 [Resource](https://github.com/Team-B1ND/dodamdodam-ios/blob/develop/Projects/App/iOS/Resource)에 추가
 
 ### 프로젝트 실행
 1. `DodamDodam` 및 `DodamDodamWidget`타겟의 `Provisioning Profile`을 디버그용 파일로 설정

@@ -9,9 +9,11 @@ public struct PostLoginRequest: RequestProtocol {
     
     public let id: String
     public let pw: String
+    public let pushToken: String
     
-    public init(id: String, pw: String) {
+    public init(id: String, pw: String, pushToken: String) {
         self.id = id
         self.pw = pw
+        self.pushToken = pushToken
     }
 }

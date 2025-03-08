@@ -16,12 +16,18 @@ final class DivisionWaitingViewModel: ObservableObject {
         
     // MARK: - Repository
     @Inject private var divisionRepository: DivisionRepository
+    var isFirstOnAppear: Bool = true
+    
+    private let divisionId: Int
     
     // MARK: - Method
+    init(divisionId: Int) {
+        self.divisionId = divisionId
+    }
+    
     @MainActor
-    func fetchAllData(id: Int) async {
-        async let fetchDivisionMembers: () = fetchDivisionMembers(id: id)
-        _ = await [fetchDivisionMembers]
+    func onRefresh() async {
+        await fetchAllData()
     }
     
     @MainActor
@@ -55,5 +61,12 @@ final class DivisionWaitingViewModel: ObservableObject {
         } catch {
             print(error)
         }
+    }
+}
+
+extension DivisionWaitingViewModel: OnAppearProtocol {
+    @MainActor
+    func fetchAllData() async {
+        await fetchDivisionMembers(id: divisionId)
     }
 }

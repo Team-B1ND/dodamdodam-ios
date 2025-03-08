@@ -16,8 +16,9 @@ public struct DivisionMemberResponse: ResponseProtocol {
     public let grade: Int?
     public let room: Int?
     public let number: Int?
+    public let role: Role
     
-    public init(id: Int, memberId: String, memberName: String, profileImage: String?, permission: DivisionPermission, grade: Int?, room: Int?, number: Int?) {
+    public init(id: Int, memberId: String, memberName: String, profileImage: String?, permission: DivisionPermission, grade: Int?, room: Int?, number: Int?, role: Role) {
         self.id = id
         self.memberId = memberId
         self.memberName = memberName
@@ -26,5 +27,12 @@ public struct DivisionMemberResponse: ResponseProtocol {
         self.grade = grade
         self.room = room
         self.number = number
+        self.role = role
+    }
+}
+
+public extension [DivisionMemberResponse] {
+    func find(permission: DivisionPermission) -> Self {
+        filter { $0.permission == permission }
     }
 }
