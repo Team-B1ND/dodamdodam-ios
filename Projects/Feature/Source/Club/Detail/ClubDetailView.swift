@@ -141,6 +141,12 @@ struct ClubDetailView: View {
                 .background(DodamColor.Background.normal)
                 .clipShape(.extraSmall)
                 .padding(.horizontal, 6)
+                DodamButton.fullWidth(
+                    title: "내 동아리 신청하러 가기"
+                ) {
+                    flow.push(ClubApplyView())
+                }
+                .padding([.bottom, .horizontal], 16)
             }
         }
         

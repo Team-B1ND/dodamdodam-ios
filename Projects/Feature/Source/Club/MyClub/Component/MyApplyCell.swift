@@ -10,7 +10,7 @@ import DDS
 import Domain
 
 struct MyApplyCell: View {
-    @StateObject private var viewModel = AffiliationCellViewModel()
+    @StateObject private var viewModel = MyApplyCellViewModel()
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack {
@@ -20,43 +20,51 @@ struct MyApplyCell: View {
             }
             
             if let applyClub = viewModel.myApplyClub {
-                let creativeClubs = applyClub.filter { $0.club.type == .activity }
-                let freeClubs = applyClub.filter { $0.club.type == .directActivity }
-                
-                if !creativeClubs.isEmpty {
-                    VStack(alignment: .leading, spacing: 14) {
-                        Text("창체")
-                            .font(.caption2(.bold))
-                            .foreground(DodamColor.Label.alternative)
-                        
-                        ForEach(ClubPriority.allCases, id: \.self) { priority in
-                            if let club = creativeClubs.first(where: { $0.priority == priority }) {
-                                HStack {
-                                    Text("\(priorityLabel(priority))지망")
-                                    Spacer()
-                                    Text(club.club.name)
-                                }
-                                .font(.body2(.medium))
-                                .foreground(DodamColor.Label.normal)
-                            }
-                        }
-                    }
-                    .padding(.vertical, 16)
-                }
-                
-                if !freeClubs.isEmpty {
-                    VStack(alignment: .leading, spacing: 14) {
-                        Text("자율")
-                            .font(.caption2(.bold))
-                            .foreground(DodamColor.Label.alternative)
-                        
+                if applyClub.isEmpty {
+                    Text("신청한 동아리가 없습니다")
+                        .font(.body2(.regular))
+                        .foreground(DodamColor.Label.alternative)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.vertical, 12)
+                } else {
+                    let creativeClubs = applyClub.filter { $0.club.type == .activity }
+                    let freeClubs = applyClub.filter { $0.club.type == .directActivity }
+                    
+                    if !creativeClubs.isEmpty {
                         VStack(alignment: .leading, spacing: 14) {
-                            ForEach(freeClubs, id: \.id) { freeClub in
-                                Text(freeClub.club.name)
+                            Text("창체")
+                                .font(.caption2(.bold))
+                                .foreground(DodamColor.Label.alternative)
+                            
+                            ForEach(ClubPriority.allCases, id: \.self) { priority in
+                                if let club = creativeClubs.first(where: { $0.priority == priority }) {
+                                    HStack {
+                                        Text("\(priorityLabel(priority))지망")
+                                        Spacer()
+                                        Text(club.club.name)
+                                    }
+                                    .font(.body2(.medium))
+                                    .foreground(DodamColor.Label.normal)
+                                }
                             }
                         }
-                        .font(.body2(.medium))
-                        .foreground(DodamColor.Label.normal)
+                        .padding(.vertical, 16)
+                    }
+                    
+                    if !freeClubs.isEmpty {
+                        VStack(alignment: .leading, spacing: 14) {
+                            Text("자율")
+                                .font(.caption2(.bold))
+                                .foreground(DodamColor.Label.alternative)
+                            
+                            VStack(alignment: .leading, spacing: 14) {
+                                ForEach(freeClubs, id: \.id) { freeClub in
+                                    Text(freeClub.club.name)
+                                }
+                            }
+                            .font(.body2(.medium))
+                            .foreground(DodamColor.Label.normal)
+                        }
                     }
                 }
             } else {
