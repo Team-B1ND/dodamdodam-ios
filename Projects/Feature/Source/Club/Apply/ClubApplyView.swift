@@ -216,7 +216,7 @@ struct ClubApplyView: View {
             
             let emptyActivityClubs = viewModel.activityClubs.filter { $0.state == .allowed }.isEmpty
             let emptyActivityClubsFreeClubs = viewModel.freeClubs.filter { $0.state == .allowed }.isEmpty
-            if emptyActivityClubs && emptyActivityClubsFreeClubs {
+            if emptyActivityClubs || emptyActivityClubsFreeClubs {
                 let alertDialog = Dialog(
                     title: "동아리 없음",
                     message: "현재 신청 가능한 동아리가 없습니다."
