@@ -28,7 +28,7 @@ struct ClubApplyView: View {
                 VStack(spacing: 16) {
                     ForEach(viewModel.activitySelections.indices, id: \.self) { index in
                         VStack {
-                            let activityClubs = viewModel.activityClubs.filter { $0.state == .allowed }
+                            let activityClubs = viewModel.activityClubs.filter({ $0.state == .allowed })
                             if !activityClubs.isEmpty {
                                 Menu {
                                     ForEach(activityClubs, id: \.id) { club in
@@ -54,6 +54,9 @@ struct ClubApplyView: View {
                                     .padding(12)
                                     .padding(.horizontal, 6)
                                 }
+                            } else {
+                                DodamLoadingView()
+                                    .frame(maxWidth: .infinity, alignment: .center)
                             }
                         }
                     }
@@ -127,7 +130,8 @@ struct ClubApplyView: View {
                         .background(DodamColor.Background.normal)
                         .clipShape(.medium)
                         
-                        if index == viewModel.freeSelections.count - 1 && viewModel.freeSelections.count < viewModel.freeClubs.count {
+                        let freeClubs = viewModel.freeClubs.filter { $0.state == .allowed }
+                        if index == viewModel.freeSelections.count - 1 && viewModel.freeSelections.count < freeClubs.count {
                             Button {
                                 viewModel.addFreeSelection()
                             } label: {
@@ -186,7 +190,7 @@ struct ClubApplyView: View {
                     }
                     .secondaryButton("취소") {}
                 } else {
-                    dialog = Dialog(title: "정말 확실합니까?", message: "창체동아리: \n\(viewModel.activityMessage) \n 자율동아리: \(viewModel.freeClubsMessage) \n 위동아리로 신청을 넣겠습니까?")
+                    dialog = Dialog(title: "정말 확실합니까?", message: "창체동아리: \n\(viewModel.activityMessage) \n자율동아리: \n\(viewModel.freeClubsMessage) \n위동아리로 신청을 넣겠습니까?")
                         .primaryButton("신청하기") {
                             Task {
                                 await viewModel.applyToClub()
@@ -198,8 +202,9 @@ struct ClubApplyView: View {
                 self.dialog.present(dialog)
             }
             .disabled(
-                (selection == 0 && !viewModel.activitySelections.allSatisfy { $0 != nil }) ||
-                (selection == 1 && !(viewModel.activitySelections.allSatisfy { $0 == nil } || viewModel.activitySelections.allSatisfy { $0 != nil } ) || !isValidDivisionDescription)
+                !viewModel.activitySelections.allSatisfy { $0 != nil } ||
+                (selection == 1 && (!isValidDivisionDescription ||
+                !viewModel.freeSelections.allSatisfy { $0.club != nil && !$0.text.isEmpty }))
             )
             .padding([.bottom, .horizontal], 16)
         }
@@ -211,7 +216,7 @@ struct ClubApplyView: View {
             
             let emptyActivityClubs = viewModel.activityClubs.filter { $0.state == .allowed }.isEmpty
             let emptyActivityClubsFreeClubs = viewModel.freeClubs.filter { $0.state == .allowed }.isEmpty
-            if emptyActivityClubs && emptyActivityClubsFreeClubs {
+            if emptyActivityClubs || emptyActivityClubsFreeClubs {
                 let alertDialog = Dialog(
                     title: "동아리 없음",
                     message: "현재 신청 가능한 동아리가 없습니다."

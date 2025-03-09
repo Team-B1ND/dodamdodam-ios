@@ -105,8 +105,12 @@ struct ClubDetailView: View {
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(spacing: 15) {
                             if let clubMembers = viewModel.clubMembers {
-                                ForEach(clubMembers.students.indices, id: \.self) { index in
-                                    let member = clubMembers.students[index]
+                                let sortedMembers = clubMembers.students.sorted {
+                                    $0.permission == .clubLeader && $1.permission != .clubLeader
+                                }
+                                
+                                ForEach(sortedMembers.indices, id: \.self) { index in
+                                    let member = sortedMembers[index]
                                     if clubMembers.isLeader {
                                         LeaderCell(for: member)
                                     } else {
@@ -144,7 +148,7 @@ struct ClubDetailView: View {
                 DodamButton.fullWidth(
                     title: "내 동아리 신청하러 가기"
                 ) {
-                    flow.push(ClubApplyView())
+                    flow.push(MyClubView())
                 }
                 .padding([.bottom, .horizontal], 16)
             }

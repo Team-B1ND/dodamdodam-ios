@@ -15,10 +15,10 @@ public struct MyClubResponse: ResponseProtocol {
     public let image: String?
     public let subject: String
     public let type: ClubType
-    public let teacher: Int?
+    public let teacher: ClubTeacher?
     public let state: StateType
     
-    public init(id: Int, name: String, shortDescription: String, description: String, image: String?, subject: String, type: ClubType, teacher: Int?, state: StateType) {
+    public init(id: Int, name: String, shortDescription: String, description: String, image: String?, subject: String, type: ClubType, teacher: ClubTeacher?, state: StateType) {
         self.id = id
         self.name = name
         self.shortDescription = shortDescription
