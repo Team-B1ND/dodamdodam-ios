@@ -15,20 +15,24 @@ class OutApplyViewModel: ObservableObject {
     // MARK: - State
     @Published var reasonText: String = ""
     @Published var dateAt: Date = Date()
-    @Published var startAt: Date = Date()
-    @Published var endAt: Date = Date()
+    @Published var startAt: Date = {
+        var components = DateComponents()
+        components.hour = 15
+        components.minute = 50
+        return Calendar.current.date(from: components)!
+    }()
+    @Published var endAt: Date = {
+        var components = DateComponents()
+        components.hour = 18
+        components.minute = 20
+        return Calendar.current.date(from: components)!
+    }()
     
     // MARK: - Repository
     @Inject var outGoingRepository: any OutGoingRepository
     @Inject var outSleepingRepository: any OutSleepingRepository
     
     // MARK: - Method
-    @MainActor
-    func onAppear() async {
-        startAt = Date()
-        endAt = startAt
-    }
-    
     @MainActor
     func postOutGoing(dinnerOrNot: Bool) async {
         do {

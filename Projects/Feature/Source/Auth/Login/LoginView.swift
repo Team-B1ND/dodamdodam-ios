@@ -48,7 +48,6 @@ struct LoginView: View {
                             .underline()
                             .foreground(DodamColor.Label.normal)
                     }
-                    .scaledButtonStyle()
                 }
                 .label(.medium)
                 DodamButton.fullWidth(
@@ -130,7 +129,7 @@ struct LoginView: View {
             DodamButton.fullWidth(
                 title: "다음"
             ) {
-                flow.push(RegisterInfoView())
+                flow.push(RegisterSelectRoleView())
                 viewModel.isModalPresented = false
             }
             .disabled(!viewModel.isChecked)
