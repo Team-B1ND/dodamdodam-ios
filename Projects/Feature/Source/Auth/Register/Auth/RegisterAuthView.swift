@@ -26,7 +26,7 @@ struct RegisterAuthView: View {
         )
         VStack(alignment: .leading, spacing: 24) {
             if viewModel.authStep >= .checkPw {
-                DodamTextField.default(
+                DodamTextField.secured(
                     title: "비밀번호 확인",
                     text: $viewModel.checkPwText
                 )
@@ -42,7 +42,7 @@ struct RegisterAuthView: View {
             }
             
             if viewModel.authStep >= .pw {
-                DodamTextField.default(
+                DodamTextField.secured(
                     title: "비밀번호",
                     text: $viewModel.pwText
                 )
