@@ -18,51 +18,45 @@ struct MemberListView: View {
     }
 
     var body: some View {
-        VStack {
-            HStack {
-                Button(action: {
-                    let newValue = !allSelected
-                    for member in members {
-                        selectedMembers[member.id] = newValue
-                    }
-                }) {
+        VStack(spacing: 12) {
+            Button {
+                let newValue = !allSelected
+                for member in members {
+                    selectedMembers[member.id] = newValue
+                }
+            } label: {
+                HStack(spacing: 8) {
                     Image(icon: allSelected ? .checkCircle : .checkmarkCircle)
                         .resizable()
                         .frame(width: 24, height: 24)
                         .foreground(allSelected ? DodamColor.Primary.normal : DodamColor.Label.assistive)
+                    
+                    Text("전체")
+                        .body1(.bold)
+                        .foreground(DodamColor.Label.normal)
                 }
-                .buttonStyle(.plain)
-                .padding(.trailing, 8)
-                
-                Text("전체")
-                    .body1(.bold)
-                    .foreground(DodamColor.Label.normal)
-                
-                Spacer()
             }
-            .padding(.bottom, 8)
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             ForEach(members, id: \.id) { member in
-                HStack {
+                HStack(spacing: 8) {
                     DodamAvatar.small(url: member.profileImage)
                     Text(member.memberName)
                         .body1(.medium)
                         .foreground(DodamColor.Label.normal)
-                        .padding(.leading, 8)
                     Spacer()
-                    Button(action: {
+                    Button {
                         selectedMembers[member.id] = !(selectedMembers[member.id] ?? false)
-                    }) {
+                    } label: {
                         Image(icon: selectedMembers[member.id, default: false] ? .checkCircle : .noneCheckCircle)
                             .resizable()
                             .foreground(selectedMembers[member.id, default: false] ? DodamColor.Primary.normal : DodamColor.Label.assistive)
                             .frame(width: 24, height: 24)
                     }
-                    .buttonStyle(.plain)
                 }
-                .padding(.vertical, 8)
+                .padding(.vertical, 12)
+                .padding(.horizontal, 8)
             }
         }
-        .padding(.vertical, 12)
     }
 }

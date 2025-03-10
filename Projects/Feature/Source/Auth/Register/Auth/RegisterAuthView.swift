@@ -18,21 +18,21 @@ struct RegisterAuthView: View {
         DodamTopAppBar.medium(
             title: { () -> String in
                 switch viewModel.authStep {
-                case 0: return "아이디를\n입력해주세요"
-                case 1: return "비밀번호를\n입력해주세요"
+                case .id: return "아이디를\n입력해주세요"
+                case .pw: return "비밀번호를\n입력해주세요"
                 default: return "비밀번호를\n확인해주세요"
                 }
             }()
         )
         VStack(alignment: .leading, spacing: 24) {
-            if viewModel.authStep >= 2 {
-                DodamTextField.default(
+            if viewModel.authStep >= .checkPw {
+                DodamTextField.secured(
                     title: "비밀번호 확인",
                     text: $viewModel.checkPwText
                 )
                 .makeFirstResponder()
                 .onSubmit {
-                    viewModel.authStep = 3
+                    viewModel.authStep = .finished
                 }
                 .transition(.slide)
                 .animation(
@@ -41,14 +41,14 @@ struct RegisterAuthView: View {
                 )
             }
             
-            if viewModel.authStep >= 1 {
-                DodamTextField.default(
+            if viewModel.authStep >= .pw {
+                DodamTextField.secured(
                     title: "비밀번호",
                     text: $viewModel.pwText
                 )
                 .makeFirstResponder()
                 .onSubmit {
-                    viewModel.authStep = 2
+                    viewModel.authStep = .checkPw
                 }
                 .transition(.slide)
                 .animation(
@@ -57,7 +57,7 @@ struct RegisterAuthView: View {
                 )
             }
             
-            if viewModel.authStep >= 0 {
+            if viewModel.authStep >= .id {
                 VStack(alignment: .leading, spacing: 4) {
                     DodamTextField.default(
                         title: "아이디",
@@ -65,7 +65,7 @@ struct RegisterAuthView: View {
                     )
                     .makeFirstResponder()
                     .onSubmit {
-                        viewModel.authStep = 1
+                        viewModel.authStep = .pw
                     }
                     .keyboardType(.asciiCapable)
                     Text("아이디는 영문과 숫자로 5 ~ 20글자 이내여야 해요.")
@@ -80,7 +80,7 @@ struct RegisterAuthView: View {
             }
             Spacer()
             
-            if viewModel.authStep >= 3 {
+            if viewModel.authStep >= .finished {
                 DodamButton.fullWidth(
                     title: "가입하기"
                 ) {
@@ -89,7 +89,8 @@ struct RegisterAuthView: View {
                             [MainView()
                                 .toast(timeout: 3) {
                                     Text("회원가입에 성공했어요!")
-                                }]
+                                }
+                            ]
                         )
                     }
                 }

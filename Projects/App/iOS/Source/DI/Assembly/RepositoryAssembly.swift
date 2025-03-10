@@ -71,5 +71,9 @@ struct RepositoryAssembly: Assembly {
         container.register((any WakeupSongRepository).self) {
             WakeupSongRepositoryImpl(dataSource: $0.resolve(WakeupSongDataSource.self)!)
         }.inObjectScope(.container)
+        
+        container.register((any ClubRepository).self) {
+            ClubRepositoryImpl(dataSource: $0.resolve(ClubDataSource.self)!)
+        }.inObjectScope(.container)
     }
 }

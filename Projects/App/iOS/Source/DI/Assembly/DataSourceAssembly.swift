@@ -72,5 +72,9 @@ struct DataSourceAssembly: Assembly {
         container.register(WakeupSongDataSource.self) {
             .init(remote: $0.resolve(WakeupSongRemote.self)!)
         }.inObjectScope(.container)
+        
+        container.register(ClubDataSource.self) {
+            .init(remote: $0.resolve(ClubRemote.self)!)
+        }.inObjectScope(.container)
     }
 }

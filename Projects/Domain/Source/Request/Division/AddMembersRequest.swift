@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Moya
 
 public struct AddMembersRequest: RequestProtocol {
     public let memberIdList: [String]
