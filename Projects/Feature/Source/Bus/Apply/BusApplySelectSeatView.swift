@@ -7,8 +7,17 @@
 
 import SwiftUI
 import DDS
+import FlowKit
 
 struct BusApplySelectSeatView: View {
+    @Flow private var flow
+    @EnvironmentObject private var dialog: DialogProvider
+    @StateObject private var viewModel: BusApplySelectSeatViewModel
+    
+    init(busId: Int) {
+        self._viewModel = StateObject(wrappedValue: BusApplySelectSeatViewModel(busId: busId))
+    }
+    
     var body: some View {
         DodamScrollView.medium(
             title: "버스 좌석을\n선택해 주세요"
@@ -24,16 +33,18 @@ struct BusApplySelectSeatView: View {
                     ForEach(0..<11, id: \.self) { rowIndex in
                         if rowIndex < 10 {
                             HStack(spacing: 4) {
-                                BusSeat(text: "\(rowIndex * 4 + 1)", selected: false)
-                                BusSeat(text: "\(rowIndex * 4 + 2)", selected: false)
+                                let offset = rowIndex * 4
+                                BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber)
+                                BusSeat(seatNumber: offset + 2, selectedSeatNumber: $viewModel.seatNumber)
                                 Spacer().frame(width: 44)
-                                BusSeat(text: "\(rowIndex * 4 + 3)", selected: false)
-                                BusSeat(text: "\(rowIndex * 4 + 4)", selected: false)
+                                BusSeat(seatNumber: offset + 3, selectedSeatNumber: $viewModel.seatNumber)
+                                BusSeat(seatNumber: offset + 4, selectedSeatNumber: $viewModel.seatNumber)
                             }
                         } else {
                             HStack(spacing: 4) {
                                 ForEach(0..<5, id: \.self) { index in
-                                    BusSeat(text: "\(40 + index + 1)", selected: false)
+                                    let offset = 40 + index
+                                    BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber)
                                 }
                             }
                         }
@@ -48,25 +59,27 @@ struct BusApplySelectSeatView: View {
                         RoundedRectangle(cornerRadius: 9)
                             .foreground(DodamColor.Line.normal)
                             .frame(width: 12, height: 108)
-                            .offset(y: 48)
+                            .padding(.top, 48)
                         Spacer()
                         RoundedRectangle(cornerRadius: 9)
                             .foreground(DodamColor.Line.normal)
                             .frame(width: 12, height: 108)
-                            .offset(y: -48)
+                            .padding(.bottom, 48)
                     }
+                    .offset(x: -6)
                     Spacer()
                     VStack {
                         RoundedRectangle(cornerRadius: 9)
                             .foreground(DodamColor.Line.normal)
                             .frame(width: 12, height: 108)
-                            .offset(y: 48)
+                            .padding(.top, 48)
                         Spacer()
                         RoundedRectangle(cornerRadius: 9)
                             .foreground(DodamColor.Line.normal)
                             .frame(width: 12, height: 108)
-                            .offset(y: -48)
+                            .padding(.bottom, 48)
                     }
+                    .offset(x: 6)
                 }
                 .zIndex(-1)
             }
@@ -77,163 +90,48 @@ struct BusApplySelectSeatView: View {
             DodamButton.fullWidth(
                 title: "신청"
             ) {
-                // TODO: Api
+                await viewModel.patchStatus {
+                    dialog.present(
+                        .init(title: "버스 신청 성공")
+                        .primaryButton("닫기") {
+                            flow.replace([BusApplyView()])
+                        }
+                    )
+                }
             }
+            .disabled(viewModel.seatNumber == nil)
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
         }
     }
 }
 
-/*
- Column(
-             modifier = Modifier
-                 .fillMaxHeight()
-                 .padding(paddingValues)
-                 .padding(horizontal = 16.dp),
-             horizontalAlignment = Alignment.CenterHorizontally
-         ) {
-             LazyColumn(
-                 modifier = Modifier
-                     .width(272.dp)
-                     .drawBehind {
-                         drawRoundRect(
-                             color = lineNormal,
-                             cornerRadius = CornerRadius(9.dp.toPx()),
-                             size = Size(
-                                 width = 12.dp.toPx(),
-                                 height = 108.dp.toPx(),
-                             ),
-                             topLeft = Offset(
-                                 x = -7.dp.toPx(),
-                                 y = 48.dp.toPx(),
-                             ),
-                         )
-                         drawRoundRect(
-                             color = lineNormal,
-                             cornerRadius = CornerRadius(9.dp.toPx()),
-                             size = Size(
-                                 width = 12.dp.toPx(),
-                                 height = 108.dp.toPx(),
-                             ),
-                             topLeft = Offset(
-                                 x = size.width - 5.dp.toPx(),
-                                 y = 48.dp.toPx(),
-                             ),
-                         )
-
-                         drawRoundRect(
-                             color = lineNormal,
-                             cornerRadius = CornerRadius(9.dp.toPx()),
-                             size = Size(
-                                 width = 12.dp.toPx(),
-                                 height = 108.dp.toPx(),
-                             ),
-                             topLeft = Offset(
-                                 x = -7.dp.toPx(),
-                                 y = size.height - 156.dp.toPx(),
-                             ),
-                         )
-                         drawRoundRect(
-                             color = lineNormal,
-                             cornerRadius = CornerRadius(9.dp.toPx()),
-                             size = Size(
-                                 width = 12.dp.toPx(),
-                                 height = 108.dp.toPx(),
-                             ),
-                             topLeft = Offset(
-                                 x = size.width - 5.dp.toPx(),
-                                 y = size.height - 156.dp.toPx(),
-                             ),
-                         )
-                     }
-                     .background(
-                         color = DodamTheme.colors.backgroundNeutral,
-                         shape = DodamTheme.shapes.large,
-                     ),
-                 verticalArrangement = Arrangement.spacedBy(4.dp),
-             ) {
-                 item {
-                     Spacer(modifier = Modifier.height(4.dp))
-                     Box(
-                         modifier = Modifier
-                             .height(58.dp)
-                             .fillMaxWidth()
-                             .padding(
-                                 horizontal = 18.dp,
-                             ),
-                         contentAlignment = Alignment.CenterEnd
-                     ) {
-                         Icon(
-                             modifier = Modifier.size(22.dp),
-                             imageVector = DodamIcons.ArrowLeft.value,
-                             contentDescription = null,
-                             tint = DodamTheme.colors.labelAssistive
-                         )
-                     }
-                 }
-                 items(11) { rowIndex ->
-                     if (rowIndex < 10) {
-                         Row(
-                             horizontalArrangement = Arrangement.spacedBy(4.dp)
-                         ) {
-                             Spacer(modifier = Modifier.width(12.dp))
-                             BusSeat(
-                                 text = "${rowIndex * 4 + 1}",
-                                 selected = false
-                             )
-                             BusSeat(
-                                 text = "${rowIndex * 4 + 2}",
-                                 selected = false
-                             )
-                             Spacer(modifier = Modifier.size(44.dp))
-                             BusSeat(
-                                 text = "${rowIndex * 4 + 3}",
-                                 selected = false
-                             )
-                             BusSeat(
-                                 text = "${rowIndex * 4 + 4}",
-                                 selected = false
-                             )
-                         }
-                     } else {
-                         Row(
-                             modifier = Modifier.padding(
-                                 bottom = 18.dp,
-                             ),
-                             horizontalArrangement = Arrangement.spacedBy(4.dp)
-                         ) {
-                             Spacer(modifier = Modifier.width(12.dp))
-                             for (i in 0 until 5) {
-                                 BusSeat(
-                                     text = "${40 + i + 1}",
-                                     selected = false
-                                 )
-                             }
-                         }
-                     }
-                 }
-             }
- */
-
-struct BusSeat: View {
-    let text: String
-    let selected: Bool
+private struct BusSeat: View {
+    let seatNumber: Int
+    @Binding var selectedSeatNumber: Int?
+    
+    private var selected: Bool {
+        selectedSeatNumber == seatNumber
+    }
     
     var body: some View {
-        Text(text)
-            .body1(.medium)
-            .foreground(
-                selected
-                ? DodamColor.Static.white
-                : DodamColor.Label.assistive
-            )
-            .frame(width: 44, height: 44)
-            .background(
-                selected
-                ? DodamColor.Primary.normal
-                : DodamColor.Background.normal
-            )
-            .clipShape(.rect(cornerRadius: 4))
+        Button {
+            selectedSeatNumber = seatNumber
+        } label: {
+            Text("\(seatNumber)")
+                .body1(.medium)
+                .foreground(
+                    selected
+                    ? DodamColor.Static.white
+                    : DodamColor.Label.assistive
+                )
+                .frame(width: 44, height: 44)
+                .background(
+                    selected
+                    ? DodamColor.Primary.normal
+                    : DodamColor.Background.normal
+                )
+                .clipShape(.rect(cornerRadius: 4))
+        }
     }
 }

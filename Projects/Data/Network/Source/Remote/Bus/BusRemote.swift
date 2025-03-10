@@ -21,15 +21,15 @@ public struct BusRemote: RemoteProtocol {
         try await self.request(target: .fetchAppliedBus, res: BusResponse?.self)
     }
     
-    public func postApplyBus(id: Int) async throws -> DefaultResponse {
-        try await self.request(target: .postApplyBus(id: id))
+    public func fetchBusSeats(id: Int) async throws -> Response<BusSeatResponse> {
+        try await self.request(target: .fetchBusSeats(id: id), res: BusSeatResponse.self)
     }
     
-    public func patchAppliedBus(id: Int) async throws -> DefaultResponse {
-        try await self.request(target: .patchAppliedBus(id: id))
+    public func fetchQrCode() async throws -> Response<BusQrCodeResponse> {
+        try await self.request(target: .fetchQrCode, res: BusQrCodeResponse.self)
     }
     
-    public func deleteAppliedBus(id: Int) async throws -> DefaultResponse {
-        try await self.request(target: .deleteAppliedBus(id: id))
+    public func patchBusStatus(id: Int, seatNumber: Int) async throws -> DefaultResponse {
+        try await self.request(target: .patchBusStatus(id: id, seatNumber: seatNumber))
     }
 }

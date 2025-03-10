@@ -16,6 +16,8 @@ public enum DateFormatterType: String, CaseIterable {
     case isoDateTimeSec = "yyyy-MM-dd'T'HH:mm:ss"
     /// The ISO8601 formatted date, time and millisec "yyyy-MM-dd'T'HH:mm:ss.SSSSSS" i.e. 1997-07-16T19:20:30.45+01:00
     case isoDateTimeMilliSec = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS"
+    /// The local time formatted as "HH:mm:ss" i.e. 19:20:30
+    case localTime = "HH:mm:ss"
 }
 
 public extension DateFormatter {

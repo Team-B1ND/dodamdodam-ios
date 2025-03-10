@@ -24,15 +24,15 @@ public struct BusRepositoryImpl: BusRepository {
         try await dataSource.fetchAppliedBus()
     }
     
-    public func postApplyBus(id: Int) async throws {
-        try await dataSource.postApplyBus(id: id)
+    public func fetchBusSeats(id: Int) async throws -> BusSeatResponse {
+        try await dataSource.fetchBusSeats(id: id)
     }
     
-    public func patchAppliedBus(id: Int) async throws {
-        try await dataSource.patchAppliedBus(id: id)
+    public func fetchQrCode() async throws -> BusQrCodeResponse {
+        try await dataSource.fetchQrCode()
     }
     
-    public func deleteAppliedBus(id: Int) async throws {
-        try await dataSource.deleteAppliedBus(id: id)
+    public func patchBusStatus(id: Int, seatNumber: Int) async throws {
+        try await dataSource.patchBusStatus(id: id, seatNumber: seatNumber)
     }
 }

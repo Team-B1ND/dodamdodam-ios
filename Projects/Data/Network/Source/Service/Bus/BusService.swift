@@ -11,9 +11,9 @@ enum BusService: ServiceProtocol {
     
     case fetchAllBus
     case fetchAppliedBus
-    case postApplyBus(id: Int)
-    case patchAppliedBus(id: Int)
-    case deleteAppliedBus(id: Int)
+    case fetchBusSeats(id: Int)
+    case fetchQrCode
+    case patchBusStatus(id: Int, seatNumber: Int)
 }
 
 extension BusService {
@@ -26,9 +26,9 @@ extension BusService {
         switch self {
         case .fetchAllBus: ""
         case .fetchAppliedBus: "/apply"
-        case let .postApplyBus(id): "/apply/\(id)"
-        case let .patchAppliedBus(id): "/apply/\(id)"
-        case let .deleteAppliedBus(id): "/apply/\(id)"
+        case let .fetchBusSeats(id): "/\(id)/seats"
+        case .fetchQrCode: "/qr-code/nonce"
+        case let .patchBusStatus(id, seatNumber): "/apply/status/\(id)/\(seatNumber)"
         }
     }
     
@@ -36,9 +36,9 @@ extension BusService {
         switch self {
         case .fetchAllBus: .get
         case .fetchAppliedBus: .get
-        case .postApplyBus: .post
-        case .patchAppliedBus: .patch
-        case .deleteAppliedBus: .delete
+        case .fetchBusSeats: .get
+        case .fetchQrCode: .get
+        case .patchBusStatus: .patch
         }
     }
     
@@ -48,11 +48,11 @@ extension BusService {
                 .requestPlain
         case .fetchAppliedBus:
                 .requestPlain
-        case .postApplyBus:
+        case .fetchBusSeats:
                 .requestPlain
-        case .patchAppliedBus:
+        case .fetchQrCode:
                 .requestPlain
-        case .deleteAppliedBus:
+        case .patchBusStatus:
                 .requestPlain
         }
     }

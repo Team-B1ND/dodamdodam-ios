@@ -8,33 +8,32 @@
 import SwiftUI
 import DDS
 import Domain
+import Shared
 
 struct BusApplyCell: View {
+    private let bus: BusResponse
+    private let action: () -> Void
     
-    let bus: BusResponse
-    let selectedBus: BusResponse?
+    init(bus: BusResponse, action: @escaping () -> Void) {
+        self.bus = bus
+        self.action = action
+    }
     
     var body: some View {
-        HStack {
-            Text(bus.busName)
-                .headline(.medium)
-                .foreground(DodamColor.Label.normal)
-            Spacer()
-            Text("\(bus.applyCount)/\(bus.peopleLimit)")
-                .headline(.regular)
-                .foreground(
-                    bus.applyCount >= bus.peopleLimit ? DodamColor.Status.negative
-                    : bus.id == selectedBus?.id ? DodamColor.Primary.normal as DodamColorable : DodamColor.Label.alternative
-                )
-            if bus.id == selectedBus?.id ?? 0 {
-                Image(icon: .checkmark)
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .foreground(DodamColor.Primary.normal)
+        Button(action: action) {
+            HStack {
+                Text(bus.busName)
+                    .headline(.medium)
+                    .foreground(DodamColor.Label.normal)
+                Spacer()
+                Text("\(bus.applyCount)/\(bus.peopleLimit)")
+                    .headline(.regular)
+                    .foreground(DodamColor.Label.alternative)
             }
+            .padding(8)
+            .opacity(bus.status == .deactivate ? 0.4 : 1)
         }
-        .frame(height: 40)
-        .padding(.horizontal, 8)
-        .animation(.spring(duration: 0.2), value: selectedBus)
+        .scaledButtonStyle()
+        .disabled(bus.applyCount >= bus.peopleLimit || bus.status == .deactivate)
     }
 }

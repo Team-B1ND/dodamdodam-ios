@@ -11,9 +11,9 @@ public protocol BusRepository: RepositoryProtocol {
     
     func fetchAppliedBus() async throws -> BusResponse?
     
-    func postApplyBus(id: Int) async throws
+    func fetchBusSeats(id: Int) async throws -> BusSeatResponse
     
-    func patchAppliedBus(id: Int) async throws
+    func fetchQrCode() async throws -> BusQrCodeResponse
     
-    func deleteAppliedBus(id: Int) async throws
+    func patchBusStatus(id: Int, seatNumber: Int) async throws
 }

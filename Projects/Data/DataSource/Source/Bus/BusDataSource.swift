@@ -25,15 +25,17 @@ public struct BusDataSource: DataSourceProtocol {
         return response.data
     }
     
-    public func postApplyBus(id: Int) async throws {
-        _ = try await remote.postApplyBus(id: id)
+    public func fetchBusSeats(id: Int) async throws -> BusSeatResponse {
+        let response = try await remote.fetchBusSeats(id: id)
+        return response.data
     }
     
-    public func patchAppliedBus(id: Int) async throws {
-        _ = try await remote.patchAppliedBus(id: id)
+    public func fetchQrCode() async throws -> BusQrCodeResponse {
+        let response = try await remote.fetchQrCode()
+        return response.data
     }
     
-    public func deleteAppliedBus(id: Int) async throws {
-        _ = try await remote.deleteAppliedBus(id: id)
+    public func patchBusStatus(id: Int, seatNumber: Int) async throws {
+        _ = try await remote.patchBusStatus(id: id, seatNumber: seatNumber)
     }
 }

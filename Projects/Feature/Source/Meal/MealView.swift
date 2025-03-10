@@ -56,8 +56,7 @@ struct MealView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            let title = viewModel.selectedCalendar.parseString(format: "M월 급식")
-            DodamTopAppBar.default(title: title)
+            DodamTopAppBar.small(title: "급식")
             ZStack(alignment: .top) {
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 0) {

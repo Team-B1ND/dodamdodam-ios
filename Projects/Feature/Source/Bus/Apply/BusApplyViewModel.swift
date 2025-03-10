@@ -9,14 +9,47 @@ import Foundation
 import Domain
 import DIContainer
 
+let dummyBus: [BusResponse] = [
+    .init(
+        id: 0,
+        busName: "동대구역 1",
+        description: "동대구역에 도착하는 버스입니다.",
+        peopleLimit: 35,
+        status: .activate,
+        applyCount: 10,
+        leaveTime: .now,
+        timeRequired: .now
+    ),
+    .init(
+        id: 1,
+        busName: "동대구역 2",
+        description: "동대구역에 도착하는 버스입니다.",
+        peopleLimit: 35,
+        status: .activate,
+        applyCount: 8,
+        leaveTime: .now,
+        timeRequired: .now
+    ),
+    .init(
+        id: 2,
+        busName: "동대구역 3",
+        description: "동대구역에 도착하는 버스입니다.",
+        peopleLimit: 35,
+        status: .deactivate,
+        applyCount: 8,
+        leaveTime: .now,
+        timeRequired: .now
+    )
+]
+
 class BusApplyViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var buses: [BusResponse] = []
+    @Published var buses: [BusResponse]?
     @Published var appliedBus: BusResponse?
     @Published var selectedBus: BusResponse?
     @Published var showNotFoundBus = false
-    @Published var dialogMessage = ""
+    var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
     @Inject var busRepository: any BusRepository
@@ -26,11 +59,11 @@ class BusApplyViewModel: ObservableObject {
     func fetchBuses() async {
         do {
             buses = try await busRepository.fetchAllBus()
-            if buses.isEmpty {
+//            buses = dummyBus
+            if buses!.isEmpty {
                 showNotFoundBus = true
             }
         } catch {
-            print("\(#function)")
             print(error)
         }
     }
@@ -39,74 +72,18 @@ class BusApplyViewModel: ObservableObject {
     func fetchAppledBus() async {
         do {
             appliedBus = try await busRepository.fetchAppliedBus()
-            self.selectedBus = appliedBus
+//            appliedBus = dummyBus[0] // dummy
         } catch {
-            print("\(#function)")
             print(error)
         }
     }
-    
+}
+
+extension BusApplyViewModel: OnAppearProtocol {
     @MainActor
-    func completeBus() async {
-        print("\(#function)")
-        defer {
-            Task {
-                await fetchBuses()
-                await fetchAppledBus()
-            }
-        }
-        guard let selectedBus else {
-            await deleteBus(id: appliedBus?.id ?? 0)
-            return
-        }
-        guard let appliedBus else {
-            await postBus(id: selectedBus.id)
-            return
-        }
-        guard selectedBus != appliedBus else {
-            await deleteBus(id: selectedBus.id)
-            return
-        }
-        guard selectedBus.applyCount < selectedBus.peopleLimit else {
-            dialogMessage = "버스가 만석이에요"
-            return
-        }
-        await patchBus(id: selectedBus.id)
-    }
-    
-    @MainActor
-    private func postBus(id: Int) async {
-        do {
-            try await busRepository.postApplyBus(id: id)
-            self.appliedBus = selectedBus
-            dialogMessage = "버스 신청에 성공했어요"
-        } catch {
-            dialogMessage = "버스 신청에 실패했어요"
-            print(error)
-        }
-    }
-    
-    @MainActor
-    private func deleteBus(id: Int) async {
-        do {
-            try await busRepository.deleteAppliedBus(id: id)
-            self.appliedBus = nil
-            dialogMessage = "버스 삭제에 성공했어요"
-        } catch {
-            dialogMessage = "버스 삭제에 실패했어요"
-            print(error)
-        }
-    }
-    
-    @MainActor
-    private func patchBus(id: Int) async {
-        do {
-            try await busRepository.patchAppliedBus(id: id)
-            dialogMessage = "버스 변경에 성공했어요"
-            self.appliedBus = selectedBus
-        } catch {
-            dialogMessage = "버스 변경에 실패했어요"
-            print(error)
-        }
+    func fetchAllData() async {
+        async let fetchBuses: () = fetchBuses()
+        async let fetchAppledBus: () = fetchAppledBus()
+        _ = await [fetchBuses, fetchAppledBus]
     }
 }
