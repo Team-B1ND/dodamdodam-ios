@@ -45,7 +45,7 @@ struct NightStudyView: View {
                                 icon: .fullMoonFace,
                                 buttonTitle: "심야 자습 신청하기"
                             ) {
-                                flow.push(NightStudyApplyView())
+                                flow.push(ApplyView())
                             }
                         }
                     } else {
@@ -64,7 +64,7 @@ struct NightStudyView: View {
             .padding([.top, .horizontal], 16)
         }
         .button(icon: .plus, hidden: !Sign.isLoggedIn) {
-            flow.push(NightStudyApplyView())
+            flow.push(ApplyView())
         }
         .borderSize(16)
         .background(DodamColor.Background.neutral)

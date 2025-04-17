@@ -102,7 +102,7 @@ struct HomeView: View {
                             ) {
                                 if Sign.isLoggedIn {
                                     Button {
-                                        flow.push(NightStudyApplyView())
+                                        flow.push(ApplyView())
                                     } label: {
                                         NightStudyStatusContainer(
                                             data: viewModel.nightStudyData

@@ -1,40 +1,43 @@
 //
-//  NightStudyApplyView.swift
-//  DodamDodam
+//  NightProjectApplyView.swift
+//  Feature
 //
-//  Created by 이민규 on 3/28/24.
+//  Created by dgsw30 on 4/17/25.
 //
 
 import SwiftUI
 import DDS
-import Domain
-import FlowKit
 import Shared
+import FlowKit
+import Domain
 
-struct NightStudyApplyView: View {
-    
+struct NightProjectApplyView: View {
     @DodamDatePicker private var datePicker
-    @ObservedObject var viewModel: NightStudyApplyViewModel
+    @DodamDialog private var dialog
+    @ObservedObject var viewModel: NightProjectApplyViewModel
     @Flow var flow
     @FocusState var focused
     
+    @State private var test = ""
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
-            DodamTextField.default(
-                title: "심야 자습 사유",
-                text: $viewModel.reasonText
-            )
-            .makeFirstResponder()
-            .padding(.bottom, 22)
-            .padding(.horizontal, 8)
-            .focused($focused)
-            .overlay(alignment: .bottomLeading) {
-                if viewModel.reasonText.count < 10 {
-                    Text("10글자 이상 입력하세요")
-                        .font(.system(size: 14, weight: .regular))
-                        .foreground(DodamColor.Status.negative)
-                        .padding(.horizontal, 8)
-                }
+            VStack(spacing: 14) {
+                DodamTextField.default(
+                    title: "프로젝트명",
+                    text: $viewModel.projectName
+                )
+                .makeFirstResponder()
+                .padding(.horizontal, 8)
+                .focused($focused)
+                .hideKeyboardWhenTap()
+                
+                DodamTextField.default(
+                    title: "프로젝트 개요",
+                    text: $viewModel.projectDescription
+                )
+                .padding(.horizontal, 8)
+                .hideKeyboardWhenTap()
             }
             
             VStack(spacing: 16) {
@@ -77,45 +80,12 @@ struct NightStudyApplyView: View {
                 }
                 .padding(.horizontal, 8)
                 .frame(height: 40)
-                Button {
-                    let datePicker = DatePicker(
-                        title: "시작 날짜",
-                        startDate: .now,
-                        endDate: Calendar.current.date(byAdding: .day, value: 0, to: self.datePicker.date.addingTimeInterval(.infinity)) ?? .now
-                    ) {
-                        viewModel.startAt = self.datePicker.date
-                    }
-                    self.datePicker.present(datePicker, date: viewModel.startAt, monthDate: viewModel.startAt)
-                    focused = false
-                } label: {
-                    HStack(spacing: 12) {
-                        Text("시작 날짜")
-                            .font(.system(size: 18, weight: .medium))
-                            .foreground(DodamColor.Label.alternative)
-                            .headline(.medium)
-                        Spacer()
-                        Text(
-                            viewModel.startAt.parseString(
-                                format: "M월 d일"
-                            )
-                        )
-                        .headline(.regular)
-                        .font(.system(size: 18, weight: .regular))
-                        .foreground(DodamColor.Primary.normal)
-                        Image(icon: .calendar)
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .foreground(DodamColor.Primary.normal)
-                    }
-                    .padding(.horizontal, 8)
-                    .frame(height: 40)
-                }
-                .scaledButtonStyle()
+                
                 Button {
                     let datePicker = DatePicker(
                         title: "종료 날짜",
                         startDate: viewModel.startAt,
-                        endDate: Calendar.current.date(byAdding: .day, value: 13, to: viewModel.startAt) ?? .now
+                        endDate: Calendar.current.date(byAdding: .day, value: 30, to: viewModel.startAt) ?? .now
                     ) {
                         viewModel.endAt = self.datePicker.date
                     }
@@ -144,23 +114,25 @@ struct NightStudyApplyView: View {
                     .frame(height: 40)
                 }
                 .scaledButtonStyle()
-                HStack(spacing: 0) {
-                    Text("휴대폰 사용")
-                        .font(.system(size: 18, weight: .medium))
-                        .foreground(DodamColor.Label.alternative)
-                    Spacer()
-                    DodamCheckbox(isChecked: $viewModel.doNeedPhone)
+                
+                HStack {
+                    DodamTextField.default(
+                        title: "학생 검색",
+                        text: $test
+                    )
+                    .padding(.vertical, 8)
+                    .padding(.top, -8)
+                    .padding(.bottom, 8)
+                    
+                    Button {
+                        print("검색 구현해야함")
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                            .foreground(DodamColor.Label.assistive)
+                    }
+                    
                 }
                 .padding(.horizontal, 8)
-                .frame(height: 40)
-                if viewModel.doNeedPhone {
-                    DodamTextField.default(
-                        title: "휴대폰 사용 사유",
-                        text: $viewModel.reasonForPhoneText
-                    )
-                    .padding(.horizontal, 8)
-                    .focused($focused)
-                }
             }
         }
     }
