@@ -53,6 +53,9 @@ struct ApplyView: View {
                 ) {
                     flow.pop()
                 }
+                .disabled(
+                    projectViewModel.projectName.isEmpty || projectViewModel.projectDescription.isEmpty
+                )
                 .padding([.bottom, .horizontal], 16)
             }
         }

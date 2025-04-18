@@ -50,7 +50,7 @@ struct NightStudyApplyView: View {
                             selection: $viewModel.place,
                             content: {
                                 ForEach(
-                                    Place.allCases,
+                                    NightStudyPlace.allCases,
                                     id: \.self
                                 ) { place in
                                     Text(place.rawValue)

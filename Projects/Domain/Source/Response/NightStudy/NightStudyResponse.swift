@@ -8,7 +8,7 @@
 import Foundation
 
 public struct NightStudyResponse: ResponseProtocol {
-    
+    //MARK: response 수정 해야할수도?
     public let id: Int
     public let content: String
     public let status: AllowStatus
@@ -16,7 +16,7 @@ public struct NightStudyResponse: ResponseProtocol {
     public let reasonForPhone: String?
     public let student: Student
     public let rejectReason: String?
-    public let place: Place
+    public let place: NightStudyPlace
     public let startAt: Date
     public let endAt: Date
     public let createdAt: Date
@@ -30,7 +30,7 @@ public struct NightStudyResponse: ResponseProtocol {
         reasonForPhone: String?,
         student: Student,
         rejectReason: String?,
-        place: Place,
+        place: NightStudyPlace,
         startAt: Date,
         endAt: Date,
         createdAt: Date,

@@ -53,7 +53,7 @@ struct NightProjectApplyView: View {
                             selection: $viewModel.place,
                             content: {
                                 ForEach(
-                                    Place.allCases,
+                                    NightProjectPlace.allCases,
                                     id: \.self
                                 ) { place in
                                     Text(place.rawValue)

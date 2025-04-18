@@ -13,7 +13,7 @@ import DIContainer
 class NightProjectApplyViewModel: ObservableObject {
     
     // MARK: - State
-    @Published var place: Place = .programming1
+    @Published var place: NightProjectPlace = .lab12
     @Published var projectName: String = ""
     @Published var projectDescription: String = ""
     @Published var startAt: Date = Date()
