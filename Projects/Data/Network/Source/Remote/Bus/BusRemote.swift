@@ -32,4 +32,8 @@ public struct BusRemote: RemoteProtocol {
     public func patchBusStatus(id: Int, seatNumber: Int) async throws -> DefaultResponse {
         try await self.request(target: .patchBusStatus(id: id, seatNumber: seatNumber))
     }
+    
+    public func applyBus(id: Int, seatNumber: Int) async throws -> DefaultResponse {
+        try await self.request(target: .applyBus(id: id, seatNumber: seatNumber))
+    }
 }

@@ -9,13 +9,14 @@ import Foundation
 import Domain
 import DIContainer
 
-final class BusApplySelectSeatViewModel: ObservableObject {
+final class BusApplySelectSeatViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var seatNumber: Int?
-    
+    @Published var busSeats: BusSeatResponse?
     private let busId: Int
     
+    var isFirstOnAppear: Bool = true
     // MARK: - Repository
     @Inject var busRepository: any BusRepository
     
@@ -34,5 +35,37 @@ final class BusApplySelectSeatViewModel: ObservableObject {
         } catch {
             print(error)
         }
+    }
+    
+    @MainActor
+    func applyBus(completion: @escaping () -> Void) async {
+        guard let seatNumber else { return }
+        
+        do {
+            try await busRepository.applyBus(id: busId, seatNumber: seatNumber)
+            completion()
+        } catch {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func fetchBusSeat() async {
+        do {
+            busSeats = try await busRepository.fetchBusSeats(id: busId)
+        } catch {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func isReserved(seatNumber: Int) -> Bool {
+        return busSeats?.busSeat.contains(seatNumber) ?? false
+    }
+    
+    @MainActor
+    func fetchAllData() async {
+        async let fetchBusSeat: () = fetchBusSeat()
+        _ = await fetchBusSeat
     }
 }

@@ -38,4 +38,8 @@ public struct BusDataSource: DataSourceProtocol {
     public func patchBusStatus(id: Int, seatNumber: Int) async throws {
         _ = try await remote.patchBusStatus(id: id, seatNumber: seatNumber)
     }
+    
+    public func applyBus(id: Int, seatNumber: Int) async throws {
+        _ = try await remote.applyBus(id: id, seatNumber: seatNumber)
+    }
 }

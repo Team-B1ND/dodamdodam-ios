@@ -34,17 +34,17 @@ struct BusApplySelectSeatView: View {
                         if rowIndex < 10 {
                             HStack(spacing: 4) {
                                 let offset = rowIndex * 4
-                                BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber)
-                                BusSeat(seatNumber: offset + 2, selectedSeatNumber: $viewModel.seatNumber)
+                                BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 1))
+                                BusSeat(seatNumber: offset + 2, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 2))
                                 Spacer().frame(width: 44)
-                                BusSeat(seatNumber: offset + 3, selectedSeatNumber: $viewModel.seatNumber)
-                                BusSeat(seatNumber: offset + 4, selectedSeatNumber: $viewModel.seatNumber)
+                                BusSeat(seatNumber: offset + 3, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 3))
+                                BusSeat(seatNumber: offset + 4, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 4))
                             }
                         } else {
                             HStack(spacing: 4) {
                                 ForEach(0..<5, id: \.self) { index in
                                     let offset = 40 + index
-                                    BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber)
+                                    BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 1))
                                 }
                             }
                         }
@@ -90,11 +90,11 @@ struct BusApplySelectSeatView: View {
             DodamButton.fullWidth(
                 title: "신청"
             ) {
-                await viewModel.patchStatus {
+                await viewModel.applyBus {
                     dialog.present(
                         .init(title: "버스 신청 성공")
                         .primaryButton("닫기") {
-                            flow.replace([BusApplyView()])
+                            flow.pop()
                         }
                     )
                 }
@@ -103,12 +103,16 @@ struct BusApplySelectSeatView: View {
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
         }
+        .task {
+            await viewModel.onAppear()
+        }
     }
 }
 
 private struct BusSeat: View {
     let seatNumber: Int
     @Binding var selectedSeatNumber: Int?
+    let isReserved: Bool
     
     private var selected: Bool {
         selectedSeatNumber == seatNumber
@@ -116,7 +120,9 @@ private struct BusSeat: View {
     
     var body: some View {
         Button {
-            selectedSeatNumber = seatNumber
+            if !isReserved {
+                selectedSeatNumber = seatNumber
+            }
         } label: {
             Text("\(seatNumber)")
                 .body1(.medium)
@@ -127,11 +133,12 @@ private struct BusSeat: View {
                 )
                 .frame(width: 44, height: 44)
                 .background(
-                    selected
+                    selected || isReserved
                     ? DodamColor.Primary.normal
                     : DodamColor.Background.normal
                 )
                 .clipShape(.rect(cornerRadius: 4))
         }
+        .disabled(isReserved)
     }
 }

@@ -16,4 +16,6 @@ public protocol BusRepository: RepositoryProtocol {
     func fetchQrCode() async throws -> BusQrCodeResponse
     
     func patchBusStatus(id: Int, seatNumber: Int) async throws
+    
+    func applyBus(id: Int, seatNumber: Int) async throws
 }

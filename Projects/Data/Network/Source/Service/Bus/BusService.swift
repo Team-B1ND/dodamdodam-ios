@@ -14,6 +14,7 @@ enum BusService: ServiceProtocol {
     case fetchBusSeats(id: Int)
     case fetchQrCode
     case patchBusStatus(id: Int, seatNumber: Int)
+    case applyBus(id: Int, seatNumber: Int)
 }
 
 extension BusService {
@@ -29,6 +30,7 @@ extension BusService {
         case let .fetchBusSeats(id): "/\(id)/seats"
         case .fetchQrCode: "/qr-code/nonce"
         case let .patchBusStatus(id, seatNumber): "/apply/status/\(id)/\(seatNumber)"
+        case let .applyBus(id, seatNumber): "/apply/\(id)/\(seatNumber)"
         }
     }
     
@@ -39,6 +41,7 @@ extension BusService {
         case .fetchBusSeats: .get
         case .fetchQrCode: .get
         case .patchBusStatus: .patch
+        case .applyBus: .post
         }
     }
     
@@ -53,6 +56,8 @@ extension BusService {
         case .fetchQrCode:
                 .requestPlain
         case .patchBusStatus:
+                .requestPlain
+        case .applyBus:
                 .requestPlain
         }
     }
