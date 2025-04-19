@@ -22,69 +22,73 @@ struct BusApplySelectSeatView: View {
         DodamScrollView.medium(
             title: "버스 좌석을\n선택해 주세요"
         ) {
-            ZStack {
-                VStack(spacing: 4) {
-                    Image(icon: .arrowLeft)
-                        .resizable()
-                        .frame(width: 22, height: 22)
-                        .foreground(DodamColor.Label.assistive)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        .frame(height: 58)
-                    ForEach(0..<11, id: \.self) { rowIndex in
-                        if rowIndex < 10 {
-                            HStack(spacing: 4) {
-                                let offset = rowIndex * 4
-                                BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 1))
-                                BusSeat(seatNumber: offset + 2, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 2))
-                                Spacer().frame(width: 44)
-                                BusSeat(seatNumber: offset + 3, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 3))
-                                BusSeat(seatNumber: offset + 4, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 4))
-                            }
-                        } else {
-                            HStack(spacing: 4) {
-                                ForEach(0..<5, id: \.self) { index in
-                                    let offset = 40 + index
+            if viewModel.isLoading {
+                DodamLoadingView()
+            } else {
+                ZStack {
+                    VStack(spacing: 4) {
+                        Image(icon: .arrowLeft)
+                            .resizable()
+                            .frame(width: 22, height: 22)
+                            .foreground(DodamColor.Label.assistive)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .frame(height: 58)
+                        ForEach(0..<11, id: \.self) { rowIndex in
+                            if rowIndex < 10 {
+                                HStack(spacing: 4) {
+                                    let offset = rowIndex * 4
                                     BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 1))
+                                    BusSeat(seatNumber: offset + 2, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 2))
+                                    Spacer().frame(width: 44)
+                                    BusSeat(seatNumber: offset + 3, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 3))
+                                    BusSeat(seatNumber: offset + 4, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 4))
+                                }
+                            } else {
+                                HStack(spacing: 4) {
+                                    ForEach(0..<5, id: \.self) { index in
+                                        let offset = 40 + index
+                                        BusSeat(seatNumber: offset + 1, selectedSeatNumber: $viewModel.seatNumber, isReserved: viewModel.isReserved(seatNumber: offset + 1))
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                .padding(.top, 4)
-                .padding([.horizontal, .bottom], 18)
-                .background(DodamColor.Background.neutral)
-                .clipShape(.large)
-                HStack {
-                    VStack {
-                        RoundedRectangle(cornerRadius: 9)
-                            .foreground(DodamColor.Line.normal)
-                            .frame(width: 12, height: 108)
-                            .padding(.top, 48)
+                    .padding(.top, 4)
+                    .padding([.horizontal, .bottom], 18)
+                    .background(DodamColor.Background.neutral)
+                    .clipShape(.large)
+                    HStack {
+                        VStack {
+                            RoundedRectangle(cornerRadius: 9)
+                                .foreground(DodamColor.Line.normal)
+                                .frame(width: 12, height: 108)
+                                .padding(.top, 48)
+                            Spacer()
+                            RoundedRectangle(cornerRadius: 9)
+                                .foreground(DodamColor.Line.normal)
+                                .frame(width: 12, height: 108)
+                                .padding(.bottom, 48)
+                        }
+                        .offset(x: -6)
                         Spacer()
-                        RoundedRectangle(cornerRadius: 9)
-                            .foreground(DodamColor.Line.normal)
-                            .frame(width: 12, height: 108)
-                            .padding(.bottom, 48)
+                        VStack {
+                            RoundedRectangle(cornerRadius: 9)
+                                .foreground(DodamColor.Line.normal)
+                                .frame(width: 12, height: 108)
+                                .padding(.top, 48)
+                            Spacer()
+                            RoundedRectangle(cornerRadius: 9)
+                                .foreground(DodamColor.Line.normal)
+                                .frame(width: 12, height: 108)
+                                .padding(.bottom, 48)
+                        }
+                        .offset(x: 6)
                     }
-                    .offset(x: -6)
-                    Spacer()
-                    VStack {
-                        RoundedRectangle(cornerRadius: 9)
-                            .foreground(DodamColor.Line.normal)
-                            .frame(width: 12, height: 108)
-                            .padding(.top, 48)
-                        Spacer()
-                        RoundedRectangle(cornerRadius: 9)
-                            .foreground(DodamColor.Line.normal)
-                            .frame(width: 12, height: 108)
-                            .padding(.bottom, 48)
-                    }
-                    .offset(x: 6)
+                    .zIndex(-1)
                 }
-                .zIndex(-1)
+                .frame(width: 272)
+                .padding(.top, 8)
             }
-            .frame(width: 272)
-            .padding(.top, 8)
         }
         .safeAreaInset(edge: .bottom) {
             DodamButton.fullWidth(
@@ -127,7 +131,7 @@ private struct BusSeat: View {
             Text("\(seatNumber)")
                 .body1(.medium)
                 .foreground(
-                    selected
+                    selected || isReserved
                     ? DodamColor.Static.white
                     : DodamColor.Label.assistive
                 )

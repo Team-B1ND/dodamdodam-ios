@@ -14,6 +14,7 @@ final class BusApplySelectSeatViewModel: ObservableObject, OnAppearProtocol {
     // MARK: - State
     @Published var seatNumber: Int?
     @Published var busSeats: BusSeatResponse?
+    @Published var isLoading: Bool = true
     private let busId: Int
     
     var isFirstOnAppear: Bool = true
@@ -65,7 +66,9 @@ final class BusApplySelectSeatViewModel: ObservableObject, OnAppearProtocol {
     
     @MainActor
     func fetchAllData() async {
+        isLoading = true
         async let fetchBusSeat: () = fetchBusSeat()
         _ = await fetchBusSeat
+        isLoading = false
     }
 }
