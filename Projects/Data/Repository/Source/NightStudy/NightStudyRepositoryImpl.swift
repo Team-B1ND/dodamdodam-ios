@@ -27,4 +27,8 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
     public func fetchNightStudy() async throws -> [NightStudyResponse] {
         try await dataSource.fetchNightStudy()
     }
+    
+    public func checkBanStatus() async throws -> DefaultResponse {
+        try await dataSource.checkBanStatus()
+    }
 }

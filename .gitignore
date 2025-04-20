@@ -133,10 +133,8 @@ xcuserdata
 /*.gcno
 **/xcshareddata/WorkspaceSettings.xcsettings
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,xcode,swift,swiftpm
-
-*.xcodeproj
-*.xcworkspace
+# Firebase
+Projects/App/iOS/Resource/GoogleService-Info.plist
 
 ### Tuist derived files ###
 graph.dot
@@ -145,4 +143,5 @@ Derived/
 ### Tuist managed dependencies ###
 Tuist/Dependencies
 
-GoogleService-Info.plist
+*.xcodeproj
+*.xcworkspace

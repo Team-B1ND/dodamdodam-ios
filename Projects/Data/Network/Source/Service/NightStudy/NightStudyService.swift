@@ -13,6 +13,7 @@ enum NightStudyService: ServiceProtocol {
     case postNightStudy(_ request: PostNightStudyRequest)
     case deleteNightStudy(id: Int)
     case fetchNightStudy
+    case checkBanStatus
 }
 
 extension NightStudyService {
@@ -26,6 +27,7 @@ extension NightStudyService {
         case .postNightStudy: ""
         case let .deleteNightStudy(id): "/\(id)"
         case .fetchNightStudy: "/my"
+        case .checkBanStatus: "/ban/my"
         }
     }
     
@@ -33,7 +35,7 @@ extension NightStudyService {
         switch self {
         case .postNightStudy: .post
         case .deleteNightStudy: .delete
-        case .fetchNightStudy: .get
+        case .fetchNightStudy, .checkBanStatus: .get
         }
     }
     
@@ -41,9 +43,7 @@ extension NightStudyService {
         switch self {
         case let .postNightStudy(request):
             request.toJSONParameters()
-        case .deleteNightStudy:
-                .requestPlain
-        case .fetchNightStudy:
+        case .deleteNightStudy, .fetchNightStudy, .checkBanStatus:
                 .requestPlain
         }
     }

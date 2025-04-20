@@ -14,6 +14,7 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var nightStudyData: [NightStudyResponse]?
+    @Published var isBanned: Bool = false
     var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
@@ -24,6 +25,7 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     func fetchAllData() async {
         if Sign.isLoggedIn {
             await fetchNightStudy()
+            await checkBanStatus()
         }
     }
     
@@ -35,6 +37,7 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     
     func clearData() {
         nightStudyData = nil
+        isBanned = false
     }
     
     @MainActor
@@ -53,6 +56,24 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
             await onRefresh()
         } catch let error {
             print(error)
+        }
+    }
+    
+    @MainActor
+    func checkBanStatus() async {
+        do {
+            _ = try await nightStudyRepository.checkBanStatus()
+            isBanned = true
+        } catch {
+            isBanned = false
+        }
+    }
+    
+    @MainActor
+    func onAppear() async {
+        if isFirstOnAppear {
+            isFirstOnAppear = false
+            await fetchAllData()
         }
     }
 }

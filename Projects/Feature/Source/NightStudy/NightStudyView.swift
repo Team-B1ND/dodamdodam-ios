@@ -41,11 +41,13 @@ struct NightStudyView: View {
                             }
                         } else {
                             DodamEmptyView(
-                                title: "아직 신청한 심야 자습이 없어요.",
+                                title: viewModel.isBanned ? "심야 자습 신청이 제한된 상태입니다." : "아직 신청한 심야 자습이 없어요.",
                                 icon: .fullMoonFace,
                                 buttonTitle: "심야 자습 신청하기"
                             ) {
-                                flow.push(ApplyView())
+                                if !viewModel.isBanned {
+                                    flow.push(ApplyView())
+                                }
                             }
                         }
                     } else {
@@ -63,7 +65,7 @@ struct NightStudyView: View {
             }
             .padding([.top, .horizontal], 16)
         }
-        .button(icon: .plus, hidden: !Sign.isLoggedIn) {
+        .button(icon: .plus, hidden: !Sign.isLoggedIn || viewModel.isBanned) {
             flow.push(ApplyView())
         }
         .borderSize(16)
