@@ -8,9 +8,15 @@
 import SwiftUI
 import DDS
 import FlowKit
+import Shared
 
 struct BusApplyTagView: View {
+    @StateObject private var viewModel: BusApplyTagViewModel
     @Flow private var flow
+    
+    init(busId: Int) {
+        self._viewModel = .init(wrappedValue: .init(busId: busId))
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -18,37 +24,43 @@ struct BusApplyTagView: View {
                 title: "QR리더기에 태깅해주세요"
             )
             Spacer()
-            Rectangle()
-                .foregroundStyle(.secondary)
-                .padding(24)
-                .frame(width: 280, height: 280)
-                .overlay {
-                    VStack {
-                        HStack {
-                            SupportView()
+            if let nonce = viewModel.nonce {
+                QRCodeView.from(string: nonce)
+                    .foregroundStyle(.secondary)
+                    .padding(24)
+                    .frame(width: 280, height: 280)
+                    .overlay {
+                        VStack {
+                            HStack {
+                                SupportView()
+                                Spacer()
+                                SupportView()
+                                    .rotationEffect(.degrees(90))
+                            }
                             Spacer()
-                            SupportView()
-                                .rotationEffect(.degrees(90))
-                        }
-                        Spacer()
-                        HStack {
-                            SupportView()
-                                .rotationEffect(.degrees(270))
-                            Spacer()
-                            SupportView()
-                                .rotationEffect(.degrees(180))
+                            HStack {
+                                SupportView()
+                                    .rotationEffect(.degrees(270))
+                                Spacer()
+                                SupportView()
+                                    .rotationEffect(.degrees(180))
+                            }
                         }
                     }
-                }
+            } else {
+                DodamLoadingView()
+            }
             Spacer()
             DodamButton.fullWidth(
                 title: "완료"
             ) {
-                // TODO: Api
                 flow.pop(2)
             }
             .padding(.horizontal, 16)
             .padding(.bottom, 12)
+        }
+        .task {
+            await viewModel.onAppear()
         }
     }
 }

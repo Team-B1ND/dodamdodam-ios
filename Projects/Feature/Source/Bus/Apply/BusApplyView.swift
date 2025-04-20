@@ -46,7 +46,7 @@ struct BusApplyView: View {
                             DodamButton.fullWidth(
                                 title: "QR 태깅"
                             ) {
-                                flow.push(BusApplyTagView())
+                                flow.push(BusApplyTagView(busId: appliedBus.id))
                             }
                             .role(.assistive)
                         }

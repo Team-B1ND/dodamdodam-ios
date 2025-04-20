@@ -59,7 +59,7 @@ class BusApplyViewModel: ObservableObject {
     func fetchBuses() async {
         do {
             buses = try await busRepository.fetchAllBus()
-//            buses = dummyBus
+            buses = dummyBus
             if buses!.isEmpty {
                 showNotFoundBus = true
             }
@@ -72,7 +72,7 @@ class BusApplyViewModel: ObservableObject {
     func fetchAppledBus() async {
         do {
             appliedBus = try await busRepository.fetchAppliedBus()
-//            appliedBus = dummyBus[0] // dummy
+            appliedBus = dummyBus[0] // dummy
         } catch {
             print(error)
         }
