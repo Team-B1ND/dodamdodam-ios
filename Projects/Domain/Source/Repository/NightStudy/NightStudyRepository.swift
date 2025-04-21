@@ -13,5 +13,5 @@ public protocol NightStudyRepository: RepositoryProtocol {
     
     func fetchNightStudy() async throws -> [NightStudyResponse]
     
-    func checkBanStatus() async throws -> DefaultResponse
+    func checkBanStatus() async throws -> NightStudyBanResponse
 }

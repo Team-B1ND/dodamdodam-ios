@@ -25,7 +25,7 @@ public struct NightStudyRemote: RemoteProtocol {
         try await self.request(target: .fetchNightStudy, res: [NightStudyResponse].self)
     }
     
-    public func checkBanStatus() async throws -> DefaultResponse {
-        try await self.request(target: .checkBanStatus)
+    public func checkBanStatus() async throws -> Response<NightStudyBanResponse> {
+        try await self.request(target: .checkBanStatus, res: NightStudyBanResponse.self)
     }
 }

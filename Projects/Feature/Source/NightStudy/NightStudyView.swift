@@ -40,12 +40,19 @@ struct NightStudyView: View {
                                 }
                             }
                         } else {
-                            DodamEmptyView(
-                                title: viewModel.isBanned ? "심야 자습 신청이 제한된 상태입니다." : "아직 신청한 심야 자습이 없어요.",
-                                icon: .fullMoonFace,
-                                buttonTitle: "심야 자습 신청하기"
-                            ) {
-                                if !viewModel.isBanned {
+                            if viewModel.isBanned {
+                                DodamEmptyView(
+                                    title: "심야 자습 신청이 제한된 상태입니다.\n\n사유: \(viewModel.banPeriod?.banReason ?? "")",
+                                    icon: .fullMoonFace,
+                                    buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "",
+                                    action: {}
+                                )
+                            } else {
+                                DodamEmptyView(
+                                    title: "아직 신청한 심야 자습이 없어요.",
+                                    icon: .fullMoonFace,
+                                    buttonTitle: "심야 자습 신청하기"
+                                ) {
                                     flow.push(ApplyView())
                                 }
                             }

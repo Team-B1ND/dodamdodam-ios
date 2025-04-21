@@ -28,7 +28,8 @@ public struct NightStudyDataSource: DataSourceProtocol {
         return response.data
     }
     
-    public func checkBanStatus() async throws -> DefaultResponse {
-        try await remote.checkBanStatus()
+    public func checkBanStatus() async throws -> NightStudyBanResponse {
+        let response = try await remote.checkBanStatus()
+        return response.data
     }
 }
