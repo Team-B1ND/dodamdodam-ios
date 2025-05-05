@@ -51,11 +51,22 @@ struct ApplyView: View {
                 DodamButton.fullWidth(
                     title: "확인"
                 ) {
-                    flow.pop()
+                    await projectViewModel.postNightStudyProject()
+                    if !projectViewModel.nightStudyApplyFailed {
+                        flow.pop()
+                    }
                 }
                 .disabled(
-                    projectViewModel.projectName.isEmpty || projectViewModel.projectDescription.isEmpty
+                    projectViewModel.projectName.isEmpty || 
+                    projectViewModel.projectDescription.count < 10 ||
+                    projectViewModel.selectedStudents.isEmpty
                 )
+                .onChange(of: projectViewModel.nightStudyApplyFailed) { _ in
+                    let dialog = Dialog(title: "실패")
+                        .message(projectViewModel.nightStudyApplyAlertMessage)
+                        .primaryButton("확인")
+                    self.dialog.present(dialog)
+                }
                 .padding([.bottom, .horizontal], 16)
             }
         }

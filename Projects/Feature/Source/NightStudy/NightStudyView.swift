@@ -6,16 +6,20 @@
 //
 
 import SwiftUI
-import FlowKit
 import DDS
 import SignKit
 import Shared
+import Domain
+import FlowKit
 
 struct NightStudyView: View {
-    
+    @ObservedObject var viewModel: NightStudyViewModel
     @DodamDialog private var dialog
-    @StateObject var viewModel = NightStudyViewModel()
     @Flow var flow
+    
+    init(viewModel: NightStudyViewModel = NightStudyViewModel()) {
+        self.viewModel = viewModel
+    }
     
     var body: some View {
         DodamScrollView.default(title: "심야 자습") {
@@ -23,16 +27,27 @@ struct NightStudyView: View {
                 if Sign.isLoggedIn {
                     if let data = viewModel.nightStudyData {
                         if !data.isEmpty {
-                            ForEach(data, id: \.self) { data in
-                                NightStudyApplyCell(
-                                    data: data
-                                ) {
+                            ForEach(data, id: \.id) { data in
+                                NightStudyApplyCell(data: data) {
                                     let dialog = Dialog(title: "해당 심야 자습을 삭제하시겠습니까?")
                                         .primaryButton("삭제") {
                                             Task {
-                                                await viewModel.deleteNightStudy(
-                                                    id: data.id
-                                                )
+                                                await viewModel.deleteNightStudy(id: data.id)
+                                            }
+                                        }
+                                        .secondaryButton("취소")
+                                    self.dialog.present(dialog)
+                                }
+                            }
+                            
+                            ForEach(viewModel.nightStudyProjectList, id: \.id) { project in
+                                NightStudyApplyCell(
+                                    data: viewModel.convertProjectToNightStudy(project)
+                                ) {
+                                    let dialog = Dialog(title: "해당 프로젝트 심자를 삭제하시겠습니까?")
+                                        .primaryButton("삭제") {
+                                            Task {
+                                                await viewModel.deleteNightStudyProject(id: project.id)
                                             }
                                         }
                                         .secondaryButton("취소")
@@ -84,8 +99,4 @@ struct NightStudyView: View {
             await viewModel.onRefresh()
         }
     }
-}
-
-#Preview {
-    NightStudyView()
 }

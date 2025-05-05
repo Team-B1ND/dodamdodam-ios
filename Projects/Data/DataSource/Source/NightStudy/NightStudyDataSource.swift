@@ -8,28 +8,46 @@
 import Domain
 import Network
 
-public struct NightStudyDataSource: DataSourceProtocol {
-    let remote: NightStudyRemote
+public final class NightStudyDataSource {
     
-    public init(remote: NightStudyRemote) {
+    private let remote: NightStudyRemote
+    
+    public init(remote: NightStudyRemote = .init()) {
         self.remote = remote
     }
+}
+
+extension NightStudyDataSource {
     
     public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
-        try await remote.postNightStudy(request)
+        try await remote.postNightStudy(request).data
     }
     
-    public func deleteNightStudy(id: Int) async throws {
-        _ = try await remote.deleteNightStudy(id: id)
+    public func deleteNightStudy(id: Int) async throws -> DefaultResponse {
+        try await remote.deleteNightStudy(id: id).data
     }
     
     public func fetchNightStudy() async throws -> [NightStudyResponse] {
-        let response = try await remote.fetchNightStudy()
-        return response.data
+        try await remote.fetchNightStudy().data
     }
     
     public func checkBanStatus() async throws -> NightStudyBanResponse {
-        let response = try await remote.checkBanStatus()
-        return response.data
+        try await remote.checkBanStatus().data
+    }
+    
+    public func searchStudents(query: String) async throws -> [NightStudyStudentResponse] {
+        try await remote.searchStudents(query: query).data
+    }
+    
+    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse {
+        try await remote.postNightStudyProject(request).data
+    }
+    
+    public func fetchNightStudyProject() async throws -> [NightStudyProjectResponse] {
+        try await remote.fetchNightStudyProject().data
+    }
+    
+    public func deleteNightStudyProject(id: Int) async throws -> DefaultResponse {
+        try await remote.deleteNightStudyProject(id: id).data
     }
 }
