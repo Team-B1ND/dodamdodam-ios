@@ -19,7 +19,7 @@ struct NightProjectApplyView: View {
     @FocusState var focused
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 14) {
+        VStack(alignment: .leading, spacing: 24) {
             DodamTextField.default(
                 title: "프로젝트명",
                 text: $viewModel.projectName
@@ -53,21 +53,14 @@ struct NightProjectApplyView: View {
                         .foreground(DodamColor.Label.alternative)
                     Spacer()
                     Menu {
-                        Picker(
-                            "시작 날짜",
-                            selection: $viewModel.projectType,
-                            content: {
-                                ForEach(
-                                    NightStudyProjectType.allCases,
-                                    id: \.self
-                                ) { place in
-                                    Text(place.displayName)
-                                }
+                        Picker("시작 날짜", selection: $viewModel.projectType) {
+                            ForEach(NightStudyProjectType.allCases, id: \.self) { place in
+                                Text(place.displayName)
                             }
-                        )
+                        }
                     } label: {
                         HStack(spacing: 4) {
-                            Text("\(viewModel.projectType.displayName)")
+                            Text(viewModel.projectType.displayName)
                                 .headline(.regular)
                                 .foreground(DodamColor.Primary.normal)
                             VStack(spacing: -4) {
@@ -93,21 +86,14 @@ struct NightProjectApplyView: View {
                         .foreground(DodamColor.Label.alternative)
                     Spacer()
                     Menu {
-                        Picker(
-                            "시작 날짜",
-                            selection: $viewModel.room,
-                            content: {
-                                ForEach(
-                                    NightProjectPlace.allCases,
-                                    id: \.self
-                                ) { place in
-                                    Text(place.displayName)
-                                }
+                        Picker("시작 날짜", selection: $viewModel.room) {
+                            ForEach(NightProjectPlace.allCases, id: \.self) { place in
+                                Text(place.displayName)
                             }
-                        )
+                        }
                     } label: {
                         HStack(spacing: 4) {
-                            Text("\(viewModel.room.displayName)")
+                            Text(viewModel.room.displayName)
                                 .headline(.regular)
                                 .foreground(DodamColor.Primary.normal)
                             VStack(spacing: -4) {
@@ -143,14 +129,10 @@ struct NightProjectApplyView: View {
                             .foreground(DodamColor.Label.alternative)
                             .headline(.medium)
                         Spacer()
-                        Text(
-                            viewModel.startAt.parseString(
-                                format: "M월 d일"
-                            )
-                        )
-                        .headline(.regular)
-                        .font(.system(size: 18, weight: .regular))
-                        .foreground(DodamColor.Primary.normal)
+                        Text(viewModel.startAt.parseString(format: "M월 d일"))
+                            .headline(.regular)
+                            .font(.system(size: 18, weight: .regular))
+                            .foreground(DodamColor.Primary.normal)
                         Image(icon: .calendar)
                             .resizable()
                             .frame(width: 24, height: 24)
@@ -178,14 +160,10 @@ struct NightProjectApplyView: View {
                             .foreground(DodamColor.Label.alternative)
                             .headline(.medium)
                         Spacer()
-                        Text(
-                            viewModel.endAt.parseString(
-                                format: "M월 d일"
-                            )
-                        )
-                        .headline(.regular)
-                        .font(.system(size: 18, weight: .regular))
-                        .foreground(DodamColor.Primary.normal)
+                        Text(viewModel.endAt.parseString(format: "M월 d일"))
+                            .headline(.regular)
+                            .font(.system(size: 18, weight: .regular))
+                            .foreground(DodamColor.Primary.normal)
                         Image(icon: .calendar)
                             .resizable()
                             .frame(width: 24, height: 24)
