@@ -22,22 +22,31 @@ class NightProjectApplyViewModel: ObservableObject {
     @Published var room: NightProjectPlace = .lab12
     
     @Published var searchText: String = ""
-    @Published var searchResults: [NightStudyStudentResponse] = []
+    @Published var searchResults: [NightStudyStudentResponse]?
     @Published var selectedStudents: Set<Int> = []
     
     @Published var nightStudyApplyFailed: Bool = false
     @Published var nightStudyApplyAlertMessage: String = "프로젝트 심자 신청에 실패했습니다."
     
+    var filteredResults: [NightStudyStudentResponse] {
+        guard let searchResults else { return [] }
+        guard !searchText.isEmpty else { return searchResults }
+        
+        return searchResults.filter {
+            $0.name.contains(searchText) ||
+            "\($0.grade)\($0.room)\($0.number)".contains(searchText)
+        }
+    }
+    
     // MARK: - Repository
     @Inject var nightStudyRepository: any NightStudyRepository
     
     // MARK: - Method
-    
     @MainActor
     func postNightStudyProject() async {
         self.nightStudyApplyFailed = false
         do {
-            let result = try await nightStudyRepository.postNightStudyProject(
+            _ = try await nightStudyRepository.postNightStudyProject(
                 .init(
                     type: projectType,
                     name: projectName,
@@ -48,10 +57,10 @@ class NightProjectApplyViewModel: ObservableObject {
                     students: Array(selectedStudents)
                 )
             )
-//            if result.status == 403 {
-//                nightStudyApplyFailed = true
-//                nightStudyApplyAlertMessage = "프로젝트 심자 신청 기간이 아닙니다."
-//            }
+            //            if result.status == 403 {
+            //                nightStudyApplyFailed = true
+            //                nightStudyApplyAlertMessage = "프로젝트 심자 신청 기간이 아닙니다."
+            //            }
         } catch let error {
             print(error)
             nightStudyApplyFailed = true
@@ -59,9 +68,9 @@ class NightProjectApplyViewModel: ObservableObject {
     }
     
     @MainActor
-    func searchStudents(query: String) async {
+    func searchStudents() async {
         do {
-            searchResults = try await nightStudyRepository.searchStudents(query: query)
+            searchResults = try await nightStudyRepository.searchStudents()
         } catch let error {
             print(error)
         }
@@ -74,17 +83,4 @@ class NightProjectApplyViewModel: ObservableObject {
             selectedStudents.insert(id)
         }
     }
-    
-//    @MainActor
-//    func convertToStudent(_ student: NightStudyStudentResponse) -> Student {
-//        Student(
-//            id: student.id,
-//            name: student.name,
-//            grade: student.grade,
-//            room: student.room,
-//            number: student.number, code: <#String#>,
-//            phone: student.phone,
-//            profileImage: student.profileImage
-//        )
-//    }
 }

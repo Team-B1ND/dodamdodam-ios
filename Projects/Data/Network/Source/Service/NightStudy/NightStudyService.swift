@@ -13,7 +13,7 @@ enum NightStudyService: ServiceProtocol {
     case deleteNightStudy(id: Int)
     case fetchNightStudy
     case checkBanStatus
-    case searchStudents(query: String)
+    case searchStudents
     case postNightStudyProject(_ request: PostNightStudyProjectRequest)
     case fetchNightStudyProject
     case deleteNightStudyProject(id: Int)
@@ -25,22 +25,12 @@ extension NightStudyService {
     }
     
     var path: String {
-//        switch self {
-//        case .postNightStudy: ""
-//        case let .deleteNightStudy(id): "/\(host)/\(id)"
-//        case .fetchNightStudy: "/\(host)/my"
-//        case .checkBanStatus: "/\(host)/ban"
-//        case .searchStudents: "/\(host)/student/search"
-//        case .postNightStudyProject: "/\(host)/project"
-//        case .fetchNightStudyProject: "/\(host)/project/my"
-//        case .deleteNightStudyProject: "/\(host)/project"
-//        }
         switch self {
         case .postNightStudy: ""
         case let .deleteNightStudy(id): "/\(id)"
         case .fetchNightStudy: "/my"
-        case .checkBanStatus: "/ban"
-        case let .searchStudents(query): "/student/search"
+        case .checkBanStatus: "/ban/my"
+        case .searchStudents: "/students"
         case .postNightStudyProject: "/project"
         case .fetchNightStudyProject: "/project/my"
         case let .deleteNightStudyProject(id): "/project"
@@ -65,27 +55,23 @@ extension NightStudyService {
         case let .postNightStudy(request):
             request.toJSONParameters()
         case .deleteNightStudy:
-            .requestPlain
+                .requestPlain
         case .fetchNightStudy:
-            .requestPlain
+                .requestPlain
         case .checkBanStatus:
-            .requestPlain
-        case let .searchStudents(query):
-            .requestParameters(parameters: ["query": query], encoding: URLEncoding())
+                .requestPlain
+        case .searchStudents:
+                .requestPlain
         case let .postNightStudyProject(request):
             request.toJSONParameters()
         case .fetchNightStudyProject:
-            .requestPlain
+                .requestPlain
         case let .deleteNightStudyProject(id):
-            .requestParameters(parameters: ["project": id], encoding: URLEncoding())
+                .requestParameters(parameters: ["project": id], encoding: URLEncoding())
         }
     }
     
     var headers: [String: String]? {
         ["Content-Type": "application/json"]
     }
-    
-//    var validationType: ValidationType {
-//        .successCodes
-//    }
 }

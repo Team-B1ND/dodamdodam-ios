@@ -38,12 +38,19 @@ struct NightStudyView: View {
                                     }
                                 }
                             } else {
-                                DodamEmptyView(
-                                    title: "아직 신청한 심야 자습이 없어요.",
-                                    icon: .fullMoonFace,
-                                    buttonTitle: "심야 자습 신청하기"
-                                ) {
-                                    flow.push(ApplyView())
+                                if viewModel.isBanned {
+                                    DodamEmptyView(
+                                        title: "심야 자습 신청이 제한된 상태입니다.\n\n사유: \(viewModel.banPeriod?.banReason ?? "")",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "") {}
+                                } else {
+                                    DodamEmptyView(
+                                        title: "아직 신청한 심야 자습이 없어요.",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: "심야 자습 신청하기"
+                                    ) {
+                                        flow.push(ApplyView())
+                                    }
                                 }
                             }
                         } else {
@@ -67,12 +74,19 @@ struct NightStudyView: View {
                                     }
                                 }
                             } else {
-                                DodamEmptyView(
-                                    title: "아직 신청한 프로젝트 심자가 없어요.",
-                                    icon: .fullMoonFace,
-                                    buttonTitle: "프로젝트 심자 신청하기"
-                                ) {
-                                    flow.push(ApplyView())
+                                if viewModel.isBanned {
+                                    DodamEmptyView(
+                                        title: "심야 자습 신청이 제한된 상태입니다.\n\n사유: \(viewModel.banPeriod?.banReason ?? "")",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "") {}
+                                } else {
+                                    DodamEmptyView(
+                                        title: "아직 신청한 프로젝트 심자가 없어요.",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: "프로젝트 심자 신청하기"
+                                    ) {
+                                        flow.push(ApplyView())
+                                    }
                                 }
                             }
                         } else {
@@ -110,13 +124,3 @@ struct NightStudyView: View {
         }
     }
 }
-
-//                            if viewModel.isBanned {
-//                                DodamEmptyView(
-//                                    title: "심야 자습 신청이 제한된 상태입니다.\n\n사유: \(viewModel.banPeriod?.banReason ?? "")",
-//                                    icon: .fullMoonFace,
-//                                    buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "",
-//                                    action: {}
-//                                )
-//                            } else {
-//                            }

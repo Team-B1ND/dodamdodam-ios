@@ -33,8 +33,8 @@ public final class NightStudyDataSource {
         return response.data
     }
     
-    public func searchStudents(query: String) async throws -> [NightStudyStudentResponse] {
-        let response = try await remote.searchStudents(query: query)
+    public func searchStudents() async throws -> [NightStudyStudentResponse] {
+        let response = try await remote.searchStudents()
         return response.data
     }
     

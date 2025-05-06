@@ -35,7 +35,9 @@ struct ApplyView: View {
                     title: "확인"
                 ) {
                     await studyViewModel.postNightStudy()
-                    flow.pop()
+                    if !studyViewModel.nightStudyApplyFailed {
+                        flow.pop()
+                    }
                 }
                 .disabled(
                     studyViewModel.reasonText.count < 10

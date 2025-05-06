@@ -15,7 +15,7 @@ public protocol NightStudyRepository: RepositoryProtocol {
     
     func checkBanStatus() async throws -> NightStudyBanResponse
     
-    func searchStudents(query: String) async throws -> [NightStudyStudentResponse]
+    func searchStudents() async throws -> [NightStudyStudentResponse]
     
     func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws
     

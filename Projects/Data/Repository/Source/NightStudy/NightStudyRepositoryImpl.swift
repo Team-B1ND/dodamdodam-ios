@@ -32,8 +32,8 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.checkBanStatus()
     }
     
-    public func searchStudents(query: String) async throws -> [NightStudyStudentResponse] {
-        try await dataSource.searchStudents(query: query)
+    public func searchStudents() async throws -> [NightStudyStudentResponse] {
+        try await dataSource.searchStudents()
     }
     
     public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws {

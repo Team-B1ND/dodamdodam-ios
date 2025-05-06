@@ -101,13 +101,13 @@ struct NightProjectApplyView: View {
                                     NightProjectPlace.allCases,
                                     id: \.self
                                 ) { place in
-                                    Text(place.rawValue)
+                                    Text(place.displayName)
                                 }
                             }
                         )
                     } label: {
                         HStack(spacing: 4) {
-                            Text("\(viewModel.room.rawValue)")
+                            Text("\(viewModel.room.displayName)")
                                 .headline(.regular)
                                 .foreground(DodamColor.Primary.normal)
                             VStack(spacing: -4) {
@@ -205,20 +205,32 @@ struct NightProjectApplyView: View {
                     .padding(.horizontal, 8)
                     .frame(height: 40)
                 
-                DodamTextField.default(
-                    title: "학생 검색",
-                    text: $viewModel.searchText
-                )
-                .padding(.horizontal, 8)
-                .onChange(of: viewModel.searchText) { _ in
-                    Task {
-                        await viewModel.searchStudents(query: viewModel.searchText)
+                HStack {
+                    DodamTextField.default(
+                        title: "학생 검색",
+                        text: $viewModel.searchText
+                    )
+                    .onSubmit {
+                        Task {
+                            await viewModel.searchStudents()
+                        }
+                    }
+                    .padding(.horizontal, 8)
+                    Button {
+                        Task {
+                            await viewModel.searchStudents()
+                        }
+                    } label: {
+                        Image(systemName: "magnifyingglass")
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                            .foreground(DodamColor.Label.assistive)
                     }
                 }
                 
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(viewModel.searchResults, id: \.id) { student in
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(spacing: 8) {
+                        ForEach(viewModel.filteredResults, id: \.id) { student in
                             DodamStudentCell(
                                 student: student,
                                 isSelected: viewModel.selectedStudents.contains(student.id)
@@ -230,27 +242,7 @@ struct NightProjectApplyView: View {
                     }
                     .padding(.horizontal, 8)
                 }
-                .frame(height: 40)
             }
         }
-    }
-}
-
-struct DodamStudentCell: View {
-    let student: NightStudyStudentResponse
-    let isSelected: Bool
-    
-    var body: some View {
-        HStack(spacing: 4) {
-            Text("\(student.grade)\(student.room)\(String(format: "%02d", student.number))")
-                .font(.system(size: 14, weight: .regular))
-            Text(student.name)
-                .font(.system(size: 14, weight: .regular))
-        }
-        .padding(.horizontal, 12)
-        .frame(height: 40)
-        .background(isSelected ? DodamColor.Primary.normal : DodamColor.Background.alternative)
-        .foreground(isSelected ? DodamColor.Label.strong : DodamColor.Label.normal)
-        .cornerRadius(20)
     }
 }

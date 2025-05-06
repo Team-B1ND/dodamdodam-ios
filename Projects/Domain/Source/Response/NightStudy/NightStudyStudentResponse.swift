@@ -13,8 +13,8 @@ public struct NightStudyStudentResponse: Codable, Hashable {
     public let grade: Int
     public let room: Int
     public let number: Int
-    public let phone: String
-    public let profileImage: String
+    public let phone: String?
+    public let profileImage: String?
     public let isBanned: Bool
     
     public init(
