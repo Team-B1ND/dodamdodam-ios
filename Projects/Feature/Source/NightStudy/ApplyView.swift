@@ -7,9 +7,13 @@ struct ApplyView: View {
     
     @StateObject var studyViewModel = NightStudyApplyViewModel()
     @StateObject var projectViewModel = NightProjectApplyViewModel()
-    @State var selection: Int = 0
+    @State var selection: Int
     @DodamDialog private var dialog
     @Flow var flow
+    
+    init(isProject: Bool = false) {
+        _selection = State(initialValue: isProject ? 1 : 0)
+    }
     
     var body: some View {
         DodamScrollView.medium(title: "심야 자습 신청하기") {
@@ -22,12 +26,6 @@ struct ApplyView: View {
                 }
             }
             .padding(.horizontal)
-        }
-        .subView {
-            DodamSegmentedButton(
-                labels: ["개인", "프로젝트"],
-                selection: $selection
-            )
         }
         .overlay(alignment: .bottom) {
             if selection == 0 {
@@ -42,12 +40,6 @@ struct ApplyView: View {
                 .disabled(
                     studyViewModel.reasonText.count < 10
                 )
-//                .onChange(of: studyViewModel.nightStudyApplyFailed) { _ in
-//                    let dialog = Dialog(title: "실패")
-//                        .message(studyViewModel.nightStudyApplyAlertMessage)
-//                        .primaryButton("확인")
-//                    self.dialog.present(dialog)
-//                }
                 .padding([.bottom, .horizontal], 16)
             } else {
                 DodamButton.fullWidth(
@@ -63,12 +55,6 @@ struct ApplyView: View {
                     projectViewModel.projectDescription.count < 10 ||
                     projectViewModel.selectedStudents.isEmpty
                 )
-//                .onChange(of: projectViewModel.nightStudyApplyFailed) { _ in
-//                    let dialog = Dialog(title: "실패")
-//                        .message(projectViewModel.nightStudyApplyAlertMessage)
-//                        .primaryButton("확인")
-//                    self.dialog.present(dialog)
-//                }
                 .padding([.bottom, .horizontal], 16)
             }
         }

@@ -46,7 +46,7 @@ class NightProjectApplyViewModel: ObservableObject {
     func postNightStudyProject() async {
         self.nightStudyApplyFailed = false
         do {
-            _ = try await nightStudyRepository.postNightStudyProject(
+            let result = try await nightStudyRepository.postNightStudyProject(
                 .init(
                     type: projectType,
                     name: projectName,
@@ -57,10 +57,6 @@ class NightProjectApplyViewModel: ObservableObject {
                     students: Array(selectedStudents)
                 )
             )
-            //            if result.status == 403 {
-            //                nightStudyApplyFailed = true
-            //                nightStudyApplyAlertMessage = "프로젝트 심자 신청 기간이 아닙니다."
-            //            }
         } catch let error {
             print(error)
             nightStudyApplyFailed = true

@@ -83,9 +83,9 @@ struct NightStudyView: View {
                                     DodamEmptyView(
                                         title: "아직 신청한 프로젝트 심자가 없어요.",
                                         icon: .fullMoonFace,
-                                        buttonTitle: "프로젝트 심자 신청하기"
+                                        buttonTitle: "프로젝트 신청하기"
                                     ) {
-                                        flow.push(ApplyView())
+                                        flow.push(ApplyView(isProject: true))
                                     }
                                 }
                             }
