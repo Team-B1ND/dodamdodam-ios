@@ -19,7 +19,7 @@ struct NightProjectApplyView: View {
     @FocusState var focused
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 24) {
+        VStack(alignment: .leading, spacing: 14) {
             DodamTextField.default(
                 title: "프로젝트명",
                 text: $viewModel.projectName
@@ -46,6 +46,86 @@ struct NightProjectApplyView: View {
             }
             
             VStack(spacing: 16) {
+                HStack(spacing: 16) {
+                    Text("진행 시각")
+                        .headline(.medium)
+                        .font(.system(size: 18, weight: .medium))
+                        .foreground(DodamColor.Label.alternative)
+                    Spacer()
+                    Menu {
+                        Picker(
+                            "시작 날짜",
+                            selection: $viewModel.projectType,
+                            content: {
+                                ForEach(
+                                    NightStudyProjectType.allCases,
+                                    id: \.self
+                                ) { place in
+                                    Text(place.displayName)
+                                }
+                            }
+                        )
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text("\(viewModel.projectType.displayName)")
+                                .headline(.regular)
+                                .foreground(DodamColor.Primary.normal)
+                            VStack(spacing: -4) {
+                                Image(icon: .chevronLeft)
+                                    .resizable()
+                                    .frame(width: 12, height: 12)
+                                    .rotationEffect(.degrees(90))
+                                Image(icon: .chevronLeft)
+                                    .resizable()
+                                    .frame(width: 12, height: 12)
+                                    .rotationEffect(.degrees(-90))
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 8)
+                .frame(height: 40)
+                
+                HStack(spacing: 16) {
+                    Text("학습 장소")
+                        .headline(.medium)
+                        .font(.system(size: 18, weight: .medium))
+                        .foreground(DodamColor.Label.alternative)
+                    Spacer()
+                    Menu {
+                        Picker(
+                            "시작 날짜",
+                            selection: $viewModel.room,
+                            content: {
+                                ForEach(
+                                    NightProjectPlace.allCases,
+                                    id: \.self
+                                ) { place in
+                                    Text(place.rawValue)
+                                }
+                            }
+                        )
+                    } label: {
+                        HStack(spacing: 4) {
+                            Text("\(viewModel.room.rawValue)")
+                                .headline(.regular)
+                                .foreground(DodamColor.Primary.normal)
+                            VStack(spacing: -4) {
+                                Image(icon: .chevronLeft)
+                                    .resizable()
+                                    .frame(width: 12, height: 12)
+                                    .rotationEffect(.degrees(90))
+                                Image(icon: .chevronLeft)
+                                    .resizable()
+                                    .frame(width: 12, height: 12)
+                                    .rotationEffect(.degrees(-90))
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 8)
+                .frame(height: 40)
+                
                 Button {
                     let datePicker = DatePicker(
                         title: "시작 날짜",
@@ -85,7 +165,7 @@ struct NightProjectApplyView: View {
                     let datePicker = DatePicker(
                         title: "종료 날짜",
                         startDate: viewModel.startAt,
-                        endDate: Calendar.current.date(byAdding: .day, value: 13, to: viewModel.startAt) ?? .now
+                        endDate: Calendar.current.date(byAdding: .day, value: 21, to: viewModel.startAt) ?? .now
                     ) {
                         viewModel.endAt = self.datePicker.date
                     }
@@ -118,39 +198,12 @@ struct NightProjectApplyView: View {
             }
             
             VStack(alignment: .leading, spacing: 16) {
-                Text("프로젝트 타입")
-                    .headline(.medium)
-                    .padding(.horizontal, 8)
-                
-                Picker("프로젝트 타입", selection: $viewModel.projectType) {
-                    ForEach(NightStudyProjectType.allCases, id: \.self) { type in
-                        Text(type.rawValue)
-                            .tag(type)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, 8)
-            }
-            
-            VStack(alignment: .leading, spacing: 16) {
-                Text("실습실")
-                    .headline(.medium)
-                    .padding(.horizontal, 8)
-                
-                Picker("실습실", selection: $viewModel.room) {
-                    ForEach(NightProjectPlace.allCases, id: \.self) { room in
-                        Text(room.rawValue)
-                            .tag(room)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding(.horizontal, 8)
-            }
-            
-            VStack(alignment: .leading, spacing: 16) {
                 Text("참여 학생")
                     .headline(.medium)
+                    .font(.system(size: 18, weight: .medium))
+                    .foreground(DodamColor.Label.alternative)
                     .padding(.horizontal, 8)
+                    .frame(height: 40)
                 
                 DodamTextField.default(
                     title: "학생 검색",
@@ -179,48 +232,7 @@ struct NightProjectApplyView: View {
                 }
                 .frame(height: 40)
             }
-            
-            Spacer()
-            
-            Button {
-                Task {
-                    await viewModel.postNightStudyProject()
-                    flow.pop()
-                }
-            } label: {
-                Text("신청하기")
-                    .font(.system(size: 16, weight: .bold))
-                    .foreground(DodamColor.Label.normal)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 48)
-                    .background(
-                        viewModel.projectName.isEmpty ||
-                        viewModel.projectDescription.count < 10 ||
-                        viewModel.selectedStudents.isEmpty ?
-                        DodamColor.Label.alternative :
-                        DodamColor.Primary.normal
-                    )
-                    .cornerRadius(8)
-            }
-            .opacity(
-                viewModel.projectName.isEmpty ||
-                viewModel.projectDescription.count < 10 ||
-                viewModel.selectedStudents.isEmpty ? 0.3 : 1
-            )
-            .padding(.horizontal, 8)
-            .padding(.bottom, 16)
         }
-        .navigationTitle("프로젝트 심자 신청")
-        .navigationBarTitleDisplayMode(.inline)
-        .alert(
-            "프로젝트 심자 신청 실패",
-            isPresented: $viewModel.nightStudyApplyFailed,
-            actions: {
-                Button("확인", role: .cancel) {}
-            }, message: {
-                Text(viewModel.nightStudyApplyAlertMessage)
-            }
-        )
     }
 }
 

@@ -17,7 +17,7 @@ class NightProjectApplyViewModel: ObservableObject {
     @Published var projectName: String = ""
     @Published var projectDescription: String = ""
     @Published var startAt: Date = Date()
-    @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 13, to: .now) ?? Date()
+    @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 21, to: .now) ?? Date()
     @Published var projectType: NightStudyProjectType = .project1
     @Published var room: NightProjectPlace = .lab12
     
@@ -48,10 +48,10 @@ class NightProjectApplyViewModel: ObservableObject {
                     students: Array(selectedStudents)
                 )
             )
-            if result.status == 403 {
-                nightStudyApplyFailed = true
-                nightStudyApplyAlertMessage = "프로젝트 심자 신청 기간이 아닙니다."
-            }
+//            if result.status == 403 {
+//                nightStudyApplyFailed = true
+//                nightStudyApplyAlertMessage = "프로젝트 심자 신청 기간이 아닙니다."
+//            }
         } catch let error {
             print(error)
             nightStudyApplyFailed = true
@@ -75,16 +75,16 @@ class NightProjectApplyViewModel: ObservableObject {
         }
     }
     
-    @MainActor
-    func convertToStudent(_ student: NightStudyStudentResponse) -> Student {
-        Student(
-            id: student.id,
-            name: student.name,
-            grade: student.grade,
-            room: student.room,
-            number: student.number,
-            phone: student.phone,
-            profileImage: student.profileImage
-        )
-    }
+//    @MainActor
+//    func convertToStudent(_ student: NightStudyStudentResponse) -> Student {
+//        Student(
+//            id: student.id,
+//            name: student.name,
+//            grade: student.grade,
+//            room: student.room,
+//            number: student.number, code: <#String#>,
+//            phone: student.phone,
+//            profileImage: student.profileImage
+//        )
+//    }
 }

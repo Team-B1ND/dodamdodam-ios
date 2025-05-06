@@ -9,45 +9,45 @@ import Domain
 import Network
 
 public final class NightStudyDataSource {
-    
     private let remote: NightStudyRemote
     
-    public init(remote: NightStudyRemote = .init()) {
+    public init(remote: NightStudyRemote) {
         self.remote = remote
     }
-}
-
-extension NightStudyDataSource {
     
-    public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
-        try await remote.postNightStudy(request).data
+    public func postNightStudy(_ request: PostNightStudyRequest) async throws {
+        _ = try await remote.postNightStudy(request)
     }
     
-    public func deleteNightStudy(id: Int) async throws -> DefaultResponse {
-        try await remote.deleteNightStudy(id: id).data
+    public func deleteNightStudy(id: Int) async throws {
+        _ = try await remote.deleteNightStudy(id: id)
     }
     
     public func fetchNightStudy() async throws -> [NightStudyResponse] {
-        try await remote.fetchNightStudy().data
+        let response = try await remote.fetchNightStudy()
+        return response.data
     }
     
     public func checkBanStatus() async throws -> NightStudyBanResponse {
-        try await remote.checkBanStatus().data
+        let response = try await remote.checkBanStatus()
+        return response.data
     }
     
     public func searchStudents(query: String) async throws -> [NightStudyStudentResponse] {
-        try await remote.searchStudents(query: query).data
+        let response = try await remote.searchStudents(query: query)
+        return response.data
     }
     
-    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse {
-        try await remote.postNightStudyProject(request).data
+    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws {
+        _ = try await remote.postNightStudyProject(request)
     }
     
     public func fetchNightStudyProject() async throws -> [NightStudyProjectResponse] {
-        try await remote.fetchNightStudyProject().data
+        let response = try await remote.fetchNightStudyProject()
+        return response.data
     }
     
-    public func deleteNightStudyProject(id: Int) async throws -> DefaultResponse {
-        try await remote.deleteNightStudyProject(id: id).data
+    public func deleteNightStudyProject(id: Int) async throws {
+        _ = try await remote.deleteNightStudyProject(id: id)
     }
 }

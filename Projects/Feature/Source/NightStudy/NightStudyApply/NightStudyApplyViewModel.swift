@@ -17,7 +17,7 @@ class NightStudyApplyViewModel: ObservableObject {
     @Published var reasonText: String = ""
     @Published var reasonForPhoneText: String = ""
     @Published var startAt: Date = Date()
-    @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 13, to: .now) ?? Date()
+    @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 14, to: .now) ?? Date()
     
     @Published var doNeedPhone: Bool = false
     
@@ -44,10 +44,10 @@ class NightStudyApplyViewModel: ObservableObject {
                 )
             )
             print("날짜 : \(startAt.timeIntervalSinceReferenceDate - endAt.timeIntervalSinceReferenceDate)")
-            if result.status == 403 {
-                nightStudyApplyFailed = true
-                nightStudyApplyAlertMessage = "심야 자습 신청 기간이 아닙니다."
-            }
+//            if result.status == 403 {
+//                nightStudyApplyFailed = true
+//                nightStudyApplyAlertMessage = "심야 자습 신청 기간이 아닙니다."
+//            }
         } catch let error {
             print(error)
             nightStudyApplyFailed = true

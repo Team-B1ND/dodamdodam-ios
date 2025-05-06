@@ -25,15 +25,25 @@ extension NightStudyService {
     }
     
     var path: String {
+//        switch self {
+//        case .postNightStudy: ""
+//        case let .deleteNightStudy(id): "/\(host)/\(id)"
+//        case .fetchNightStudy: "/\(host)/my"
+//        case .checkBanStatus: "/\(host)/ban"
+//        case .searchStudents: "/\(host)/student/search"
+//        case .postNightStudyProject: "/\(host)/project"
+//        case .fetchNightStudyProject: "/\(host)/project/my"
+//        case .deleteNightStudyProject: "/\(host)/project"
+//        }
         switch self {
-        case .postNightStudy: "/\(host)"
-        case let .deleteNightStudy(id): "/\(host)/\(id)"
-        case .fetchNightStudy: "/\(host)/my"
-        case .checkBanStatus: "/\(host)/ban"
-        case .searchStudents: "/\(host)/student/search"
-        case .postNightStudyProject: "/\(host)/project"
-        case .fetchNightStudyProject: "/\(host)/project/my"
-        case .deleteNightStudyProject: "/\(host)/project"
+        case .postNightStudy: ""
+        case let .deleteNightStudy(id): "/\(id)"
+        case .fetchNightStudy: "/my"
+        case .checkBanStatus: "/ban"
+        case let .searchStudents(query): "/student/search"
+        case .postNightStudyProject: "/project"
+        case .fetchNightStudyProject: "/project/my"
+        case let .deleteNightStudyProject(id): "/project"
         }
     }
     
@@ -75,7 +85,7 @@ extension NightStudyService {
         ["Content-Type": "application/json"]
     }
     
-    var validationType: ValidationType {
-        .successCodes
-    }
+//    var validationType: ValidationType {
+//        .successCodes
+//    }
 }

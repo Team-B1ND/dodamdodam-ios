@@ -14,9 +14,9 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var nightStudyData: [NightStudyResponse]?
-    @Published var nightStudyProjectList: [NightStudyProjectResponse] = []
+    @Published var nightProjectData: [NightStudyProjectResponse]?
     @Published var isBanned: Bool = false
-    @Published var banPeriod: NightStudyBanResponse?
+//    @Published var banPeriod: NightStudyBanResponse?
     var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
@@ -28,7 +28,7 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
         if Sign.isLoggedIn {
             await fetchNightStudy()
             await fetchNightStudyProjects()
-            await checkBanStatus()
+//            await checkBanStatus()
         }
     }
     
@@ -40,9 +40,9 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     
     func clearData() {
         nightStudyData = nil
-        nightStudyProjectList = []
+        nightProjectData = nil
         isBanned = false
-        banPeriod = nil
+//        banPeriod = nil
     }
     
     @MainActor
@@ -57,21 +57,21 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     @MainActor
     func fetchNightStudyProjects() async {
         do {
-            nightStudyProjectList = try await nightStudyRepository.fetchNightStudyProjects()
+            nightProjectData = try await nightStudyRepository.fetchNightStudyProjects()
         } catch let error {
             print(error)
         }
     }
     
-    @MainActor
-    func checkBanStatus() async {
-        do {
-            banPeriod = try await nightStudyRepository.checkBanStatus()
-            isBanned = banPeriod != nil
-        } catch let error {
-            print(error)
-        }
-    }
+//    @MainActor
+//    func checkBanStatus() async {
+//        do {
+//            banPeriod = try await nightStudyRepository.checkBanStatus()
+//            isBanned = banPeriod != nil
+//        } catch let error {
+//            print(error)
+//        }
+//    }
     
     @MainActor
     func deleteNightStudy(id: Int) async {
@@ -93,22 +93,22 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
         }
     }
     
-    func convertProjectToNightStudy(_ project: NightStudyProjectResponse) -> NightStudyResponse {
-        NightStudyResponse(
-            id: project.id,
-            content: project.name,
-            status: project.status,
-            doNeedPhone: false,
-            reasonForPhone: nil,
-            student: project.leader,
-            rejectReason: nil,
-            place: .project5,
-            startAt: project.startAt,
-            endAt: project.endAt,
-            createdAt: .now,
-            modifiedAt: nil
-        )
-    }
+//    func convertProjectToNightStudy(_ project: NightStudyProjectResponse) -> NightStudyResponse {
+//        NightStudyResponse(
+//            id: project.id,
+//            content: project.name,
+//            status: project.status,
+//            doNeedPhone: false,
+//            reasonForPhone: nil,
+//            student: project.leader,
+//            rejectReason: nil,
+//            place: .project5,
+//            startAt: project.startAt,
+//            endAt: project.endAt,
+//            createdAt: .now,
+//            modifiedAt: nil
+//        )
+//    }
     
     @MainActor
     func onAppear() async {

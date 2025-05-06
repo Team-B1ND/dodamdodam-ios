@@ -40,12 +40,12 @@ struct ApplyView: View {
                 .disabled(
                     studyViewModel.reasonText.count < 10
                 )
-                .onChange(of: studyViewModel.nightStudyApplyFailed) { _ in
-                    let dialog = Dialog(title: "실패")
-                        .message(studyViewModel.nightStudyApplyAlertMessage)
-                        .primaryButton("확인")
-                    self.dialog.present(dialog)
-                }
+//                .onChange(of: studyViewModel.nightStudyApplyFailed) { _ in
+//                    let dialog = Dialog(title: "실패")
+//                        .message(studyViewModel.nightStudyApplyAlertMessage)
+//                        .primaryButton("확인")
+//                    self.dialog.present(dialog)
+//                }
                 .padding([.bottom, .horizontal], 16)
             } else {
                 DodamButton.fullWidth(
@@ -61,12 +61,12 @@ struct ApplyView: View {
                     projectViewModel.projectDescription.count < 10 ||
                     projectViewModel.selectedStudents.isEmpty
                 )
-                .onChange(of: projectViewModel.nightStudyApplyFailed) { _ in
-                    let dialog = Dialog(title: "실패")
-                        .message(projectViewModel.nightStudyApplyAlertMessage)
-                        .primaryButton("확인")
-                    self.dialog.present(dialog)
-                }
+//                .onChange(of: projectViewModel.nightStudyApplyFailed) { _ in
+//                    let dialog = Dialog(title: "실패")
+//                        .message(projectViewModel.nightStudyApplyAlertMessage)
+//                        .primaryButton("확인")
+//                    self.dialog.present(dialog)
+//                }
                 .padding([.bottom, .horizontal], 16)
             }
         }

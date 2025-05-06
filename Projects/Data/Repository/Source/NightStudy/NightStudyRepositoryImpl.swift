@@ -16,11 +16,11 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         self.dataSource = dataSource
     }
     
-    public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
+    public func postNightStudy(_ request: PostNightStudyRequest) async throws {
         try await dataSource.postNightStudy(request)
     }
     
-    public func deleteNightStudy(id: Int) async throws -> DefaultResponse {
+    public func deleteNightStudy(id: Int) async throws {
         try await dataSource.deleteNightStudy(id: id)
     }
     
@@ -36,7 +36,7 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.searchStudents(query: query)
     }
     
-    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse {
+    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws {
         try await dataSource.postNightStudyProject(request)
     }
     
@@ -44,7 +44,7 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.fetchNightStudyProject()
     }
     
-    public func deleteNightStudyProject(id: Int) async throws -> DefaultResponse {
+    public func deleteNightStudyProject(id: Int) async throws {
         try await dataSource.deleteNightStudyProject(id: id)
     }
 }
