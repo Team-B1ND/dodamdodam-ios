@@ -46,86 +46,13 @@ struct NightProjectApplyView: View {
             }
             
             VStack(spacing: 16) {
-                HStack(spacing: 16) {
-                    Text("프로젝트 타임")
-                        .headline(.medium)
-                        .font(.system(size: 18, weight: .medium))
-                        .foreground(DodamColor.Label.alternative)
-                    Spacer()
-                    Menu {
-                        Picker(
-                            "프로젝트 타임",
-                            selection: $viewModel.projectType
-                        ) {
-                            ForEach(NightStudyProjectType.allCases, id: \.self) { type in
-                                Text(type == .project1 ? "프로젝트 심1" : "프로젝트 심2")
-                            }
-                        }
-                    } label: {
-                        HStack(spacing: 4) {
-                            Text("\(viewModel.projectType == .project1 ? "프로젝트 심1" : "프로젝트 심2")")
-                                .headline(.regular)
-                                .foreground(DodamColor.Primary.normal)
-                            VStack(spacing: -4) {
-                                Image(icon: .chevronLeft)
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .rotationEffect(.degrees(90))
-                                Image(icon: .chevronLeft)
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .rotationEffect(.degrees(-90))
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 8)
-                .frame(height: 40)
-                
-                HStack(spacing: 16) {
-                    Text("자습 장소")
-                        .headline(.medium)
-                        .font(.system(size: 18, weight: .medium))
-                        .foreground(DodamColor.Label.alternative)
-                    Spacer()
-                    Menu {
-                        Picker(
-                            "자습 장소",
-                            selection: $viewModel.place
-                        ) {
-                            ForEach(NightProjectPlace.allCases, id: \.self) { place in
-                                Text(place.rawValue)
-                            }
-                        }
-                    } label: {
-                        HStack(spacing: 4) {
-                            Text("\(viewModel.place.rawValue)")
-                                .headline(.regular)
-                                .foreground(DodamColor.Primary.normal)
-                            VStack(spacing: -4) {
-                                Image(icon: .chevronLeft)
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .rotationEffect(.degrees(90))
-                                Image(icon: .chevronLeft)
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .rotationEffect(.degrees(-90))
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 8)
-                .frame(height: 40)
-                
                 Button {
                     let datePicker = DatePicker(
                         title: "시작 날짜",
-                        startDate: Date(),
-                        endDate: Calendar.current.date(byAdding: .day, value: 30, to: .now) ?? .now
+                        startDate: .now,
+                        endDate: Calendar.current.date(byAdding: .day, value: 0, to: self.datePicker.date.addingTimeInterval(.infinity)) ?? .now
                     ) {
                         viewModel.startAt = self.datePicker.date
-                        viewModel.endAt = Calendar.current.date(byAdding: .day, value: 1, to: viewModel.startAt) ?? viewModel.startAt
                     }
                     self.datePicker.present(datePicker, date: viewModel.startAt, monthDate: viewModel.startAt)
                     focused = false
@@ -134,10 +61,16 @@ struct NightProjectApplyView: View {
                         Text("시작 날짜")
                             .font(.system(size: 18, weight: .medium))
                             .foreground(DodamColor.Label.alternative)
+                            .headline(.medium)
                         Spacer()
-                        Text(viewModel.startAt.parseString(format: "M월 d일"))
-                            .headline(.regular)
-                            .foreground(DodamColor.Primary.normal)
+                        Text(
+                            viewModel.startAt.parseString(
+                                format: "M월 d일"
+                            )
+                        )
+                        .headline(.regular)
+                        .font(.system(size: 18, weight: .regular))
+                        .foreground(DodamColor.Primary.normal)
                         Image(icon: .calendar)
                             .resizable()
                             .frame(width: 24, height: 24)
@@ -152,7 +85,7 @@ struct NightProjectApplyView: View {
                     let datePicker = DatePicker(
                         title: "종료 날짜",
                         startDate: viewModel.startAt,
-                        endDate: Calendar.current.date(byAdding: .day, value: 30, to: viewModel.startAt) ?? .now
+                        endDate: Calendar.current.date(byAdding: .day, value: 13, to: viewModel.startAt) ?? .now
                     ) {
                         viewModel.endAt = self.datePicker.date
                     }
@@ -163,10 +96,16 @@ struct NightProjectApplyView: View {
                         Text("종료 날짜")
                             .font(.system(size: 18, weight: .medium))
                             .foreground(DodamColor.Label.alternative)
+                            .headline(.medium)
                         Spacer()
-                        Text(viewModel.endAt.parseString(format: "M월 d일"))
-                            .headline(.regular)
-                            .foreground(DodamColor.Primary.normal)
+                        Text(
+                            viewModel.endAt.parseString(
+                                format: "M월 d일"
+                            )
+                        )
+                        .headline(.regular)
+                        .font(.system(size: 18, weight: .regular))
+                        .foreground(DodamColor.Primary.normal)
                         Image(icon: .calendar)
                             .resizable()
                             .frame(width: 24, height: 24)
@@ -176,52 +115,109 @@ struct NightProjectApplyView: View {
                     .frame(height: 40)
                 }
                 .scaledButtonStyle()
+            }
+            
+            VStack(alignment: .leading, spacing: 16) {
+                Text("프로젝트 타입")
+                    .headline(.medium)
+                    .padding(.horizontal, 8)
                 
-                VStack(alignment: .leading, spacing: 16) {
-                    Text("참여 학생")
-                        .headline(.medium)
-                        .font(.system(size: 18, weight: .medium))
-                        .foreground(DodamColor.Label.alternative)
-                        .padding(.horizontal, 8)
-                    
-                    HStack {
-                        DodamTextField.default(
-                            title: "학생 검색",
-                            text: $viewModel.searchText
-                        )
-                        .padding(.horizontal, 8)
-                        
-                        Button {
-                            Task {
-                                await viewModel.searchStudents()
-                            }
-                        } label: {
-                            Image(systemName: "magnifyingglass")
-                                .foreground(DodamColor.Label.assistive)
-                        }
-                        .scaledButtonStyle()
+                Picker("프로젝트 타입", selection: $viewModel.projectType) {
+                    ForEach(NightStudyProjectType.allCases, id: \.self) { type in
+                        Text(type.rawValue)
+                            .tag(type)
                     }
-                    
-                    LazyVStack(spacing: 8) {
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 8)
+            }
+            
+            VStack(alignment: .leading, spacing: 16) {
+                Text("실습실")
+                    .headline(.medium)
+                    .padding(.horizontal, 8)
+                
+                Picker("실습실", selection: $viewModel.room) {
+                    ForEach(NightProjectPlace.allCases, id: \.self) { room in
+                        Text(room.rawValue)
+                            .tag(room)
+                    }
+                }
+                .pickerStyle(.segmented)
+                .padding(.horizontal, 8)
+            }
+            
+            VStack(alignment: .leading, spacing: 16) {
+                Text("참여 학생")
+                    .headline(.medium)
+                    .padding(.horizontal, 8)
+                
+                DodamTextField.default(
+                    title: "학생 검색",
+                    text: $viewModel.searchText
+                )
+                .padding(.horizontal, 8)
+                .onChange(of: viewModel.searchText) { _ in
+                    Task {
+                        await viewModel.searchStudents(query: viewModel.searchText)
+                    }
+                }
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
                         ForEach(viewModel.searchResults, id: \.id) { student in
                             DodamStudentCell(
                                 student: student,
                                 isSelected: viewModel.selectedStudents.contains(student.id)
-                            ) {
+                            )
+                            .onTapGesture {
                                 viewModel.toggleStudent(student.id)
                             }
                         }
                     }
+                    .padding(.horizontal, 8)
                 }
+                .frame(height: 40)
             }
+            
+            Spacer()
+            
+            Button {
+                Task {
+                    await viewModel.postNightStudyProject()
+                    flow.pop()
+                }
+            } label: {
+                Text("신청하기")
+                    .font(.system(size: 16, weight: .bold))
+                    .foreground(DodamColor.Label.normal)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 48)
+                    .background(
+                        viewModel.projectName.isEmpty ||
+                        viewModel.projectDescription.count < 10 ||
+                        viewModel.selectedStudents.isEmpty ?
+                        DodamColor.Label.alternative :
+                        DodamColor.Primary.normal
+                    )
+                    .cornerRadius(8)
+            }
+            .opacity(
+                viewModel.projectName.isEmpty ||
+                viewModel.projectDescription.count < 10 ||
+                viewModel.selectedStudents.isEmpty ? 0.3 : 1
+            )
+            .padding(.horizontal, 8)
+            .padding(.bottom, 16)
         }
+        .navigationTitle("프로젝트 심자 신청")
+        .navigationBarTitleDisplayMode(.inline)
         .alert(
             "프로젝트 심자 신청 실패",
             isPresented: $viewModel.nightStudyApplyFailed,
             actions: {
                 Button("확인", role: .cancel) {}
-            },
-            message: {
+            }, message: {
                 Text(viewModel.nightStudyApplyAlertMessage)
             }
         )
@@ -231,39 +227,18 @@ struct NightProjectApplyView: View {
 struct DodamStudentCell: View {
     let student: NightStudyStudentResponse
     let isSelected: Bool
-    let action: () -> Void
     
     var body: some View {
-        Button(action: action) {
-            HStack(spacing: 12) {
-                Image(systemName: "person.circle.fill")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .foreground(DodamColor.Label.alternative)
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(student.name)
-                        .body1(.bold)
-                        .foreground(DodamColor.Label.normal)
-                    Text("\(student.grade)-\(student.room)")
-                        .caption1(.medium)
-                        .foreground(DodamColor.Label.alternative)
-                }
-                
-                Spacer()
-                
-                if isSelected {
-                    Image(systemName: "checkmark.circle.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foreground(DodamColor.Primary.normal)
-                }
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(DodamColor.Background.neutral)
-            .cornerRadius(12)
+        HStack(spacing: 4) {
+            Text("\(student.grade)\(student.room)\(String(format: "%02d", student.number))")
+                .font(.system(size: 14, weight: .regular))
+            Text(student.name)
+                .font(.system(size: 14, weight: .regular))
         }
-        .scaledButtonStyle()
+        .padding(.horizontal, 12)
+        .frame(height: 40)
+        .background(isSelected ? DodamColor.Primary.normal : DodamColor.Background.alternative)
+        .foreground(isSelected ? DodamColor.Label.strong : DodamColor.Label.normal)
+        .cornerRadius(20)
     }
 }

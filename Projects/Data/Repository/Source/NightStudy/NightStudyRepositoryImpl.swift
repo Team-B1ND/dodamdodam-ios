@@ -40,7 +40,7 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.postNightStudyProject(request)
     }
     
-    public func fetchNightStudyProject() async throws -> [NightStudyProjectResponse] {
+    public func fetchNightStudyProjects() async throws -> [NightStudyProjectResponse] {
         try await dataSource.fetchNightStudyProject()
     }
     

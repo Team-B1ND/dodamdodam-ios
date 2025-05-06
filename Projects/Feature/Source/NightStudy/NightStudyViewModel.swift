@@ -14,6 +14,7 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var nightStudyData: [NightStudyResponse]?
+    @Published var nightStudyProjectList: [NightStudyProjectResponse] = []
     @Published var isBanned: Bool = false
     @Published var banPeriod: NightStudyBanResponse?
     var isFirstOnAppear: Bool = true
@@ -26,6 +27,7 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     func fetchAllData() async {
         if Sign.isLoggedIn {
             await fetchNightStudy()
+            await fetchNightStudyProjects()
             await checkBanStatus()
         }
     }
@@ -38,6 +40,7 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     
     func clearData() {
         nightStudyData = nil
+        nightStudyProjectList = []
         isBanned = false
         banPeriod = nil
     }
@@ -52,10 +55,9 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     }
     
     @MainActor
-    func deleteNightStudy(id: Int) async {
+    func fetchNightStudyProjects() async {
         do {
-            try await nightStudyRepository.deleteNightStudy(id: id)
-            await onRefresh()
+            nightStudyProjectList = try await nightStudyRepository.fetchNightStudyProjects()
         } catch let error {
             print(error)
         }
@@ -64,13 +66,48 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     @MainActor
     func checkBanStatus() async {
         do {
-            let response = try await nightStudyRepository.checkBanStatus()
-            isBanned = true
-            banPeriod = response
-        } catch {
-            isBanned = false
-            banPeriod = nil
+            banPeriod = try await nightStudyRepository.checkBanStatus()
+            isBanned = banPeriod != nil
+        } catch let error {
+            print(error)
         }
+    }
+    
+    @MainActor
+    func deleteNightStudy(id: Int) async {
+        do {
+            try await nightStudyRepository.deleteNightStudy(id: id)
+            await fetchAllData()
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    @MainActor
+    func deleteNightStudyProject(id: Int) async {
+        do {
+            try await nightStudyRepository.deleteNightStudyProject(id: id)
+            await fetchAllData()
+        } catch let error {
+            print(error)
+        }
+    }
+    
+    func convertProjectToNightStudy(_ project: NightStudyProjectResponse) -> NightStudyResponse {
+        NightStudyResponse(
+            id: project.id,
+            content: project.name,
+            status: project.status,
+            doNeedPhone: false,
+            reasonForPhone: nil,
+            student: project.leader,
+            rejectReason: nil,
+            place: .project5,
+            startAt: project.startAt,
+            endAt: project.endAt,
+            createdAt: .now,
+            modifiedAt: nil
+        )
     }
     
     @MainActor

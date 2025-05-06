@@ -38,45 +38,6 @@ struct NightStudyApplyView: View {
             }
             
             VStack(spacing: 16) {
-                HStack(spacing: 16) {
-                    Text("자습 장소")
-                        .headline(.medium)
-                        .font(.system(size: 18, weight: .medium))
-                        .foreground(DodamColor.Label.alternative)
-                    Spacer()
-                    Menu {
-                        Picker(
-                            "시작 날짜",
-                            selection: $viewModel.place,
-                            content: {
-                                ForEach(
-                                    NightStudyPlace.allCases,
-                                    id: \.self
-                                ) { place in
-                                    Text(place.rawValue)
-                                }
-                            }
-                        )
-                    } label: {
-                        HStack(spacing: 4) {
-                            Text("\(viewModel.place.rawValue)")
-                                .headline(.regular)
-                                .foreground(DodamColor.Primary.normal)
-                            VStack(spacing: -4) {
-                                Image(icon: .chevronLeft)
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .rotationEffect(.degrees(90))
-                                Image(icon: .chevronLeft)
-                                    .resizable()
-                                    .frame(width: 12, height: 12)
-                                    .rotationEffect(.degrees(-90))
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 8)
-                .frame(height: 40)
                 Button {
                     let datePicker = DatePicker(
                         title: "시작 날짜",
@@ -99,9 +60,9 @@ struct NightStudyApplyView: View {
                                 format: "M월 d일"
                             )
                         )
-                            .headline(.regular)
-                            .font(.system(size: 18, weight: .regular))
-                            .foreground(DodamColor.Primary.normal)
+                        .headline(.regular)
+                        .font(.system(size: 18, weight: .regular))
+                        .foreground(DodamColor.Primary.normal)
                         Image(icon: .calendar)
                             .resizable()
                             .frame(width: 24, height: 24)
@@ -115,7 +76,7 @@ struct NightStudyApplyView: View {
                     let datePicker = DatePicker(
                         title: "종료 날짜",
                         startDate: viewModel.startAt,
-                        endDate: Calendar.current.date(byAdding: .day, value: 13, to: viewModel.startAt) ?? .now
+                        endDate: Calendar.current.date(byAdding: .day, value: 6, to: viewModel.startAt) ?? .now
                     ) {
                         viewModel.endAt = self.datePicker.date
                     }
@@ -126,15 +87,16 @@ struct NightStudyApplyView: View {
                         Text("종료 날짜")
                             .font(.system(size: 18, weight: .medium))
                             .foreground(DodamColor.Label.alternative)
+                            .headline(.medium)
                         Spacer()
                         Text(
                             viewModel.endAt.parseString(
                                 format: "M월 d일"
                             )
                         )
-                            .headline(.regular)
-                            .font(.system(size: 18, weight: .regular))
-                            .foreground(DodamColor.Primary.normal)
+                        .headline(.regular)
+                        .font(.system(size: 18, weight: .regular))
+                        .foreground(DodamColor.Primary.normal)
                         Image(icon: .calendar)
                             .resizable()
                             .frame(width: 24, height: 24)

@@ -19,7 +19,7 @@ public protocol NightStudyRepository: RepositoryProtocol {
     
     func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse
     
-    func fetchNightStudyProject() async throws -> [NightStudyProjectResponse]
+    func fetchNightStudyProjects() async throws -> [NightStudyProjectResponse]
     
     func deleteNightStudyProject(id: Int) async throws -> DefaultResponse
 }
