@@ -33,7 +33,7 @@ extension NightStudyService {
         case .searchStudents: "/students"
         case .postNightStudyProject: "/project"
         case .fetchNightStudyProject: "/project/my"
-        case let .deleteNightStudyProject(id): "/project"
+        case let .deleteNightStudyProject(id): "/project/\(id)"
         }
     }
     
@@ -66,8 +66,8 @@ extension NightStudyService {
             request.toJSONParameters()
         case .fetchNightStudyProject:
                 .requestPlain
-        case let .deleteNightStudyProject(id):
-                .requestParameters(parameters: ["project": id], encoding: URLEncoding())
+        case .deleteNightStudyProject:
+                .requestPlain
         }
     }
     

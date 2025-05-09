@@ -27,34 +27,48 @@ struct ApplyView: View {
             }
             .padding(.horizontal)
         }
+        .subView {
+            DodamSegmentedButton(
+                labels: ["개인", "프로젝트"],
+                selection: $selection
+            )
+        }
         .overlay(alignment: .bottom) {
             if selection == 0 {
                 DodamButton.fullWidth(
                     title: "확인"
                 ) {
                     await studyViewModel.postNightStudy()
-                    if !studyViewModel.nightStudyApplyFailed {
-                        flow.pop()
-                    }
+                    flow.pop()
                 }
                 .disabled(
                     studyViewModel.reasonText.count < 10
                 )
+                .onChange(of: studyViewModel.nightStudyApplyFailed) { _ in
+                    let dialog = Dialog(title: "실패")
+                        .message(studyViewModel.nightStudyApplyAlertMessage)
+                        .primaryButton("확인")
+                    self.dialog.present(dialog)
+                }
                 .padding([.bottom, .horizontal], 16)
             } else {
                 DodamButton.fullWidth(
                     title: "확인"
                 ) {
                     await projectViewModel.postNightStudyProject()
-                    if !projectViewModel.nightStudyApplyFailed {
-                        flow.pop()
-                    }
+                    flow.pop()
                 }
                 .disabled(
-                    projectViewModel.projectName.isEmpty || 
+                    projectViewModel.projectName.isEmpty ||
                     projectViewModel.projectDescription.count < 10 ||
                     projectViewModel.selectedStudents.isEmpty
                 )
+                .onChange(of: projectViewModel.nightStudyApplyFailed) { _ in
+                    let dialog = Dialog(title: "실패")
+                        .message(projectViewModel.nightStudyApplyAlertMessage)
+                        .primaryButton("확인")
+                    self.dialog.present(dialog)
+                }
                 .padding([.bottom, .horizontal], 16)
             }
         }

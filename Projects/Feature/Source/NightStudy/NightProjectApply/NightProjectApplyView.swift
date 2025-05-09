@@ -33,7 +33,7 @@ struct NightProjectApplyView: View {
                 title: "프로젝트 개요",
                 text: $viewModel.projectDescription
             )
-            .padding(.bottom, 22)
+            .padding(.bottom, 26)
             .padding(.horizontal, 8)
             .hideKeyboardWhenTap()
             .overlay(alignment: .bottomLeading) {

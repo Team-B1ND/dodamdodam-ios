@@ -16,8 +16,6 @@ public struct NightStudyProjectResponse: ResponseProtocol {
     public let description: String
     public let startAt: Date
     public let endAt: Date
-    public let leader: Student
-    public let participants: [Student]
     
     public init(
         id: Int,
@@ -27,9 +25,7 @@ public struct NightStudyProjectResponse: ResponseProtocol {
         name: String,
         description: String,
         startAt: Date,
-        endAt: Date,
-        leader: Student,
-        participants: [Student]
+        endAt: Date
     ) {
         self.id = id
         self.type = type
@@ -39,7 +35,5 @@ public struct NightStudyProjectResponse: ResponseProtocol {
         self.description = description
         self.startAt = startAt
         self.endAt = endAt
-        self.leader = leader
-        self.participants = participants
     }
 }

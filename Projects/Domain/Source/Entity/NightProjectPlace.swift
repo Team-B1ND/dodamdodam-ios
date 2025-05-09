@@ -27,5 +27,3 @@ public enum NightProjectPlace: String, Codable, CaseIterable, Hashable {
         }
     }
 }
-
-

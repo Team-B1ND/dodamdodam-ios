@@ -33,7 +33,7 @@ class NightStudyApplyViewModel: ObservableObject {
     func postNightStudy() async {
         self.nightStudyApplyFailed = false
         do {
-            _ = try await nightStudyRepository.postNightStudy(
+            let result = try await nightStudyRepository.postNightStudy(
                 .init(
                     place: place.rawValue,
                     content: reasonText,
