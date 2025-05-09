@@ -11,13 +11,13 @@ import Domain
 import DIContainer
 import Shared
 
-class NightProjectApplyViewModel: ObservableObject {
+class NightProjectApplyViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var projectName: String = ""
     @Published var projectDescription: String = ""
     @Published var startAt: Date = Date()
-    @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 21, to: .now) ?? Date()
+    @Published var endAt: Date = Calendar.current.date(byAdding: .day, value: 20, to: .now) ?? Date()
     @Published var projectType: NightStudyProjectType = .project1
     @Published var room: NightProjectPlace = .lab12
     
@@ -28,6 +28,9 @@ class NightProjectApplyViewModel: ObservableObject {
     @Published var nightStudyApplyFailed: Bool = false
     @Published var nightStudyApplyAlertMessage: String = "프로젝트 심자 신청에 실패했습니다."
     
+    @Published var usingRoom: [NightProjectUsingRoomResponse]?
+    var isFirstOnAppear: Bool = true
+    
     var filteredResults: [NightStudyStudentResponse] {
         guard let searchResults else { return [] }
         guard !searchText.isEmpty else { return searchResults }
@@ -36,6 +39,11 @@ class NightProjectApplyViewModel: ObservableObject {
             $0.name.contains(searchText) ||
             "\($0.grade)\($0.room)\($0.number)".contains(searchText)
         }
+    }
+    
+    var filteredPlaces: [NightProjectPlace] {
+        let used = Set((usingRoom ?? []).compactMap { NightProjectPlace(rawValue: $0.room) })
+        return NightProjectPlace.allCases.filter { !used.contains($0) }
     }
     
     // MARK: - Repository
@@ -57,6 +65,10 @@ class NightProjectApplyViewModel: ObservableObject {
                     students: Array(selectedStudents)
                 )
             )
+            if result.status == 403 {
+                nightStudyApplyFailed = true
+                nightStudyApplyAlertMessage = "프로젝트 신청 기간이 아닙니다."
+            }
         } catch let error {
             print(error)
             nightStudyApplyFailed = true
@@ -72,11 +84,26 @@ class NightProjectApplyViewModel: ObservableObject {
         }
     }
     
+    @MainActor
+    func fetchUsingRoom() async {
+        do {
+            usingRoom = try await nightStudyRepository.fetchUsingRoom()
+        } catch let error {
+            print(error)
+        }
+    }
+    
     func toggleStudent(_ id: Int) {
         if selectedStudents.contains(id) {
             selectedStudents.remove(id)
         } else {
             selectedStudents.insert(id)
         }
+    }
+    
+    @MainActor
+    func fetchAllData() async {
+        async let fetchUsingRoom: () = fetchUsingRoom()
+        _ = await fetchUsingRoom
     }
 }

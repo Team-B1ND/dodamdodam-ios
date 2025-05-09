@@ -13,8 +13,8 @@ public struct NightStudyRemote: RemoteProtocol {
     
     public init() {}
     
-    public func postNightStudy(_ request: PostNightStudyRequest) async throws -> Response<DefaultResponse> {
-        try await self.request(target: .postNightStudy(request), res: DefaultResponse.self)
+    public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postNightStudy(request))
     }
     
     public func deleteNightStudy(id: Int) async throws -> Response<DefaultResponse> {
@@ -33,8 +33,8 @@ public struct NightStudyRemote: RemoteProtocol {
         try await self.request(target: .searchStudents, res: [NightStudyStudentResponse].self)
     }
     
-    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> Response<DefaultResponse> {
-        try await self.request(target: .postNightStudyProject(request), res: DefaultResponse.self)
+    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postNightStudyProject(request))
     }
     
     public func fetchNightStudyProject() async throws -> Response<[NightStudyProjectResponse]> {
@@ -43,5 +43,9 @@ public struct NightStudyRemote: RemoteProtocol {
     
     public func deleteNightStudyProject(id: Int) async throws -> Response<DefaultResponse> {
         try await self.request(target: .deleteNightStudyProject(id: id), res: DefaultResponse.self)
+    }
+    
+    public func fetchUsingRoom() async throws -> Response<[NightProjectUsingRoomResponse]> {
+        try await self.request(target: .fetchUsingRoom, res: [NightProjectUsingRoomResponse].self)
     }
 }

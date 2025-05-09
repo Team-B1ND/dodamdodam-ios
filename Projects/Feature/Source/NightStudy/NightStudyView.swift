@@ -40,7 +40,7 @@ struct NightStudyView: View {
                             } else {
                                 if viewModel.isBanned {
                                     DodamEmptyView(
-                                        title: "심야 자습 신청이 제한된 상태입니다.\n\n사유: \(viewModel.banPeriod?.banReason ?? "")",
+                                        title: "심야 자습 신청이 제한된 상태입니다.\n사유: \(viewModel.banPeriod?.banReason ?? "")",
                                         icon: .fullMoonFace,
                                         buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "") {}
                                 } else {
@@ -76,7 +76,7 @@ struct NightStudyView: View {
                             } else {
                                 if viewModel.isBanned {
                                     DodamEmptyView(
-                                        title: "심야 자습 신청이 제한된 상태입니다.\n\n사유: \(viewModel.banPeriod?.banReason ?? "")",
+                                        title: "심야 자습 신청이 제한된 상태입니다.\n사유: \(viewModel.banPeriod?.banReason ?? "")",
                                         icon: .fullMoonFace,
                                         buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "") {}
                                 } else {

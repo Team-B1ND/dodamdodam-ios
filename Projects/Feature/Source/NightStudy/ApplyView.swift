@@ -47,7 +47,9 @@ struct ApplyView: View {
                 .onChange(of: studyViewModel.nightStudyApplyFailed) { _ in
                     let dialog = Dialog(title: "실패")
                         .message(studyViewModel.nightStudyApplyAlertMessage)
-                        .primaryButton("확인")
+                        .primaryButton("확인") {
+                            flow.pop()
+                        }
                     self.dialog.present(dialog)
                 }
                 .padding([.bottom, .horizontal], 16)
@@ -66,7 +68,9 @@ struct ApplyView: View {
                 .onChange(of: projectViewModel.nightStudyApplyFailed) { _ in
                     let dialog = Dialog(title: "실패")
                         .message(projectViewModel.nightStudyApplyAlertMessage)
-                        .primaryButton("확인")
+                        .primaryButton("확인") {
+                            flow.pop()
+                        }
                     self.dialog.present(dialog)
                 }
                 .padding([.bottom, .horizontal], 16)

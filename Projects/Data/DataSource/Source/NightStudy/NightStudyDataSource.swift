@@ -15,8 +15,8 @@ public final class NightStudyDataSource {
         self.remote = remote
     }
     
-    public func postNightStudy(_ request: PostNightStudyRequest) async throws {
-        _ = try await remote.postNightStudy(request)
+    public func postNightStudy(_ request: PostNightStudyRequest) async throws -> DefaultResponse {
+        try await remote.postNightStudy(request)
     }
     
     public func deleteNightStudy(id: Int) async throws {
@@ -38,8 +38,8 @@ public final class NightStudyDataSource {
         return response.data
     }
     
-    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws {
-        _ = try await remote.postNightStudyProject(request)
+    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse {
+        try await remote.postNightStudyProject(request)
     }
     
     public func fetchNightStudyProject() async throws -> [NightStudyProjectResponse] {
@@ -49,5 +49,10 @@ public final class NightStudyDataSource {
     
     public func deleteNightStudyProject(id: Int) async throws {
         _ = try await remote.deleteNightStudyProject(id: id)
+    }
+    
+    public func fetchUsingRoom() async throws -> [NightProjectUsingRoomResponse] {
+        let response = try await remote.fetchUsingRoom()
+        return response.data
     }
 }

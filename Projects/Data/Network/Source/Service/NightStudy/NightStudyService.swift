@@ -17,6 +17,7 @@ enum NightStudyService: ServiceProtocol {
     case postNightStudyProject(_ request: PostNightStudyProjectRequest)
     case fetchNightStudyProject
     case deleteNightStudyProject(id: Int)
+    case fetchUsingRoom
 }
 
 extension NightStudyService {
@@ -34,6 +35,7 @@ extension NightStudyService {
         case .postNightStudyProject: "/project"
         case .fetchNightStudyProject: "/project/my"
         case let .deleteNightStudyProject(id): "/project/\(id)"
+        case .fetchUsingRoom: "project/rooms"
         }
     }
     
@@ -47,6 +49,7 @@ extension NightStudyService {
         case .postNightStudyProject: .post
         case .fetchNightStudyProject: .get
         case .deleteNightStudyProject: .delete
+        case .fetchUsingRoom: .get
         }
     }
     
@@ -67,6 +70,8 @@ extension NightStudyService {
         case .fetchNightStudyProject:
                 .requestPlain
         case .deleteNightStudyProject:
+                .requestPlain
+        case .fetchUsingRoom:
                 .requestPlain
         }
     }
