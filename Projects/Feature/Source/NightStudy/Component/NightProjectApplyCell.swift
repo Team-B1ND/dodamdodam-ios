@@ -62,9 +62,6 @@ struct NightProjectApplyCell: View {
             }
             if nightStudyData.status == .rejected {
                 HStack(spacing: 8) {
-                    Text("거절 사유")
-                        .label(.medium)
-                        .foreground(DodamColor.Label.alternative)
                     Text("선생님께서 프로젝트 신청을 거절하였습니다")
                         .body1(.medium)
                         .foreground(DodamColor.Label.normal)

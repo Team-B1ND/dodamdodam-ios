@@ -20,7 +20,7 @@ struct WakeupSongView: View {
     var body: some View {
         DodamScrollView.medium(title: "기상송") {
             VStack(alignment: .leading, spacing: 0) {
-                Text("내일의 기상송")
+                Text("오늘의 기상송")
                     .headline(.bold)
                     .foreground(DodamColor.Label.normal)
                 if let data = viewModel.allowedWakeupSongData {
