@@ -49,7 +49,7 @@ struct NightStudyView: View {
                                         icon: .fullMoonFace,
                                         buttonTitle: "심야 자습 신청하기"
                                     ) {
-                                        flow.push(ApplyView())
+                                        flow.push(NightStudyApplyMainView())
                                     }
                                 }
                             }
@@ -85,7 +85,7 @@ struct NightStudyView: View {
                                         icon: .fullMoonFace,
                                         buttonTitle: "프로젝트 신청하기"
                                     ) {
-                                        flow.push(ApplyView(isProject: true))
+                                        flow.push(NightStudyApplyMainView(isProject: true))
                                     }
                                 }
                             }
@@ -112,7 +112,7 @@ struct NightStudyView: View {
             )
         }
         .button(icon: .plus, hidden: !Sign.isLoggedIn || viewModel.isBanned) {
-            flow.push(ApplyView())
+            flow.push(NightStudyApplyMainView())
         }
         .borderSize(16)
         .background(DodamColor.Background.neutral)

@@ -83,3 +83,4 @@ struct NightStudyApplyMainView: View {
 #Preview {
     NightStudyApplyMainView()
 }
+
