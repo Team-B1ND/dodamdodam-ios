@@ -12,4 +12,16 @@ public protocol NightStudyRepository: RepositoryProtocol {
     func deleteNightStudy(id: Int) async throws
     
     func fetchNightStudy() async throws -> [NightStudyResponse]
+    
+    func checkBanStatus() async throws -> NightStudyBanResponse
+    
+    func searchStudents() async throws -> [NightStudyStudentResponse]
+    
+    func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse
+    
+    func fetchNightStudyProjects() async throws -> [NightStudyProjectResponse]
+    
+    func deleteNightStudyProject(id: Int) async throws
+    
+    func fetchUsingRoom() async throws -> [NightProjectUsingRoomResponse]
 }

@@ -6,50 +6,92 @@
 //
 
 import SwiftUI
-import FlowKit
 import DDS
 import SignKit
 import Shared
+import Domain
+import FlowKit
 
 struct NightStudyView: View {
-    
+    @StateObject private var viewModel = NightStudyViewModel()
     @DodamDialog private var dialog
-    @StateObject var viewModel = NightStudyViewModel()
+    @State var selection: Int = 0
     @Flow var flow
     
     var body: some View {
         DodamScrollView.default(title: "심야 자습") {
             VStack(spacing: 20) {
                 if Sign.isLoggedIn {
-                    if let data = viewModel.nightStudyData {
-                        if !data.isEmpty {
-                            ForEach(data, id: \.self) { data in
-                                NightStudyApplyCell(
-                                    data: data
-                                ) {
-                                    let dialog = Dialog(title: "해당 심야 자습을 삭제하시겠습니까?")
-                                        .primaryButton("삭제") {
-                                            Task {
-                                                await viewModel.deleteNightStudy(
-                                                    id: data.id
-                                                )
+                    if selection == 0 {
+                        if let data = viewModel.nightStudyData {
+                            if !data.isEmpty {
+                                ForEach(data, id: \.id) { data in
+                                    NightStudyApplyCell(data: data) {
+                                        let dialog = Dialog(title: "해당 심야 자습을 삭제하시겠습니까?")
+                                            .primaryButton("삭제") {
+                                                Task {
+                                                    await viewModel.deleteNightStudy(id: data.id)
+                                                }
                                             }
-                                        }
-                                        .secondaryButton("취소")
-                                    self.dialog.present(dialog)
+                                            .secondaryButton("취소")
+                                        self.dialog.present(dialog)
+                                    }
+                                }
+                            } else {
+                                if viewModel.isBanned {
+                                    DodamEmptyView(
+                                        title: "심야 자습 신청이 제한된 상태입니다.\n사유: \(viewModel.banPeriod?.banReason ?? "")",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "") {}
+                                } else {
+                                    DodamEmptyView(
+                                        title: "아직 신청한 심야 자습이 없어요.",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: "심야 자습 신청하기"
+                                    ) {
+                                        flow.push(NightStudyApplyMainView())
+                                    }
                                 }
                             }
                         } else {
-                            DodamEmptyView(
-                                title: "아직 신청한 심야 자습이 없어요.",
-                                icon: .fullMoonFace,
-                                buttonTitle: "심야 자습 신청하기"
-                            ) {
-                                flow.push(NightStudyApplyView())
-                            }
+                            DodamLoadingView()
                         }
-                    } else {
-                        DodamLoadingView()
+                    }
+                    
+                    if selection == 1 {
+                        if let data = viewModel.nightProjectData {
+                            if !data.isEmpty {
+                                ForEach(data, id: \.id) { project in
+                                    NightProjectApplyCell(data: project) {
+                                        let dialog = Dialog(title: "해당 프로젝트 심자를 삭제하시겠습니까?")
+                                            .primaryButton("삭제") {
+                                                Task {
+                                                    await viewModel.deleteNightStudyProject(id: project.id)
+                                                }
+                                            }
+                                            .secondaryButton("취소")
+                                        self.dialog.present(dialog)
+                                    }
+                                }
+                            } else {
+                                if viewModel.isBanned {
+                                    DodamEmptyView(
+                                        title: "심야 자습 신청이 제한된 상태입니다.\n사유: \(viewModel.banPeriod?.banReason ?? "")",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: viewModel.banPeriod.map { "\($0.started) ~ \($0.ended)" } ?? "") {}
+                                } else {
+                                    DodamEmptyView(
+                                        title: "아직 신청한 프로젝트 심자가 없어요.",
+                                        icon: .fullMoonFace,
+                                        buttonTitle: "프로젝트 신청하기"
+                                    ) {
+                                        flow.push(NightStudyApplyMainView(isProject: true))
+                                    }
+                                }
+                            }
+                        } else {
+                            DodamLoadingView()
+                        }
                     }
                 } else {
                     DodamEmptyView(
@@ -63,8 +105,14 @@ struct NightStudyView: View {
             }
             .padding([.top, .horizontal], 16)
         }
-        .button(icon: .plus, hidden: !Sign.isLoggedIn) {
-            flow.push(NightStudyApplyView())
+        .subView {
+            DodamSegmentedButton(
+                labels: ["개인", "프로젝트"],
+                selection: $selection
+            )
+        }
+        .button(icon: .plus, hidden: !Sign.isLoggedIn || viewModel.isBanned) {
+            flow.push(NightStudyApplyMainView())
         }
         .borderSize(16)
         .background(DodamColor.Background.neutral)
@@ -75,8 +123,4 @@ struct NightStudyView: View {
             await viewModel.onRefresh()
         }
     }
-}
-
-#Preview {
-    NightStudyView()
 }

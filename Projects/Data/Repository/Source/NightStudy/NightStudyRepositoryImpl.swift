@@ -27,4 +27,28 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
     public func fetchNightStudy() async throws -> [NightStudyResponse] {
         try await dataSource.fetchNightStudy()
     }
+    
+    public func checkBanStatus() async throws -> NightStudyBanResponse {
+        try await dataSource.checkBanStatus()
+    }
+    
+    public func searchStudents() async throws -> [NightStudyStudentResponse] {
+        try await dataSource.searchStudents()
+    }
+    
+    public func postNightStudyProject(_ request: PostNightStudyProjectRequest) async throws -> DefaultResponse {
+        try await dataSource.postNightStudyProject(request)
+    }
+    
+    public func fetchNightStudyProjects() async throws -> [NightStudyProjectResponse] {
+        try await dataSource.fetchNightStudyProject()
+    }
+    
+    public func deleteNightStudyProject(id: Int) async throws {
+        try await dataSource.deleteNightStudyProject(id: id)
+    }
+    
+    public func fetchUsingRoom() async throws -> [NightProjectUsingRoomResponse] {
+        try await dataSource.fetchUsingRoom()
+    }
 }
