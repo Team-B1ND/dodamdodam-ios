@@ -15,7 +15,7 @@ struct MealContainer: View {
     @State private var pageSize: CGSize?
     private let mealData: MealModel?
     @Binding var mealType: MealType?
-
+    
     init(
         data mealData: MealModel?,
         mealType: Binding<MealType?>
@@ -23,7 +23,7 @@ struct MealContainer: View {
         self.mealData = mealData
         self._mealType = mealType
     }
-
+    
     var body: some View {
         if let data = mealData {
             if data.exists {
@@ -59,9 +59,10 @@ struct MealContainer: View {
                     self.mealType = MealType.from(.now) ?? .breakfast
                 }
             } else {
+                let notExistMeal = MealType.from(.now) == nil
                 SupportingContainer(
-                    subTitle: "오늘은 급식이 없어요",
-                    title: "내일 급식 보러가기"
+                    subTitle: notExistMeal ? "내일의 급식정보가 없어요" : "오늘은 급식이 없어요",
+                    title: "급식 정보 보러가기"
                 )
             }
         } else {
