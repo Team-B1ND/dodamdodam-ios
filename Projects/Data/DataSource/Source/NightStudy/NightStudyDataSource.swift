@@ -51,8 +51,10 @@ public final class NightStudyDataSource {
         _ = try await remote.deleteNightStudyProject(id: id)
     }
     
+    /*
     public func fetchUsingRoom() async throws -> [NightProjectUsingRoomResponse] {
         let response = try await remote.fetchUsingRoom()
         return response.data
     }
+    */
 }

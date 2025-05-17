@@ -48,7 +48,9 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.deleteNightStudyProject(id: id)
     }
     
+    /*
     public func fetchUsingRoom() async throws -> [NightProjectUsingRoomResponse] {
         try await dataSource.fetchUsingRoom()
     }
+    */
 }
