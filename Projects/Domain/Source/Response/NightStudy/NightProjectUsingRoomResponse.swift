@@ -7,6 +7,7 @@
 
 import Foundation
 
+/*
 public struct NightProjectUsingRoomResponse: Codable, Hashable {
     public let room: String
     public let project: String
@@ -25,3 +26,4 @@ public struct NightProjectUsingRoomResponse: Codable, Hashable {
         self.endAt = endAt
     }
 }
+*/

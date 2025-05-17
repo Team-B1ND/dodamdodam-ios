@@ -11,7 +11,6 @@ public struct PostNightStudyProjectRequest: RequestProtocol {
     public let description: String
     public let startAt: String
     public let endAt: String
-    public let room: NightProjectPlace
     public let students: [Int]
     
     public init(
@@ -20,7 +19,6 @@ public struct PostNightStudyProjectRequest: RequestProtocol {
         description: String,
         startAt: String,
         endAt: String,
-        room: NightProjectPlace,
         students: [Int]
     ) {
         self.type = type
@@ -28,7 +26,6 @@ public struct PostNightStudyProjectRequest: RequestProtocol {
         self.description = description
         self.startAt = startAt
         self.endAt = endAt
-        self.room = room
         self.students = students
     }
 }

@@ -45,7 +45,9 @@ public struct NightStudyRemote: RemoteProtocol {
         try await self.request(target: .deleteNightStudyProject(id: id), res: DefaultResponse.self)
     }
     
+    /*
     public func fetchUsingRoom() async throws -> Response<[NightProjectUsingRoomResponse]> {
         try await self.request(target: .fetchUsingRoom, res: [NightProjectUsingRoomResponse].self)
     }
+    */
 }

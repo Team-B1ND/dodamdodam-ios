@@ -81,44 +81,7 @@ struct NightProjectApplyView: View {
                 .padding(.horizontal, 8)
                 .frame(height: 40)
                 
-                HStack(spacing: 16) {
-                    Text("학습 장소")
-                        .headline(.medium)
-                        .font(.system(size: 18, weight: .medium))
-                        .foreground(DodamColor.Label.alternative)
-                    Spacer()
-                    if !viewModel.filteredPlaces.isEmpty {
-                        Menu {
-                            Picker("시작 날짜", selection: $viewModel.room) {
-                                ForEach(viewModel.filteredPlaces, id: \.self) { place in
-                                    Text(place.displayName)
-                                }
-                            }
-                        } label: {
-                            HStack(spacing: 4) {
-                                Text(viewModel.room.displayName)
-                                    .headline(.regular)
-                                    .foreground(DodamColor.Primary.normal)
-                                VStack(spacing: -4) {
-                                    Image(icon: .chevronLeft)
-                                        .resizable()
-                                        .frame(width: 12, height: 12)
-                                        .rotationEffect(.degrees(90))
-                                    Image(icon: .chevronLeft)
-                                        .resizable()
-                                        .frame(width: 12, height: 12)
-                                        .rotationEffect(.degrees(-90))
-                                }
-                            }
-                        }
-                    } else {
-                        Text("사용할 수 있는 실이 없습니다")
-                            .headline(.regular)
-                            .foreground(DodamColor.Primary.normal)
-                    }
-                }
-                .padding(.horizontal, 8)
-                .frame(height: 40)
+
                 
                 Button {
                     let datePicker = DatePicker(
