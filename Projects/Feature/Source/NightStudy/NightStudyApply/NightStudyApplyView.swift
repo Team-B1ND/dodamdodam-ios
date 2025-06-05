@@ -38,6 +38,41 @@ struct NightStudyApplyView: View {
             }
             
             VStack(spacing: 16) {
+                VStack(spacing: 16) {
+                    HStack(spacing: 16) {
+                        Text("진행 시각")
+                            .headline(.medium)
+                            .font(.system(size: 18, weight: .medium))
+                            .foreground(DodamColor.Label.alternative)
+                        Spacer()
+                        Menu {
+                            Picker("심자 선택", selection: $viewModel.type) {
+                                ForEach(NightStudyType.allCases, id: \.self) { type in
+                                    Text(type.displayName)
+                                }
+                            }
+                        } label: {
+                            HStack(spacing: 4) {
+                                Text(viewModel.type.displayName)
+                                    .headline(.regular)
+                                    .foreground(DodamColor.Primary.normal)
+                                VStack(spacing: -4) {
+                                    Image(icon: .chevronLeft)
+                                        .resizable()
+                                        .frame(width: 12, height: 12)
+                                        .rotationEffect(.degrees(90))
+                                    Image(icon: .chevronLeft)
+                                        .resizable()
+                                        .frame(width: 12, height: 12)
+                                        .rotationEffect(.degrees(-90))
+                                }
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 8)
+                .frame(height: 40)
+                
                 Button {
                     let datePicker = DatePicker(
                         title: "시작 날짜",
