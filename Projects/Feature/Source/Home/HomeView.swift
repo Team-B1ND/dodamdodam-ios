@@ -36,7 +36,7 @@ struct HomeView: View {
                         icon: Dodam.icon(.forkAndKnife)
                     ) {
                         Button {
-                            flow.push(MealView())
+                            selection = 1
                         } label: {
                             MealContainer(
                                 data: viewModel.mealData,
