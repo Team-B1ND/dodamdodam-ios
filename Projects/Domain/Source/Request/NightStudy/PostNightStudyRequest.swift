@@ -7,16 +7,16 @@
 
 public struct PostNightStudyRequest: RequestProtocol {
     
-    public let place: String
     public let content: String
+    public let type: String
     public let doNeedPhone: Bool
     public let reasonForPhone: String?
     public let startAt: String
     public let endAt: String
     
-    public init(place: String, content: String, doNeedPhone: Bool, reasonForPhone: String?, startAt: String, endAt: String) {
-        self.place = place
+    public init(content: String, type: String, doNeedPhone: Bool, reasonForPhone: String?, startAt: String, endAt: String) {
         self.content = content
+        self.type = type
         self.doNeedPhone = doNeedPhone
         self.reasonForPhone = reasonForPhone
         self.startAt = startAt

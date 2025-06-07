@@ -14,6 +14,7 @@ class NightStudyApplyViewModel: ObservableObject {
     
     // MARK: - State
     @Published var place: NightStudyPlace = .project5
+    @Published var type: NightStudyType = .type1
     @Published var reasonText: String = ""
     @Published var reasonForPhoneText: String = ""
     @Published var startAt: Date = Date()
@@ -35,8 +36,8 @@ class NightStudyApplyViewModel: ObservableObject {
         do {
             let result = try await nightStudyRepository.postNightStudy(
                 .init(
-                    place: place.rawValue,
                     content: reasonText,
+                    type: type.rawValue,
                     doNeedPhone: doNeedPhone,
                     reasonForPhone: reasonForPhoneText,
                     startAt: startAt.parse(from: .isoDate),

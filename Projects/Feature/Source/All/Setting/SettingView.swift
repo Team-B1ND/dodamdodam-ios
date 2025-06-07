@@ -36,7 +36,6 @@ struct SettingView: View {
                                         .label(.medium)
                                         .foreground(DodamColor.Label.alternative)
                                 }
-                                .scaledButtonStyle()
                             }
                             Spacer()
                         } else {
@@ -77,7 +76,7 @@ struct SettingView: View {
                         let lastDialog = Dialog(title: "정말 정말 정말 탈퇴하시겠습니까?", message: "회원 탈퇴 시 모든 정보가 삭제됩니다!!!!!!")
                             .primaryButton("회원 탈퇴") {
                                 Task {
-                                     try await viewModel.patchDeactivate()
+                                    try await viewModel.patchDeactivate()
                                     Sign.logout()
                                     flow.replace([MainView()])
                                 }
