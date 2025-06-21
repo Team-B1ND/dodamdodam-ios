@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum MealType: Int, RawRepresentable {
+public enum MealType: Int, RawRepresentable, Codable {
     case breakfast
     case lunch
     case dinner

@@ -6,7 +6,7 @@ let project = Project(
     targets: [
         .target(
             name: "Shared",
-            destinations: [.iPhone],
+            destinations: [.iPhone, .appleWatch],
             product: .staticFramework,
             bundleId: "com.b1nd.dodam.studentShared",
             deploymentTargets: .iOS("15.0"),

@@ -6,10 +6,13 @@ let project = Project(
     targets: [
         .target(
             name: "Domain",
-            destinations: [.iPhone],
+            destinations: [.iPhone, .appleWatch],
             product: .framework,
             bundleId: "com.b1nd.dodam.studentDomain",
-            deploymentTargets: .iOS("15.0"),
+            deploymentTargets: .multiplatform(
+                iOS: "15.0",
+                watchOS: "8.0"
+            ),
             sources: ["Source/**"],
             scripts: [.swiftLint],
             dependencies: []

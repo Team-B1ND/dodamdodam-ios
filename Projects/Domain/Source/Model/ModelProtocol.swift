@@ -7,4 +7,4 @@
 
 import Foundation
 
-public protocol ModelProtocol: Hashable {}
+public protocol ModelProtocol: Hashable, Codable {}

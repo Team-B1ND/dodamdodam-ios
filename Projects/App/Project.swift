@@ -58,7 +58,7 @@ let project = Project(
             name: "DodamDodamWidget",
             destinations: [.iPhone],
             product: .appExtension,
-            bundleId: "com.b1nd.dodam.student.widget",
+            bundleId: "com.b1nd.dodam.student.watch",
             deploymentTargets: .iOS("15.0"),
             infoPlist: .extendingDefault(with: [
                 "CFBundleDisplayName": "$(PRODUCT_NAME)",
@@ -74,6 +74,27 @@ let project = Project(
                 .project(target: "Repository", path: .relativeToRoot("Projects/Data")),
                 .project(target: "DIContainer", path: .relativeToRoot("Projects/DIContainer")),
                 .project(target: "Shared", path: .relativeToRoot("Projects/Shared")),
+                .external(name: "DDS")
+            ]
+        ),
+        .target(
+            name: "DodamDodamWatchApp",
+            destinations: .watchOS,
+            product: .app,
+            bundleId: "com.b1nd.dodam.student.watch",
+            deploymentTargets: .watchOS("8.0"),
+            infoPlist: .extendingDefault(
+                with: [
+                    "CFBundleDisplayName": "$(PRODUCT_NAME)",
+                    "WKApplication": .boolean(true),
+                    "WKCompanionAppBundleIdentifier": "com.b1nd.dodam.student"
+                ]
+            ),
+            sources: ["watchOS/Sources/**"],
+            resources: ["watchOS/Resources/**"],
+            scripts: [.swiftLint],
+            dependencies: [
+                .project(target: "Domain", path: .relativeToRoot("Projects/Domain")),
                 .external(name: "DDS")
             ]
         ),

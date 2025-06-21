@@ -31,6 +31,7 @@ class MealViewModel: ObservableObject, OnAppearProtocol {
     @MainActor
     func fetchAllData() async {
         await fetchMealData()
+        sendTodayMealToWatch()
     }
     
     @MainActor
@@ -46,5 +47,17 @@ class MealViewModel: ObservableObject, OnAppearProtocol {
         } catch let error {
             print(error)
         }
+    }
+    
+    func sendTodayMealToWatch() {
+        guard let todayMeal = selectedMeal else { return }
+        let data = MealModel(
+            exists: todayMeal.exists,
+            date: todayMeal.date,
+            breakfast: todayMeal.breakfast,
+            lunch: todayMeal.lunch,
+            dinner: todayMeal.dinner
+        )
+        PhoneSessionManager.shared.sendMealDataToWatch(meals: [data])
     }
 }
