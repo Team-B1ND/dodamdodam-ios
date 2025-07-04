@@ -116,6 +116,11 @@ struct AllView: View {
                             AllCell("그룹", icon: .handshake) {
                                 flow.push(DivisionView())
                             }
+                            if viewModel.isProjectManger {
+                                AllCell("심자 관리", icon: .moonPlus) {
+                                    flow.push(ManageNightStudyView())
+                                }
+                            }
                         }
                     }
                 }

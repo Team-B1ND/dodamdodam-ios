@@ -17,6 +17,13 @@ enum NightStudyService: ServiceProtocol {
     case postNightStudyProject(_ request: PostNightStudyProjectRequest)
     case fetchNightStudyProject
     case deleteNightStudyProject(id: Int)
+    
+    //MARK: 자치위원 기능
+    case fetchAllNightStudy // 아직 개발 덜된듯 걍 필터로 해야할듯
+    case fetchPendingNightStudy
+    case allowNightStudy(id: Int)
+    case rejectNightStudy(id: Int)
+    case banNightStudy(_ requset: NightStudyBanRequest)
 }
 
 extension NightStudyService {
@@ -34,6 +41,13 @@ extension NightStudyService {
         case .postNightStudyProject: "/project"
         case .fetchNightStudyProject: "/project/my"
         case let .deleteNightStudyProject(id): "/project/\(id)"
+            
+            //MARK: 자치위원 기능
+        case .fetchAllNightStudy: "/all"
+        case .fetchPendingNightStudy: "/pending"
+        case let .allowNightStudy(id): "/\(id)/allow"
+        case let .rejectNightStudy(id): "/\(id)/reject"
+        case .banNightStudy: "ban"
         }
     }
     
@@ -47,6 +61,13 @@ extension NightStudyService {
         case .postNightStudyProject: .post
         case .fetchNightStudyProject: .get
         case .deleteNightStudyProject: .delete
+            
+            //MARK: 자치위원 기능
+        case .fetchAllNightStudy: .get
+        case .fetchPendingNightStudy: .get
+        case .allowNightStudy: .patch
+        case .rejectNightStudy: .patch
+        case .banNightStudy: .post
         }
     }
     
@@ -68,7 +89,18 @@ extension NightStudyService {
                 .requestPlain
         case .deleteNightStudyProject:
                 .requestPlain
-
+            
+            //MARK: 자치위원 기능
+        case .fetchAllNightStudy:
+                .requestPlain
+        case .fetchPendingNightStudy:
+                .requestPlain
+        case .allowNightStudy:
+                .requestPlain
+        case .rejectNightStudy:
+                .requestPlain
+        case let .banNightStudy(request):
+            request.toJSONParameters()
         }
     }
     

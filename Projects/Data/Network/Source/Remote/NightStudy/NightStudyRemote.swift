@@ -50,4 +50,12 @@ public struct NightStudyRemote: RemoteProtocol {
         try await self.request(target: .fetchUsingRoom, res: [NightProjectUsingRoomResponse].self)
     }
     */
+    
+    public func fetchAllNightStudy() async throws -> Response<[OngoingNightStudyResponse]> {
+        try await self.request(target: .fetchNightStudy, res: [OngoingNightStudyResponse].self)
+    }
+    
+    public func fetchPendingNightStudy() async throws -> Response<[OngoingNightStudyResponse]> {
+        try await self.request(target: .fetchPendingNightStudy, res: [OngoingNightStudyResponse].self)
+    }
 }

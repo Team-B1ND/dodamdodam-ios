@@ -53,4 +53,12 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.fetchUsingRoom()
     }
     */
+    
+    public func fetchAllNightStudy() async throws -> [OngoingNightStudyResponse] {
+        try await dataSource.fetchAllNightStudy()
+    }
+    
+    public func fetchPendingNightStudy() async throws -> [OngoingNightStudyResponse] {
+        try await dataSource.fetchPendingNightStudy()
+    }
 }

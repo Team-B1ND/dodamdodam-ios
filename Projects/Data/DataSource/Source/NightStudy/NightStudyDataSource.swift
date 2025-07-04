@@ -52,9 +52,18 @@ public final class NightStudyDataSource {
     }
     
     /*
-    public func fetchUsingRoom() async throws -> [NightProjectUsingRoomResponse] {
-        let response = try await remote.fetchUsingRoom()
+     public func fetchUsingRoom() async throws -> [NightProjectUsingRoomResponse] {
+     let response = try await remote.fetchUsingRoom()
+     return response.data
+     }
+     */
+    public func fetchAllNightStudy() async throws -> [OngoingNightStudyResponse] {
+        let response = try await remote.fetchAllNightStudy()
         return response.data
     }
-    */
+    
+    public func fetchPendingNightStudy() async throws -> [OngoingNightStudyResponse] {
+        let response = try await remote.fetchPendingNightStudy()
+        return response.data
+    }
 }
