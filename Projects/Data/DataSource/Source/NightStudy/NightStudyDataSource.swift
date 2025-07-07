@@ -71,4 +71,12 @@ public final class NightStudyDataSource {
         let response = try await remote.fetchApproveNightStudy()
         return response.data
     }
+    
+    public func allowNightStudy(id: Int) async throws -> DefaultResponse {
+        try await remote.allowNightStudy(id: id)
+    }
+    
+    public func rejectNightStudy(id: Int) async throws -> DefaultResponse {
+        try await remote.rejectNightStudy(id: id)
+    }
 }

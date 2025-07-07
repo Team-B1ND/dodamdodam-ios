@@ -14,8 +14,8 @@ class ApproveNightStudyViewModel: ObservableObject, OnAppearProtocol {
     @Published var studentInfo: OngoingNightStudyResponse?
     @Published var isModalPresented: Bool = false
     
-    @Published var banNightStudyFailed: Bool = false
-    @Published var banNightStudyAlertMessage: String = "심자 승인 실패"
+    @Published var nightStudyFailed: Bool = false
+    @Published var nightStudyAlertMessage: String = "심자 승인 실패"
     
     var isFirstOnAppear: Bool = true
     
@@ -54,13 +54,42 @@ class ApproveNightStudyViewModel: ObservableObject, OnAppearProtocol {
         pendingNightStudy = nil
     }
     
-    //MARK: 대기중
     @MainActor
     func fetchPendingNightStudy() async {
         do {
             pendingNightStudy = try await nightStudyRepository.fetchPendingNightStudy()
         } catch {
             print(error)
+        }
+    }
+    
+    @MainActor
+    func approveNightStudy(id: Int) async {
+        self.nightStudyFailed = false
+        do {
+            let result = try await nightStudyRepository.allowNightStudy(id: id)
+            if result.status == 403 {
+                nightStudyFailed = true
+                nightStudyAlertMessage = "오류가 발생했습니다."
+            }
+        } catch {
+            print(error)
+            nightStudyFailed = true
+        }
+    }
+    
+    @MainActor
+    func rejectNightStudy(id: Int) async {
+        self.nightStudyFailed = false
+        do {
+            let result = try await nightStudyRepository.rejectNightStudy(id: id)
+            if result.status == 403 {
+                nightStudyFailed = true
+                nightStudyAlertMessage = "오류가 발생했습니다."
+            }
+        } catch {
+            print(error)
+            nightStudyFailed = true
         }
     }
 }

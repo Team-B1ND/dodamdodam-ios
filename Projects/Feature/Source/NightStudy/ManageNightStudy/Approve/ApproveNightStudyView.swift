@@ -69,7 +69,39 @@ struct ApproveNightStudyView: View {
             )
         }
         .dodamSheet(isPresented: $viewModel.isModalPresented) {
-            Text("z")
+            if let data = viewModel.studentInfo {
+                ApproveSheetCell(data: data) {
+                    Task {
+                        await viewModel.approveNightStudy(id: data.id)
+                        viewModel.isModalPresented = false
+                        let dialog = Dialog(title: "심자 승인 성공")
+                            .message("심자 승인에 성공했어요!")
+                            .primaryButton("확인") {}
+                        self.dialog.present(dialog)
+                    }
+                } reject: {
+                    Task {
+                        await viewModel.rejectNightStudy(id: data.id)
+                        viewModel.isModalPresented = false
+                        let dialog = Dialog(title: "심자 거절 성공")
+                            .message("심자 거절에 성공했어요!")
+                            .primaryButton("확인") {}
+                        self.dialog.present(dialog)
+                    }
+                }
+                .onDisappear {
+                    viewModel.studentInfo = nil
+                }
+            } else {
+                DodamLoadingView()
+            }
+        }
+        .onChange(of: viewModel.nightStudyFailed) { _ in
+            viewModel.isModalPresented = false
+            let dialog = Dialog(title: "실패")
+                .message(viewModel.nightStudyAlertMessage)
+                .primaryButton("확인") {}
+            self.dialog.present(dialog)
         }
         .background(DodamColor.Background.neutral)
         .task {

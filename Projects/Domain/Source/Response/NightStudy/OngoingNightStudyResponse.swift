@@ -15,8 +15,8 @@ public struct OngoingNightStudyResponse: ResponseProtocol {
     public let reasonForPhone: String?
     public let student: Student
     public let rejectReason: String?
-    public let startAt: String
-    public let endAt: String
+    public let startAt: Date
+    public let endAt: Date
     public let createdAt: String
     public let modifiedAt: String
     
@@ -28,8 +28,8 @@ public struct OngoingNightStudyResponse: ResponseProtocol {
         reasonForPhone: String,
         student: Student,
         rejectReason: String?,
-        startAt: String,
-        endAt: String,
+        startAt: Date,
+        endAt: Date,
         createdAt: String,
         modifiedAt: String
     ) {

@@ -22,7 +22,9 @@ struct PendingNightStudyStudentCell: View {
     
     var body: some View {
         Button {
-            action()
+            withAnimation {
+                action()
+            }
         } label: {
             HStack(spacing: 16) {
                 Group {

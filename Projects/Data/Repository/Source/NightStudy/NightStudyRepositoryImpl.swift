@@ -65,4 +65,12 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
     public func fetchApproveNightStudy() async throws -> [OngoingNightStudyResponse] {
         try await dataSource.fetchApproveNightStudy()
     }
+    
+    public func allowNightStudy(id: Int) async throws -> DefaultResponse {
+        try await dataSource.allowNightStudy(id: id)
+    }
+    
+    public func rejectNightStudy(id: Int) async throws -> DefaultResponse {
+        try await dataSource.rejectNightStudy(id: id)
+    }
 }

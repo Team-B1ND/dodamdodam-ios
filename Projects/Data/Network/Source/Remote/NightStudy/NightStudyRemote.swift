@@ -63,4 +63,12 @@ public struct NightStudyRemote: RemoteProtocol {
     public func fetchApproveNightStudy() async throws -> Response<[OngoingNightStudyResponse]> {
         try await self.request(target: .fetchApproveNightStudy, res: [OngoingNightStudyResponse].self)
     }
+    
+    public func allowNightStudy(id: Int) async throws -> DefaultResponse {
+        try await self.request(target: .allowNightStudy(id: id))
+    }
+    
+    public func rejectNightStudy(id: Int) async throws -> DefaultResponse {
+        try await self.request(target: .rejectNightStudy(id: id))
+    }
 }

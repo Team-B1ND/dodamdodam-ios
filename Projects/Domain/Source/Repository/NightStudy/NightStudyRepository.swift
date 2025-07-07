@@ -28,4 +28,8 @@ public protocol NightStudyRepository: RepositoryProtocol {
     func banNightStudy(_ request: NightStudyBanRequest) async throws -> DefaultResponse
     
     func fetchApproveNightStudy() async throws -> [OngoingNightStudyResponse]
+    
+    func allowNightStudy(id: Int) async throws -> DefaultResponse
+    
+    func rejectNightStudy(id: Int) async throws -> DefaultResponse
 }
