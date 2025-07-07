@@ -19,8 +19,8 @@ enum NightStudyService: ServiceProtocol {
     case deleteNightStudyProject(id: Int)
     
     //MARK: 자치위원 기능
-    case fetchAllNightStudy // 아직 개발 덜된듯 걍 필터로 해야할듯
     case fetchPendingNightStudy
+    case fetchApproveNightStudy
     case allowNightStudy(id: Int)
     case rejectNightStudy(id: Int)
     case banNightStudy(_ requset: NightStudyBanRequest)
@@ -43,11 +43,11 @@ extension NightStudyService {
         case let .deleteNightStudyProject(id): "/project/\(id)"
             
             //MARK: 자치위원 기능
-        case .fetchAllNightStudy: "/all"
         case .fetchPendingNightStudy: "/pending"
+        case .fetchApproveNightStudy: ""
         case let .allowNightStudy(id): "/\(id)/allow"
         case let .rejectNightStudy(id): "/\(id)/reject"
-        case .banNightStudy: "ban"
+        case .banNightStudy: "/ban"
         }
     }
     
@@ -63,8 +63,8 @@ extension NightStudyService {
         case .deleteNightStudyProject: .delete
             
             //MARK: 자치위원 기능
-        case .fetchAllNightStudy: .get
         case .fetchPendingNightStudy: .get
+        case .fetchApproveNightStudy: .get
         case .allowNightStudy: .patch
         case .rejectNightStudy: .patch
         case .banNightStudy: .post
@@ -91,9 +91,9 @@ extension NightStudyService {
                 .requestPlain
             
             //MARK: 자치위원 기능
-        case .fetchAllNightStudy:
-                .requestPlain
         case .fetchPendingNightStudy:
+                .requestPlain
+        case .fetchApproveNightStudy:
                 .requestPlain
         case .allowNightStudy:
                 .requestPlain

@@ -77,7 +77,6 @@ class NightProjectApplyViewModel: ObservableObject, OnAppearProtocol {
     }
     
 
-    
     func toggleStudent(_ id: Int) {
         if selectedStudents.contains(id) {
             selectedStudents.remove(id)

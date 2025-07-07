@@ -54,11 +54,15 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
     }
     */
     
-    public func fetchAllNightStudy() async throws -> [OngoingNightStudyResponse] {
-        try await dataSource.fetchAllNightStudy()
-    }
-    
     public func fetchPendingNightStudy() async throws -> [OngoingNightStudyResponse] {
         try await dataSource.fetchPendingNightStudy()
+    }
+    
+    public func banNightStudy(_ request: NightStudyBanRequest) async throws -> DefaultResponse {
+        try await dataSource.banNightStudy(request: request)
+    }
+    
+    public func fetchApproveNightStudy() async throws -> [OngoingNightStudyResponse] {
+        try await dataSource.fetchApproveNightStudy()
     }
 }

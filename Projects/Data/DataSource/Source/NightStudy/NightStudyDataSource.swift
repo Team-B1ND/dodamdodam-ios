@@ -57,13 +57,18 @@ public final class NightStudyDataSource {
      return response.data
      }
      */
-    public func fetchAllNightStudy() async throws -> [OngoingNightStudyResponse] {
-        let response = try await remote.fetchAllNightStudy()
-        return response.data
-    }
     
     public func fetchPendingNightStudy() async throws -> [OngoingNightStudyResponse] {
         let response = try await remote.fetchPendingNightStudy()
+        return response.data
+    }
+    
+    public func banNightStudy(request: NightStudyBanRequest) async throws -> DefaultResponse {
+        try await remote.banNightStudy(request)
+    }
+    
+    public func fetchApproveNightStudy() async throws -> [OngoingNightStudyResponse] {
+        let response = try await remote.fetchApproveNightStudy()
         return response.data
     }
 }

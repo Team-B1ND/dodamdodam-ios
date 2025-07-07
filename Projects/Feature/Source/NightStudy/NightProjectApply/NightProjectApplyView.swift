@@ -81,8 +81,6 @@ struct NightProjectApplyView: View {
                 .padding(.horizontal, 8)
                 .frame(height: 40)
                 
-
-                
                 Button {
                     let datePicker = DatePicker(
                         title: "시작 날짜",

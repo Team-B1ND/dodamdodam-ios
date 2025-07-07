@@ -12,7 +12,7 @@ public struct OngoingNightStudyResponse: ResponseProtocol {
     public let content: String
     public let status: AllowStatus
     public let doNeedPhone: Bool
-    public let reasonForPhone: String
+    public let reasonForPhone: String?
     public let student: Student
     public let rejectReason: String?
     public let startAt: String

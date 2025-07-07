@@ -46,16 +46,21 @@ public struct NightStudyRemote: RemoteProtocol {
     }
     
     /*
-    public func fetchUsingRoom() async throws -> Response<[NightProjectUsingRoomResponse]> {
-        try await self.request(target: .fetchUsingRoom, res: [NightProjectUsingRoomResponse].self)
-    }
-    */
+     public func fetchUsingRoom() async throws -> Response<[NightProjectUsingRoomResponse]> {
+     try await self.request(target: .fetchUsingRoom, res: [NightProjectUsingRoomResponse].self)
+     }
+     */
     
-    public func fetchAllNightStudy() async throws -> Response<[OngoingNightStudyResponse]> {
-        try await self.request(target: .fetchNightStudy, res: [OngoingNightStudyResponse].self)
-    }
     
     public func fetchPendingNightStudy() async throws -> Response<[OngoingNightStudyResponse]> {
         try await self.request(target: .fetchPendingNightStudy, res: [OngoingNightStudyResponse].self)
+    }
+    
+    public func banNightStudy(_ request: NightStudyBanRequest) async throws -> DefaultResponse {
+        try await self.request(target: .banNightStudy(request))
+    }
+    
+    public func fetchApproveNightStudy() async throws -> Response<[OngoingNightStudyResponse]> {
+        try await self.request(target: .fetchApproveNightStudy, res: [OngoingNightStudyResponse].self)
     }
 }

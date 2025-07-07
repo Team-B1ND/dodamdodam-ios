@@ -9,11 +9,11 @@ import SwiftUI
 import DDS
 import Domain
 
-struct NightStudyStudentCell: View {
+struct ApprovedNightStudyStudentCell: View {
     let data: OngoingNightStudyResponse
     let action: () -> Void
     
-    public init(_ data: OngoingNightStudyResponse, action: @escaping () -> Void) {
+    public init(data: OngoingNightStudyResponse, action: @escaping () -> Void) {
         self.data = data
         self.action = action
     }
@@ -59,7 +59,7 @@ struct NightStudyStudentCell: View {
                 Text("정지")
                     .font(.body1(.bold))
                     .foreground(DodamColor.Static.white)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 4)
                     .padding(.horizontal, 14)
                     .background(DodamColor.Status.negative)
                     .clipShape(.extraSmall)
