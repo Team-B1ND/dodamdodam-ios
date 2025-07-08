@@ -33,7 +33,7 @@ struct ManageNightStudyView: View {
                 .onSubmit {}
                 .padding(.horizontal, 8)
                 
-                if let _ = viewModel.approveNightStudy {
+                if viewModel.approveNightStudy != nil {
                     VStack(spacing: 8) {
                         ApproveStudentInfoHeader()
                             .padding(.vertical, 4)
@@ -42,12 +42,8 @@ struct ManageNightStudyView: View {
                             ApprovedNightStudyStudentCell(
                                 data: data
                             ) {
-                                //TODO: 심자 정지 구현
-                                //                                self.dodamSheet(isPresented: $isShowing) {
-                                //                                    Text("필수 항목 모두 체크하기")
-                                //                                        .body1(.bold)
-                                //                                        .foreground(DodamColor.Label.neutral)
-                                //                                }
+                                viewModel.studentInfo = data
+                                viewModel.isModalPresented = true
                             }
                         }
                         .padding(.vertical, 8)
@@ -70,6 +66,39 @@ struct ManageNightStudyView: View {
                 labels: ["전체", "1반", "2반", "3반", "4반"],
                 selection: $viewModel.selectedClassIndex
             )
+        }
+        .dodamSheet(isPresented: $viewModel.isModalPresented) {
+            if let data = viewModel.studentInfo {
+                RejectNightStudySheetCell(
+                    data: data,
+                    selectedDate: $viewModel.endAt,
+                    reasonBanText: $viewModel.reasoneText
+                ) {
+                    Task {
+                        await viewModel.banNightStudy(data.student.id)
+                        viewModel.isModalPresented = false
+                        let dialog = Dialog(title: "심자 정지 성공")
+                            .primaryButton("확인") {}
+                        self.dialog.present(dialog)
+                    }
+                } cancel: {
+                    viewModel.isModalPresented = false
+                }
+                .onDisappear {
+                    viewModel.studentInfo = nil
+                    viewModel.reasoneText = ""
+                    viewModel.endAt = Date()
+                }
+            } else {
+                DodamLoadingView()
+            }
+        }
+        .onChange(of: viewModel.banNightStudyFailed) { _ in
+            viewModel.isModalPresented = false
+            let dialog = Dialog(title: "실패")
+                .message(viewModel.banNightStudyAlertMessage)
+                .primaryButton("확인") {}
+            self.dialog.present(dialog)
         }
         .background(DodamColor.Background.neutral)
         .task {

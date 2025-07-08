@@ -9,7 +9,7 @@ import SwiftUI
 import DDS
 import Domain
 
-struct ApproveSheetCell: View {
+struct ApproveNightStudySheetCell: View {
     let data: OngoingNightStudyResponse
     let approve: () -> Void
     let reject: () -> Void
@@ -100,6 +100,5 @@ struct ApproveSheetCell: View {
             .padding(.top, 24)
             .frame(maxWidth: .infinity)
         }
-        .padding(.horizontal)
     }
 }

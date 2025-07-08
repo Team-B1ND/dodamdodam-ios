@@ -30,7 +30,6 @@ struct ApproveNightStudyView: View {
                     title: "학생 검색",
                     text: $viewModel.searchText
                 )
-                .onSubmit {}
                 .padding(.horizontal, 8)
                 
                 if let _ = viewModel.pendingNightStudy {
@@ -70,12 +69,11 @@ struct ApproveNightStudyView: View {
         }
         .dodamSheet(isPresented: $viewModel.isModalPresented) {
             if let data = viewModel.studentInfo {
-                ApproveSheetCell(data: data) {
+                ApproveNightStudySheetCell(data: data) {
                     Task {
                         await viewModel.approveNightStudy(id: data.id)
                         viewModel.isModalPresented = false
                         let dialog = Dialog(title: "심자 승인 성공")
-                            .message("심자 승인에 성공했어요!")
                             .primaryButton("확인") {}
                         self.dialog.present(dialog)
                     }
@@ -84,7 +82,6 @@ struct ApproveNightStudyView: View {
                         await viewModel.rejectNightStudy(id: data.id)
                         viewModel.isModalPresented = false
                         let dialog = Dialog(title: "심자 거절 성공")
-                            .message("심자 거절에 성공했어요!")
                             .primaryButton("확인") {}
                         self.dialog.present(dialog)
                     }

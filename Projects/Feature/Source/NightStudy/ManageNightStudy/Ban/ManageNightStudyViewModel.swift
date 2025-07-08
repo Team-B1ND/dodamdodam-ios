@@ -11,9 +11,11 @@ import DIContainer
 
 class ManageNightStudyViewModel: ObservableObject, OnAppearProtocol {
     @Published var approveNightStudy: [OngoingNightStudyResponse]?
+    @Published var studentInfo: OngoingNightStudyResponse?
     @Published var searchText: String = ""
     @Published var reasoneText: String = ""
-    @Published var endAt: Date = Date()
+    @Published var endAt: Date?
+    @Published var isModalPresented: Bool = false
     
     @Published var banNightStudyFailed: Bool = false
     @Published var banNightStudyAlertMessage: String = "심자 정지 실패"
@@ -54,7 +56,6 @@ class ManageNightStudyViewModel: ObservableObject, OnAppearProtocol {
         approveNightStudy = nil
     }
     
-    
     @MainActor
     func fetchApproveNightStudy() async {
         do {
@@ -72,7 +73,7 @@ class ManageNightStudyViewModel: ObservableObject, OnAppearProtocol {
                 .init(
                     student: studentId,
                     reason: reasoneText,
-                    ended: endAt.parse(from: .isoDate)
+                    ended: endAt!.parse(from: .isoDate)
                 )
             )
             if result.status == 403 {
