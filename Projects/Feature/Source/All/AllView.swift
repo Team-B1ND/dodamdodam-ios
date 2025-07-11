@@ -96,7 +96,7 @@ struct AllView: View {
                             }
                             DodamDivider()
                                 .padding(.horizontal, 8)
-
+                            
                             AllCell("귀가 버스 신청하기", icon: .colorfulBus) {
                                 flow.push(BusApplyView())
                             }
@@ -115,6 +115,18 @@ struct AllView: View {
                             }
                             AllCell("그룹", icon: .handshake) {
                                 flow.push(DivisionView())
+                            }
+                            if viewModel.isProjectManger {
+                                
+                                DodamDivider()
+                                    .padding(.horizontal, 8)
+                                
+                                AllCell("심자 승인하기", icon: .pencil) {
+                                    flow.push(ApproveNightStudyView())
+                                }
+                                AllCell("심자진행 관리하기", icon: .moonPlus) {
+                                    flow.push(ManageNightStudyView())
+                                }
                             }
                         }
                     }

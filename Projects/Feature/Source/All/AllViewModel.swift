@@ -14,6 +14,7 @@ class AllViewModel: ObservableObject, OnAppearProtocol {
     
     // MARK: - State
     @Published var memberData: MemberResponse?
+    @Published var isProjectManger: Bool = false
     var isFirstOnAppear: Bool = true
     
     // MARK: - Repository
@@ -23,7 +24,9 @@ class AllViewModel: ObservableObject, OnAppearProtocol {
     @MainActor
     func fetchAllData() async {
         if Sign.isLoggedIn {
-            await fetchMemberData()
+            async let fetchMemberData: () = fetchMemberData()
+            async let checkProjectManger: () = checkProjectManger()
+            _ = await [fetchMemberData, checkProjectManger]
         }
     }
     
@@ -45,4 +48,14 @@ class AllViewModel: ObservableObject, OnAppearProtocol {
             print(error)
         }
     }
+    
+    @MainActor
+    func checkProjectManger() async {
+        do {
+            isProjectManger = try await memberRepository.checkNightStudyManager()
+        } catch {
+            print(error)
+        }
+    }
+    
 }

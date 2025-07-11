@@ -30,4 +30,6 @@ public protocol MemberRepository: RepositoryProtocol {
     func fetchMemberByCode(code: String) async throws -> MemberResponse
     
     func fetchRelation() async throws -> [ConnectStudentResponse]
+    
+    func checkNightStudyManager() async throws -> Bool
 }

@@ -53,4 +53,24 @@ public struct NightStudyRepositoryImpl: NightStudyRepository {
         try await dataSource.fetchUsingRoom()
     }
     */
+    
+    public func fetchPendingNightStudy() async throws -> [OngoingNightStudyResponse] {
+        try await dataSource.fetchPendingNightStudy()
+    }
+    
+    public func banNightStudy(_ request: NightStudyBanRequest) async throws -> DefaultResponse {
+        try await dataSource.banNightStudy(request: request)
+    }
+    
+    public func fetchApproveNightStudy() async throws -> [OngoingNightStudyResponse] {
+        try await dataSource.fetchApproveNightStudy()
+    }
+    
+    public func allowNightStudy(id: Int) async throws -> DefaultResponse {
+        try await dataSource.allowNightStudy(id: id)
+    }
+    
+    public func rejectNightStudy(id: Int) async throws -> DefaultResponse {
+        try await dataSource.rejectNightStudy(id: id)
+    }
 }

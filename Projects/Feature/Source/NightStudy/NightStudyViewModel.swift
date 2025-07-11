@@ -26,9 +26,10 @@ class NightStudyViewModel: ObservableObject, OnAppearProtocol {
     @MainActor
     func fetchAllData() async {
         if Sign.isLoggedIn {
-            await fetchNightStudy()
-            await fetchNightStudyProjects()
-            await checkBanStatus()
+            async let fetchNightStudy: () = fetchNightStudy()
+            async let fetchNightStudyProjects: () = fetchNightStudyProjects()
+            async let checkBanStatus: () = checkBanStatus()
+            _ = await [fetchNightStudy, fetchNightStudyProjects, checkBanStatus]
         }
     }
     
