@@ -59,7 +59,7 @@ struct ApprovedNightStudyStudentCell: View {
                 Text("정지")
                     .font(.body1(.bold))
                     .foreground(DodamColor.Static.white)
-                    .padding(8)
+                    .padding(6)
                     .padding(.horizontal, 4)
                     .background(DodamColor.Status.negative)
                     .clipShape(.extraSmall)
