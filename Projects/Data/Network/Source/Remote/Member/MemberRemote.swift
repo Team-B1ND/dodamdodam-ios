@@ -60,4 +60,8 @@ public struct MemberRemote: RemoteProtocol {
     public func fetchRelation() async throws -> Response<[ConnectStudentResponse]> {
         try await self.request(target: .fetchRelation, res: [ConnectStudentResponse].self)
     }
+    
+    public func checkNightStudyManager() async throws -> Response<Bool> {
+        try await self.request(target: .checkNightStudyManager, res: Bool.self)
+    }
 }

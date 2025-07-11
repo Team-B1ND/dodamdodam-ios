@@ -65,4 +65,9 @@ public struct MemberDataSource: DataSourceProtocol {
         let response = try await remote.fetchRelation()
         return response.data
     }
+    
+    public func checkNightStudyManager() async throws -> Bool {
+        let response = try await remote.checkNightStudyManager()
+        return response.data
+    }
 }

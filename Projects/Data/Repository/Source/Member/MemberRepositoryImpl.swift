@@ -63,4 +63,8 @@ public struct MemberRepositoryImpl: MemberRepository {
     public func fetchRelation() async throws -> [ConnectStudentResponse] {
         try await dataSource.fetchRelation()
     }
+    
+    public func checkNightStudyManager() async throws -> Bool {
+        try await dataSource.checkNightStudyManager()
+    }
 }

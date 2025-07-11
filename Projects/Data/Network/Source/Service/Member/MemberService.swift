@@ -22,6 +22,9 @@ enum MemberService: ServiceProtocol {
     case fetchInfo
     case fetchMemberByCode(code: String)
     case fetchRelation
+    
+    //MARK: 자치위원 기능
+    case checkNightStudyManager
 }
 
 extension MemberService {
@@ -44,6 +47,7 @@ extension MemberService {
         case .fetchInfo: "/my"
         case let .fetchMemberByCode(code): "/code/\(code)"
         case .fetchRelation: "/relation"
+        case .checkNightStudyManager: "/check/dormitory-manage-member"
         }
     }
     
@@ -61,6 +65,7 @@ extension MemberService {
         case .fetchInfo: .get
         case .fetchMemberByCode: .get
         case .fetchRelation: .get
+        case .checkNightStudyManager: .get
         }
     }
     
@@ -89,6 +94,8 @@ extension MemberService {
         case .fetchMemberByCode:
                 .requestPlain
         case .fetchRelation:
+                .requestPlain
+        case .checkNightStudyManager:
                 .requestPlain
         }
     }
