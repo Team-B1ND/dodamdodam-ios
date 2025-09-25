@@ -84,29 +84,38 @@ class HomeViewModel: ObservableObject, OnAppearProtocol {
     
     @MainActor
     func fetchMealData() async {
-        let currentTime = Date.now
+        let now = Date.now
         do {
             let todayMeal = try await mealRepository.fetchMeal(
                 .init(
-                    year: currentTime[.year],
-                    month: currentTime[.month],
-                    day: currentTime[.day]
+                    year: now[.year],
+                    month: now[.month],
+                    day: now[.day]
                 )
             )
             
-            if !todayMeal.exists && MealType.from(.now) == nil {
-                let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: currentTime) ?? currentTime
-                mealData = try await mealRepository.fetchMeal(
+            let currentMealType = MealType.from(now)
+            
+            if !todayMeal.exists || currentMealType == nil {
+                let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: now) ?? now
+                
+                let tomorrowMeal = try await mealRepository.fetchMeal(
                     .init(
                         year: tomorrow[.year],
                         month: tomorrow[.month],
                         day: tomorrow[.day]
                     )
                 )
+                
+                if tomorrowMeal.exists {
+                    mealData = tomorrowMeal
+                } else {
+                    mealData = nil
+                }
             } else {
                 mealData = todayMeal
             }
-        } catch let error {
+        } catch {
             print(error)
         }
     }
