@@ -110,7 +110,13 @@ class HomeViewModel: ObservableObject, OnAppearProtocol {
                 if tomorrowMeal.exists {
                     mealData = tomorrowMeal
                 } else {
-                    mealData = nil
+                    mealData = .init(
+                        exists: false,
+                        date: Date(),
+                        breakfast: nil,
+                        lunch: nil,
+                        dinner: nil
+                    )
                 }
             } else {
                 mealData = todayMeal
