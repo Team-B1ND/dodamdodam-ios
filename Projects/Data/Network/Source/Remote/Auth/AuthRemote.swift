@@ -21,7 +21,7 @@ public struct AuthRemote: RemoteProtocol {
         try await self.request(target: .postReissue(request), res: ReissueResponse.self)
     }
 
-    public func postQRLogin(_ request: DeepLinkLoginRequest) async throws {
-        _ = try await self.request(target: .postQRLogin(request))
+    public func postQRLogin(_ request: DeepLinkLoginRequest) async throws -> DefaultResponse {
+        try await self.request(target: .postQRLogin(request))
     }
 }

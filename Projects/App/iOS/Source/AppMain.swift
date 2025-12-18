@@ -61,6 +61,14 @@ struct AppMain: App {
         deepLinkViewModel.onDeepLinkReceived = { [self] clientId, code in
             self.showQRLoginDialog(clientId: clientId, code: code)
         }
+
+        deepLinkViewModel.onLoginSuccess = { [self] message in
+            self.showLoginResultDialog(title: "로그인 성공", message: message)
+        }
+
+        deepLinkViewModel.onLoginFailure = { [self] message in
+            self.showLoginResultDialog(title: "로그인 실패", message: message)
+        }
     }
 
     private func showQRLoginDialog(clientId: String, code: String) {
@@ -73,6 +81,14 @@ struct AppMain: App {
                 }
             }
             .secondaryButton("취소")
+        )
+    }
+
+    private func showLoginResultDialog(title: String, message: String) {
+        dialogProvider.present(
+            .init(title: title)
+            .message(message)
+            .primaryButton("확인")
         )
     }
 }

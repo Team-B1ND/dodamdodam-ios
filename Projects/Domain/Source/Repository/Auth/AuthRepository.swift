@@ -11,5 +11,5 @@ public protocol AuthRepository: RepositoryProtocol {
     
     func postReissue(_ request: PostReissueRequest) async throws
 
-    func postQRLogin(_ request: DeepLinkLoginRequest) async throws
+    func postQRLogin(_ request: DeepLinkLoginRequest) async throws -> DefaultResponse
 }

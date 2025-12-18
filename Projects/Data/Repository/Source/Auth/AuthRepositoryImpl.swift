@@ -33,7 +33,7 @@ public struct AuthRepositoryImpl: AuthRepository {
         Sign.reissue(data.accessToken)
     }
 
-    public func postQRLogin(_ request: DeepLinkLoginRequest) async throws {
+    public func postQRLogin(_ request: DeepLinkLoginRequest) async throws -> DefaultResponse {
         try await dataSource.postQRLogin(request)
     }
 }

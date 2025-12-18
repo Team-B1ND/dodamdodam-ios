@@ -2,7 +2,7 @@ import Foundation
 import SignKit
 
 public protocol DeepLinkLoginUseCase {
-    func execute(clientId: String, code: String) async throws
+    func execute(clientId: String, code: String) async throws -> (isSuccess: Bool, message: String)
 }
 
 public final class DeepLinkLoginUseCaseImpl: DeepLinkLoginUseCase {
@@ -13,7 +13,7 @@ public final class DeepLinkLoginUseCaseImpl: DeepLinkLoginUseCase {
         self.authRepository = authRepository
     }
 
-    public func execute(clientId: String, code: String) async throws {
+    public func execute(clientId: String, code: String) async throws -> (isSuccess: Bool, message: String) {
         guard let accessToken = Sign.accessToken,
               let refreshToken = Sign.refreshToken else {
             throw NSError(domain: "DeepLink", code: -1, userInfo: [NSLocalizedDescriptionKey: "로그인이 필요합니다"])
@@ -26,6 +26,9 @@ public final class DeepLinkLoginUseCaseImpl: DeepLinkLoginUseCase {
             refresh: refreshToken
         )
 
-        try await authRepository.postQRLogin(request)
+        let response = try await authRepository.postQRLogin(request)
+
+        let isSuccess = (200..<300).contains(response.status)
+        return (isSuccess, response.message)
     }
 }

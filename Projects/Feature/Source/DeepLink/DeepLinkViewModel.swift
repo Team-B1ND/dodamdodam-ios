@@ -37,12 +37,21 @@ public class DeepLinkViewModel: ObservableObject {
     }
 
     public var onDeepLinkReceived: ((String, String) -> Void)?
+    public var onLoginSuccess: ((String) -> Void)?
+    public var onLoginFailure: ((String) -> Void)?
 
     @MainActor
     public func performQRLogin(clientId: String, code: String) async {
         do {
-            try await deepLinkLoginUseCase.execute(clientId: clientId, code: code)
+            let (isSuccess, message) = try await deepLinkLoginUseCase.execute(clientId: clientId, code: code)
+
+            if isSuccess {
+                onLoginSuccess?(message)
+            } else {
+                onLoginFailure?(message)
+            }
         } catch {
+            onLoginFailure?(error.localizedDescription)
         }
     }
 }
