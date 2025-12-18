@@ -20,4 +20,8 @@ public struct AuthRemote: RemoteProtocol {
     public func postReissue(_ request: PostReissueRequest) async throws -> Response<ReissueResponse> {
         try await self.request(target: .postReissue(request), res: ReissueResponse.self)
     }
+
+    public func postQRLogin(_ request: DeepLinkLoginRequest) async throws {
+        _ = try await self.request(target: .postQRLogin(request))
+    }
 }

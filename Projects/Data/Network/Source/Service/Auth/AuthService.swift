@@ -12,6 +12,7 @@ enum AuthService: ServiceProtocol {
     
     case postLogin(_ request: PostLoginRequest)
     case postReissue(_ request: PostReissueRequest)
+    case postQRLogin(_ request: DeepLinkLoginRequest)
 }
 
 extension AuthService {
@@ -24,6 +25,7 @@ extension AuthService {
         switch self {
         case .postLogin: "/login"
         case .postReissue: "/reissue"
+        case .postQRLogin: "/qr-login"
         }
     }
     
@@ -31,6 +33,7 @@ extension AuthService {
         switch self {
         case .postLogin: .post
         case .postReissue: .post
+        case .postQRLogin: .post
         }
     }
     
@@ -39,6 +42,8 @@ extension AuthService {
         case let .postLogin(request):
             request.toJSONParameters()
         case let .postReissue(request):
+            request.toJSONParameters()
+        case let .postQRLogin(request):
             request.toJSONParameters()
         }
     }

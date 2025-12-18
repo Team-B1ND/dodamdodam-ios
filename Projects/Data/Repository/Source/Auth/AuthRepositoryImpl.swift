@@ -32,4 +32,8 @@ public struct AuthRepositoryImpl: AuthRepository {
         let data = try await dataSource.postReissue(request)
         Sign.reissue(data.accessToken)
     }
+
+    public func postQRLogin(_ request: DeepLinkLoginRequest) async throws {
+        try await dataSource.postQRLogin(request)
+    }
 }
