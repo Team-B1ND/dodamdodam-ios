@@ -46,11 +46,11 @@ struct AppMain: App {
 #endif
             }
             .onOpenURL { url in
-                handleUniversalLink(url)
+                DeepLinkManager.shared.handleUniversalLink(url)
             }
             .onContinueUserActivity(NSUserActivityTypeBrowsingWeb) { userActivity in
                 if let url = userActivity.webpageURL {
-                    handleUniversalLink(url)
+                    DeepLinkManager.shared.handleUniversalLink(url)
                 }
             }
             .onChange(of: deepLinkHandler.shouldShowDialog) { shouldShow in
@@ -61,22 +61,6 @@ struct AppMain: App {
                     deepLinkHandler.shouldShowDialog = false
                 }
             }
-        }
-    }
-
-    private func handleUniversalLink(_ url: URL) {
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            return
-        }
-
-        if components.path == "/" || components.path == "/student" {
-            guard let queryItems = components.queryItems,
-                  let clientId = queryItems.first(where: { $0.name == "clientId" })?.value,
-                  let code = queryItems.first(where: { $0.name == "code" })?.value else {
-                return
-            }
-
-            DeepLinkManager.shared.setDeepLinkParams(clientId: clientId, code: code)
         }
     }
 
