@@ -28,7 +28,7 @@ struct AppMain: App {
     @StateObject private var datePickerProvider = DatePickerProvider()
     @StateObject private var timePickerProvider = TimePickerProvider()
     @StateObject private var flow = FlowProvider(rootView: MainView())
-    @StateObject private var deepLinkHandler = DeepLinkObserver()
+    @StateObject private var deepLinkViewModel = DeepLinkViewModel()
 
     var body: some Scene {
         WindowGroup {
@@ -44,6 +44,7 @@ struct AppMain: App {
 #if DEBUG
                 print("Realm DB location: \(RLMRealmConfiguration.default().fileURL!)")
 #endif
+                setupDeepLinkHandler()
             }
             .onOpenURL { url in
                 DeepLinkManager.shared.handleUniversalLink(url)
@@ -53,14 +54,12 @@ struct AppMain: App {
                     DeepLinkManager.shared.handleUniversalLink(url)
                 }
             }
-            .onChange(of: deepLinkHandler.shouldShowDialog) { shouldShow in
-                if shouldShow,
-                   let clientId = deepLinkHandler.clientId,
-                   let code = deepLinkHandler.code {
-                    showQRLoginDialog(clientId: clientId, code: code)
-                    deepLinkHandler.shouldShowDialog = false
-                }
-            }
+        }
+    }
+
+    private func setupDeepLinkHandler() {
+        deepLinkViewModel.onDeepLinkReceived = { [self] clientId, code in
+            self.showQRLoginDialog(clientId: clientId, code: code)
         }
     }
 
@@ -70,22 +69,10 @@ struct AppMain: App {
             .message("웹에서 로그인하시겠습니까?\n\n다음 정보에 접근합니다:\n이름, 전화번호, 이메일, 프로필이미지, 기숙사 정보, 외박 정보, 동아리 정보")
             .primaryButton("로그인") {
                 Task {
-                    await self.performQRLogin(clientId: clientId, code: code)
+                    await self.deepLinkViewModel.performQRLogin(clientId: clientId, code: code)
                 }
             }
             .secondaryButton("취소")
         )
-    }
-
-    @MainActor
-    private func performQRLogin(clientId: String, code: String) async {
-        guard let useCase = DependencyProvider.shared.container.resolve(DeepLinkLoginUseCase.self) else {
-            return
-        }
-
-        do {
-            try await useCase.execute(clientId: clientId, code: code)
-        } catch {
-        }
     }
 }

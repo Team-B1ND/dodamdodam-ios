@@ -7,6 +7,7 @@
 
 import Moya
 import Domain
+import Foundation
 
 enum AuthService: ServiceProtocol {
     
@@ -16,7 +17,18 @@ enum AuthService: ServiceProtocol {
 }
 
 extension AuthService {
-    
+
+    var baseURL: URL {
+        switch self {
+        case .postQRLogin:
+            return .init(string: Constants.dauthAPI)!
+                .appendingPathComponent(host)
+        default:
+            return .init(string: Constants.API)!
+                .appendingPathComponent(host)
+        }
+    }
+
     var host: String {
         "auth"
     }
