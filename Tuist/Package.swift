@@ -16,6 +16,11 @@ import PackageDescription
             ],
             defaultSettings: .recommended
         ),
+        targetSettings: [
+            "SwiftUIIntrospect": [
+                "IPHONEOS_DEPLOYMENT_TARGET": "15.0"
+            ]
+        ],
         projectOptions: [
             "LocalSwiftPackage": .options(disableSynthesizedResourceAccessors: false)
         ]
