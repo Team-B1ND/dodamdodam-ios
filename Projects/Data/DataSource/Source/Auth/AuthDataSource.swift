@@ -24,4 +24,8 @@ public struct AuthDataSource: DataSourceProtocol {
         let response = try await remote.postReissue(request)
         return response.data
     }
+
+    public func postQRLogin(_ request: DeepLinkLoginRequest) async throws -> DefaultResponse {
+        try await remote.postQRLogin(request)
+    }
 }

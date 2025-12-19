@@ -26,7 +26,7 @@ let project = Project(
             infoPlist: .extendingDefault(
                 with: [
                     "CFBundleDisplayName": "도담도담",
-                    "CFBundleShortVersionString": "3.4.6",
+                    "CFBundleShortVersionString": "3.4.7",
                     "CFBundleVersion": "1",
                     "UISupportedInterfaceOrientations": ["UIInterfaceOrientationPortrait"],
                     "UIMainStoryboardFile": "",
