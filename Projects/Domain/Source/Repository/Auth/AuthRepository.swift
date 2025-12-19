@@ -10,4 +10,6 @@ public protocol AuthRepository: RepositoryProtocol {
     func postLogin(_ request: PostLoginRequest) async throws -> Member
     
     func postReissue(_ request: PostReissueRequest) async throws
+
+    func postQRLogin(_ request: DeepLinkLoginRequest) async throws -> DefaultResponse
 }

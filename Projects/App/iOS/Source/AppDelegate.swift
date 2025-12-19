@@ -37,6 +37,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         print("✅ AppDelegate.application.didRegisterForRemoteNotificationsWithDeviceToken - apnsToken \(deviceToken)")
         Messaging.messaging().apnsToken = deviceToken
     }
+
+    func application(
+        _ application: UIApplication,
+        continue userActivity: NSUserActivity,
+        restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void
+    ) -> Bool {
+        return false
+    }
 }
 
 // Cloud Messaging...
